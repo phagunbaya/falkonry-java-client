@@ -1,7 +1,83 @@
 package com.falkonry.client;
 
-/**
- * Created by phagunbaya on 23/03/16.
+/*!
+ * falkonry-java-client
+ * Copyright(c) 2016 Falkonry Inc
+ * MIT Licensed
  */
+
+import com.falkonry.client.service.FalkonryService;
+import com.falkonry.helper.models.*;
+import java.io.ByteArrayOutputStream;
+import java.util.List;
+import java.util.Map;
+
+
 public class Falkonry {
+
+  private FalkonryService falkonryService;
+
+  public Falkonry(String host, String token) throws Exception {
+    this.falkonryService = new FalkonryService(host, token);
+  }
+
+  public Eventbuffer createEventbuffer(Eventbuffer eventbuffer, Map<String, String> options) throws Exception {
+    return falkonryService.createEventbuffer(eventbuffer, options);
+  }
+
+  public List<Eventbuffer> getEventbuffers() throws Exception {
+    return falkonryService.getEventbuffers();
+  }
+
+  public void deleteEventbuffer(String eventbuffer) throws Exception {
+    falkonryService.deleteEventbuffer(eventbuffer);
+  }
+
+  public Pipeline createPipeline(Pipeline pipeline) throws Exception {
+    return falkonryService.createPipeline(pipeline);
+  }
+
+  public List<Pipeline> getPipelines() throws Exception {
+    return falkonryService.getPipelines();
+  }
+
+  public void deletePipeline(String pipeline) throws Exception {
+    falkonryService.deletePipeline(pipeline);
+  }
+
+  public InputStatus addInput(String eventbuffer, String data, Map<String, String> options) throws Exception {
+    return this.falkonryService.addInputData(eventbuffer, data, options);
+  }
+
+  public InputStatus addInputStream(String eventbuffer, ByteArrayOutputStream stream, Map<String, String> options) throws Exception {
+    return this.falkonryService.addInputFromStream(eventbuffer, stream, options);
+  }
+
+  public void getOutput(String pipeline, Long start, Long end) throws Exception {
+    this.falkonryService.getOutput(pipeline, start, end);
+  }
+
+  public Subscription createSubscription(String eventbuffer, Subscription subscription) throws Exception {
+    return falkonryService.createSubscription(eventbuffer, subscription);
+  }
+
+  public Subscription updateSubscription(String eventbuffer, Subscription subscription) throws Exception {
+    return falkonryService.updateSubscription(eventbuffer, subscription);
+  }
+
+  public void deleteEventbuffer(String eventbuffer, String subscription) throws Exception {
+    falkonryService.deleteEventbuffer(eventbuffer, subscription);
+  }
+
+  public Publication createPublication(String pipeline, Publication publication) throws Exception {
+    return falkonryService.createPublication(pipeline, publication);
+  }
+
+  public Publication updatePublication(String pipeline, Publication publication) throws Exception {
+    return falkonryService.updatePublication(pipeline, publication);
+  }
+
+  public void deletePublication(String pipeline, String publication) throws Exception {
+    falkonryService.deletePublication(pipeline, publication);
+  }
 }
