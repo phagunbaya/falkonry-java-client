@@ -21,6 +21,7 @@ public class Eventbuffer {
   private Long updateTime;
   private List<Object> schemaList;
   private List<Subscription> subscriptionList;
+  private Stats stats;
 
   public String getId() {
     return id;
@@ -114,4 +115,13 @@ public class Eventbuffer {
     return this;
   }
 
+  public Stats getStats() {
+    return stats;
+  }
+
+  public Eventbuffer setStats(Stats stats)
+  {
+    this.stats = stats;
+    return this;
+  }
 }

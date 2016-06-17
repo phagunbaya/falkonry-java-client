@@ -8,6 +8,8 @@ package com.falkonry.client;
 
 import com.falkonry.client.service.FalkonryService;
 import com.falkonry.helper.models.*;
+
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.util.List;
 import java.util.Map;
@@ -23,10 +25,14 @@ public class Falkonry {
 
   public Eventbuffer createEventbuffer(Eventbuffer eventbuffer, Map<String, String> options) throws Exception {
     return falkonryService.createEventbuffer(eventbuffer, options);
-  }
+}
 
   public List<Eventbuffer> getEventbuffers() throws Exception {
     return falkonryService.getEventbuffers();
+  }
+
+  public Eventbuffer getUpdatedEventbuffer(String id) throws Exception{
+    return falkonryService.getUpdatedEventbuffer(id);
   }
 
   public void deleteEventbuffer(String eventbuffer) throws Exception {
@@ -49,7 +55,7 @@ public class Falkonry {
     return this.falkonryService.addInputData(eventbuffer, data, options);
   }
 
-  public InputStatus addInputStream(String eventbuffer, ByteArrayOutputStream stream, Map<String, String> options) throws Exception {
+  public InputStatus addInputStream(String eventbuffer, ByteArrayInputStream stream, Map<String, String> options) throws Exception {
     return this.falkonryService.addInputFromStream(eventbuffer, stream, options);
   }
 
@@ -65,8 +71,8 @@ public class Falkonry {
     return falkonryService.updateSubscription(eventbuffer, subscription);
   }
 
-  public void deleteEventbuffer(String eventbuffer, String subscription) throws Exception {
-    falkonryService.deleteEventbuffer(eventbuffer, subscription);
+  public void deleteSubscription(String eventbuffer, String subscription) throws Exception {
+    falkonryService.deleteSubscription(eventbuffer, subscription);
   }
 
   public Publication createPublication(String pipeline, Publication publication) throws Exception {

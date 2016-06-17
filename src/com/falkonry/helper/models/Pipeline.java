@@ -10,29 +10,6 @@ import org.codehaus.jackson.annotate.JsonProperty;
 
 import java.util.List;
 
-class Interval {
-  private String field;
-  private String duration;
-
-  public String getField() {
-    return this.field;
-  }
-
-  public Interval setField(String field) {
-    this.field = field;
-    return this;
-  }
-
-  public String getDuration() {
-    return this.duration;
-  }
-
-  public Interval setDuration(String duration) {
-    this.duration = duration;
-    return this;
-  }
-}
-
 public class Pipeline {
   private String id;
   private String sourceId;
@@ -53,7 +30,36 @@ public class Pipeline {
   private Long earliestDataPoint;
   private Long latestDataPoint;
   private List<Object> modelRevisionList;
-  private List<Object> outflowHistoryList;
+  private List<Object> outflowHistory;
+  private String status;
+  private String outflowStatus;
+  private StatsMeasurementMap statsMeasurementMap;
+  private String type;
+
+
+  public String getOutflowStatus() {
+    return outflowStatus;
+  }
+
+  public void setOutflowStatus(String outflowStatus) {
+    this.outflowStatus = outflowStatus;
+  }
+
+  public String getStatus() {
+    return status;
+  }
+
+  public void setStatus(String status) {
+    this.status = status;
+  }
+
+  public String getName() {
+    return name;
+  }
+
+  public void setName(String name) {
+    this.name = name;
+  }
 
   public String getId(){
     return this.id;
@@ -84,10 +90,12 @@ public class Pipeline {
     return this;
   }
 
+  @JsonProperty("input")
   public String getEventbuffer() {
     return eventbuffer;
   }
 
+  @JsonProperty("input")
   public Pipeline setEventbuffer(String eventbuffer) {
     this.eventbuffer = eventbuffer;
     return this;
@@ -221,12 +229,28 @@ public class Pipeline {
     return this;
   }
 
-  public List<Object> getOutflowHistoryList() {
-    return outflowHistoryList;
+  public List<Object> getOutflowHistory() {
+    return outflowHistory;
   }
 
-  public Pipeline setOutflowHistoryList(List<Object> outflowHistoryList) {
-    this.outflowHistoryList = outflowHistoryList;
+  public Pipeline setOutflowHistory(List<Object> outflowHistory) {
+    this.outflowHistory = outflowHistory;
     return this;
+  }
+
+  public StatsMeasurementMap getStatsMeasurementMap() {
+    return statsMeasurementMap;
+  }
+
+  public void setStatsMeasurementMap(StatsMeasurementMap statsMeasurementMap) {
+    this.statsMeasurementMap = statsMeasurementMap;
+  }
+
+  public String getType() {
+    return type;
+  }
+
+  public void setType(String type) {
+    this.type = type;
   }
 }

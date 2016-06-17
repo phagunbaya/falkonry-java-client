@@ -1,32 +1,18 @@
 package com.falkonry.helper.models;
 
-/*!
- * falkonry-java-client
- * Copyright(c) 2016 Falkonry Inc
- * MIT Licensed
+/**
+ * Created by avais on 17/6/16.
  */
-
-
-public class Signal {
-  private String key;
+public class SignalRequest {
   private String name;
   private ValueType valueType;
   private EventType eventType;
-
-  public String getKey() {
-    return key;
-  }
-
-  public Signal setKey(String key) {
-    this.key = key;
-    return this;
-  }
 
   public String getName() {
     return name;
   }
 
-  public Signal setName(String name) {
+  public SignalRequest setName(String name) {
     this.name = name;
     return this;
   }
@@ -35,7 +21,7 @@ public class Signal {
     return valueType;
   }
 
-  public Signal setValueType(ValueType valueType) {
+  public SignalRequest setValueType(ValueType valueType) {
     this.valueType = valueType;
     return this;
   }
@@ -44,7 +30,7 @@ public class Signal {
     return eventType;
   }
 
-  public Signal setEventType(EventType eventType) {
+  public SignalRequest setEventType(EventType eventType) {
     this.eventType = eventType;
     return this;
   }

@@ -12,7 +12,10 @@ import java.util.List;
 public class Assessment {
   private String key;
   private String name;
-  private List<Signal> inputList = new ArrayList<Signal>();
+  private String measurement;
+  private String episodeMeasurement;
+  private String verificationMeasurement;
+  private List<String> inputList = new ArrayList<String>();
   private List<String> aprioriConditionList = new ArrayList<String>();
 
   public Assessment() {
@@ -37,11 +40,11 @@ public class Assessment {
     return this;
   }
 
-  public List<Signal> getInputList() {
+  public List<String> getInputList() {
     return this.inputList;
   }
 
-  public Assessment setInputList(List<Signal> inputList) {
+  public Assessment setInputList(List<String> inputList) {
     this.inputList = inputList;
     return this;
   }
@@ -53,5 +56,29 @@ public class Assessment {
   public Assessment setAprioriConditionList(List<String> aprioriConditionList) {
     this.aprioriConditionList = aprioriConditionList;
     return this;
+  }
+
+  public String getMeasurement() {
+    return measurement;
+  }
+
+  public void setMeasurement(String measurement) {
+    this.measurement = measurement;
+  }
+
+  public String getVerificationMeasurement() {
+    return verificationMeasurement;
+  }
+
+  public void setVerificationMeasurement(String verificationMeasurement) {
+    this.verificationMeasurement = verificationMeasurement;
+  }
+
+  public String getEpisodeMeasurement() {
+    return episodeMeasurement;
+  }
+
+  public void setEpisodeMeasurement(String episodeMeasurement) {
+    this.episodeMeasurement = episodeMeasurement;
   }
 }

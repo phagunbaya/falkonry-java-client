@@ -18,8 +18,8 @@ import java.util.*;
 
 public class TestCreateEventbuffer {
   Falkonry falkonry = null;
-  String host = "http://localhost:8080";
-  String token = "";
+  String host = "https://dev.falkonry.io";
+  String token = "f8xew97kv5rc1qdgps0hn5qi77om014q";
   List<Eventbuffer> eventbuffers = new ArrayList<Eventbuffer>();
 
   @Before
@@ -36,7 +36,6 @@ public class TestCreateEventbuffer {
     options.put("timeFormat", "iso_8601");
     Eventbuffer eventbuffer = falkonry.createEventbuffer(eb, options);
     eventbuffers.add(eventbuffer);
-
     Assert.assertEquals(eb.getName(), eventbuffer.getName());
     Assert.assertNotEquals(null, eventbuffer.getId());
     Assert.assertEquals(0, eventbuffer.getSchemaList().size());
@@ -50,6 +49,7 @@ public class TestCreateEventbuffer {
     Map<String, String> options = new HashMap<String, String>();
     options.put("timeIdentifier", "time");
     options.put("timeFormat", "iso_8601");
+    options.put("fileFormat","json");
     options.put("data", "{\"time\" :\"2016-03-01 01:01:01\", \"current\" : 12.4, \"vibration\" : 3.4, \"state\" : \"On\"}");
     Eventbuffer eventbuffer = falkonry.createEventbuffer(eb, options);
     eventbuffers.add(eventbuffer);
@@ -67,6 +67,7 @@ public class TestCreateEventbuffer {
     Map<String, String> options = new HashMap<String, String>();
     options.put("timeIdentifier", "time");
     options.put("timeFormat", "iso_8601");
+    options.put("fileFormat", "csv");
     options.put("data", "time, current, vibration, state\n" + "2016-03-01 01:01:01, 12.4, 3.4, On");
     Eventbuffer eventbuffer = falkonry.createEventbuffer(eb, options);
     eventbuffers.add(eventbuffer);
@@ -86,16 +87,16 @@ public class TestCreateEventbuffer {
     options.put("timeFormat", "iso_8601");
     Subscription sub = new Subscription();
     sub.setType("MQTT")
-        .setPath("mqtt://test.mosquito.com")
-        .setTopic("falkonry-eb-1-test")
-        .setUsername("test-user")
-        .setPassword("test")
-        .setTimeFormat("YYYY-MM-DD HH:mm:ss")
-        .setTimeIdentifier("time");
+            .setPath("mqtt://test.mosquito.com")
+            .setTopic("falkonry-eb-1-test")
+            .setUsername("test-user")
+            .setPassword("test")
+            .setTimeFormat("YYYY-MM-DD HH:mm:ss")
+            .setTimeIdentifier("time");
 
     Eventbuffer eventbuffer = falkonry.createEventbuffer(eb, options);
     eventbuffers.add(eventbuffer);
-    Assert.assertEquals(2, eventbuffer.getSubscriptionList().size());
+    Assert.assertEquals(1, eventbuffer.getSubscriptionList().size());
 
     Subscription subscription = falkonry.createSubscription(eventbuffer.getId(), sub);
     Assert.assertNotEquals(null, subscription.getKey());
@@ -118,11 +119,11 @@ public class TestCreateEventbuffer {
     options.put("timeFormat", "iso_8601");
     Subscription sub = new Subscription();
     sub.setType("PIPELINEOUTFLOW")
-        .setPath("urn:falkonry:pipeline:qaerscdtxh7rc3");
+            .setPath("urn:falkonry:pipeline:qaerscdtxh7rc3");
 
     Eventbuffer eventbuffer = falkonry.createEventbuffer(eb, options);
     eventbuffers.add(eventbuffer);
-    Assert.assertEquals(2, eventbuffer.getSubscriptionList().size());
+    Assert.assertEquals(1, eventbuffer.getSubscriptionList().size());
 
     Subscription subscription = falkonry.createSubscription(eventbuffer.getId(), sub);
     Assert.assertNotEquals(null, subscription.getKey());
@@ -139,21 +140,21 @@ public class TestCreateEventbuffer {
     options.put("timeFormat", "iso_8601");
     Subscription sub = new Subscription();
     sub.setType("MQTT")
-        .setPath("mqtt://test.mosquito.com")
-        .setTopic("falkonry-eb-1-test")
-        .setUsername("test-user")
-        .setPassword("test")
-        .setTimeFormat("YYYY-MM-DD HH:mm:ss")
-        .setTimeIdentifier("time")
-        .setHistorian(true)
-        .setValueColumn("value")
-        .setSignalsDelimiter("_")
-        .setSignalsTagField("tag")
-        .setSignalsLocation("prefix");
+            .setPath("mqtt://test.mosquito.com")
+            .setTopic("falkonry-eb-1-test")
+            .setUsername("test-user")
+            .setPassword("test")
+            .setTimeFormat("YYYY-MM-DD HH:mm:ss")
+            .setTimeIdentifier("time")
+            .setHistorian(true)
+            .setValueColumn("value")
+            .setSignalsDelimiter("_")
+            .setSignalsTagField("tag")
+            .setSignalsLocation("prefix");
 
     Eventbuffer eventbuffer = falkonry.createEventbuffer(eb, options);
     eventbuffers.add(eventbuffer);
-    Assert.assertEquals(2, eventbuffer.getSubscriptionList().size());
+    Assert.assertEquals(1, eventbuffer.getSubscriptionList().size());
 
     Subscription subscription = falkonry.createSubscription(eventbuffer.getId(), sub);
     Assert.assertNotEquals(null, subscription.getKey());
