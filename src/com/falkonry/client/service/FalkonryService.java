@@ -177,13 +177,13 @@ public class FalkonryService {
 
   public Publication createPublication(String pipeline, Publication publication) throws Exception {
     ObjectMapper mapper = new ObjectMapper();
-    String publication_json = httpService.post(pipeline, mapper.writeValueAsString(publication));
+    String publication_json = httpService.post("/pipeline"+pipeline+"/publication", mapper.writeValueAsString(publication));
     return mapper.readValue(publication_json, Publication.class);
   }
 
   public Publication updatePublication(String pipeline, Publication publication) throws Exception {
     ObjectMapper mapper = new ObjectMapper();
-    String publication_json = httpService.put(pipeline, mapper.writeValueAsString(publication));
+    String publication_json = httpService.put("/pipeline"+pipeline+"/publication/"+publication.getKey(), mapper.writeValueAsString(publication));
     return mapper.readValue(publication_json, Publication.class);
   }
 
