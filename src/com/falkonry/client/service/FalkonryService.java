@@ -22,7 +22,7 @@ public class FalkonryService {
 
   public FalkonryService (String host, String token) throws Exception {
     this.httpService = new HttpService(host, token);
-  }//working
+  }
 
   public Eventbuffer createEventbuffer(Eventbuffer eventbuffer, Map<String, String> options) throws Exception {
     ObjectMapper mapper = new ObjectMapper();
@@ -49,7 +49,7 @@ public class FalkonryService {
       String eventbuffer_json = httpService.sfpost("/eventbuffer", ops, null);
       return mapper.readValue(eventbuffer_json, Eventbuffer.class);
     }
-  }//working
+  }
 
   public List<Eventbuffer> getEventbuffers() throws Exception {
     ObjectMapper mapper = new ObjectMapper();
@@ -62,11 +62,11 @@ public class FalkonryService {
     String url = "/eventbuffer/" + id;
     String eventbuffer_json = httpService.get(url);
     return mapper.readValue(eventbuffer_json,Eventbuffer.class);
-  }//working
+  }
 
   public void deleteEventbuffer(String eventbuffer) throws Exception {
     httpService.delete("/eventbuffer/" + eventbuffer);
-  }//working
+  }
 
   public Pipeline createPipeline(Pipeline pipeline) throws Exception {
     ObjectMapper mapper = new ObjectMapper();
@@ -105,7 +105,7 @@ public class FalkonryService {
     System.out.println(mapper.writeValueAsString(pipelineRequest));
     String pipeline_json = httpService.post("/pipeline", mapper.writeValueAsString(pipelineRequest));
     return mapper.readValue(pipeline_json, Pipeline.class);
-  }//working
+  }
 
   public List<Pipeline> getPipelines() throws Exception {
     ObjectMapper mapper = new ObjectMapper();
@@ -120,9 +120,6 @@ public class FalkonryService {
   public InputStatus addInputData(String eventbuffer, String data, Map<String, String> options) throws Exception {
     ObjectMapper mapper = new ObjectMapper();
     Map<String, String> ops = new HashMap<String, String>();
-    /*if (options.containsKey("fileFormat")){
-      ops.put("fileFormat",options.get("fileFormat"));
-    }*/
     String url = "/eventbuffer/"+eventbuffer;
     if(options.containsKey("subscription")){
       url += "?subscriptionKey="+options.get("subscription");
@@ -131,7 +128,7 @@ public class FalkonryService {
     InputStream stream = new ByteArrayInputStream(data_bytes);
     String status = this.httpService.postData(url, data);
     return mapper.readValue(status, InputStatus.class);
-  }//working
+  }
 
   public InputStatus addInputFromStream(String eventbuffer, ByteArrayInputStream stream, Map<String, String> options) throws Exception {
     ObjectMapper mapper = new ObjectMapper();
@@ -163,7 +160,7 @@ public class FalkonryService {
     System.out.println(mapper.writeValueAsString(subscription));
     String subscription_json = httpService.post("/eventbuffer/"+eventbuffer+"/subscription", mapper.writeValueAsString(subscription));
     return mapper.readValue(subscription_json, Subscription.class);
-  }//working
+  }
 
   public Subscription updateSubscription(String eventbuffer, Subscription subscription) throws Exception {
     ObjectMapper mapper = new ObjectMapper();
@@ -177,7 +174,7 @@ public class FalkonryService {
 
   public Publication createPublication(String pipeline, Publication publication) throws Exception {
     ObjectMapper mapper = new ObjectMapper();
-    String publication_json = httpService.post("/pipeline"+pipeline+"/publication", mapper.writeValueAsString(publication));
+    String publication_json = httpService.post("/pipeline/"+pipeline+"/publication", mapper.writeValueAsString(publication));
     return mapper.readValue(publication_json, Publication.class);
   }
 

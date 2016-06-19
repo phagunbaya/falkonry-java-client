@@ -74,11 +74,6 @@ public class HttpService {
 
   public String post(String path, String data) throws Exception {
     String url = this.host + path;
-    /*CloseableHttpClient httpClient = HttpClients.createDefault();
-    HttpPost httpPost = new HttpPost(url);
-    httpPost.addHeader("User-Agent", this.user_agent);
-    httpPost.addHeader("Authorization", "Token "+this.token);
-    httpPost.addHeader("Content-Type", "application/json");*/
 
     URL obj = new URL(url);
     HttpURLConnection con = (HttpURLConnection) obj.openConnection();
@@ -91,12 +86,6 @@ public class HttpService {
     wr.writeBytes(data);
     wr.flush();
     wr.close();
-
-    /*CloseableHttpResponse closeableHttpResponse = httpClient.execute(httpPost);
-    int responseCode = closeableHttpResponse.getStatusLine().getStatusCode();
-    HttpEntity responseEntity = closeableHttpResponse.getEntity();
-
-    InputStream is = responseEntity.getContent();*/
     int responseCode = con.getResponseCode();
     System.out.println(responseCode);
     InputStream is = con.getInputStream();
@@ -126,12 +115,6 @@ public class HttpService {
 
   public String postData(String path, String data) throws Exception {
     String url = this.host + path;
-    /*CloseableHttpClient httpClient = HttpClients.createDefault();
-    HttpPost httpPost = new HttpPost(url);
-    httpPost.addHeader("User-Agent", this.user_agent);
-    httpPost.addHeader("Authorization", "Token "+this.token);
-    httpPost.addHeader("Content-Type", "application/json");*/
-
     URL obj = new URL(url);
     HttpURLConnection con = (HttpURLConnection) obj.openConnection();
     con.setRequestMethod("POST");
@@ -143,12 +126,6 @@ public class HttpService {
     wr.writeBytes(data);
     wr.flush();
     wr.close();
-
-    /*CloseableHttpResponse closeableHttpResponse = httpClient.execute(httpPost);
-    int responseCode = closeableHttpResponse.getStatusLine().getStatusCode();
-    HttpEntity responseEntity = closeableHttpResponse.getEntity();
-
-    InputStream is = responseEntity.getContent();*/
     int responseCode = con.getResponseCode();
     InputStream is = con.getInputStream();
     BufferedReader in = new BufferedReader(
@@ -162,8 +139,6 @@ public class HttpService {
     }
 
     in.close();
-
-    //System.out.println(response.toString());
 
     if(responseCode == 401)
       throw new Exception("Unauthorized : Invalid token");
@@ -218,35 +193,7 @@ public class HttpService {
     httpDelete.addHeader("Authorization", "Token "+this.token);
     httpDelete.addHeader("Content-Type", "application/json");
     CloseableHttpResponse closeableHttpResponse = httpClient.execute(httpDelete);
-    /*URL obj = new URL(url);
-    HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-    con.setRequestMethod("DELETE");
-    con.setRequestProperty("User-Agent", this.user_agent);
-    con.setRequestProperty("Content-Type", "application/json");
-    con.setRequestProperty("Authorization", "Token "+this.token);
-    con.setDoOutput(true);
-    DataOutputStream wr = new DataOutputStream(con.getOutputStream());
-    wr.writeBytes("");
-    wr.flush();
-    wr.close();*/
     int responseCode = closeableHttpResponse.getStatusLine().getStatusCode();
-    /*HttpEntity responseEntity = closeableHttpResponse.getEntity();
-    System.out.println(responseCode);
-
-    InputStream is = responseEntity.getContent();
-    System.out.println(responseCode);
-    BufferedReader in = new BufferedReader(
-        new InputStreamReader(is));
-
-    String inputLine;
-    StringBuffer response = new StringBuffer();
-
-    while ((inputLine = in.readLine()) != null) {
-      response.append(inputLine);
-    }
-
-    in.close();*/
-
     if(responseCode == 401)
       throw new Exception("Unauthorized : Invalid token");
     else if(responseCode >= 400)

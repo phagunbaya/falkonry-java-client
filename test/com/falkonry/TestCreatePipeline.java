@@ -14,8 +14,8 @@ import java.util.*;
  */
 public class TestCreatePipeline {
   Falkonry falkonry = null;
-  String host = "http://192.168.2.238:8080";
-  String token = "14m9d8tv5pk96lku7u972d2qznn0weok";
+  String host = "https://dev.falkonry.io";
+  String token = "f8xew97kv5rc1qdgps0hn5qi77om014q";
   List<Eventbuffer> eventbuffers = new ArrayList<Eventbuffer>();
   List<Pipeline> pipelines = new ArrayList<Pipeline>();
 

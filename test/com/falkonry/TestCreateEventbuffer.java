@@ -108,6 +108,7 @@ public class TestCreateEventbuffer {
     Assert.assertEquals(sub.getPassword(), subscription.getPassword());
     Assert.assertEquals(sub.getTimeIdentifier(), subscription.getTimeIdentifier());
     Assert.assertEquals(sub.getTimeFormat(), subscription.getTimeFormat());
+    falkonry.deleteSubscription(eventbuffer.getId(),subscription.getKey());
   }
 
   @Test
