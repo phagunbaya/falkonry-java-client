@@ -1,7 +1,10 @@
 package com.falkonry;
 
-/**
- * Created by phagunbaya on 23/03/16.
+/*!
+ * falkonry-java-client
+ * Copyright(c) 2016 Falkonry Inc
+ * MIT Licensed
  */
+
 public class TestGetPipelines {
 }

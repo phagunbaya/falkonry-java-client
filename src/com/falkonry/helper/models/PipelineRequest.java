@@ -4,9 +4,12 @@ import org.codehaus.jackson.annotate.JsonProperty;
 
 import java.util.List;
 
-/**
- * Created by avais on 17/6/16.
+/*!
+ * falkonry-java-client
+ * Copyright(c) 2016 Falkonry Inc
+ * MIT Licensed
  */
+
 public class PipelineRequest {
   private String name;
   private String eventbuffer;

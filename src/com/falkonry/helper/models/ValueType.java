@@ -1,8 +1,10 @@
 package com.falkonry.helper.models;
-
-/**
- * Created by avais on 17/6/16.
+/*!
+ * falkonry-java-client
+ * Copyright(c) 2016 Falkonry Inc
+ * MIT Licensed
  */
+
 public class ValueType {
   private String type = "Numerical";
 

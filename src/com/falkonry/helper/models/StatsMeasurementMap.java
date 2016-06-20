@@ -2,9 +2,12 @@ package com.falkonry.helper.models;
 
 import org.codehaus.jackson.annotate.JsonProperty;
 
-/**
- * Created by avais on 17/6/16.
+/*!
+ * falkonry-java-client
+ * Copyright(c) 2016 Falkonry Inc
+ * MIT Licensed
  */
+
 public class StatsMeasurementMap {
   private String Data;
   private String Signal;

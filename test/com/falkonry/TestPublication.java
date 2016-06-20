@@ -9,9 +9,12 @@ import org.junit.Test;
 
 import java.util.*;
 
-/**
- * Created by phagunbaya on 12/06/16.
+/*!
+ * falkonry-java-client
+ * Copyright(c) 2016 Falkonry Inc
+ * MIT Licensed
  */
+
 public class TestPublication {
   Falkonry falkonry = null;
   String host = "https://dev.falkonry.io";
@@ -25,14 +28,17 @@ public class TestPublication {
   }
 
   @Test
-  public void createPipeline() throws Exception {
+  public void createPublication() throws Exception {
     Eventbuffer eb = new Eventbuffer();
     eb.setName("Test-EB-" + Math.random());
 
     List<Signal> signals = new ArrayList<Signal>();
-    signals.add(new Signal().setName("current").setValueType(new ValueType().setType("Numeric")).setEventType(new EventType().setType("Samples")));
-    signals.add(new Signal().setName("vibration").setValueType(new ValueType().setType("Numeric")).setEventType(new EventType().setType("Samples")));
-    signals.add(new Signal().setName("state").setValueType(new ValueType().setType("Categorical")).setEventType(new EventType().setType("Samples")));
+    signals.add(new Signal().setName("current").setValueType(new ValueType().setType("Numeric"))
+        .setEventType(new EventType().setType("Samples")));
+    signals.add(new Signal().setName("vibration").setValueType(new ValueType().setType("Numeric"))
+        .setEventType(new EventType().setType("Samples")));
+    signals.add(new Signal().setName("state").setValueType(new ValueType().setType("Categorical"))
+        .setEventType(new EventType().setType("Samples")));
 
     List<String> inputList = new ArrayList<String>();
     inputList.add("current");

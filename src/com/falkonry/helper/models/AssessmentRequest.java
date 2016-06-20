@@ -3,9 +3,12 @@ package com.falkonry.helper.models;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by avais on 17/6/16.
+/*!
+ * falkonry-java-client
+ * Copyright(c) 2016 Falkonry Inc
+ * MIT Licensed
  */
+
 public class AssessmentRequest {
   private String name;
   private List<String> inputList = new ArrayList<String>();

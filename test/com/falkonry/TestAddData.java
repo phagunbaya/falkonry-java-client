@@ -10,9 +10,12 @@ import org.junit.Test;
 
 import java.util.*;
 
-/**
- * Created by phagunbaya on 23/03/16.
+/*!
+ * falkonry-java-client
+ * Copyright(c) 2016 Falkonry Inc
+ * MIT Licensed
  */
+
 public class TestAddData {
     Falkonry falkonry = null;
     String host = "https://dev.falkonry.io";

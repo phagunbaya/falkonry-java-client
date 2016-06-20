@@ -45,7 +45,6 @@ public class FalkonryService {
       return mapper.readValue(eventbuffer_json, Eventbuffer.class);
     }
     else {
-      System.out.println(ops);
       String eventbuffer_json = httpService.sfpost("/eventbuffer", ops, null);
       return mapper.readValue(eventbuffer_json, Eventbuffer.class);
     }
@@ -73,7 +72,6 @@ public class FalkonryService {
     PipelineRequest pipelineRequest = new PipelineRequest();
     List<Signal> signalList;
     List<SignalRequest> signalRequestList = new ArrayList<SignalRequest>();
-    System.out.println(mapper.writeValueAsString(pipeline));
     int len_input_list = pipeline.getInputList().size();
     signalList = pipeline.getInputList();
     for(int i = 0; i < len_input_list; i++)
@@ -102,7 +100,6 @@ public class FalkonryService {
         .setInputList(signalRequestList)
         .setAssessmentList(assessmentRequestList)
         .setThingName(pipeline.getThingName());
-    System.out.println(mapper.writeValueAsString(pipelineRequest));
     String pipeline_json = httpService.post("/pipeline", mapper.writeValueAsString(pipelineRequest));
     return mapper.readValue(pipeline_json, Pipeline.class);
   }
@@ -157,7 +154,6 @@ public class FalkonryService {
 
   public Subscription createSubscription(String eventbuffer, Subscription subscription) throws Exception {
     ObjectMapper mapper = new ObjectMapper();
-    System.out.println(mapper.writeValueAsString(subscription));
     String subscription_json = httpService.post("/eventbuffer/"+eventbuffer+"/subscription", mapper.writeValueAsString(subscription));
     return mapper.readValue(subscription_json, Subscription.class);
   }

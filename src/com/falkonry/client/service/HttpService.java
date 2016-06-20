@@ -87,7 +87,6 @@ public class HttpService {
     wr.flush();
     wr.close();
     int responseCode = con.getResponseCode();
-    System.out.println(responseCode);
     InputStream is = con.getInputStream();
     BufferedReader in = new BufferedReader(
             new InputStreamReader(is));
@@ -101,7 +100,6 @@ public class HttpService {
 
     in.close();
 
-    System.out.println(response.toString());
 
     if(responseCode == 401)
       throw new Exception("Unauthorized : Invalid token");
@@ -186,7 +184,6 @@ public class HttpService {
 
   public String delete(String path) throws Exception {
     String url = this.host + path;
-    System.out.println(url);
     CloseableHttpClient httpClient = HttpClients.createDefault();
     HttpDelete httpDelete = new HttpDelete(url);
     httpDelete.addHeader("User-Agent", this.user_agent);
@@ -242,8 +239,6 @@ public class HttpService {
 
     in.close();
 
-    System.out.println(response.toString());
-
     if(responseCode == 401)
       throw new Exception("Unauthorized : Invalid token");
     else if(responseCode >= 400)
@@ -279,8 +274,6 @@ public class HttpService {
     }
 
     in.close();
-
-    System.out.println(responseCode + " " +response.toString());
 
     if(responseCode == 401)
       throw new Exception("Unauthorized : Invalid token");
