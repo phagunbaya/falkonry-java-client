@@ -123,8 +123,8 @@ import com.falkonry.client.Falkonry
 
 Falkonry falkonry = new Falkonry("https://service.falkonry.io", "auth-token");
 OutputStream os   = new FileOutputStream("/tmp/sample.json");
-Long startTime    = "1457018017"; //seconds since unix epoch 
-Long endTime      = "1457028017"; //seconds since unix epoch
+Long startTime    = "1457018017000"; //miliseconds since unix epoch
+Long endTime      = "1457028017000"; //miliseconds since unix epoch
 
 BufferedReader br = falkonry.getOutput("pipeline_id", startTime, endTime);
 ```
