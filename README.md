@@ -135,11 +135,8 @@ BufferedReader br = falkonry.getOutput("pipeline_id", startTime, endTime);
      
 ## Tests
 
-  To run the test suite, first install the dependencies, then run `Test.sh`:
+  To run the test suite, first install the dependencies, then run tests from the test folder.
   
-```
-$ ./Test.sh
-```
 
 ## License
 
