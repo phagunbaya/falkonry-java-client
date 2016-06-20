@@ -31,8 +31,8 @@ public class TestPipelineGetOutput {
   @Ignore
   public void getOutput() throws Exception{
     try {
-
-      BufferedReader br = falkonry.getOutput("e9wxrrh4yvwv4p", null, null);
+      String pipeline = "e9wxrrh4yvwv4p";
+      BufferedReader br = falkonry.getOutput(pipeline, null, null);
       BufferedWriter bw = new BufferedWriter(new FileWriter("res/output.txt"));
       String data;
       while ((data = br.readLine()) != null)
