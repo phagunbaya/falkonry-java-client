@@ -32,25 +32,42 @@ import com.falkonry.schemas
 
 Falkonry falkonry = new Falkonry("https://service.falkonry.io", "auth-token");
 
-Map<String, String> signals = new HashMap<String, String>();
-signals.put("current", "Numeric");
-signals.put("vibration", "Numeric");
+List<Signal> signals = new ArrayList<Signal>();
+    signals.add(new schemas.Signal().setName("current").setValueType(new ValueType().setType("Numeric"))
+        .setEventType(new EventType().setType("Samples")));
+    signals.add(new schemas.Signal().setName("vibration").setValueType(new ValueType().setType("Numeric"))
+        .setEventType(new EventType().setType("Samples")));
+    signals.add(new schemas.Signal().setName("state").setValueType(new ValueType().setType("Categorical"))
+        .setEventType(new EventType().setType("Samples")));
 
-ArrayList<String> assessment_signals = new ArrayList<String>();
-assessment_signals.add("current");
-assessment_signals.add("vibration");
+List<String> inputList = new ArrayList<String>();
+    inputList.add("current");
+    inputList.add("vibration");
+    inputList.add("state");
 
+List<Assessment> assessmentList = new ArrayList<Assessment>();
 Assessment assessment = new schemas.Assessment()
                 .setName("Health")
                 .addSignals(assessment_signals);
+assessmentList.add(assessment);
+
+Map<String, String> options = new HashMap<String, String>();
+Eventbuffer eb = new schemas.Eventbuffer();
+    eb.setName("Test-EB-" + Math.random());
+    options.put("timeIdentifier", "time");
+    options.put("timeFormat", "iso_8601");
+Eventbuffer eventbuffer = falkonry.createEventbuffer(eb, options);
+
+Interval interval = new schemas.Interval();
+    interval.setDuration("PT1S");
                         
 Pipeline pipeline = new schemas.Pipeline()
                 .setName("Motor Health")
+                .setEventbuffer(eventbuffer.getId())
                 .setThingName("Motor")
-                .setTimeIdentifier("time")
-                .setTimeFormat("YYYY-MM-DD HH:MM:SS")
                 .setInputSignals(signals)
-                .addAssessment(assessment);
+                .setAssessmentList(assessments)
+                .setInterval(interval);
         
 Pipeline createdPipeline = falkonry.createPipeline(pipeline);
 ```
@@ -61,9 +78,9 @@ Pipeline createdPipeline = falkonry.createPipeline(pipeline);
 import com.falkonry.client.Falkonry
 import com.falkonry.schemas
 
-Falkonry falkonry = new Falkonry("https://service.falkonry.io", "auth-token")
+Falkonry falkonry = new Falkonry("https://service.falkonry.io", "auth-token");
 
-List<Pipeline> pipelines = falkonry.getPipelines()
+List<Pipeline> pipelines = falkonry.getPipelines();
 ```
 
     * To add data
@@ -72,53 +89,44 @@ List<Pipeline> pipelines = falkonry.getPipelines()
 import org.json.simple.JSONObject
 import com.falkonry.client.Falkonry
 
-List<JSONObject> data = new ArrayList<JSONObject>();
-data.add(
-    new JSONObject()
-        .put("time", 1456528122024L)
-        .put("current", new Double(3.86))
-        .put("vibration", new Double(4.2))
-);
-data.add(
-    new JSONObject()
-        .put("time", 1456528132024L)
-        .put("current", new Double(4.456))
-        .put("vibration", new Double(6.8))
-);
-data.add(
-    new JSONObject()
-        .put("time", 1456528142024L)
-        .put("current", new Double(2.4690))
-        .put("vibration", new Double(9.3))
-);
+Map<String, String> options = new HashMap<String, String>();
+        options.put("timeIdentifier", "time");
+        options.put("timeFormat", "iso_8601");
+String data = "{\"time\" :\"2016-03-01 01:01:01\", \"current\" : 12.4, \"vibration\" : 3.4, \"state\" : \"On\"}";
+        options.put("fileFormat","json");
 
-Falkonry falkonry = new Falkonry("https://service.falkonry.io", "auth-token")
+Falkonry falkonry = new Falkonry("https://service.falkonry.io", "auth-token");
 
-inputResponse = falkonry.addInput("pipeline_id", data)
+InputStatus inputStatus = falkonry.addInput(eventbuffer.getId(),data,options);
 ```
 
     * To add data from a stream
     
 ```java
 import com.falkonry.client.Falkonry
+import org.apache.commons.io.FileUtils;
 
-Falkonry falkonry   = new Falkonry("https://service.falkonry.io", "auth-token")
-InputStream istream = new FileInputStream(new File("/tmp/data.json"));
+Falkonry falkonry   = new Falkonry("https://service.falkonry.io", "auth-token");
+Map<String, String> options = new HashMap<String, String>();
+    options.put("timeIdentifier", "time");
+    options.put("timeFormat", "iso_8601");
+File file = new File("tmp/data.json");
+ByteArrayInputStream istream = new ByteArrayInputStream(FileUtils.readFileToByteArray(file));
 
-inputResponse = falkonry.addInputFromStream("pipeline_id", istream);
+InputStatus inputStatus = falkonry.addInputStream(eventbuffer.getId(),byteArrayInputStream,options);
 ```
 
     * To get output of a Pipeline
-    
+
 ```java
 import com.falkonry.client.Falkonry
 
-Falkonry falkonry = new Falkonry("https://service.falkonry.io", "auth-token")
+Falkonry falkonry = new Falkonry("https://service.falkonry.io", "auth-token");
 OutputStream os   = new FileOutputStream("/tmp/sample.json");
 Long startTime    = "1457018017"; //seconds since unix epoch 
 Long endTime      = "1457028017"; //seconds since unix epoch
 
-OutputStream outputStream = falkonry.getOutput("pipeline_id", startTime, endTime);
+BufferedReader br = falkonry.getOutput("pipeline_id", startTime, endTime);
 ```
 
 ## Docs

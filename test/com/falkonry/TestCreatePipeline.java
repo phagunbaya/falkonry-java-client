@@ -61,13 +61,13 @@ public class TestCreatePipeline {
 
     Pipeline pipeline = new Pipeline();
     String name = "Test-PL-" + Math.random();
-    pipeline.setName(name);
-    pipeline.setEventbuffer(eventbuffer.getId());
-    pipeline.setInputList(signals);
-    pipeline.setThingName(name);
-    pipeline.setThingIdentifier("thing");
-    pipeline.setAssessmentList(assessments);
-    pipeline.setInterval(interval);
+    pipeline.setName(name)
+    .setEventbuffer(eventbuffer.getId())
+    .setInputList(signals)
+    .setThingName(name)
+    .setThingIdentifier("thing")
+    .setAssessmentList(assessments)
+    .setInterval(interval);
 
     Pipeline pl = falkonry.createPipeline(pipeline);
     Assert.assertEquals(pl.getName(),pipeline.getName());

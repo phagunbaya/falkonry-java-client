@@ -57,8 +57,9 @@ public class Pipeline {
     return name;
   }
 
-  public void setName(String name) {
+  public Pipeline setName(String name) {
     this.name = name;
+    return this;
   }
 
   public String getId(){
@@ -250,7 +251,8 @@ public class Pipeline {
     return type;
   }
 
-  public void setType(String type) {
+  public Pipeline setType(String type) {
     this.type = type;
+    return this;
   }
 }
