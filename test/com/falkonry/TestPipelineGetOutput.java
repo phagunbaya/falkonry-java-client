@@ -9,6 +9,7 @@ package com.falkonry;
 import com.falkonry.client.Falkonry;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.BufferedReader;
@@ -21,11 +22,13 @@ public class TestPipelineGetOutput {
   String token = "";
 
   @Before
+  @Ignore
   public void setUp() throws Exception {
     falkonry = new Falkonry(host, token);
   }
 
   @Test
+  @Ignore
   public void getOutput() throws Exception{
     try {
 

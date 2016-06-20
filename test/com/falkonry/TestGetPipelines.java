@@ -8,10 +8,7 @@ package com.falkonry;
 
 import com.falkonry.client.Falkonry;
 import com.falkonry.helper.models.*;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 
 import java.util.*;
 
@@ -23,11 +20,13 @@ public class TestGetPipelines {
   List<Pipeline> pipelines = new ArrayList<Pipeline>();
 
   @Before
+  @Ignore
   public void setUp() throws Exception {
     falkonry = new Falkonry(host, token);
   }
 
   @Test
+  @Ignore
   public void getPipelines() throws Exception{
     Eventbuffer eb = new Eventbuffer();
     eb.setName("Test-EB-" + Math.random());
@@ -77,6 +76,7 @@ public class TestGetPipelines {
   }
 
   @After
+  @Ignore
   public void cleanUp() throws Exception {
     Iterator<Eventbuffer> itr = eventbuffers.iterator();
     while(itr.hasNext()) {

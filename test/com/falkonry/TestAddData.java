@@ -3,10 +3,7 @@ package com.falkonry;
 import com.falkonry.client.Falkonry;
 import com.falkonry.helper.models.Eventbuffer;
 import com.falkonry.helper.models.InputStatus;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 
 import java.util.*;
 
@@ -23,11 +20,13 @@ public class TestAddData {
     List<Eventbuffer> eventbuffers = new ArrayList<Eventbuffer>();
 
     @Before
+    @Ignore
     public void setUp() throws Exception {
         falkonry = new Falkonry(host, token);
     }
 
     @Test
+    @Ignore
     public void addDataJson() throws Exception {
         Eventbuffer eb = new Eventbuffer();
         eb.setName("Test-EB-" + Math.random());
@@ -44,6 +43,7 @@ public class TestAddData {
     }
 
     @Test
+    @Ignore
     public void addDataCsv() throws Exception {
         Eventbuffer eb = new Eventbuffer();
         eb.setName("Test-EB-" + Math.random());
@@ -60,6 +60,7 @@ public class TestAddData {
     }
 
     @After
+    @Ignore
     public void cleanUp() throws Exception {
         Iterator<Eventbuffer> itr = eventbuffers.iterator();
         while(itr.hasNext()) {

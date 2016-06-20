@@ -3,10 +3,7 @@ package com.falkonry;
 import com.falkonry.client.Falkonry;
 import com.falkonry.helper.models.Eventbuffer;
 import com.falkonry.helper.models.Subscription;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 
 import java.util.*;
 
@@ -23,11 +20,13 @@ public class TestCreateEventbuffer {
   List<Eventbuffer> eventbuffers = new ArrayList<Eventbuffer>();
 
   @Before
+  @Ignore
   public void setUp() throws Exception {
     falkonry = new Falkonry(host, token);
   }
 
   @Test
+  @Ignore
   public void createEventbuffer() throws Exception {
     Eventbuffer eb = new Eventbuffer();
     eb.setName("Test-EB-"+Math.random());
@@ -43,6 +42,7 @@ public class TestCreateEventbuffer {
   }
 
   @Test
+  @Ignore
   public void createEventbufferWithJsonData() throws Exception {
     Eventbuffer eb = new Eventbuffer();
     eb.setName("Test-EB-"+Math.random());
@@ -61,6 +61,7 @@ public class TestCreateEventbuffer {
   }
 
   @Test
+  @Ignore
   public void createEventbufferWithCsvData() throws Exception {
     Eventbuffer eb = new Eventbuffer();
     eb.setName("Test-EB-"+Math.random());
@@ -79,6 +80,7 @@ public class TestCreateEventbuffer {
   }
 
   @Test
+  @Ignore
   public void createEventbufferWithMqttSubscription() throws Exception {
     Eventbuffer eb = new Eventbuffer();
     eb.setName("Test-EB-"+Math.random());
@@ -112,6 +114,7 @@ public class TestCreateEventbuffer {
   }
 
   @Test
+  @Ignore
   public void createEventbufferWithOutflowSubscription() throws Exception {
     Eventbuffer eb = new Eventbuffer();
     eb.setName("Test-EB-"+Math.random());
@@ -133,6 +136,7 @@ public class TestCreateEventbuffer {
   }
 
   @Test
+  @Ignore
   public void createEventbufferWithMqttSubscriptionForHistorianData() throws Exception {
     Eventbuffer eb = new Eventbuffer();
     eb.setName("Test-EB-"+Math.random());
@@ -174,6 +178,7 @@ public class TestCreateEventbuffer {
   }
 
   @After
+  @Ignore
   public void cleanUp() throws Exception {
     Iterator<Eventbuffer> itr = eventbuffers.iterator();
     while(itr.hasNext()) {
