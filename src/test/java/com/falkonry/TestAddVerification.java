@@ -20,11 +20,13 @@ public class TestAddVerification {
     List<Pipeline> pipelines = new ArrayList<Pipeline>();
 
     @Before
+    @Ignore
     public void setUp() throws Exception {
         falkonry = new Falkonry(host, token);
     }
 
     @Test
+    @Ignore
     public void createPipelineWithCsvVerification() throws Exception {
         Eventbuffer eb = new Eventbuffer();
         eb.setName("Test-EB-" + Math.random());
@@ -69,12 +71,13 @@ public class TestAddVerification {
         Pipeline pl = falkonry.createPipeline(pipeline);
 
         String data = "time,end,car,Health\n2011-03-31T00:00:00Z,2011-04-01T00:00:00Z,IL9753,Normal\n2011-03-31T00:00:00Z,2011-04-01T00:00:00Z,HI3821,Normal";
-        String response = falkonry.addVerification(pl.getId(),"csv", data, null);
+        String response = falkonry.addVerification(pl.getId(), data, null);
         Assert.assertEquals(response,"{\"message\":\"Data submitted successfully\"}");
         falkonry.deletePipeline(pl.getId());
     }
 
     @Test
+    @Ignore
     public void createPipelineWithJsonVerification() throws Exception {
         Eventbuffer eb = new Eventbuffer();
         eb.setName("Test-EB-" + Math.random());
@@ -119,7 +122,7 @@ public class TestAddVerification {
         Pipeline pl = falkonry.createPipeline(pipeline);
 
         String data = "{\"time\" : \"2011-03-26T12:00:00Z\", \"car\" : \"HI3821\", \"end\" : \"2012-06-01T00:00:00Z\", \"Health\" : \"Normal\"}";
-        String response = falkonry.addVerification(pl.getId(),"json", data, null);
+        String response = falkonry.addVerification(pl.getId(), data, null);
         String response_id = response.split("(:)|(,)")[1];
         Assert.assertNotEquals(response_id,null);
         Assert.assertEquals(pl.getName(),pipeline.getName());
@@ -127,6 +130,7 @@ public class TestAddVerification {
     }
 
     @After
+    @Ignore
     public void cleanUp() throws Exception {
         Iterator<Eventbuffer> itr = eventbuffers.iterator();
         while(itr.hasNext()) {

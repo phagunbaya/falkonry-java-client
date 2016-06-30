@@ -23,11 +23,13 @@ public class TestAddVerificationStream {
     List<Pipeline> pipelines = new ArrayList<Pipeline>();
 
     @Before
+    @Ignore
     public void setUp() throws Exception {
         falkonry = new Falkonry(host, token);
     }
 
     @Test
+    @Ignore
     public void createPipelineWithCsvVerificationStream() throws Exception {
         Eventbuffer eb = new Eventbuffer();
         eb.setName("Test-EB-" + Math.random());
@@ -79,6 +81,7 @@ public class TestAddVerificationStream {
     }
 
     @Test
+    @Ignore
     public void createPipelineWithJsonVerification() throws Exception {
         Eventbuffer eb = new Eventbuffer();
         eb.setName("Test-EB-" + Math.random());
@@ -132,6 +135,7 @@ public class TestAddVerificationStream {
     }
 
     @After
+    @Ignore
     public void cleanUp() throws Exception {
         Iterator<Eventbuffer> itr = eventbuffers.iterator();
         while(itr.hasNext()) {

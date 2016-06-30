@@ -127,7 +127,7 @@ public class FalkonryService {
     return mapper.readValue(status, InputStatus.class);
   }
 
-  public String addVerification(String pipeline, String dataType, String data, Map<String, String > options) throws Exception{
+  public String addVerification(String pipeline, String data, Map<String, String > options) throws Exception{
     String url = "/pipeline/" + pipeline + "/verification";
     return this.httpService.postData(url, data);
   }

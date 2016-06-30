@@ -55,8 +55,8 @@ public class Falkonry {
     return this.falkonryService.addInputData(eventbuffer, data, options);
   }
 
-  public String addVerification(String pipeline, String dataType, String data, Map<String, String> options) throws Exception{
-    return this.falkonryService.addVerification(pipeline,dataType,data,options);
+  public String addVerification(String pipeline,  String data, Map<String, String> options) throws Exception{
+    return this.falkonryService.addVerification(pipeline, data, options);
   }
 
   public InputStatus addInputStream(String eventbuffer, ByteArrayInputStream stream, Map<String, String> options) throws Exception {
