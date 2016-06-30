@@ -1,7 +1,5 @@
 [![Falkonry Logo](http://static1.squarespace.com/static/55a7df64e4b09f03368a7a78/t/569c6441ab281050fe32c18a/1453089858079/15-logo-transparent-h.png?format=500w)](http://falkonry.com/)
 
-[![Build status](https://img.shields.io/travis/Falkonry/falkonry-java-client.svg?style=flat-square)](https://travis-ci.org/Falkonry/falkonry-java-client)
-
 Falkonry Java Client to access [Falkonry Condition Prediction](falkonry.com) APIs
 
 ## Installation
