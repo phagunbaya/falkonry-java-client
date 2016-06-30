@@ -15,11 +15,16 @@ Maven install
 
 ## Features
 
+    * Create Eventbuffer
+    * Retrieve Eventbuffers
     * Create Pipeline
     * Retrieve Pipelines
-    * Add data to Pipeline (jsonarray, stream)
+    * Add data to Eventbuffer (csv/json, stream)
     * Retrieve output of Pipeline
-    
+    * Create/update/delete subscription for Eventbuffer
+    * Create/update/delete publication for Pipeline
+    * Add verification to Pipeline (csv/json, stream)
+
 ## Quick Start
 
     * To create Pipeline
