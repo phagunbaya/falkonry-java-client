@@ -119,7 +119,6 @@ InputStatus inputStatus = falkonry.addInputStream(eventbuffer.getId(),byteArrayI
     * To add verification data
 
 ```java
-import org.json.simple.JSONObject
 import com.falkonry.client.Falkonry
 
 Falkonry falkonry = new Falkonry("https://service.falkonry.io", "auth-token");
