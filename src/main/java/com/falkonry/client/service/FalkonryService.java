@@ -127,6 +127,11 @@ public class FalkonryService {
     return mapper.readValue(status, InputStatus.class);
   }
 
+  public String addVerification(String pipeline, String dataType, String data, Map<String, String > options) throws Exception{
+    String url = "/pipeline/" + pipeline + "/verification";
+    return this.httpService.postData(url, data);
+  }
+
   public InputStatus addInputFromStream(String eventbuffer, ByteArrayInputStream stream, Map<String, String> options) throws Exception {
     ObjectMapper mapper = new ObjectMapper();
     String url = "/eventbuffer/"+eventbuffer;
@@ -136,6 +141,12 @@ public class FalkonryService {
     byte[] data_bytes = IOUtils.toByteArray(stream);
     String status = this.httpService.upstream(url, data_bytes);
     return mapper.readValue(status, InputStatus.class);
+  }
+
+  public String addVerificationStream(String pipeline, ByteArrayInputStream stream, Map<String, String> options) throws Exception{
+    String url = "/pipeline/" + pipeline + "/verification";
+    byte[] data_bytes = IOUtils.toByteArray(stream);
+    return this.httpService.upstream(url, data_bytes);
   }
 
   public BufferedReader getOutput(String pipeline, Long start, Long end) throws Exception {
