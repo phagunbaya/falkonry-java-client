@@ -116,6 +116,30 @@ ByteArrayInputStream istream = new ByteArrayInputStream(FileUtils.readFileToByte
 InputStatus inputStatus = falkonry.addInputStream(eventbuffer.getId(),byteArrayInputStream,options);
 ```
 
+    * To add verification data
+
+```java
+import org.json.simple.JSONObject
+import com.falkonry.client.Falkonry
+
+Falkonry falkonry = new Falkonry("https://service.falkonry.io", "auth-token");
+
+String data = "time,end,car,Health\n2011-03-31T00:00:00Z,2011-04-01T00:00:00Z,IL9753,Normal\n2011-03-31T00:00:00Z,2011-04-01T00:00:00Z,HI3821,Normal";
+String response = falkonry.addVerification(pipeline.getId(),data, options);
+```
+
+    * To add verification data from a stream
+
+```java
+import com.falkonry.client.Falkonry
+import org.apache.commons.io.FileUtils;
+
+Falkonry falkonry   = new Falkonry("https://service.falkonry.io", "auth-token");
+File file = new File("res/verificationData.json");
+ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(FileUtils.readFileToByteArray(file));
+String response = falkonry.addVerificationStream(pipeline.getId(),byteArrayInputStream, options);
+```
+
     * To get output of a Pipeline
 
 ```java
