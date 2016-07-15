@@ -23,6 +23,7 @@ public class Subscription {
   private String valueColumn;
   private Boolean streaming;
   private Boolean isHistorian;
+  private Boolean archived;
 
   public String getKey() {
     return key;
@@ -81,54 +82,24 @@ public class Subscription {
     return timeIdentifier;
   }
 
-  public Subscription setTimeIdentifier(String timeIdentifier) {
-    this.timeIdentifier = timeIdentifier;
-    return this;
-  }
-
   public String getTimeFormat() {
     return timeFormat;
-  }
-
-  public Subscription setTimeFormat(String timeFormat) {
-    this.timeFormat = timeFormat;
-    return this;
   }
 
   public String getSignalsTagField() {
     return signalsTagField;
   }
 
-  public Subscription setSignalsTagField(String signalsTagField) {
-    this.signalsTagField = signalsTagField;
-    return this;
-  }
-
   public String getSignalsDelimiter() {
     return signalsDelimiter;
-  }
-
-  public Subscription setSignalsDelimiter(String signalsDelimiter) {
-    this.signalsDelimiter = signalsDelimiter;
-    return this;
   }
 
   public String getSignalsLocation() {
     return signalsLocation;
   }
 
-  public Subscription setSignalsLocation(String signalsLocation) {
-    this.signalsLocation = signalsLocation;
-    return this;
-  }
-
   public String getValueColumn() {
     return valueColumn;
-  }
-
-  public Subscription setValueColumn(String valueColumn) {
-    this.valueColumn = valueColumn;
-    return this;
   }
 
   public Boolean getStreaming() {
@@ -145,10 +116,18 @@ public class Subscription {
     return isHistorian;
   }
 
+  public Boolean getArchived() {
+    return archived;
+  }
+
   @JsonProperty("isHistorian")
   public Subscription setHistorian(Boolean historian) {
     this.isHistorian = historian;
     return this;
   }
 
+  public Subscription setArchived(Boolean archived) {
+    this.archived = archived;
+    return this;
+  }
 }

@@ -9,7 +9,6 @@ package com.falkonry;
 import com.falkonry.client.Falkonry;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.BufferedReader;
@@ -18,20 +17,18 @@ import java.io.FileWriter;
 
 public class TestPipelineGetOutput {
   Falkonry falkonry = null;
-  String host = "http://localhost:8080";
-  String token = "";
+  String host = "https://dev.falkonry.io";
+  String token = "6vhoa94dnndb299ulaj4a51hq9ppa88y";
 
   @Before
-  @Ignore
   public void setUp() throws Exception {
     falkonry = new Falkonry(host, token);
   }
 
   @Test
-  @Ignore
   public void getOutput() throws Exception{
     try {
-      String pipeline = "e9wxrrh4yvwv4p";
+      String pipeline = "zmusfprsf7zspf";
       BufferedReader br = falkonry.getOutput(pipeline, null, null);
       BufferedWriter bw = new BufferedWriter(new FileWriter("res/output.txt"));
       String data;

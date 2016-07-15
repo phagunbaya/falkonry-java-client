@@ -14,35 +14,33 @@ import java.util.*;
 
 public class TestGetPipelines {
   Falkonry falkonry = null;
-  String host = "http://localhost:8080";
-  String token = "";
+  String host = "https://dev.falkonry.io";
+  String token = "6vhoa94dnndb299ulaj4a51hq9ppa88y";
   List<Eventbuffer> eventbuffers = new ArrayList<Eventbuffer>();
   List<Pipeline> pipelines = new ArrayList<Pipeline>();
 
   @Before
-  @Ignore
   public void setUp() throws Exception {
     falkonry = new Falkonry(host, token);
   }
 
   @Test
-  @Ignore
   public void getPipelines() throws Exception{
     Eventbuffer eb = new Eventbuffer();
-    eb.setName("Test-EB-" + Math.random());
+    eb.setName("Test-EB-"+Math.random());
+    eb.setTimeIdentifier("time");
+    eb.setTimeFormat("iso_8601");
+    eb.setValueColumn("value");
+    eb.setSignalsDelimiter("_");
+    eb.setSignalsLocation("prefix");
+    eb.setSignalsTagField("tag");
 
     List<Signal> signals = new ArrayList<Signal>();
-    signals.add(new Signal().setName("current").setValueType(new ValueType().setType("Numeric"))
-        .setEventType(new EventType().setType("Samples")));
-    signals.add(new Signal().setName("vibration").setValueType(new ValueType().setType("Numeric"))
-        .setEventType(new EventType().setType("Samples")));
-    signals.add(new Signal().setName("state").setValueType(new ValueType().setType("Categorical"))
-        .setEventType(new EventType().setType("Samples")));
+    signals.add(new Signal().setName("signal1").setValueType(new ValueType().setType("Numeric"))
+            .setEventType(new EventType().setType("Samples")));
 
     List<String> inputList = new ArrayList<String>();
-    inputList.add("current");
-    inputList.add("vibration");
-    inputList.add("state");
+    inputList.add("signal1");
 
     List<Assessment> assessments = new ArrayList<Assessment>();
     Assessment assessment = new Assessment();
@@ -51,10 +49,11 @@ public class TestGetPipelines {
     assessments.add(assessment);
 
     Map<String, String> options = new HashMap<String, String>();
-    options.put("timeIdentifier", "time");
-    options.put("timeFormat", "iso_8601");
-    Eventbuffer eventbuffer = falkonry.createEventbuffer(eb, options);
+    Eventbuffer eventbuffer = falkonry.createEventbuffer(eb);
     eventbuffers.add(eventbuffer);
+
+    String data = "time, tag, value\n2016-03-01 01:01:01, signal1_thing1, 3.4";
+    falkonry.addInput(eventbuffer.getId(), data, options);
 
     Interval interval = new Interval();
     interval.setDuration("PT1S");
@@ -64,8 +63,6 @@ public class TestGetPipelines {
     pipeline.setName(name);
     pipeline.setEventbuffer(eventbuffer.getId());
     pipeline.setInputList(signals);
-    pipeline.setThingName(name);
-    pipeline.setThingIdentifier("thing");
     pipeline.setAssessmentList(assessments);
     pipeline.setInterval(interval);
 
@@ -76,7 +73,6 @@ public class TestGetPipelines {
   }
 
   @After
-  @Ignore
   public void cleanUp() throws Exception {
     Iterator<Eventbuffer> itr = eventbuffers.iterator();
     while(itr.hasNext()) {

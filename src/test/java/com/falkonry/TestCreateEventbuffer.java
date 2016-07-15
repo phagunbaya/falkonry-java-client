@@ -15,170 +15,224 @@ import java.util.*;
 
 public class TestCreateEventbuffer {
   Falkonry falkonry = null;
-  String host = "http://localhost:8080";
-  String token = "";
+  String host = "https://dev.falkonry.io";
+  String token = "6vhoa94dnndb299ulaj4a51hq9ppa88y";
   List<Eventbuffer> eventbuffers = new ArrayList<Eventbuffer>();
 
   @Before
-  @Ignore
   public void setUp() throws Exception {
     falkonry = new Falkonry(host, token);
   }
 
   @Test
-  @Ignore
   public void createEventbuffer() throws Exception {
     Eventbuffer eb = new Eventbuffer();
     eb.setName("Test-EB-"+Math.random());
-    Map<String, String> options = new HashMap<String, String>();
-    options.put("timeIdentifier", "time");
-    options.put("timeFormat", "iso_8601");
-    Eventbuffer eventbuffer = falkonry.createEventbuffer(eb, options);
+    eb.setTimeIdentifier("time");
+    eb.setTimeFormat("iso_8601");
+    eb.setValueColumn("value");
+    eb.setSignalsDelimiter("_");
+    eb.setSignalsLocation("prefix");
+    eb.setSignalsTagField("tag");
+
+    Eventbuffer eventbuffer = falkonry.createEventbuffer(eb);
     eventbuffers.add(eventbuffer);
+
     Assert.assertEquals(eb.getName(), eventbuffer.getName());
     Assert.assertNotEquals(null, eventbuffer.getId());
-    Assert.assertEquals(0, eventbuffer.getSchemaList().size());
+    Assert.assertEquals(1, eventbuffer.getSchemaList().size());
     Assert.assertEquals(1, eventbuffer.getSubscriptionList().size());
+
+    Assert.assertEquals(eventbuffer.getTimeIdentifier(), eb.getTimeIdentifier());
+    Assert.assertEquals(eventbuffer.getTimeFormat(), eb.getTimeFormat());
+
+    Assert.assertEquals(eventbuffer.getValueColumn(), eb.getValueColumn());
+    Assert.assertEquals(eventbuffer.getSignalsDelimiter(), eb.getSignalsDelimiter());
+    Assert.assertEquals(eventbuffer.getSignalsTagField(), eb.getSignalsTagField());
+    Assert.assertEquals(eventbuffer.getSignalsLocation(), eb.getSignalsLocation());
   }
 
   @Test
-  @Ignore
   public void createEventbufferWithJsonData() throws Exception {
     Eventbuffer eb = new Eventbuffer();
     eb.setName("Test-EB-"+Math.random());
-    Map<String, String> options = new HashMap<String, String>();
-    options.put("timeIdentifier", "time");
-    options.put("timeFormat", "iso_8601");
-    options.put("fileFormat","json");
-    options.put("data", "{\"time\" :\"2016-03-01 01:01:01\", \"current\" : 12.4, \"vibration\" : 3.4, \"state\" : \"On\"}");
-    Eventbuffer eventbuffer = falkonry.createEventbuffer(eb, options);
+    eb.setTimeIdentifier("time");
+    eb.setTimeFormat("iso_8601");
+    eb.setValueColumn("value");
+    eb.setSignalsDelimiter("_");
+    eb.setSignalsLocation("prefix");
+    eb.setSignalsTagField("tag");
+
+    Eventbuffer eventbuffer = falkonry.createEventbuffer(eb);
     eventbuffers.add(eventbuffer);
+
+    String data = "{\"time\" : \"2016-03-01 01:01:01\", \"tag\" : \"signal1_thing1\", \"value\" : 3.4}";
+    Map<String, String> options = new HashMap<String, String>();
+    falkonry.addInput(eventbuffer.getId(), data, options);
 
     Assert.assertEquals(eb.getName(), eventbuffer.getName());
     Assert.assertNotEquals(null, eventbuffer.getId());
     Assert.assertEquals(1, eventbuffer.getSchemaList().size());
     Assert.assertEquals(1, eventbuffer.getSubscriptionList().size());
+
+    Assert.assertEquals(eventbuffer.getTimeFormat(), eb.getTimeFormat());
+    Assert.assertEquals(eventbuffer.getTimeIdentifier(), eb.getTimeIdentifier());
+
+    Assert.assertEquals(eventbuffer.getValueColumn(), eb.getValueColumn());
+    Assert.assertEquals(eventbuffer.getSignalsDelimiter(), eb.getSignalsDelimiter());
+    Assert.assertEquals(eventbuffer.getSignalsTagField(), eb.getSignalsTagField());
+    Assert.assertEquals(eventbuffer.getSignalsLocation(), eb.getSignalsLocation());
   }
 
   @Test
-  @Ignore
   public void createEventbufferWithCsvData() throws Exception {
     Eventbuffer eb = new Eventbuffer();
     eb.setName("Test-EB-"+Math.random());
-    Map<String, String> options = new HashMap<String, String>();
-    options.put("timeIdentifier", "time");
-    options.put("timeFormat", "iso_8601");
-    options.put("fileFormat", "csv");
-    options.put("data", "time, current, vibration, state\n" + "2016-03-01 01:01:01, 12.4, 3.4, On");
-    Eventbuffer eventbuffer = falkonry.createEventbuffer(eb, options);
+    eb.setTimeIdentifier("time");
+    eb.setTimeFormat("iso_8601");
+    eb.setValueColumn("value");
+    eb.setSignalsDelimiter("_");
+    eb.setSignalsLocation("prefix");
+    eb.setSignalsTagField("tag");
+
+    Eventbuffer eventbuffer = falkonry.createEventbuffer(eb);
     eventbuffers.add(eventbuffer);
+
+    String data = "time, tag, value\n2016-03-01 01:01:01, signal1_thing1, 3.4";
+    Map<String, String> options = new HashMap<String, String>();
+    falkonry.addInput(eventbuffer.getId(), data, options);
 
     Assert.assertEquals(eb.getName(), eventbuffer.getName());
     Assert.assertNotEquals(null, eventbuffer.getId());
     Assert.assertEquals(1, eventbuffer.getSchemaList().size());
     Assert.assertEquals(1, eventbuffer.getSubscriptionList().size());
+
+    Assert.assertEquals(eventbuffer.getValueColumn(), eb.getValueColumn());
+    Assert.assertEquals(eventbuffer.getSignalsDelimiter(), eb.getSignalsDelimiter());
+    Assert.assertEquals(eventbuffer.getSignalsTagField(), eb.getSignalsTagField());
+    Assert.assertEquals(eventbuffer.getSignalsLocation(), eb.getSignalsLocation());
   }
 
   @Test
-  @Ignore
   public void createEventbufferWithMqttSubscription() throws Exception {
     Eventbuffer eb = new Eventbuffer();
     eb.setName("Test-EB-"+Math.random());
-    Map<String, String> options = new HashMap<String, String>();
-    options.put("timeIdentifier", "time");
-    options.put("timeFormat", "iso_8601");
+    eb.setTimeIdentifier("time");
+    eb.setTimeFormat("iso_8601");
+    eb.setValueColumn("value");
+    eb.setSignalsDelimiter("_");
+    eb.setSignalsLocation("prefix");
+    eb.setSignalsTagField("tag");
+
     Subscription sub = new Subscription();
     sub.setType("MQTT")
             .setPath("mqtt://test.mosquito.com")
             .setTopic("falkonry-eb-1-test")
             .setUsername("test-user")
-            .setPassword("test")
-            .setTimeFormat("YYYY-MM-DD HH:mm:ss")
-            .setTimeIdentifier("time");
+            .setPassword("test");
 
-    Eventbuffer eventbuffer = falkonry.createEventbuffer(eb, options);
+    Eventbuffer eventbuffer = falkonry.createEventbuffer(eb);
+
     eventbuffers.add(eventbuffer);
     Assert.assertEquals(1, eventbuffer.getSubscriptionList().size());
 
     Subscription subscription = falkonry.createSubscription(eventbuffer.getId(), sub);
+
     Assert.assertNotEquals(null, subscription.getKey());
     Assert.assertEquals(sub.getType(), subscription.getType());
     Assert.assertEquals(sub.getPath(), subscription.getPath());
     Assert.assertEquals(sub.getTopic(), subscription.getTopic());
-    Assert.assertEquals(sub.getPath(), subscription.getPath());
     Assert.assertEquals(sub.getUsername(), subscription.getUsername());
     Assert.assertEquals(sub.getPassword(), subscription.getPassword());
-    Assert.assertEquals(sub.getTimeIdentifier(), subscription.getTimeIdentifier());
-    Assert.assertEquals(sub.getTimeFormat(), subscription.getTimeFormat());
+
+    Assert.assertEquals(eventbuffer.getTimeIdentifier(), eb.getTimeIdentifier());
+    Assert.assertEquals(eventbuffer.getTimeFormat(), eb.getTimeFormat());
+
+    Assert.assertEquals(eventbuffer.getValueColumn(), eb.getValueColumn());
+    Assert.assertEquals(eventbuffer.getSignalsDelimiter(), eb.getSignalsDelimiter());
+    Assert.assertEquals(eventbuffer.getSignalsTagField(), eb.getSignalsTagField());
+    Assert.assertEquals(eventbuffer.getSignalsLocation(), eb.getSignalsLocation());
+
     falkonry.deleteSubscription(eventbuffer.getId(),subscription.getKey());
   }
 
   @Test
-  @Ignore
   public void createEventbufferWithOutflowSubscription() throws Exception {
     Eventbuffer eb = new Eventbuffer();
     eb.setName("Test-EB-"+Math.random());
-    Map<String, String> options = new HashMap<String, String>();
-    options.put("timeIdentifier", "time");
-    options.put("timeFormat", "iso_8601");
+    eb.setTimeIdentifier("time");
+    eb.setTimeFormat("iso_8601");
+    eb.setValueColumn("value");
+    eb.setSignalsDelimiter("_");
+    eb.setSignalsLocation("prefix");
+    eb.setSignalsTagField("tag");
+
     Subscription sub = new Subscription();
     sub.setType("PIPELINEOUTFLOW")
-            .setPath("urn:falkonry:pipeline:qaerscdtxh7rc3");
+            .setPath("urn:falkonry:pipeline:zmusfprsf7zspf");
 
-    Eventbuffer eventbuffer = falkonry.createEventbuffer(eb, options);
+    Eventbuffer eventbuffer = falkonry.createEventbuffer(eb);
     eventbuffers.add(eventbuffer);
     Assert.assertEquals(1, eventbuffer.getSubscriptionList().size());
 
     Subscription subscription = falkonry.createSubscription(eventbuffer.getId(), sub);
+
     Assert.assertNotEquals(null, subscription.getKey());
     Assert.assertEquals(sub.getType(), subscription.getType());
     Assert.assertEquals(sub.getPath(), subscription.getPath());
+
+    Assert.assertEquals(eventbuffer.getTimeIdentifier(), eb.getTimeIdentifier());
+    Assert.assertEquals(eventbuffer.getTimeFormat(), eb.getTimeFormat());
+
+    Assert.assertEquals(eventbuffer.getValueColumn(), eb.getValueColumn());
+    Assert.assertEquals(eventbuffer.getSignalsDelimiter(), eb.getSignalsDelimiter());
+    Assert.assertEquals(eventbuffer.getSignalsTagField(), eb.getSignalsTagField());
+    Assert.assertEquals(eventbuffer.getSignalsLocation(), eb.getSignalsLocation());
+
+    falkonry.deleteSubscription(eventbuffer.getId(),subscription.getKey());
   }
 
   @Test
-  @Ignore
   public void createEventbufferWithMqttSubscriptionForHistorianData() throws Exception {
     Eventbuffer eb = new Eventbuffer();
     eb.setName("Test-EB-"+Math.random());
-    Map<String, String> options = new HashMap<String, String>();
-    options.put("timeIdentifier", "time");
-    options.put("timeFormat", "iso_8601");
+    eb.setTimeIdentifier("time");
+    eb.setTimeFormat("iso_8601");
+    eb.setValueColumn("value");
+    eb.setSignalsDelimiter("_");
+    eb.setSignalsLocation("prefix");
+    eb.setSignalsTagField("tag");
+
     Subscription sub = new Subscription();
     sub.setType("MQTT")
             .setPath("mqtt://test.mosquito.com")
             .setTopic("falkonry-eb-1-test")
             .setUsername("test-user")
-            .setPassword("test")
-            .setTimeFormat("YYYY-MM-DD HH:mm:ss")
-            .setTimeIdentifier("time")
-            .setHistorian(true)
-            .setValueColumn("value")
-            .setSignalsDelimiter("_")
-            .setSignalsTagField("tag")
-            .setSignalsLocation("prefix");
+            .setPassword("test");
 
-    Eventbuffer eventbuffer = falkonry.createEventbuffer(eb, options);
+    Eventbuffer eventbuffer = falkonry.createEventbuffer(eb);
     eventbuffers.add(eventbuffer);
     Assert.assertEquals(1, eventbuffer.getSubscriptionList().size());
 
     Subscription subscription = falkonry.createSubscription(eventbuffer.getId(), sub);
+
     Assert.assertNotEquals(null, subscription.getKey());
     Assert.assertEquals(sub.getType(), subscription.getType());
     Assert.assertEquals(sub.getPath(), subscription.getPath());
     Assert.assertEquals(sub.getTopic(), subscription.getTopic());
-    Assert.assertEquals(sub.getPath(), subscription.getPath());
     Assert.assertEquals(sub.getUsername(), subscription.getUsername());
     Assert.assertEquals(sub.getPassword(), subscription.getPassword());
-    Assert.assertEquals(sub.getTimeIdentifier(), subscription.getTimeIdentifier());
-    Assert.assertEquals(sub.getTimeFormat(), subscription.getTimeFormat());
-    Assert.assertEquals(sub.getValueColumn(), subscription.getValueColumn());
-    Assert.assertEquals(sub.getSignalsDelimiter(), subscription.getSignalsDelimiter());
-    Assert.assertEquals(sub.getSignalsTagField(), subscription.getSignalsTagField());
-    Assert.assertEquals(sub.getSignalsLocation(), subscription.getSignalsLocation());
+
+    Assert.assertEquals(eventbuffer.getTimeIdentifier(), eb.getTimeIdentifier());
+    Assert.assertEquals(eventbuffer.getTimeFormat(), eb.getTimeFormat());
+
+    Assert.assertEquals(eventbuffer.getValueColumn(), eb.getValueColumn());
+    Assert.assertEquals(eventbuffer.getSignalsDelimiter(), eb.getSignalsDelimiter());
+    Assert.assertEquals(eventbuffer.getSignalsTagField(), eb.getSignalsTagField());
+    Assert.assertEquals(eventbuffer.getSignalsLocation(), eb.getSignalsLocation());
   }
 
   @After
-  @Ignore
   public void cleanUp() throws Exception {
     Iterator<Eventbuffer> itr = eventbuffers.iterator();
     while(itr.hasNext()) {

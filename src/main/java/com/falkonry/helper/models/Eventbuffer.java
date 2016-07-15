@@ -22,6 +22,14 @@ public class Eventbuffer {
   private List<Object> schemaList;
   private List<Subscription> subscriptionList;
   private Stats stats;
+  private String timeIdentifier;
+  private String timeFormat;
+  private String singleThingID;
+  private String thingIdentifier;
+  private String signalsTagField;
+  private String signalsDelimiter;
+  private String signalsLocation;
+  private String valueColumn;
 
   public String getId() {
     return id;
@@ -122,6 +130,80 @@ public class Eventbuffer {
   public Eventbuffer setStats(Stats stats)
   {
     this.stats = stats;
+    return this;
+  }
+
+  public String getTimeIdentifier() {
+    return timeIdentifier;
+  }
+
+  public Eventbuffer setTimeIdentifier(String timeIdentifier) {
+    this.timeIdentifier = timeIdentifier;
+    return this;
+  }
+
+  public String getTimeFormat() {
+    return timeFormat;
+  }
+
+  public Eventbuffer setTimeFormat(String timeFormat) {
+    this.timeFormat = timeFormat;
+    return this;
+  }
+
+  public String getThingIdentifier() {
+    return thingIdentifier;
+  }
+
+  public Eventbuffer setThingIdentifier(String thingIdentifier) {
+    this.thingIdentifier = thingIdentifier;
+    return this;
+  }
+
+  public String getSingleThingID() {
+    return singleThingID;
+  }
+
+  public Eventbuffer setSingleThingID(String singleThingID) {
+    this.singleThingID = singleThingID;
+    return this;
+  }
+
+
+  public String getSignalsTagField() {
+    return signalsTagField;
+  }
+
+
+  public Eventbuffer setSignalsTagField(String signalsTagField) {
+    this.signalsTagField = signalsTagField;
+    return this;
+  }
+
+  public String getSignalsDelimiter() {
+    return signalsDelimiter;
+  }
+
+  public Eventbuffer setSignalsDelimiter(String signalsDelimiter) {
+    this.signalsDelimiter = signalsDelimiter;
+    return this;
+  }
+
+  public String getSignalsLocation() {
+    return signalsLocation;
+  }
+
+  public Eventbuffer setSignalsLocation(String signalsLocation) {
+    this.signalsLocation = signalsLocation;
+    return this;
+  }
+
+  public String getValueColumn() {
+    return valueColumn;
+  }
+
+  public Eventbuffer setValueColumn(String valueColumn) {
+    this.valueColumn = valueColumn;
     return this;
   }
 }

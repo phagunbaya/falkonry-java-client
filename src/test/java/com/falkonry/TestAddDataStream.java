@@ -3,12 +3,11 @@ package com.falkonry;
 import com.falkonry.client.Falkonry;
 import com.falkonry.helper.models.Eventbuffer;
 import com.falkonry.helper.models.InputStatus;
-import org.junit.*;
 import org.apache.commons.io.FileUtils;
+import org.junit.*;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.util.*;
 
 /*!
@@ -20,27 +19,29 @@ import java.util.*;
 
 public class TestAddDataStream {
   Falkonry falkonry = null;
-  String host = "http://localhost:8080";
-  String token = "";
+  String host = "https://dev.falkonry.io";
+  String token = "6vhoa94dnndb299ulaj4a51hq9ppa88y";
   List<Eventbuffer> eventbuffers = new ArrayList<Eventbuffer>();
 
   @Before
-  @Ignore
   public void setUp() throws Exception {
     falkonry = new Falkonry(host, token);
   }
 
   @Test
-  @Ignore
   public void addDataJsonStream() throws Exception {
     Eventbuffer eb = new Eventbuffer();
-    eb.setName("Test-EB-" + Math.random());
+    eb.setName("Test-EB-"+Math.random());
+    eb.setTimeIdentifier("time");
+    eb.setTimeFormat("iso_8601");
+    eb.setValueColumn("value");
+    eb.setSignalsDelimiter("_");
+    eb.setSignalsLocation("prefix");
+    eb.setSignalsTagField("tag");
     Map<String, String> options = new HashMap<String, String>();
-    options.put("timeIdentifier", "time");
-    options.put("timeFormat", "iso_8601");
-    Eventbuffer eventbuffer = falkonry.createEventbuffer(eb, options);
+    Eventbuffer eventbuffer = falkonry.createEventbuffer(eb);
     eventbuffers.add(eventbuffer);
-    File file = new File("res/data.json");
+    File file = new File("res/data_historian.json");
     ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(FileUtils.readFileToByteArray(file));
     InputStatus inputStatus = falkonry.addInputStream(eventbuffer.getId(),byteArrayInputStream,options);
     eventbuffer = falkonry.getUpdatedEventbuffer(eventbuffer.getId());
@@ -48,16 +49,19 @@ public class TestAddDataStream {
   }
 
   @Test
-  @Ignore
   public void addDataCsvStream() throws Exception {
     Eventbuffer eb = new Eventbuffer();
-    eb.setName("Test-EB-" + Math.random());
+    eb.setName("Test-EB-"+Math.random());
+    eb.setTimeIdentifier("time");
+    eb.setTimeFormat("iso_8601");
+    eb.setValueColumn("value");
+    eb.setSignalsDelimiter("_");
+    eb.setSignalsLocation("prefix");
+    eb.setSignalsTagField("tag");
     Map<String, String> options = new HashMap<String, String>();
-    options.put("timeIdentifier", "time");
-    options.put("timeFormat", "iso_8601");
-    Eventbuffer eventbuffer = falkonry.createEventbuffer(eb, options);
+    Eventbuffer eventbuffer = falkonry.createEventbuffer(eb);
     eventbuffers.add(eventbuffer);
-    File file = new File("res/data.csv");
+    File file = new File("res/data_historian.csv");
     ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(FileUtils.readFileToByteArray(file));
     InputStatus inputStatus = falkonry.addInputStream(eventbuffer.getId(),byteArrayInputStream,options);
     eventbuffer = falkonry.getUpdatedEventbuffer(eventbuffer.getId());
@@ -65,7 +69,6 @@ public class TestAddDataStream {
   }
 
   @After
-  @Ignore
   public void cleanUp() throws Exception {
     Iterator<Eventbuffer> itr = eventbuffers.iterator();
     while(itr.hasNext()) {

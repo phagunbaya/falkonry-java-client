@@ -111,25 +111,30 @@ public class Pipeline {
     return this;
   }
 
+
   public String getThingIdentifier() {
     return thingIdentifier;
   }
 
+  /*
   public Pipeline setThingIdentifier(String thingIdentifier) {
     this.thingIdentifier = thingIdentifier;
     return this;
   }
+  */
 
   @JsonProperty("singleThingID")
   public String getThingName() {
     return singleThingID;
   }
 
+  /*
   @JsonProperty("singleThingID")
   public Pipeline setThingName(String singleThingID) {
     this.singleThingID = singleThingID;
     return this;
   }
+  */
 
   public String getCreatedBy() {
     return createdBy;
