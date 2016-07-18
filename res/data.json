@@ -1,1 +1,1 @@
-{"time" :"2016-03-01 01:01:01", "current" : 12.4, "vibration" : 3.4, "state" : "On"}
+{"time" :"2016-03-01 01:01:01", "tag" : "signal1_thing1", "value" : 3.4}

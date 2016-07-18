@@ -6,8 +6,6 @@ package com.falkonry.helper.models;
  * MIT Licensed
  */
 
-import org.codehaus.jackson.annotate.JsonProperty;
-
 public class Subscription {
   private String key;
   private String type;
@@ -111,20 +109,21 @@ public class Subscription {
     return this;
   }
 
-  @JsonProperty("isHistorian")
+  /*@JsonProperty("isHistorian")
   public Boolean getHistorian() {
     return isHistorian;
   }
+  */
 
   public Boolean getArchived() {
     return archived;
   }
 
-  @JsonProperty("isHistorian")
+  /*@JsonProperty("isHistorian")
   public Subscription setHistorian(Boolean historian) {
     this.isHistorian = historian;
     return this;
-  }
+  }*/
 
   public Subscription setArchived(Boolean archived) {
     this.archived = archived;

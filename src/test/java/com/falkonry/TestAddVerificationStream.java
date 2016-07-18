@@ -17,8 +17,8 @@ import java.util.*;
 
 public class TestAddVerificationStream {
     Falkonry falkonry = null;
-    String host = "https://dev.falkonry.io";
-    String token = "6vhoa94dnndb299ulaj4a51hq9ppa88y";
+    String host = "http://localhost:8080";
+    String token = "";
     List<Eventbuffer> eventbuffers = new ArrayList<Eventbuffer>();
     List<Pipeline> pipelines = new ArrayList<Pipeline>();
 
@@ -69,7 +69,7 @@ public class TestAddVerificationStream {
                 .setInterval(interval);
         Pipeline pl = falkonry.createPipeline(pipeline);
 
-        File file = new File("res/verificationData_historian.csv");
+        File file = new File("res/verificationData.csv");
         ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(FileUtils.readFileToByteArray(file));
         String response = falkonry.addVerificationStream(pl.getId(),byteArrayInputStream, null);
         Assert.assertEquals(response,"{\"message\":\"Data submitted successfully\"}");
@@ -119,7 +119,7 @@ public class TestAddVerificationStream {
                 .setInterval(interval);
         Pipeline pl = falkonry.createPipeline(pipeline);
 
-        File file = new File("res/verificationData_historian.json");
+        File file = new File("res/verificationData.json");
         ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(FileUtils.readFileToByteArray(file));
         String response = falkonry.addVerificationStream(pl.getId(),byteArrayInputStream, null);
         String response_id = response.split("(:)|(,)")[1];

@@ -19,8 +19,8 @@ import java.util.*;
 
 public class TestAddDataStream {
   Falkonry falkonry = null;
-  String host = "https://dev.falkonry.io";
-  String token = "6vhoa94dnndb299ulaj4a51hq9ppa88y";
+  String host = "http://localhost:8080";
+  String token = "";
   List<Eventbuffer> eventbuffers = new ArrayList<Eventbuffer>();
 
   @Before
@@ -41,7 +41,7 @@ public class TestAddDataStream {
     Map<String, String> options = new HashMap<String, String>();
     Eventbuffer eventbuffer = falkonry.createEventbuffer(eb);
     eventbuffers.add(eventbuffer);
-    File file = new File("res/data_historian.json");
+    File file = new File("res/data.json");
     ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(FileUtils.readFileToByteArray(file));
     InputStatus inputStatus = falkonry.addInputStream(eventbuffer.getId(),byteArrayInputStream,options);
     eventbuffer = falkonry.getUpdatedEventbuffer(eventbuffer.getId());
@@ -61,7 +61,7 @@ public class TestAddDataStream {
     Map<String, String> options = new HashMap<String, String>();
     Eventbuffer eventbuffer = falkonry.createEventbuffer(eb);
     eventbuffers.add(eventbuffer);
-    File file = new File("res/data_historian.csv");
+    File file = new File("res/data.csv");
     ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(FileUtils.readFileToByteArray(file));
     InputStatus inputStatus = falkonry.addInputStream(eventbuffer.getId(),byteArrayInputStream,options);
     eventbuffer = falkonry.getUpdatedEventbuffer(eventbuffer.getId());
