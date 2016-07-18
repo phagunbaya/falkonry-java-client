@@ -13,7 +13,8 @@ import java.util.*;
  */
 
 public class TestAddVerification {
-    Falkonry falkonry = null;String host = "http://localhost:8080";
+    Falkonry falkonry = null;
+    String host = "http://localhost:8080";
     String token = "";
     List<Eventbuffer> eventbuffers = new ArrayList<Eventbuffer>();
     List<Pipeline> pipelines = new ArrayList<Pipeline>();

@@ -109,21 +109,9 @@ public class Subscription {
     return this;
   }
 
-  /*@JsonProperty("isHistorian")
-  public Boolean getHistorian() {
-    return isHistorian;
-  }
-  */
-
   public Boolean getArchived() {
     return archived;
   }
-
-  /*@JsonProperty("isHistorian")
-  public Subscription setHistorian(Boolean historian) {
-    this.isHistorian = historian;
-    return this;
-  }*/
 
   public Subscription setArchived(Boolean archived) {
     this.archived = archived;
