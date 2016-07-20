@@ -48,7 +48,6 @@ public class FalkonryService {
       eb.setSignalsLocation(eventbuffer.getSignalsLocation());
 
     String eventbuffer_json = httpService.post("/eventbuffer", mapper.writeValueAsString(eb));
-    System.out.println(eventbuffer_json);
     return mapper.readValue(eventbuffer_json, Eventbuffer.class);
   }
 
