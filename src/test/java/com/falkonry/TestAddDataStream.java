@@ -49,6 +49,23 @@ public class TestAddDataStream {
   }
 
   @Test
+  public void addWideDataJsonStream() throws Exception {
+    Eventbuffer eb = new Eventbuffer();
+    eb.setName("Test-EB-"+Math.random());
+    eb.setTimeIdentifier("time");
+    eb.setTimeFormat("millis");
+    eb.setThingIdentifier("thing");
+    Map<String, String> options = new HashMap<String, String>();
+    Eventbuffer eventbuffer = falkonry.createEventbuffer(eb);
+    eventbuffers.add(eventbuffer);
+    File file = new File("res/data_wide.json");
+    ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(FileUtils.readFileToByteArray(file));
+    InputStatus inputStatus = falkonry.addInputStream(eventbuffer.getId(),byteArrayInputStream,options);
+    eventbuffer = falkonry.getUpdatedEventbuffer(eventbuffer.getId());
+    Assert.assertEquals(1,eventbuffer.getSchemaList().size());
+  }
+
+  @Test
   public void addDataCsvStream() throws Exception {
     Eventbuffer eb = new Eventbuffer();
     eb.setName("Test-EB-"+Math.random());
@@ -62,6 +79,23 @@ public class TestAddDataStream {
     Eventbuffer eventbuffer = falkonry.createEventbuffer(eb);
     eventbuffers.add(eventbuffer);
     File file = new File("res/data.csv");
+    ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(FileUtils.readFileToByteArray(file));
+    InputStatus inputStatus = falkonry.addInputStream(eventbuffer.getId(),byteArrayInputStream,options);
+    eventbuffer = falkonry.getUpdatedEventbuffer(eventbuffer.getId());
+    Assert.assertEquals(1,eventbuffer.getSchemaList().size());
+  }
+
+  @Test
+  public void addWideDataCsvStream() throws Exception {
+    Eventbuffer eb = new Eventbuffer();
+    eb.setName("Test-EB-"+Math.random());
+    eb.setTimeIdentifier("time");
+    eb.setTimeFormat("millis");
+    eb.setThingIdentifier("thing");
+    Map<String, String> options = new HashMap<String, String>();
+    Eventbuffer eventbuffer = falkonry.createEventbuffer(eb);
+    eventbuffers.add(eventbuffer);
+    File file = new File("res/data_wide.csv");
     ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(FileUtils.readFileToByteArray(file));
     InputStatus inputStatus = falkonry.addInputStream(eventbuffer.getId(),byteArrayInputStream,options);
     eventbuffer = falkonry.getUpdatedEventbuffer(eventbuffer.getId());

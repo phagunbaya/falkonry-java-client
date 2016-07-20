@@ -111,7 +111,6 @@ public class Pipeline {
     return this;
   }
 
-
   public String getThingIdentifier() {
     return thingIdentifier;
   }

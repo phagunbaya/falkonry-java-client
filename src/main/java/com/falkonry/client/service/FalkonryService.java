@@ -31,16 +31,24 @@ public class FalkonryService {
     ObjectMapper mapper = new ObjectMapper();
     Eventbuffer eb = new Eventbuffer();
 
-    eb.setName(eventbuffer.getName())
-            .setThingIdentifier(eventbuffer.getThingIdentifier())
-            .setTimeFormat(eventbuffer.getTimeFormat())
-            .setTimeIdentifier(eventbuffer.getTimeIdentifier())
-            .setSignalsTagField(eventbuffer.getSignalsTagField())
-            .setSignalsDelimiter(eventbuffer.getSignalsDelimiter())
-            .setValueColumn(eventbuffer.getValueColumn())
-            .setSignalsLocation(eventbuffer.getSignalsLocation());
+    eb.setName(eventbuffer.getName());
+    if(eventbuffer.getThingIdentifier()!=null)
+    eb.setThingIdentifier(eventbuffer.getThingIdentifier());
+    if(eventbuffer.getTimeFormat()!=null)
+      eb.setTimeFormat(eventbuffer.getTimeFormat());
+    if(eventbuffer.getTimeIdentifier()!=null)
+      eb.setTimeIdentifier(eventbuffer.getTimeIdentifier());
+    if(eventbuffer.getSignalsTagField()!=null)
+      eb.setSignalsTagField(eventbuffer.getSignalsTagField());
+    if(eventbuffer.getSignalsDelimiter()!=null)
+      eb.setSignalsDelimiter(eventbuffer.getSignalsDelimiter());
+    if(eventbuffer.getValueColumn()!=null)
+      eb.setValueColumn(eventbuffer.getValueColumn());
+    if(eventbuffer.getSignalsLocation()!=null)
+      eb.setSignalsLocation(eventbuffer.getSignalsLocation());
 
     String eventbuffer_json = httpService.post("/eventbuffer", mapper.writeValueAsString(eb));
+    System.out.println(eventbuffer_json);
     return mapper.readValue(eventbuffer_json, Eventbuffer.class);
   }
 
