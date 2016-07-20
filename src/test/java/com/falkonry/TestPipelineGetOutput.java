@@ -19,7 +19,6 @@ public class TestPipelineGetOutput {
   Falkonry falkonry = null;
   String host = "http://localhost:8080";
   String token = "";
-
   @Before
   public void setUp() throws Exception {
     falkonry = new Falkonry(host, token);
