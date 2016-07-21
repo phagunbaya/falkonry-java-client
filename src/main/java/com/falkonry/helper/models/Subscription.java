@@ -20,7 +20,6 @@ public class Subscription {
   private String signalsLocation;
   private String valueColumn;
   private Boolean streaming;
-  private Boolean isHistorian;
   private Boolean archived;
 
   public String getKey() {
