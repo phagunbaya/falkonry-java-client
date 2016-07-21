@@ -23,8 +23,8 @@ public class Falkonry {
     this.falkonryService = new FalkonryService(host, token);
   }
 
-  public Eventbuffer createEventbuffer(Eventbuffer eventbuffer, Map<String, String> options) throws Exception {
-    return falkonryService.createEventbuffer(eventbuffer, options);
+  public Eventbuffer createEventbuffer(Eventbuffer eventbuffer) throws Exception {
+    return falkonryService.createEventbuffer(eventbuffer);
 }
 
   public List<Eventbuffer> getEventbuffers() throws Exception {

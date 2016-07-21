@@ -19,23 +19,31 @@ public class TestEntityModel {
   public void eventbufferModel()throws Exception{
     Eventbuffer eb = new Eventbuffer();
     eb.setName("Test-EB");
+    eb.setTimeIdentifier("time");
+    eb.setTimeFormat("iso_8601");
+    eb.setValueColumn("value");
+    eb.setSignalsDelimiter("_");
+    eb.setSignalsLocation("prefix");
+    eb.setSignalsTagField("tag");
+
     Assert.assertEquals(eb.getName(),"Test-EB");
+    Assert.assertEquals("time", eb.getTimeIdentifier());
+    Assert.assertEquals("iso_8601", eb.getTimeFormat());
+
+    Assert.assertEquals("value", eb.getValueColumn());
+    Assert.assertEquals("_", eb.getSignalsDelimiter());
+    Assert.assertEquals("tag", eb.getSignalsTagField());
+    Assert.assertEquals("prefix", eb.getSignalsLocation());
   }
 
   @Test
   public void pipelineModelWithSingleThingWithDefaults(){
     List<Signal> signals = new ArrayList<Signal>();
-    signals.add(new Signal().setName("current").setValueType(new ValueType().setType("Numeric"))
-        .setEventType(new EventType().setType("Samples")));
-    signals.add(new Signal().setName("vibration").setValueType(new ValueType().setType("Numeric"))
-        .setEventType(new EventType().setType("Samples")));
-    signals.add(new Signal().setName("state").setValueType(new ValueType().setType("Categorical"))
-        .setEventType(new EventType().setType("Samples")));
+    signals.add(new Signal().setName("signal1").setValueType(new ValueType().setType("Numeric"))
+            .setEventType(new EventType().setType("Samples")));
 
     List<String> inputList = new ArrayList<String>();
-    inputList.add("current");
-    inputList.add("vibration");
-    inputList.add("state");
+    inputList.add("signal1");
 
     List<Assessment> assessments = new ArrayList<Assessment>();
     Assessment assessment = new Assessment();
@@ -50,15 +58,12 @@ public class TestEntityModel {
     pipeline.setName("Motor Health");
     pipeline.setEventbuffer("eventbuffer-id");
     pipeline.setInputList(signals);
-    pipeline.setThingName("Motor");
-    pipeline.setThingIdentifier("thing");
     pipeline.setAssessmentList(assessments);
     pipeline.setInterval(interval);
 
     Assert.assertEquals(pipeline.getName(),"Motor Health");
     Assert.assertEquals(pipeline.getEventbuffer(),"eventbuffer-id");
-    Assert.assertEquals(pipeline.getThingName(),"Motor");
-    Assert.assertEquals(pipeline.getInputList().size(),3);
+    Assert.assertEquals(pipeline.getInputList().size(),1);
     Assert.assertEquals(pipeline.getAssessmentList().size(),1);
     Assert.assertEquals(pipeline.getInterval().getDuration(),"PT1S");
 
@@ -67,17 +72,11 @@ public class TestEntityModel {
   @Test
   public void pipelineModelWithMultipleThingsWithOverrides(){
     List<Signal> signals = new ArrayList<Signal>();
-    signals.add(new Signal().setName("current").setValueType(new ValueType().setType("Numeric"))
-        .setEventType(new EventType().setType("Samples")));
-    signals.add(new Signal().setName("vibration").setValueType(new ValueType().setType("Numeric"))
-        .setEventType(new EventType().setType("Samples")));
-    signals.add(new Signal().setName("state").setValueType(new ValueType().setType("Categorical"))
+    signals.add(new Signal().setName("signal1").setValueType(new ValueType().setType("Numeric"))
         .setEventType(new EventType().setType("Samples")));
 
     List<String> inputList = new ArrayList<String>();
-    inputList.add("current");
-    inputList.add("vibration");
-    inputList.add("state");
+    inputList.add("signal1");
 
     List<Assessment> assessments = new ArrayList<Assessment>();
     Assessment assessment = new Assessment();
@@ -92,15 +91,12 @@ public class TestEntityModel {
     pipeline.setName("Motor Health");
     pipeline.setEventbuffer("eventbuffer-id");
     pipeline.setInputList(signals);
-    pipeline.setThingName("Motor");
-    pipeline.setThingIdentifier("thing");
     pipeline.setAssessmentList(assessments);
     pipeline.setInterval(interval);
 
     Assert.assertEquals(pipeline.getName(),"Motor Health");
     Assert.assertEquals(pipeline.getEventbuffer(),"eventbuffer-id");
-    Assert.assertEquals(pipeline.getThingName(),"Motor");
-    Assert.assertEquals(pipeline.getInputList().size(),3);
+    Assert.assertEquals(pipeline.getInputList().size(),1);
     Assert.assertEquals(pipeline.getAssessmentList().size(),1);
     Assert.assertEquals(pipeline.getInterval().getDuration(),"PT1S");
   }
@@ -140,25 +136,12 @@ public class TestEntityModel {
         .setPath("mqtt://test.mosquito.com")
         .setTopic("falkonry-eb-1-test")
         .setUsername("test-user")
-        .setPassword("test")
-        .setTimeFormat("YYYY-MM-DD HH:mm:ss")
-        .setTimeIdentifier("time")
-        .setHistorian(true)
-        .setValueColumn("value")
-        .setSignalsDelimiter("_")
-        .setSignalsTagField("tag")
-        .setSignalsLocation("prefix");
+        .setPassword("test");
 
     Assert.assertEquals(sub.getType(),"MQTT");
     Assert.assertEquals(sub.getTopic(),"falkonry-eb-1-test");
     Assert.assertEquals(sub.getPath(),"mqtt://test.mosquito.com");
     Assert.assertEquals(sub.getUsername(),"test-user");
-    Assert.assertEquals(sub.getValueColumn(),"value");
-    Assert.assertEquals(sub.getTimeFormat(),"YYYY-MM-DD HH:mm:ss");
-    Assert.assertEquals(sub.getTimeIdentifier(),"time");
-    Assert.assertEquals(sub.getSignalsDelimiter(),"_");
-    Assert.assertEquals(sub.getSignalsTagField(),"tag");
-    Assert.assertEquals(sub.getSignalsLocation(),"prefix");
 
   }
 

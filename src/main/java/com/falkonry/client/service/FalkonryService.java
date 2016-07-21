@@ -10,7 +10,10 @@ import com.falkonry.helper.models.*;
 import org.apache.commons.io.IOUtils;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.type.TypeReference;
-import java.io.*;
+
+import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -24,30 +27,28 @@ public class FalkonryService {
     this.httpService = new HttpService(host, token);
   }
 
-  public Eventbuffer createEventbuffer(Eventbuffer eventbuffer, Map<String, String> options) throws Exception {
+  public Eventbuffer createEventbuffer(Eventbuffer eventbuffer) throws Exception {
     ObjectMapper mapper = new ObjectMapper();
-    Map<String, String> ops = new HashMap<String, String>();
-    ops.put("name",eventbuffer.getName());
-    if(options.containsKey("fileFormat"))
-      ops.put("fileFormat", options.get("fileFormat"));
-    if(options.containsKey("timeIdentifier"))
-      ops.put("timeIdentifier", options.get("timeIdentifier"));
-    else
-      ops.put("timeIdentifier", "time");
+    Eventbuffer eb = new Eventbuffer();
 
-    if(options.containsKey("timeFormat"))
-      ops.put("timeFormat", options.get("timeFormat"));
-    else
-      ops.put("timeFormat", "iso_8601");
-    if(options.containsKey("data")){
-      String eventbuffer_json = httpService.sfpost("/eventbuffer", ops,
-              new ByteArrayInputStream(options.get("data").getBytes(Charset.forName("UTF-8"))));
-      return mapper.readValue(eventbuffer_json, Eventbuffer.class);
-    }
-    else {
-      String eventbuffer_json = httpService.sfpost("/eventbuffer", ops, null);
-      return mapper.readValue(eventbuffer_json, Eventbuffer.class);
-    }
+    eb.setName(eventbuffer.getName());
+    if(eventbuffer.getThingIdentifier()!=null)
+    eb.setThingIdentifier(eventbuffer.getThingIdentifier());
+    if(eventbuffer.getTimeFormat()!=null)
+      eb.setTimeFormat(eventbuffer.getTimeFormat());
+    if(eventbuffer.getTimeIdentifier()!=null)
+      eb.setTimeIdentifier(eventbuffer.getTimeIdentifier());
+    if(eventbuffer.getSignalsTagField()!=null)
+      eb.setSignalsTagField(eventbuffer.getSignalsTagField());
+    if(eventbuffer.getSignalsDelimiter()!=null)
+      eb.setSignalsDelimiter(eventbuffer.getSignalsDelimiter());
+    if(eventbuffer.getValueColumn()!=null)
+      eb.setValueColumn(eventbuffer.getValueColumn());
+    if(eventbuffer.getSignalsLocation()!=null)
+      eb.setSignalsLocation(eventbuffer.getSignalsLocation());
+
+    String eventbuffer_json = httpService.post("/eventbuffer", mapper.writeValueAsString(eb));
+    return mapper.readValue(eventbuffer_json, Eventbuffer.class);
   }
 
   public List<Eventbuffer> getEventbuffers() throws Exception {
