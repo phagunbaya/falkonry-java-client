@@ -54,12 +54,19 @@ Assessment assessment = new schemas.Assessment()
                 .addSignals(assessment_signals);
 assessmentList.add(assessment);
 
-Map<String, String> options = new HashMap<String, String>();
 Eventbuffer eb = new schemas.Eventbuffer();
     eb.setName("Test-EB-" + Math.random());
-    options.put("timeIdentifier", "time");
-    options.put("timeFormat", "iso_8601");
+    eb.setTimeIdentifier("time");
+    eb.setTimeFormat("iso_8601");
+    eb.setValueColumn("value");
+    eb.setSignalsDelimiter("_");
+    eb.setSignalsLocation("prefix");
+    eb.setSignalsTagField("tag");
+
 Eventbuffer eventbuffer = falkonry.createEventbuffer(eb, options);
+String data = "{\"time\" : \"2016-03-01 01:01:01\", \"tag\" : \"signal1_thing1\", \"value\" : 3.4}";
+Map<String, String> options = new HashMap<String, String>();
+falkonry.addInput(eventbuffer.getId(), data, options);
 
 Interval interval = new schemas.Interval();
     interval.setDuration("PT1S");
@@ -93,10 +100,7 @@ import org.json.simple.JSONObject
 import com.falkonry.client.Falkonry
 
 Map<String, String> options = new HashMap<String, String>();
-        options.put("timeIdentifier", "time");
-        options.put("timeFormat", "iso_8601");
 String data = "{\"time\" :\"2016-03-01 01:01:01\", \"current\" : 12.4, \"vibration\" : 3.4, \"state\" : \"On\"}";
-        options.put("fileFormat","json");
 
 Falkonry falkonry = new Falkonry("https://service.falkonry.io", "auth-token");
 
@@ -111,8 +115,7 @@ import org.apache.commons.io.FileUtils;
 
 Falkonry falkonry   = new Falkonry("https://service.falkonry.io", "auth-token");
 Map<String, String> options = new HashMap<String, String>();
-    options.put("timeIdentifier", "time");
-    options.put("timeFormat", "iso_8601");
+
 File file = new File("tmp/data.json");
 ByteArrayInputStream istream = new ByteArrayInputStream(FileUtils.readFileToByteArray(file));
 
@@ -149,8 +152,8 @@ import com.falkonry.client.Falkonry
 
 Falkonry falkonry = new Falkonry("https://service.falkonry.io", "auth-token");
 OutputStream os   = new FileOutputStream("/tmp/sample.json");
-Long startTime    = "1457018017000"; //miliseconds since unix epoch
-Long endTime      = "1457028017000"; //miliseconds since unix epoch
+Long startTime    = "1457018017000"; //milliseconds since unix epoch
+Long endTime      = "1457028017000"; //milliseconds since unix epoch
 
 BufferedReader br = falkonry.getOutput("pipeline_id", startTime, endTime);
 ```
