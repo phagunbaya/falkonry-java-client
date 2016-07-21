@@ -33,6 +33,8 @@ Maven install
 import com.falkonry.client.Falkonry
 import com.falkonry.schemas
 
+Falkonry falkonry = new Falkonry("https://service.falkonry.io", "auth-token");
+
 Eventbuffer eb = new schemas.Eventbuffer();
     eb.setName("Eventbuffer_name");
     eb.setTimeIdentifier("time");
@@ -48,6 +50,11 @@ eventbuffers.add(eventbuffer);
     * To create an Eventbuffer in wide format
 
 ```java
+import com.falkonry.client.Falkonry
+import com.falkonry.schemas
+
+Falkonry falkonry = new Falkonry("https://service.falkonry.io", "auth-token");
+
 Eventbuffer eb = new Eventbuffer();
     eb.setName("Eventbuffer_name");
     eb.setTimeIdentifier("time");
@@ -82,6 +89,22 @@ import com.falkonry.schemas
 
 Falkonry falkonry = new Falkonry("https://service.falkonry.io", "auth-token");
 
+Eventbuffer eb = new schemas.Eventbuffer();
+    eb.setName("Eventbuffer_name");
+    eb.setTimeIdentifier("time");
+    eb.setTimeFormat("iso_8601");
+    eb.setValueColumn("value");
+    eb.setSignalsDelimiter("_");
+    eb.setSignalsLocation("prefix");
+    eb.setSignalsTagField("tag");
+
+Eventbuffer eventbuffer = falkonry.createEventbuffer(eb);
+eventbuffers.add(eventbuffer);
+
+String data = "{\"time\" : \"2016-03-01 01:01:01\", \"tag\" : \"signal1_thing1\", \"value\" : 3.4}";
+Map<String, String> options = new HashMap<String, String>();
+falkonry.addInput(eventbuffer.getId(), data, options);
+
 List<Signal> signals = new ArrayList<Signal>();
     signals.add(new schemas.Signal().setName("current").setValueType(new ValueType().setType("Numeric"))
         .setEventType(new EventType().setType("Samples")));
@@ -100,21 +123,6 @@ Assessment assessment = new schemas.Assessment()
                 .setName("Health")
                 .addSignals(assessment_signals);
 assessmentList.add(assessment);
-
-Eventbuffer eb = new schemas.Eventbuffer();
-    eb.setName("Eventbuffer_name");
-    eb.setTimeIdentifier("time");
-    eb.setTimeFormat("iso_8601");
-    eb.setValueColumn("value");
-    eb.setSignalsDelimiter("_");
-    eb.setSignalsLocation("prefix");
-    eb.setSignalsTagField("tag");
-
-Eventbuffer eventbuffer = falkonry.createEventbuffer(eb);
-eventbuffers.add(eventbuffer);
-String data = "{\"time\" : \"2016-03-01 01:01:01\", \"tag\" : \"signal1_thing1\", \"value\" : 3.4}";
-Map<String, String> options = new HashMap<String, String>();
-falkonry.addInput(eventbuffer.getId(), data, options);
 
 Interval interval = new schemas.Interval();
     interval.setDuration("PT1S");
@@ -222,6 +230,9 @@ BufferedReader br = falkonry.getOutput("pipeline_id", startTime, endTime);
        * To create/delete a Subscription for an Eventbuffer
 
 ```java
+import com.falkonry.client.Falkonry
+import com.falkonry.schemas
+
 Subscription sub = new Subscription();
 sub.setType("MQTT")
       .setPath("mqtt://test.mosquito.com")
@@ -236,6 +247,9 @@ falkonry.deleteSubscription(eventbuffer.getId(),subscription.getKey());
        * To create/delete a Publication for a Pipeline
 
 ```java
+import com.falkonry.client.Falkonry
+import com.falkonry.schemas
+
 Publication publication = new Publication();
 publication.setType("MQTT")
     .setPath("mqtt://test.mosquito.com")
