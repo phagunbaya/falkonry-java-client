@@ -259,8 +259,8 @@ publication.setType("MQTT")
     .setPassword("test")
     .setContentType("application/json");
 
-Publication pb = falkonry.createPublication(pl.getId(),publication);
-falkonry.deletePublication(pl.getId(),pb.getKey());
+Publication pb = falkonry.createPublication(pipeline.getId(),publication);
+falkonry.deletePublication(pipeline.getId(),publication.getKey());
 ```
 ## Docs
 
