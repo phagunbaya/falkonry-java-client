@@ -20,10 +20,11 @@ Maven install
     * Create Pipeline
     * Retrieve Pipelines
     * Add data to Eventbuffer (csv/json, stream)
-    * Retrieve output of Pipeline
-    * Create/delete subscription for Eventbuffer
-    * Create/delete publication for Pipeline
     * Add verification to Pipeline (csv/json, stream)
+    * Retrieve output of Pipeline
+    * Create/delete Subscription for Eventbuffer
+    * Create/delete Publication for Pipeline
+
 
 ## Quick Start
 
@@ -191,7 +192,7 @@ ByteArrayInputStream istream = new ByteArrayInputStream(FileUtils.readFileToByte
 InputStatus inputStatus = falkonry.addInputStream(eventbuffer.getId(),byteArrayInputStream,options);
 ```
 
-    * To add verification data
+    * To add verification data to a pipeline
 
 ```java
 import com.falkonry.client.Falkonry
