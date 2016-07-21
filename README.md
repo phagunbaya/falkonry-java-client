@@ -34,7 +34,7 @@ import com.falkonry.client.Falkonry
 import com.falkonry.schemas
 
 Eventbuffer eb = new schemas.Eventbuffer();
-    eb.setName("Test-EB-" + Math.random());
+    eb.setName("Eventbuffer_name");
     eb.setTimeIdentifier("time");
     eb.setTimeFormat("iso_8601");
     eb.setValueColumn("value");
@@ -49,7 +49,7 @@ eventbuffers.add(eventbuffer);
 
 ```java
 Eventbuffer eb = new Eventbuffer();
-    eb.setName("Test-EB-"+Math.random());
+    eb.setName("Eventbuffer_name");
     eb.setTimeIdentifier("time");
     eb.setTimeFormat("iso_8601");
     eb.setThingIdentifier("thing");
@@ -102,7 +102,7 @@ Assessment assessment = new schemas.Assessment()
 assessmentList.add(assessment);
 
 Eventbuffer eb = new schemas.Eventbuffer();
-    eb.setName("Test-EB-" + Math.random());
+    eb.setName("Eventbuffer_name");
     eb.setTimeIdentifier("time");
     eb.setTimeFormat("iso_8601");
     eb.setValueColumn("value");
