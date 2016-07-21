@@ -21,8 +21,8 @@ Maven install
     * Retrieve Pipelines
     * Add data to Eventbuffer (csv/json, stream)
     * Retrieve output of Pipeline
-    * Create/update/delete subscription for Eventbuffer
-    * Create/update/delete publication for Pipeline
+    * Create/delete subscription for Eventbuffer
+    * Create/delete publication for Pipeline
     * Add verification to Pipeline (csv/json, stream)
 
 ## Quick Start
@@ -155,7 +155,7 @@ String data = "{\"time\" : \"2016-03-01 01:01:01\", \"tag\" : \"signal1_thing1\"
 InputStatus inputStatus = falkonry.addInput(eventbuffer.getId(),data,options);
 ```
 
-    * To add json data in wide format
+    * To add json/csv data in wide format
 
 ```java
 import org.json.simple.JSONObject
@@ -177,8 +177,7 @@ import org.apache.commons.io.FileUtils;
 Falkonry falkonry   = new Falkonry("https://service.falkonry.io", "auth-token");
 Map<String, String> options = new HashMap<String, String>();
 
-File file = new File("tmp/data.json");
-//use '*.csv' for csv file formats
+File file = new File("tmp/data.json");      //use '*.csv' for csv file formats
 ByteArrayInputStream istream = new ByteArrayInputStream(FileUtils.readFileToByteArray(file));
 
 InputStatus inputStatus = falkonry.addInputStream(eventbuffer.getId(),byteArrayInputStream,options);
@@ -202,7 +201,7 @@ import com.falkonry.client.Falkonry
 import org.apache.commons.io.FileUtils;
 
 Falkonry falkonry   = new Falkonry("https://service.falkonry.io", "auth-token");
-File file = new File("res/verificationData.json");
+File file = new File("res/verificationData.json");      //use '*.csv' for csv file format
 ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(FileUtils.readFileToByteArray(file));
 String response = falkonry.addVerificationStream(pipeline.getId(),byteArrayInputStream, options);
 ```
@@ -220,6 +219,34 @@ Long endTime      = "1457028017000"; //milliseconds since unix epoch
 BufferedReader br = falkonry.getOutput("pipeline_id", startTime, endTime);
 ```
 
+       * To create/delete a Subscription for an Eventbuffer
+
+```java
+Subscription sub = new Subscription();
+sub.setType("MQTT")
+      .setPath("mqtt://test.mosquito.com")
+      .setTopic("falkonry-eb-1-test")
+      .setUsername("test-user")
+      .setPassword("test");
+
+Subscription subscription = falkonry.createSubscription(eventbuffer.getId(), sub);
+falkonry.deleteSubscription(eventbuffer.getId(),subscription.getKey());
+```
+
+       * To create/delete a Publication for a Pipeline
+
+```java
+Publication publication = new Publication();
+publication.setType("MQTT")
+    .setPath("mqtt://test.mosquito.com")
+    .setTopic("falkonry-eb-1-test")
+    .setUsername("test-user")
+    .setPassword("test")
+    .setContentType("application/json");
+
+Publication pb = falkonry.createPublication(pl.getId(),publication);
+falkonry.deletePublication(pl.getId(),pb.getKey());
+```
 ## Docs
 
     * [Falkonry APIs](https://service.falkonry.io/api)
