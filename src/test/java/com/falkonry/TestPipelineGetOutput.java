@@ -24,7 +24,7 @@ public class TestPipelineGetOutput {
     falkonry = new Falkonry(host, token);
   }
 
-  @Test
+  //@Test
   public void getOutput() throws Exception{
     try {
       String pipeline = "zmusfprsf7zspf";

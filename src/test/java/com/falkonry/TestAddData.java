@@ -23,7 +23,7 @@ public class TestAddData {
         falkonry = new Falkonry(host, token);
     }
 
-    @Test
+    //@Test
     public void addDataJson() throws Exception {
         Eventbuffer eb = new Eventbuffer();
         eb.setName("Test-EB-"+Math.random());
@@ -43,7 +43,7 @@ public class TestAddData {
         Assert.assertEquals(1,eventbuffer.getSchemaList().size());
     }
 
-    @Test
+    //@Test
     public void addWideDataJson() throws Exception {
         Eventbuffer eb = new Eventbuffer();
         eb.setName("Test-EB-"+Math.random());
@@ -62,7 +62,7 @@ public class TestAddData {
         Assert.assertEquals(1,eventbuffer.getSchemaList().size());
     }
 
-    @Test
+    //@Test
     public void addDataCsv() throws Exception {
         Eventbuffer eb = new Eventbuffer();
         eb.setName("Test-EB-"+Math.random());
@@ -81,7 +81,7 @@ public class TestAddData {
         Assert.assertEquals(1,eventbuffer.getSchemaList().size());
     }
 
-    @Test
+    //@Test
     public void addWideDataCsv() throws Exception {
         Eventbuffer eb = new Eventbuffer();
         eb.setName("Test-EB-"+Math.random());

@@ -24,7 +24,7 @@ public class TestPublication {
     falkonry = new Falkonry(host, token);
   }
 
-  @Test
+  //@Test
   public void createPublication() throws Exception {
     Eventbuffer eb = new Eventbuffer();
     eb.setName("Test-EB-"+Math.random());

@@ -24,7 +24,7 @@ public class TestCreateEventbuffer {
     falkonry = new Falkonry(host, token);
   }
 
-  @Test
+  //@Test
   public void createEventbuffer() throws Exception {
     Eventbuffer eb = new Eventbuffer();
     eb.setName("Test-EB-"+Math.random());
@@ -52,7 +52,7 @@ public class TestCreateEventbuffer {
     Assert.assertEquals(eventbuffer.getSignalsLocation(), eb.getSignalsLocation());
   }
 
-  @Test
+  //@Test
   public void createWideEventbuffer() throws Exception {
     Eventbuffer eb = new Eventbuffer();
     eb.setName("Test-EB-"+Math.random());
@@ -72,7 +72,7 @@ public class TestCreateEventbuffer {
     Assert.assertEquals(eventbuffer.getTimeFormat(), eb.getTimeFormat());
   }
 
-  @Test
+  //@Test
   public void createEventbufferWithJsonData() throws Exception {
     Eventbuffer eb = new Eventbuffer();
     eb.setName("Test-EB-"+Math.random());
@@ -104,7 +104,7 @@ public class TestCreateEventbuffer {
     Assert.assertEquals(eventbuffer.getSignalsLocation(), eb.getSignalsLocation());
   }
 
-  @Test
+  //@Test
   public void createEventbufferWithWideJsonData() throws Exception {
     Eventbuffer eb = new Eventbuffer();
     eb.setName("Test-EB-"+Math.random());
@@ -134,7 +134,7 @@ public class TestCreateEventbuffer {
     Assert.assertEquals(eventbuffer.getSignalsLocation(), eb.getSignalsLocation());
   }
 
-  @Test
+  //@Test
   public void createEventbufferWithCsvData() throws Exception {
     Eventbuffer eb = new Eventbuffer();
     eb.setName("Test-EB-"+Math.random());
@@ -163,7 +163,7 @@ public class TestCreateEventbuffer {
     Assert.assertEquals(eventbuffer.getSignalsLocation(), eb.getSignalsLocation());
   }
 
-  @Test
+  //@Test
   public void createEventbufferWithWideCsvData() throws Exception {
     Eventbuffer eb = new Eventbuffer();
     eb.setName("Test-EB-"+Math.random());
@@ -190,7 +190,7 @@ public class TestCreateEventbuffer {
     Assert.assertEquals(eventbuffer.getSignalsLocation(), eb.getSignalsLocation());
   }
 
-  @Test
+  //@Test
   public void createEventbufferWithMqttSubscription() throws Exception {
     Eventbuffer eb = new Eventbuffer();
     eb.setName("Test-EB-"+Math.random());
@@ -233,7 +233,7 @@ public class TestCreateEventbuffer {
     falkonry.deleteSubscription(eventbuffer.getId(),subscription.getKey());
   }
 
-  @Test
+  //@Test
   public void createEventbufferWithOutflowSubscription() throws Exception {
     Eventbuffer eb = new Eventbuffer();
     eb.setName("Test-EB-"+Math.random());
@@ -269,7 +269,7 @@ public class TestCreateEventbuffer {
     falkonry.deleteSubscription(eventbuffer.getId(),subscription.getKey());
   }
 
-  @Test
+  //@Test
   public void createEventbufferWithMqttSubscriptionForHistorianData() throws Exception {
     Eventbuffer eb = new Eventbuffer();
     eb.setName("Test-EB-"+Math.random());

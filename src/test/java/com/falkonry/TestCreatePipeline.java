@@ -24,7 +24,7 @@ public class TestCreatePipeline {
     falkonry = new Falkonry(host, token);
   }
 
-  @Test
+  //@Test
   public void createPipeline() throws Exception {
     Eventbuffer eb = new Eventbuffer();
     eb.setName("Test-EB-"+Math.random());
@@ -72,7 +72,7 @@ public class TestCreatePipeline {
   }
 
 
-  @Test
+  //@Test
   public void createPipelineWithWideData() throws Exception {
     Eventbuffer eb = new Eventbuffer();
     eb.setName("Test-EB-"+Math.random());

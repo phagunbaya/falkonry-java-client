@@ -24,7 +24,7 @@ public class TestAddVerification {
         falkonry = new Falkonry(host, token);
     }
 
-    @Test
+    //@Test
     public void createPipelineWithCsvVerification() throws Exception {
 
         Eventbuffer eb = new Eventbuffer();
@@ -75,7 +75,7 @@ public class TestAddVerification {
         falkonry.deletePipeline(pl.getId());
     }
 
-    @Test
+    //@Test
     public void createPipelineWithWideCsvVerification() throws Exception {
 
         Eventbuffer eb = new Eventbuffer();
@@ -123,7 +123,7 @@ public class TestAddVerification {
         falkonry.deletePipeline(pl.getId());
     }
 
-    @Test
+    //@Test
     public void createPipelineWithJsonVerification() throws Exception {
         Eventbuffer eb = new Eventbuffer();
         eb.setName("Test-EB-"+Math.random());
@@ -175,7 +175,7 @@ public class TestAddVerification {
         falkonry.deletePipeline(pl.getId());
     }
 
-    @Test
+    //@Test
     public void createPipelineWithWideJsonVerification() throws Exception {
         Eventbuffer eb = new Eventbuffer();
         eb.setName("Test-EB-"+Math.random());
