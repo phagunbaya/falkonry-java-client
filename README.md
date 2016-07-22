@@ -48,7 +48,6 @@ Eventbuffer eb = new schemas.Eventbuffer();
     eb.setSignalsTagField("tag");
 
 Eventbuffer eventbuffer = falkonry.createEventbuffer(eb);
-eventbuffers.add(eventbuffer);
 ```
     * To create an Eventbuffer for wide formatted data
 
@@ -65,7 +64,6 @@ Eventbuffer eb = new Eventbuffer();
     eb.setThingIdentifier("thing");
 
 Eventbuffer eventbuffer = falkonry.createEventbuffer(eb);
-eventbuffers.add(eventbuffer);
 ```
 
     * To get an Eventbuffer
@@ -102,7 +100,6 @@ Eventbuffer eb = new schemas.Eventbuffer();
     eb.setSignalsTagField("tag");
 
 Eventbuffer eventbuffer = falkonry.createEventbuffer(eb);
-eventbuffers.add(eventbuffer);
 
 String data = "{\"time\" : \"2016-03-01 01:01:01\", \"tag\" : \"signal1_thing1\", \"value\" : 3.4}";
 Map<String, String> options = new HashMap<String, String>();
