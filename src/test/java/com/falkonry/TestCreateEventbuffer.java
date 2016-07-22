@@ -270,7 +270,7 @@ public class TestCreateEventbuffer {
   }
 
   //@Test
-  public void createEventbufferWithMqttSubscriptionForHistorianData() throws Exception {
+  public void createEventbufferWithMqttSubscriptionForNarrowFormatData() throws Exception {
     Eventbuffer eb = new Eventbuffer();
     eb.setName("Test-EB-"+Math.random());
     eb.setTimeIdentifier("time");
