@@ -2,7 +2,7 @@
 
 Falkonry Java Client to access [Falkonry Condition Prediction](falkonry.com) APIs
 
-[Releases](https://github.com/Falkonry/falkonry-python-client/releases)
+[Releases](https://github.com/Falkonry/falkonry-java-client/releases)
 
 ## Installation
 
