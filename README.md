@@ -2,6 +2,8 @@
 
 Falkonry Java Client to access [Falkonry Condition Prediction](falkonry.com) APIs
 
+[Releases](https://github.com/Falkonry/falkonry-python-client/releases)
+
 ## Installation
 
 Maven install
@@ -9,7 +11,7 @@ Maven install
 <dependency>
   <groupId>com.falkonry</groupId>
   <artifactId>client</artifactId>
-  <version>0.1.2</version>
+  <version>0.1.3</version>
 </dependency>
 ```
 
@@ -22,13 +24,13 @@ Maven install
     * Add data to Eventbuffer (csv/json, stream)
     * Add verification to Pipeline (csv/json, stream)
     * Retrieve output of Pipeline
-    * Create/delete Subscription for Eventbuffer
-    * Create/delete Publication for Pipeline
+    * Create/delete subscription for Eventbuffer
+    * Create/delete publication for Pipeline
 
 
 ## Quick Start
 
-    * To create an Eventbuffer in narrow format
+    * To create an Eventbuffer for narrow formatted data
 
 ```java
 import com.falkonry.client.Falkonry
@@ -48,7 +50,7 @@ Eventbuffer eb = new schemas.Eventbuffer();
 Eventbuffer eventbuffer = falkonry.createEventbuffer(eb);
 eventbuffers.add(eventbuffer);
 ```
-    * To create an Eventbuffer in wide format
+    * To create an Eventbuffer for wide formatted data
 
 ```java
 import com.falkonry.client.Falkonry
@@ -66,7 +68,7 @@ Eventbuffer eventbuffer = falkonry.createEventbuffer(eb);
 eventbuffers.add(eventbuffer);
 ```
 
-    * To retrieve an updated Eventbuffer
+    * To get an Eventbuffer
 
 ```java
 import com.falkonry.client.Falkonry
@@ -82,7 +84,7 @@ falkonry.addInput(eventbuffer.getId(), data, options);
 eventbuffer = falkonry.getUpdatedEventbuffer(eventbuffer.getId());
 ```
 
-    * To create Pipeline
+    * To create a Pipeline
     
 ```java
 import com.falkonry.client.Falkonry
@@ -150,7 +152,7 @@ Falkonry falkonry = new Falkonry("https://service.falkonry.io", "auth-token");
 List<Pipeline> pipelines = falkonry.getPipelines();
 ```
 
-    * To add json/csv data in narrow format
+    * To add json/csv data in narrow formatted Eventbuffer
     
 ```java
 import org.json.simple.JSONObject
@@ -164,7 +166,7 @@ String data = "{\"time\" : \"2016-03-01 01:01:01\", \"tag\" : \"signal1_thing1\"
 InputStatus inputStatus = falkonry.addInput(eventbuffer.getId(),data,options);
 ```
 
-    * To add json/csv data in wide format
+    * To add json/csv data in wide formatted Eventbuffer
 
 ```java
 import org.json.simple.JSONObject
@@ -177,7 +179,7 @@ String data = "{\"time\":1467729675422,\"thing\":\"thing1\",\"signal1\":41.11,\"
 
 InputStatus inputStatus = falkonry.addInput(eventbuffer.getId(),data,options);
 ```
-    * To add json/csv data from a stream
+    * To add json/csv data from a stream to an Eventbuffer
     
 ```java
 import com.falkonry.client.Falkonry
@@ -192,7 +194,7 @@ ByteArrayInputStream istream = new ByteArrayInputStream(FileUtils.readFileToByte
 InputStatus inputStatus = falkonry.addInputStream(eventbuffer.getId(),byteArrayInputStream,options);
 ```
 
-    * To add verification data to a pipeline
+    * To add verification data to a Pipeline
 
 ```java
 import com.falkonry.client.Falkonry
@@ -203,7 +205,7 @@ String data = "time,end,car,Health\n2011-03-31T00:00:00Z,2011-04-01T00:00:00Z,IL
 String response = falkonry.addVerification(pipeline.getId(),data, options);
 ```
 
-    * To add verification data from a stream
+    * To add verification data from a stream to a Pipeline
 
 ```java
 import com.falkonry.client.Falkonry
@@ -228,7 +230,7 @@ Long endTime      = "1457028017000"; //milliseconds since unix epoch
 BufferedReader br = falkonry.getOutput("pipeline_id", startTime, endTime);
 ```
 
-       * To create/delete a Subscription for an Eventbuffer
+    * To create/delete a subscription for an Eventbuffer
 
 ```java
 import com.falkonry.client.Falkonry
@@ -245,7 +247,7 @@ Subscription subscription = falkonry.createSubscription(eventbuffer.getId(), sub
 falkonry.deleteSubscription(eventbuffer.getId(),subscription.getKey());
 ```
 
-       * To create/delete a Publication for a Pipeline
+    * To create/delete a publication for a Pipeline
 
 ```java
 import com.falkonry.client.Falkonry
@@ -264,7 +266,7 @@ falkonry.deletePublication(pipeline.getId(),publication.getKey());
 ```
 ## Docs
 
-    * [Falkonry APIs](https://service.falkonry.io/api)
+    [Falkonry APIs](https://service.falkonry.io/api)
      
 ## Tests
 
