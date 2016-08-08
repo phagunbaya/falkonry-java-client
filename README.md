@@ -27,11 +27,38 @@ Maven install
     * Create/delete subscription for Eventbuffer
     * Create/delete publication for Pipeline
 
+## Format of Data 
 
+    * Narrow Format [Historian] JSON 
+```
+    {"time" :"2016-03-01 01:01:01", "tag" : "signal1_thing1", "value" : 3.4}
+    {"time" :"2016-04-01 05:04:01", "tag" : "signal1_thing2", "value" : 9.3}
+```    
+ 
+    * Narrow Format [Historian] CSV 
+```
+    time, tag, value
+    2016-03-01 01:01:01, signal1_thing1, 3.4
+    2016-03-01 01:01:01, signal1_thing1, 3.4
+```
+   
+    * Wide Format JSON
+```
+    {"time":1467729675422,"thing":"Thing1","signal1":41.11,"signal2":82.34,"signal3":74.63,"signal4":4.8,"signal5":72.01}
+    {"time":1467729668919,"thing":"Thing2","signal1":78.11,"signal2":2.33,"signal3":4.6,"signal4":9.8,"signal5":99.09}
+```
+
+    * Wide Format CSV
+```
+    time,thing,signal1,signal2,signal3,signal4,signal5
+    1467729675422,thing1,41.11,62.34,77.63,4.8,72.01
+    1467729675445,thing1,43.91,82.64,73.63,3.8,2.01
+```    
+ 
 ## Quick Start
 
     * To create an Eventbuffer for narrow format data
-
+    
 ```java
 import com.falkonry.client.Falkonry
 import com.falkonry.schemas
@@ -65,7 +92,6 @@ Eventbuffer eb = new Eventbuffer();
 
 Eventbuffer eventbuffer = falkonry.createEventbuffer(eb);
 ```
-
     * To get an Eventbuffer
 
 ```java
@@ -76,7 +102,6 @@ Falkonry falkonry = new Falkonry("https://service.falkonry.io", "auth-token");
 
 eventbuffer = falkonry.getUpdatedEventbuffer(eventbuffer.getId());
 ```
-
     * To create a Pipeline with narrow format csv data
     
 ```java
