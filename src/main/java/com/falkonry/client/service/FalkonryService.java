@@ -7,6 +7,7 @@ package com.falkonry.client.service;
  */
 
 import com.falkonry.helper.models.*;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.apache.commons.io.IOUtils;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.type.TypeReference;
@@ -15,10 +16,8 @@ import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.nio.charset.Charset;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Stream;
 
 public class FalkonryService {
   private HttpService httpService;
@@ -162,6 +161,49 @@ public class FalkonryService {
         url += "startTime="+start;
     }
     return this.httpService.downstream(url);
+  }
+
+  private class StreamingThread extends Observable implements Runnable {
+    String pipeline = "";
+    Long start = 0l;
+    Boolean awaitingResponse = false;
+    private StreamingThread (String pipeline, Long start) throws Exception {
+      pipeline = this.pipeline;
+      start = this.start;
+    }
+    public void run() {
+      String data = "";
+      if (!awaitingResponse) {
+        data = outflowData(pipeline);
+      }
+      notifyObservers(data);
+    }
+    private String outflowData (String pipeline) {
+      try {
+        if(pipelineOpen()) {
+          System.out.println("Start : " + start);
+          String url = "/pipeline/" + pipeline + "/output?startTime=" + start;
+        }
+      } catch (Exception e) {
+        System.out.println("Error : " + e);
+      }
+    }
+
+    private boolean pipelineOpen() throws Exception {
+      String url = "/Pipeline/" + pipeline;
+      String pipeline_json = httpService.get("/pipeline");
+
+    }
+  }
+
+  public String streamOutput(String pipeline, Long start) {
+    try {
+      StreamingThread streamingThread = new StreamingThread(pipeline, start);
+    } catch (Exception e) {
+      System.out.println("Error instantiating streamingThread : "+ e);
+    }
+
+    //return data;
   }
 
   public Subscription createSubscription(String eventbuffer, Subscription subscription) throws Exception {
