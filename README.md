@@ -30,7 +30,7 @@ Maven install
 
 ## Quick Start
 
-    * To create an Eventbuffer for narrow formatted data
+    * To create an Eventbuffer for narrow format data
 
 ```java
 import com.falkonry.client.Falkonry
@@ -49,7 +49,7 @@ Eventbuffer eb = new schemas.Eventbuffer();
 
 Eventbuffer eventbuffer = falkonry.createEventbuffer(eb);
 ```
-    * To create an Eventbuffer for wide formatted data
+    * To create an Eventbuffer for wide format data
 
 ```java
 import com.falkonry.client.Falkonry
@@ -74,15 +74,61 @@ import com.falkonry.schemas
 
 Falkonry falkonry = new Falkonry("https://service.falkonry.io", "auth-token");
 
-String data = "{\"time\" : \"2016-03-01 01:01:01\", \"tag\" : \"signal1_thing1\", \"value\" : 3.4}";
-Map<String, String> options = new HashMap<String, String>();
-
-falkonry.addInput(eventbuffer.getId(), data, options);
-
 eventbuffer = falkonry.getUpdatedEventbuffer(eventbuffer.getId());
 ```
 
-    * To create a Pipeline
+    * To create a Pipeline with narrow format csv data
+    
+```java
+import com.falkonry.client.Falkonry
+import com.falkonry.schemas
+
+Falkonry falkonry = new Falkonry("https://service.falkonry.io", "auth-token");
+
+Eventbuffer eb = new schemas.Eventbuffer();
+    eb.setName("Eventbuffer_name");
+    eb.setTimeIdentifier("time");
+    eb.setTimeFormat("iso_8601");
+
+Eventbuffer eventbuffer = falkonry.createEventbuffer(eb);
+
+String data = "time, tag, value\n" + "2016-03-01 01:01:01, signal1_thing1, 3.4";
+Map<String, String> options = new HashMap<String, String>();
+falkonry.addInput(eventbuffer.getId(), data, options);
+
+List<Signal> signals = new ArrayList<Signal>();
+    signals.add(new schemas.Signal().setName("current").setValueType(new ValueType().setType("Numeric"))
+        .setEventType(new EventType().setType("Samples")));
+    signals.add(new schemas.Signal().setName("vibration").setValueType(new ValueType().setType("Numeric"))
+        .setEventType(new EventType().setType("Samples")));
+    signals.add(new schemas.Signal().setName("state").setValueType(new ValueType().setType("Categorical"))
+        .setEventType(new EventType().setType("Samples")));
+
+List<String> inputList = new ArrayList<String>();
+    inputList.add("current");
+    inputList.add("vibration");
+    inputList.add("state");
+
+List<Assessment> assessmentList = new ArrayList<Assessment>();
+Assessment assessment = new schemas.Assessment()
+                .setName("Health")
+                .addSignals(assessment_signals);
+assessmentList.add(assessment);
+
+Interval interval = new schemas.Interval();
+    interval.setDuration("PT1S");
+                        
+Pipeline pipeline = new schemas.Pipeline()
+                .setName("Motor Health")
+                .setEventbuffer(eventbuffer.getId())
+                .setThingName("Motor")
+                .setInputSignals(signals)
+                .setAssessmentList(assessments)
+                .setInterval(interval);
+        
+Pipeline createdPipeline = falkonry.createPipeline(pipeline);
+```
+    * To create a Pipeline with wide format json data
     
 ```java
 import com.falkonry.client.Falkonry
@@ -137,7 +183,6 @@ Pipeline pipeline = new schemas.Pipeline()
         
 Pipeline createdPipeline = falkonry.createPipeline(pipeline);
 ```
-
     * To get all Pipelines
     
 ```java
@@ -148,11 +193,9 @@ Falkonry falkonry = new Falkonry("https://service.falkonry.io", "auth-token");
 
 List<Pipeline> pipelines = falkonry.getPipelines();
 ```
-
-    * To add json/csv data in narrow formatted Eventbuffer
+    * To add json data in narrow formatted Eventbuffer
     
 ```java
-import org.json.simple.JSONObject
 import com.falkonry.client.Falkonry
 
 Falkonry falkonry = new Falkonry("https://service.falkonry.io", "auth-token");
@@ -162,8 +205,64 @@ String data = "{\"time\" : \"2016-03-01 01:01:01\", \"tag\" : \"signal1_thing1\"
 
 InputStatus inputStatus = falkonry.addInput(eventbuffer.getId(),data,options);
 ```
+    * To add json data in narrow formatted Eventbuffer for multiple things
+    
+```java
+import com.falkonry.client.Falkonry
 
-    * To add json/csv data in wide formatted Eventbuffer
+Falkonry falkonry = new Falkonry("https://service.falkonry.io", "auth-token");
+Map<String, String> options = new HashMap<String, String>();
+
+String data = "{\"time\" : \"2016-03-01 01:01:01\", \"tag\" : \"signal1_thing1\", \"value\" : 3.4}\n"
+                + "{\"time\" : \"2016-04-01 02:04:01\", \"tag\" : \"signal1_thing2\", \"value\" : 9.8}\n"
+                + "{\"time\" : \"2016-09-07 07:03:01\", \"tag\" : \"signal1_thing3\", \"value\" : 7.4}";
+
+InputStatus inputStatus = falkonry.addInput(eventbuffer.getId(),data,options);
+```
+    * To add csv data in narrow formatted Eventbuffer
+    
+```java
+import com.falkonry.client.Falkonry
+
+Falkonry falkonry = new Falkonry("https://service.falkonry.io", "auth-token");
+Map<String, String> options = new HashMap<String, String>();
+
+String data = "time, tag, value\n"+
+            + "2016-03-01 01:01:01, signal1_thing1, 3.4"
+            
+InputStatus inputStatus = falkonry.addInput(eventbuffer.getId(),data,options);
+```
+    * To add csv data in narrow formatted Eventbuffer for multiple things
+      
+```java
+import com.falkonry.client.Falkonry
+
+Falkonry falkonry = new Falkonry("https://service.falkonry.io", "auth-token");
+Map<String, String> options = new HashMap<String, String>();
+
+String data = "time, tag, value\n"+
+            + "2016-03-01 01:01:01, signal1_thing1, 3.4\n"
+            + "2016-04-01 02:03:01, signal1_thing2, 8.4\n"
+            + "2016-07-01 01:07:09, signal1_thing3, 3.9";
+
+InputStatus inputStatus = falkonry.addInput(eventbuffer.getId(),data,options);
+```
+    * To add json data in wide format Eventbuffer with multiple things
+
+```java
+import org.json.simple.JSONObject
+import com.falkonry.client.Falkonry
+
+Falkonry falkonry = new Falkonry("https://service.falkonry.io", "auth-token");
+Map<String, String> options = new HashMap<String, String>();
+
+String data = "{\"time\":1467729675422,\"thing\":\"thing1\",\"signal1\":41.11,\"signal2\":82.34,\"signal3\":74.63,\"signal4\":4.8,\"signal5\":72.01}\n"
+                + "{\"time\":1467729675188,\"thing\":\"thing2\",\"signal1\":77.81,\"signal2\":78.34,\"signal3\":77.63,\"signal4\":6.8,\"signal5\":72.89}\n"
+                + "{\"time\":1467729675422,\"thing\":\"thing3\",\"signal1\":11.11,\"signal2\":2.39,\"signal3\":70.63,\"signal4\":40,\"signal5\":12.01}";
+
+InputStatus inputStatus = falkonry.addInput(eventbuffer.getId(),data,options);
+```
+    * To add json data in wide format Eventbuffer for multiple things
 
 ```java
 import org.json.simple.JSONObject
@@ -176,7 +275,35 @@ String data = "{\"time\":1467729675422,\"thing\":\"thing1\",\"signal1\":41.11,\"
 
 InputStatus inputStatus = falkonry.addInput(eventbuffer.getId(),data,options);
 ```
-    * To add json/csv data from a stream to an Eventbuffer
+    * To add csv data in a wide format Eventbuffer
+    
+```java
+import com.falkonry.client.Falkonry
+
+Falkonry falkonry = new Falkonry("https://service.falkonry.io", "auth-token");
+Map<String, String> options = new HashMap<String, String>();
+
+String data = "time,thing,signal1,signal2,signal3,signal4,signal5\n"
+                + "1467729675422,thing1,41.11,62.34,77.63,4.8,72.01";
+
+InputStatus inputStatus = falkonry.addInput(eventbuffer.getId(),data,options);
+```
+    * To add csv data in a wide format Eventbuffer for multiple things
+    
+```java
+import com.falkonry.client.Falkonry
+
+Falkonry falkonry = new Falkonry("https://service.falkonry.io", "auth-token");
+Map<String, String> options = new HashMap<String, String>();
+
+String data = "time,thing,signal1,signal2,signal3,signal4,signal5\n"
+                + "1467729655422,thing1,71.11,62.34,77.66,4.8,72.1\n"
+                + "1467729666782,thing2,40.1,29.34,7.43,3.8,2.01\n"
+                + "1467729674890,thing3,21.55,89.34,90.63,9.8,8.01";
+
+InputStatus inputStatus = falkonry.addInput(eventbuffer.getId(),data,options);
+```
+    * To add json data from a stream to an Eventbuffer
     
 ```java
 import com.falkonry.client.Falkonry
@@ -185,13 +312,36 @@ import org.apache.commons.io.FileUtils;
 Falkonry falkonry   = new Falkonry("https://service.falkonry.io", "auth-token");
 Map<String, String> options = new HashMap<String, String>();
 
-File file = new File("tmp/data.json");      //use '*.csv' for csv file formats
+File file = new File("tmp/data.json");      
 ByteArrayInputStream istream = new ByteArrayInputStream(FileUtils.readFileToByteArray(file));
 
 InputStatus inputStatus = falkonry.addInputStream(eventbuffer.getId(),byteArrayInputStream,options);
 ```
+    * To add csv data from a stream to an Eventbuffer
+    
+```java
+import com.falkonry.client.Falkonry
+import org.apache.commons.io.FileUtils;
 
-    * To add verification data to a Pipeline
+Falkonry falkonry   = new Falkonry("https://service.falkonry.io", "auth-token");
+Map<String, String> options = new HashMap<String, String>();
+
+File file = new File("tmp/data.csv");     
+ByteArrayInputStream istream = new ByteArrayInputStream(FileUtils.readFileToByteArray(file));
+
+InputStatus inputStatus = falkonry.addInputStream(eventbuffer.getId(),byteArrayInputStream,options);
+```
+    * To add verification json data to a Pipeline
+
+```java
+import com.falkonry.client.Falkonry
+
+Falkonry falkonry = new Falkonry("https://service.falkonry.io", "auth-token");
+
+String data = "{\"time\" : \"2011-03-26T12:00:00Z\", \"thing\" : \"thing1\", \"end\" : \"2012-06-01T00:00:00Z\", \"Health\" : \"Normal\"}";
+String response = falkonry.addVerification(pipeline.getId(),data, options);
+```
+    * To add verification csv data to a Pipeline
 
 ```java
 import com.falkonry.client.Falkonry
@@ -201,19 +351,28 @@ Falkonry falkonry = new Falkonry("https://service.falkonry.io", "auth-token");
 String data = "time,end,car,Health\n2011-03-31T00:00:00Z,2011-04-01T00:00:00Z,IL9753,Normal\n2011-03-31T00:00:00Z,2011-04-01T00:00:00Z,HI3821,Normal";
 String response = falkonry.addVerification(pipeline.getId(),data, options);
 ```
-
-    * To add verification data from a stream to a Pipeline
-
+    * To add json verification data from a stream to a Pipeline
+    
 ```java
 import com.falkonry.client.Falkonry
 import org.apache.commons.io.FileUtils;
 
 Falkonry falkonry   = new Falkonry("https://service.falkonry.io", "auth-token");
-File file = new File("res/verificationData.json");      //use '*.csv' for csv file format
+File file = new File("res/verificationData.json");      
 ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(FileUtils.readFileToByteArray(file));
 String response = falkonry.addVerificationStream(pipeline.getId(),byteArrayInputStream, options);
 ```
+    * To add csv verification data from a stream to a Pipeline
+    
+```java
+import com.falkonry.client.Falkonry
+import org.apache.commons.io.FileUtils;
 
+Falkonry falkonry   = new Falkonry("https://service.falkonry.io", "auth-token");
+File file = new File("res/verificationData.csv");      
+ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(FileUtils.readFileToByteArray(file));
+String response = falkonry.addVerificationStream(pipeline.getId(),byteArrayInputStream, options);
+```
     * To get output of a Pipeline
 
 ```java
@@ -226,7 +385,6 @@ Long endTime      = "1457028017000"; //milliseconds since unix epoch
 
 BufferedReader br = falkonry.getOutput("pipeline_id", startTime, endTime);
 ```
-
     * To create/delete a subscription for an Eventbuffer
 
 ```java
