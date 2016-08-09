@@ -8,8 +8,10 @@ package com.falkonry.client.service;
 
 import com.falkonry.helper.models.*;
 import com.sun.org.apache.xpath.internal.operations.Bool;
+import javafx.beans.*;
 import org.apache.commons.io.IOUtils;
 import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jackson.map.util.JSONPObject;
 import org.codehaus.jackson.type.TypeReference;
 
 import java.io.BufferedReader;
@@ -17,7 +19,9 @@ import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.nio.charset.Charset;
 import java.util.*;
+import java.util.Observable;
 import java.util.stream.Stream;
+import org.json.JSONObject;
 
 public class FalkonryService {
   private HttpService httpService;
@@ -172,38 +176,62 @@ public class FalkonryService {
       start = this.start;
     }
     public void run() {
-      String data = "";
+      BufferedReader data = null;
       if (!awaitingResponse) {
         data = outflowData(pipeline);
       }
-      notifyObservers(data);
+      if (data != null) {
+        setChanged();
+        notifyObservers(data);
+      }
     }
-    private String outflowData (String pipeline) {
+    private BufferedReader outflowData (String pipeline) {
+      //BufferedReader pipelineOutflowData = null;
       try {
         if(pipelineOpen()) {
           System.out.println("Start : " + start);
           String url = "/pipeline/" + pipeline + "/output?startTime=" + start;
+          //pipelineOutflowData =
+          return httpService.downstream(url);
         }
       } catch (Exception e) {
         System.out.println("Error : " + e);
       }
+      //return pipelineOutflowData;
     }
 
     private boolean pipelineOpen() throws Exception {
       String url = "/Pipeline/" + pipeline;
       String pipeline_json = httpService.get("/pipeline");
-
+      //JSONPObject pipeline_jsonpobject = new JSONPObject(, pipeline_json);
+      //ObjectMapper mapper = new ObjectMapper();
+      //if(mapper.readValue(pipeline_json, Object[].class) == "CLOSED") {}
+      JSONObject outflowStatus = new JSONObject(pipeline_json);
+      return (outflowStatus.get("outflowStatus") == "OPEN");
     }
   }
 
-  public String streamOutput(String pipeline, Long start) {
+  public Observer streamOutput(String pipeline, Long start) {
+    Observer outflowObserver = new Observer() {
+      private String outflowData;
+      @Override
+      public void update(Observable o, Object arg) {
+        //System.out.println("Data received  : " + arg);
+        outflowData = arg.toString();
+      }
+      private String getData () {
+        return outflowData;
+      }
+    };
     try {
       StreamingThread streamingThread = new StreamingThread(pipeline, start);
+
+      streamingThread.addObserver(outflowObserver);
     } catch (Exception e) {
-      System.out.println("Error instantiating streamingThread : "+ e);
+      System.out.println("Error instantiating streamingThread : " + e);
     }
 
-    //return data;
+    return ;
   }
 
   public Subscription createSubscription(String eventbuffer, Subscription subscription) throws Exception {

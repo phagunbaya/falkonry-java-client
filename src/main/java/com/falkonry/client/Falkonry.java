@@ -13,6 +13,7 @@ import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.util.List;
 import java.util.Map;
+import java.util.Observer;
 
 
 public class Falkonry {
@@ -48,7 +49,7 @@ public class Falkonry {
   }
 
   public void deletePipeline(String pipeline) throws Exception {
-    falkonryService.deletePipeline(pipeline);
+    this.falkonryService.deletePipeline(pipeline);
   }
 
   public InputStatus addInput(String eventbuffer, String data, Map<String, String> options) throws Exception {
@@ -71,7 +72,7 @@ public class Falkonry {
     return this.falkonryService.getOutput(pipeline, start, end);
   }
 
-  public String streamOutput(String pipeline, Long start) throws Exception {
+  public Observer streamOutput(String pipeline, Long start) throws Exception {
     return this.falkonryService.streamOutput(pipeline, start);
   }
 
