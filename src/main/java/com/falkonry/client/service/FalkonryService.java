@@ -194,10 +194,13 @@ public class FalkonryService {
           //pipelineOutflowData =
           return httpService.downstream(url);
         }
+        else {
+          return null;
+        }
       } catch (Exception e) {
         System.out.println("Error : " + e);
       }
-      //return pipelineOutflowData;
+      return null;
     }
 
     private boolean pipelineOpen() throws Exception {
@@ -211,27 +214,30 @@ public class FalkonryService {
     }
   }
 
-  public Observer streamOutput(String pipeline, Long start) {
-    Observer outflowObserver = new Observer() {
-      private String outflowData;
-      @Override
-      public void update(Observable o, Object arg) {
-        //System.out.println("Data received  : " + arg);
-        outflowData = arg.toString();
-      }
-      private String getData () {
-        return outflowData;
-      }
-    };
-    try {
-      StreamingThread streamingThread = new StreamingThread(pipeline, start);
+  /*private class StreamObserver implements Observer {
+    private String outflowData = "";
 
-      streamingThread.addObserver(outflowObserver);
+    @Override
+    public void update(Observable o, Object arg) {
+      //System.out.println("Data received  : " + arg);
+      outflowData = arg.toString();
+    }
+    public String getData () {
+      return  outflowData;
+    }
+  }*/
+
+  public Observable streamOutput(String pipeline, Long start) {
+    String data;
+    //StreamObserver outflowObserver = new StreamObserver();
+    try {
+      //StreamingThread streamingThread = new StreamingThread(pipeline, start);
+      //streamingThread.addObserver(outflowObserver);
+      return (new StreamingThread(pipeline, start));
     } catch (Exception e) {
       System.out.println("Error instantiating streamingThread : " + e);
     }
-
-    return ;
+    return null;
   }
 
   public Subscription createSubscription(String eventbuffer, Subscription subscription) throws Exception {

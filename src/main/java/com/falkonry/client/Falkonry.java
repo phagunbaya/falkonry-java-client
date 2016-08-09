@@ -72,7 +72,7 @@ public class Falkonry {
     return this.falkonryService.getOutput(pipeline, start, end);
   }
 
-  public Observer streamOutput(String pipeline, Long start) throws Exception {
+  public String streamOutput(String pipeline, Long start) throws Exception {
     return this.falkonryService.streamOutput(pipeline, start);
   }
 
