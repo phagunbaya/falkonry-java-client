@@ -20,6 +20,7 @@ import java.io.InputStream;
 import java.nio.charset.Charset;
 import java.util.*;
 import java.util.Observable;
+import java.util.concurrent.*;
 import java.util.stream.Stream;
 import org.json.JSONObject;
 
@@ -167,7 +168,7 @@ public class FalkonryService {
     return this.httpService.downstream(url);
   }
 
-  private class StreamingThread extends Observable implements Runnable {
+  /*private class StreamingThread extends Observable implements Runnable {
     String pipeline = "";
     Long start = 0l;
     Boolean awaitingResponse = false;
@@ -214,7 +215,7 @@ public class FalkonryService {
     }
   }
 
-  /*private class StreamObserver implements Observer {
+  private class StreamObserver implements Observer {
     private String outflowData = "";
 
     @Override
@@ -225,7 +226,7 @@ public class FalkonryService {
     public String getData () {
       return  outflowData;
     }
-  }*/
+  }
 
   public Observable streamOutput(String pipeline, Long start) {
     String data;
@@ -237,6 +238,76 @@ public class FalkonryService {
     } catch (Exception e) {
       System.out.println("Error instantiating streamingThread : " + e);
     }
+    return null;
+  }
+
+  private class StreamingThread {     // implements Runnable {
+    ScheduledExecutorService scheduledExecutorService =
+            Executors.newScheduledThreadPool(3);
+    ScheduledFuture scheduledFuture =
+            scheduledExecutorService.schedule(new Callable() {
+              public Object call() throws Exception {
+                System.out.println("Executed!");
+                return "Called!";
+              }
+            }, 5, TimeUnit.SECONDS);
+
+    String pipeline = "";
+    Long start = 0l;
+    Boolean awaitingResponse = false;
+    private StreamingThread (String pipeline, Long start) throws Exception {
+      pipeline = this.pipeline;
+      start = this.start;
+    }
+    public void run() {
+      BufferedReader data = null;
+      if (!awaitingResponse) {
+        data = outflowData(pipeline);
+      }
+      if (data != null) {
+        //setChanged();
+        //notifyObservers(data);
+      }
+    }
+    private BufferedReader outflowData (String pipeline) {
+      //BufferedReader pipelineOutflowData = null;
+      try {
+        if(pipelineOpen()) {
+          System.out.println("Start : " + start);
+          String url = "/pipeline/" + pipeline + "/output?startTime=" + start;
+          //pipelineOutflowData =
+          return httpService.downstream(url);
+        }
+        else {
+          return null;
+        }
+      } catch (Exception e) {
+        System.out.println("Error : " + e);
+      }
+      return null;
+    }
+
+    private boolean pipelineOpen() throws Exception {
+      String url = "/Pipeline/" + pipeline;
+      String pipeline_json = httpService.get("/pipeline");
+      //JSONPObject pipeline_jsonpobject = new JSONPObject(, pipeline_json);
+      //ObjectMapper mapper = new ObjectMapper();
+      //if(mapper.readValue(pipeline_json, Object[].class) == "CLOSED") {}
+      JSONObject outflowStatus = new JSONObject(pipeline_json);
+      return (outflowStatus.get("outflowStatus") == "OPEN");
+    }
+  }
+*/
+
+
+
+  public Object streamOutput(String pipeline, Long start) {
+    String data;
+      try {
+
+      } catch (Exception e) {
+        System.out.println("Error instantiating streamingThread : " + e);
+      }
     return null;
   }
 
