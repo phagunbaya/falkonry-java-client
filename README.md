@@ -320,7 +320,7 @@ Usage:
     Falkonry falkonry = new Falkonry("https://service.falkonry.io", "auth-token");
 
     String data = "{\"time\" : \"2011-03-26T12:00:00Z\", \"entities\" : \"thing1\", \"end\" : \"2012-06-01T00:00:00Z\", \"Health\" : \"Normal\"}";
-    String response = falkonry.addVerification(pipeline.getId(),data, options);
+    String response = falkonry.addfacts(pipeline.getId(),data, options);
 ```
 
 #### To add facts data (csv format) to a Pipeline
@@ -331,7 +331,7 @@ Usage:
     Falkonry falkonry = new Falkonry("https://service.falkonry.io", "auth-token");
 
     String data = "time,end,car,Health\n2011-03-31T00:00:00Z,2011-04-01T00:00:00Z,IL9753,Normal\n2011-03-31T00:00:00Z,2011-04-01T00:00:00Z,HI3821,Normal";
-    String response = falkonry.addVerification(pipeline.getId(),data, options);
+    String response = falkonry.addFacts(pipeline.getId(),data, options);
 ```
 
 #### Add facts data (json format) from a stream to a Pipeline
@@ -343,7 +343,7 @@ Usage:
     Falkonry falkonry   = new Falkonry("https://service.falkonry.io", "auth-token");
     File file = new File("res/factsData.json");      
     ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(FileUtils.readFileToByteArray(file));
-    String response = falkonry.addVerificationStream(pipeline.getId(),byteArrayInputStream, options);
+    String response = falkonry.addFactsStream(pipeline.getId(),byteArrayInputStream, options);
 ```
 
 #### Add facts data (csv format) from a stream to a Pipeline
@@ -355,7 +355,7 @@ Usage:
     Falkonry falkonry   = new Falkonry("https://service.falkonry.io", "auth-token");
     File file = new File("res/factsData.csv");      
     ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(FileUtils.readFileToByteArray(file));
-    String response = falkonry.addVerificationStream(pipeline.getId(),byteArrayInputStream, options);
+    String response = falkonry.addFactsStream(pipeline.getId(),byteArrayInputStream, options);
 ```
 
 #### Get output of a Pipeline
