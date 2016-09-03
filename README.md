@@ -22,7 +22,7 @@ Maven install
     * Create Pipeline
     * Retrieve Pipelines
     * Add data to Eventbuffer (csv/json, stream)
-    * Add verification to Pipeline (csv/json, stream)
+    * Add facts to Pipeline (csv/json, stream)
     * Retrieve output of Pipeline
     * Create/delete subscription for Eventbuffer
     * Create/delete publication for Pipeline
@@ -34,7 +34,7 @@ Maven install
 
 ## Examples
 
-#### Setup Eventbuffer for narrow/historian style data from a single thing
+#### Setup Eventbuffer for narrow/historian style data from a single entity
 
 Data:
 ```
@@ -73,7 +73,7 @@ Usage:
 
 ```
 
-#### Setup Eventbuffer for narrow/historian style data from multiple things
+#### Setup Eventbuffer for narrow/historian style data from multiple entities
 
 Data:
 ```
@@ -119,7 +119,7 @@ Usage:
 
 ```
 
-#### Setup Eventbuffer for wide style data from a single thing
+#### Setup Eventbuffer for wide style data from a single entity
 
 Data:
 ```
@@ -154,16 +154,16 @@ Usage:
     InputStatus inputStatus = falkonry.addInput(eventbuffer.getId(), data, options);
 ```
 
-#### Setup Eventbuffer for wide style data from multiple things
+#### Setup Eventbuffer for wide style data from multiple entities
 
 Data:
 ```
-    {"time":1467729675422, "thing": "Thing1", "signal1":41.11, "signal2":82.34, "signal3":74.63, "signal4":4.8}
-    {"time":1467729668919, "thing": "Thing2", "signal1":78.11, "signal2":2.33, "signal3":4.6, "signal4":9.8}
+    {"time":1467729675422, "entities": "Thing1", "signal1":41.11, "signal2":82.34, "signal3":74.63, "signal4":4.8}
+    {"time":1467729668919, "entities": "Thing2", "signal1":78.11, "signal2":2.33, "signal3":4.6, "signal4":9.8}
 
     or
 
-    time, thing, signal1, signal2, signal3, signal4
+    time, entities, signal1, signal2, signal3, signal4
     1467729675422, thing1, 41.11, 62.34, 77.63, 4.8
     1467729675445, thing1, 43.91, 82.64, 73.63, 3.8
 ```
@@ -179,13 +179,13 @@ Usage:
         .setName("Eventbuffer_name")  //name of the eventbuffer
         .setTimeIdentifier("time")    //property that identifies time in the data
         .setTimeFormat("millis")      //format of the time in the data
-        .setThingIdentifier("thing"); //property that identifies system id in the data.
+        .setEntityIdentifier("entities"); //property that identifies system id in the data.
 
     //create eventbuffer
     Eventbuffer eventbuffer = falkonry.createEventbuffer(eb);
 
     //Add data to eventbuffer
-    String data = "time, thing, signal1, signal2, signal3, signal4" + "\n"
+    String data = "time, entities, signal1, signal2, signal3, signal4" + "\n"
         + "1467729675422, thing1, 41.11, 62.34, 77.63, 4.8" + "\n"
         + "1467729675445, thing1, 43.91, 82.64, 73.63, 3.8";
     InputStatus inputStatus = falkonry.addInput(eventbuffer.getId(), data, options);
@@ -312,18 +312,18 @@ Usage:
     List<Pipeline> pipelines = falkonry.getPipelines();
 ```
 
-#### Add verification data (json format) to a Pipeline
+#### Add facts data (json format) to a Pipeline
 
 ```java
     import com.falkonry.client.Falkonry
 
     Falkonry falkonry = new Falkonry("https://service.falkonry.io", "auth-token");
 
-    String data = "{\"time\" : \"2011-03-26T12:00:00Z\", \"thing\" : \"thing1\", \"end\" : \"2012-06-01T00:00:00Z\", \"Health\" : \"Normal\"}";
+    String data = "{\"time\" : \"2011-03-26T12:00:00Z\", \"entities\" : \"thing1\", \"end\" : \"2012-06-01T00:00:00Z\", \"Health\" : \"Normal\"}";
     String response = falkonry.addVerification(pipeline.getId(),data, options);
 ```
 
-#### To add verification data (csv format) to a Pipeline
+#### To add facts data (csv format) to a Pipeline
 
 ```java
     import com.falkonry.client.Falkonry
@@ -334,26 +334,26 @@ Usage:
     String response = falkonry.addVerification(pipeline.getId(),data, options);
 ```
 
-#### Add verification data (json format) from a stream to a Pipeline
+#### Add facts data (json format) from a stream to a Pipeline
     
 ```java
     import com.falkonry.client.Falkonry
     import org.apache.commons.io.FileUtils;
 
     Falkonry falkonry   = new Falkonry("https://service.falkonry.io", "auth-token");
-    File file = new File("res/verificationData.json");      
+    File file = new File("res/factsData.json");      
     ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(FileUtils.readFileToByteArray(file));
     String response = falkonry.addVerificationStream(pipeline.getId(),byteArrayInputStream, options);
 ```
 
-#### Add verification data (csv format) from a stream to a Pipeline
+#### Add facts data (csv format) from a stream to a Pipeline
     
 ```java
     import com.falkonry.client.Falkonry
     import org.apache.commons.io.FileUtils;
 
     Falkonry falkonry   = new Falkonry("https://service.falkonry.io", "auth-token");
-    File file = new File("res/verificationData.csv");      
+    File file = new File("res/factsData.csv");      
     ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(FileUtils.readFileToByteArray(file));
     String response = falkonry.addVerificationStream(pipeline.getId(),byteArrayInputStream, options);
 ```
