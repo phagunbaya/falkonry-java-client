@@ -30,6 +30,7 @@ public class Eventbuffer {
   private String signalsDelimiter;
   private String signalsLocation;
   private String valueColumn;
+  private Object timezone;
 
   public String getId() {
     return id;
@@ -204,6 +205,15 @@ public class Eventbuffer {
 
   public Eventbuffer setValueColumn(String valueColumn) {
     this.valueColumn = valueColumn;
+    return this;
+  }
+
+  public Timezone getTimezone() {
+    return timezone;
+  }
+
+  public Eventbuffer setTimezone(Timezone timezone) {
+    this.timezone = timezone;
     return this;
   }
 }

@@ -26,6 +26,10 @@ public class TestCreateEventbuffer {
 
   //@Test
   public void createEventbuffer() throws Exception {
+    Timezone timezone = new Timezone()
+    timezone.setZone("GMT");
+    timezone.setOffset(0);
+
     Eventbuffer eb = new Eventbuffer();
     eb.setName("Test-EB-"+Math.random());
     eb.setTimeIdentifier("time");
@@ -34,6 +38,7 @@ public class TestCreateEventbuffer {
     eb.setSignalsDelimiter("_");
     eb.setSignalsLocation("prefix");
     eb.setSignalsTagField("tag");
+    eb.setTimezone(timezone);
 
     Eventbuffer eventbuffer = falkonry.createEventbuffer(eb);
     eventbuffers.add(eventbuffer);

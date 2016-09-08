@@ -56,10 +56,15 @@ Usage:
 
     //instantiate Falkonry
     Falkonry falkonry = new Falkonry("https://service.falkonry.io", "auth-token");
+    Timezone timezone = new Timezone();
+    timezone.setZone("GMT");
+    timezone.setOffset(0);
+
     Eventbuffer eb = new schemas.Eventbuffer()
         .setName("Eventbuffer_name")  //name of the eventbuffer
         .setTimeIdentifier("time")    //property that identifies time in the data
         .setTimeFormat("iso_8601")    //format of the time in the data
+        .setTimezone(timezone)        //output data will be generated using timezone
         .setValueColumn("value")      //property that identifies value of the signal in the data
         .setSignalsTagField("tag");   //property that identifies signal tag in the data
 
