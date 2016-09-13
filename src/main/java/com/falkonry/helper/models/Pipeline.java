@@ -17,8 +17,8 @@ public class Pipeline {
   private String tenant;
   private String eventbuffer;
   private String inputMeasurement;
-  private String thingIdentifier;
-  private String singleThingID;
+  private String entityIdentifier;
+  private String entityName;
   private String createdBy;
   private Long createTime;
   private String updatedBy;
@@ -111,13 +111,13 @@ public class Pipeline {
     return this;
   }
 
-  public String getThingIdentifier() {
-    return thingIdentifier;
+  public String getEntityIdentifier() {
+    return entityIdentifier;
   }
 
-  @JsonProperty("singleThingID")
-  public String getThingName() {
-    return singleThingID;
+  @JsonProperty("entityName")
+  public String getEntityName() {
+    return entityName;
   }
 
   public String getCreatedBy() {

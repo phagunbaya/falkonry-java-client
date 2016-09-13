@@ -12,7 +12,7 @@ import java.util.*;
  * MIT Licensed
  */
 
-public class TestAddVerification {
+public class TestAddFacts {
     Falkonry falkonry = null;
     String host = "http://localhost:8080";
     String token = "";
@@ -25,7 +25,7 @@ public class TestAddVerification {
     }
 
     //@Test
-    public void createPipelineWithCsvVerification() throws Exception {
+    public void createPipelineWithCsvFacts() throws Exception {
 
         Eventbuffer eb = new Eventbuffer();
         eb.setName("Test-EB-"+Math.random());
@@ -70,19 +70,19 @@ public class TestAddVerification {
         Pipeline pl = falkonry.createPipeline(pipeline);
 
         data = "time,end,thing,Health\n2011-03-31T00:00:00Z,2011-04-01T00:00:00Z,thing1,Normal\n2011-03-31T00:00:00Z,2011-04-01T00:00:00Z,thing1,Normal";
-        String response = falkonry.addVerification(pl.getId(), data, null);
+        String response = falkonry.addFacts(pl.getId(), data, null);
         Assert.assertEquals(response,"{\"message\":\"Data submitted successfully\"}");
         falkonry.deletePipeline(pl.getId());
     }
 
     //@Test
-    public void createPipelineWithWideCsvVerification() throws Exception {
+    public void createPipelineWithWideCsvFacts() throws Exception {
 
         Eventbuffer eb = new Eventbuffer();
         eb.setName("Test-EB-"+Math.random());
         eb.setTimeIdentifier("time");
         eb.setTimeFormat("iso_8601");
-        eb.setThingIdentifier("thing");
+        eb.setEntityIdentifier("entity");
 
         List<Signal> signals = new ArrayList<Signal>();
         signals.add(new Signal().setName("signal1").setValueType(new ValueType().setType("Numeric"))
@@ -102,7 +102,7 @@ public class TestAddVerification {
         Eventbuffer eventbuffer = falkonry.createEventbuffer(eb);
         eventbuffers.add(eventbuffer);
 
-        String data = "time, tag, thing, signal1, signal2, signal3\n2016-03-01 01:01:01, signal1_thing1, thing1, 3.4, 4.8, 8.3";
+        String data = "time, tag, entity, signal1, signal2, signal3\n2016-03-01 01:01:01, signal1_thing1, thing1, 3.4, 4.8, 8.3";
         falkonry.addInput(eventbuffer.getId(), data, options);
 
         Interval interval = new Interval();
@@ -117,14 +117,14 @@ public class TestAddVerification {
                 .setInterval(interval);
         Pipeline pl = falkonry.createPipeline(pipeline);
 
-        data = "time,end,thing,Health\n2011-03-31T00:00:00Z,2011-04-01T00:00:00Z,thing1,Normal\n2011-03-31T00:00:00Z,2011-04-01T00:00:00Z,thing1,Normal";
-        String response = falkonry.addVerification(pl.getId(), data, null);
+        data = "time,end,entity,Health\n2011-03-31T00:00:00Z,2011-04-01T00:00:00Z,thing1,Normal\n2011-03-31T00:00:00Z,2011-04-01T00:00:00Z,thing1,Normal";
+        String response = falkonry.addFacts(pl.getId(), data, null);
         Assert.assertEquals(response,"{\"message\":\"Data submitted successfully\"}");
         falkonry.deletePipeline(pl.getId());
     }
 
     //@Test
-    public void createPipelineWithJsonVerification() throws Exception {
+    public void createPipelineWithJsonFacts() throws Exception {
         Eventbuffer eb = new Eventbuffer();
         eb.setName("Test-EB-"+Math.random());
         eb.setTimeIdentifier("time");
@@ -167,8 +167,8 @@ public class TestAddVerification {
                 .setInterval(interval);
         Pipeline pl = falkonry.createPipeline(pipeline);
 
-        data = "{\"time\" : \"2011-03-26T12:00:00Z\", \"thing\" : \"thing1\", \"end\" : \"2012-06-01T00:00:00Z\", \"Health\" : \"Normal\"}";
-        String response = falkonry.addVerification(pl.getId(), data, null);
+        data = "{\"time\" : \"2011-03-26T12:00:00Z\", \"entity\" : \"thing1\", \"end\" : \"2012-06-01T00:00:00Z\", \"Health\" : \"Normal\"}";
+        String response = falkonry.addFacts(pl.getId(), data, null);
         String response_id = response.split("(:)|(,)")[1];
         Assert.assertNotEquals(response_id,null);
         Assert.assertEquals(pl.getName(),pipeline.getName());
@@ -176,12 +176,12 @@ public class TestAddVerification {
     }
 
     //@Test
-    public void createPipelineWithWideJsonVerification() throws Exception {
+    public void createPipelineWithWideJsonFacts() throws Exception {
         Eventbuffer eb = new Eventbuffer();
         eb.setName("Test-EB-"+Math.random());
         eb.setTimeIdentifier("time");
         eb.setTimeFormat("millis");
-        eb.setThingIdentifier("thing");
+        eb.setEntityIdentifier("entity");
 
         List<Signal> signals = new ArrayList<Signal>();
         signals.add(new Signal().setName("signal1").setValueType(new ValueType().setType("Numeric"))
@@ -201,7 +201,7 @@ public class TestAddVerification {
         Eventbuffer eventbuffer = falkonry.createEventbuffer(eb);
         eventbuffers.add(eventbuffer);
 
-        String data = "{\"time\":1467729675422,\"thing\":\"thing1\",\"signal1\":41.11,\"signal2\":82.34,\"signal3\":74.63,\"signal4\":4.8,\"signal5\":72.01}";
+        String data = "{\"time\":1467729675422,\"entity\":\"thing1\",\"signal1\":41.11,\"signal2\":82.34,\"signal3\":74.63,\"signal4\":4.8,\"signal5\":72.01}";
         falkonry.addInput(eventbuffer.getId(), data, options);
 
         Interval interval = new Interval();
@@ -216,8 +216,8 @@ public class TestAddVerification {
                 .setInterval(interval);
         Pipeline pl = falkonry.createPipeline(pipeline);
 
-        data = "{\"time\" : \"2011-03-26T12:00:00Z\", \"thing\" : \"thing1\", \"end\" : \"2012-06-01T00:00:00Z\", \"Health\" : \"Normal\"}";
-        String response = falkonry.addVerification(pl.getId(), data, null);
+        data = "{\"time\" : \"2011-03-26T12:00:00Z\", \"entity\" : \"thing1\", \"end\" : \"2012-06-01T00:00:00Z\", \"Health\" : \"Normal\"}";
+        String response = falkonry.addFacts(pl.getId(), data, null);
         String response_id = response.split("(:)|(,)")[1];
         Assert.assertNotEquals(response_id,null);
         Assert.assertEquals(pl.getName(),pipeline.getName());

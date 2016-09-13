@@ -13,8 +13,8 @@ import java.util.List;
 public class PipelineRequest {
   private String name;
   private String eventbuffer;
-  private String thingIdentifier;
-  private String singleThingID;
+  private String entityIdentifier;
+  private String entityName;
   private List<SignalRequest> inputList;
   private List<AssessmentRequest> assessmentList;
   private Interval interval;
@@ -55,23 +55,23 @@ public class PipelineRequest {
     return this;
   }
 
-  @JsonProperty("singleThingID")
-  public String getThingName() {
-    return singleThingID;
+  @JsonProperty("entityName")
+  public String getEntityName() {
+    return entityName;
   }
 
-  @JsonProperty("singleThingID")
-  public PipelineRequest setThingName(String singleThingID) {
-    this.singleThingID = singleThingID;
+  @JsonProperty("entityName")
+  public PipelineRequest setEntityName(String entityName) {
+    this.entityName = entityName;
     return this;
   }
 
-  public String getThingIdentifier() {
-    return thingIdentifier;
+  public String getEntityIdentifier() {
+    return entityIdentifier;
   }
 
-  public PipelineRequest setThingIdentifier(String thingIdentifier) {
-    this.thingIdentifier = thingIdentifier;
+  public PipelineRequest setEntityIdentifier(String entityIdentifier) {
+    this.entityIdentifier = entityIdentifier;
     return this;
   }
 

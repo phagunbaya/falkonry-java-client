@@ -32,8 +32,8 @@ public class FalkonryService {
     Eventbuffer eb = new Eventbuffer();
 
     eb.setName(eventbuffer.getName());
-    if(eventbuffer.getThingIdentifier()!=null)
-    eb.setThingIdentifier(eventbuffer.getThingIdentifier());
+    if(eventbuffer.getEntityIdentifier()!=null)
+    eb.setEntityIdentifier(eventbuffer.getEntityIdentifier());
     if(eventbuffer.getTimeFormat()!=null)
       eb.setTimeFormat(eventbuffer.getTimeFormat());
     if(eventbuffer.getTimeIdentifier()!=null)
@@ -95,12 +95,12 @@ public class FalkonryService {
       assessmentRequestList.add(assessmentRequest);
     }
     pipelineRequest.setName(pipeline.getName())
-        .setThingIdentifier(pipeline.getThingIdentifier())
+        .setEntityIdentifier(pipeline.getEntityIdentifier())
         .setInterval(pipeline.getInterval())
         .setEventbuffer(pipeline.getEventbuffer())
         .setInputList(signalRequestList)
         .setAssessmentList(assessmentRequestList)
-        .setThingName(pipeline.getThingName());
+        .setEntityName(pipeline.getEntityName());
     String pipeline_json = httpService.post("/pipeline", mapper.writeValueAsString(pipelineRequest));
     return mapper.readValue(pipeline_json, Pipeline.class);
   }
@@ -128,8 +128,8 @@ public class FalkonryService {
     return mapper.readValue(status, InputStatus.class);
   }
 
-  public String addVerification(String pipeline, String data, Map<String, String > options) throws Exception{
-    String url = "/pipeline/" + pipeline + "/verification";
+  public String addFacts(String pipeline, String data, Map<String, String > options) throws Exception{
+    String url = "/pipeline/" + pipeline + "/facts";
     return this.httpService.postData(url, data);
   }
 
@@ -144,8 +144,8 @@ public class FalkonryService {
     return mapper.readValue(status, InputStatus.class);
   }
 
-  public String addVerificationStream(String pipeline, ByteArrayInputStream stream, Map<String, String> options) throws Exception{
-    String url = "/pipeline/" + pipeline + "/verification";
+  public String addFactsStream(String pipeline, ByteArrayInputStream stream, Map<String, String> options) throws Exception{
+    String url = "/pipeline/" + pipeline + "/facts";
     byte[] data_bytes = IOUtils.toByteArray(stream);
     return this.httpService.upstream(url, data_bytes);
   }
