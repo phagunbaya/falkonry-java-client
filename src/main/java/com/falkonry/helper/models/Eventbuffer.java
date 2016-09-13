@@ -30,7 +30,7 @@ public class Eventbuffer {
   private String signalsDelimiter;
   private String signalsLocation;
   private String valueColumn;
-  private Object timezone;
+  private Timezone timezone;
 
   public String getId() {
     return id;

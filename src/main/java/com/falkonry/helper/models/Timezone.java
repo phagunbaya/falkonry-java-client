@@ -14,7 +14,7 @@ public class Timezone {
     return this.zone;
   }
 
-  public Interval setZone(String zone) {
+  public Timezone setZone(String zone) {
     this.zone = zone;
     return this;
   }
@@ -23,7 +23,7 @@ public class Timezone {
     return this.offset;
   }
 
-  public Interval setOffset(String offset) {
+  public Timezone setOffset(String offset) {
     this.offset = offset;
     return this;
   }
