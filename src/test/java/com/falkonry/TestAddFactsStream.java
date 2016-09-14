@@ -15,7 +15,7 @@ import java.util.*;
  * MIT Licensed
  */
 
-public class TestAddVerificationStream {
+public class TestAddFactsStream {
     Falkonry falkonry = null;
     String host = "http://localhost:8080";
     String token = "";
@@ -28,7 +28,7 @@ public class TestAddVerificationStream {
     }
 
     //@Test
-    public void createPipelineWithCsvVerificationStream() throws Exception {
+    public void createPipelineWithCsvFactsStream() throws Exception {
         Eventbuffer eb = new Eventbuffer();
         eb.setName("Test-EB-"+Math.random());
         eb.setTimeIdentifier("time");
@@ -69,15 +69,15 @@ public class TestAddVerificationStream {
                 .setInterval(interval);
         Pipeline pl = falkonry.createPipeline(pipeline);
 
-        File file = new File("res/verificationData.csv");
+        File file = new File("res/factsData.csv");
         ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(FileUtils.readFileToByteArray(file));
-        String response = falkonry.addVerificationStream(pl.getId(),byteArrayInputStream, null);
+        String response = falkonry.addFactsStream(pl.getId(),byteArrayInputStream, null);
         Assert.assertEquals(response,"{\"message\":\"Data submitted successfully\"}");
         falkonry.deletePipeline(pl.getId());
     }
 
     //@Test
-    public void createPipelineWithJsonVerification() throws Exception {
+    public void createPipelineWithJsonFacts() throws Exception {
         Eventbuffer eb = new Eventbuffer();
         eb.setName("Test-EB-"+Math.random());
         eb.setTimeIdentifier("time");
@@ -119,9 +119,9 @@ public class TestAddVerificationStream {
                 .setInterval(interval);
         Pipeline pl = falkonry.createPipeline(pipeline);
 
-        File file = new File("res/verificationData.json");
+        File file = new File("res/factsData.json");
         ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(FileUtils.readFileToByteArray(file));
-        String response = falkonry.addVerificationStream(pl.getId(),byteArrayInputStream, null);
+        String response = falkonry.addFactsStream(pl.getId(),byteArrayInputStream, null);
         String response_id = response.split("(:)|(,)")[1];
         Assert.assertNotEquals(response_id,null);
         Assert.assertEquals(pl.getName(),pipeline.getName());

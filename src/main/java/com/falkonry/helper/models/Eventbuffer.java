@@ -24,12 +24,13 @@ public class Eventbuffer {
   private Stats stats;
   private String timeIdentifier;
   private String timeFormat;
-  private String singleThingID;
-  private String thingIdentifier;
+  private String entityName;
+  private String entityIdentifier;
   private String signalsTagField;
   private String signalsDelimiter;
   private String signalsLocation;
   private String valueColumn;
+  private Timezone timezone;
 
   public String getId() {
     return id;
@@ -151,21 +152,21 @@ public class Eventbuffer {
     return this;
   }
 
-  public String getThingIdentifier() {
-    return thingIdentifier;
+  public String getEntityIdentifier() {
+    return entityIdentifier;
   }
 
-  public Eventbuffer setThingIdentifier(String thingIdentifier) {
-    this.thingIdentifier = thingIdentifier;
+  public Eventbuffer setEntityIdentifier(String entityIdentifier) {
+    this.entityIdentifier = entityIdentifier;
     return this;
   }
 
-  public String getSingleThingID() {
-    return singleThingID;
+  public String getEntityName() {
+    return entityName;
   }
 
-  public Eventbuffer setSingleThingID(String singleThingID) {
-    this.singleThingID = singleThingID;
+  public Eventbuffer setEntityName(String entityName) {
+    this.entityName = entityName;
     return this;
   }
 
@@ -204,6 +205,15 @@ public class Eventbuffer {
 
   public Eventbuffer setValueColumn(String valueColumn) {
     this.valueColumn = valueColumn;
+    return this;
+  }
+
+  public Timezone getTimezone() {
+    return timezone;
+  }
+
+  public Eventbuffer setTimezone(Timezone timezone) {
+    this.timezone = timezone;
     return this;
   }
 }
