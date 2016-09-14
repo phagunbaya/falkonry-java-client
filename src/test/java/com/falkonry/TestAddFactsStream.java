@@ -54,7 +54,7 @@ public class TestAddFactsStream {
         Map<String, String> options = new HashMap<String, String>();
         Eventbuffer eventbuffer = falkonry.createEventbuffer(eb);
         eventbuffers.add(eventbuffer);
-        String data = "time, tag, value\n2016-03-01 01:01:01, signal1_thing1, 3.4";
+        String data = "time, tag, value\n2016-03-01 01:01:01, signal1_entity1, 3.4";
         falkonry.addInput(eventbuffer.getId(), data, options);
 
         Interval interval = new Interval();
@@ -104,7 +104,7 @@ public class TestAddFactsStream {
         Eventbuffer eventbuffer = falkonry.createEventbuffer(eb);
         eventbuffers.add(eventbuffer);
 
-        String data = "{\"time\" : \"2016-03-01 01:01:01\", \"tag\" : \"signal1_thing1\", \"value\" : 3.4}";
+        String data = "{\"time\" : \"2016-03-01 01:01:01\", \"tag\" : \"signal1_entity1\", \"value\" : 3.4}";
         falkonry.addInput(eventbuffer.getId(), data, options);
 
         Interval interval = new Interval();

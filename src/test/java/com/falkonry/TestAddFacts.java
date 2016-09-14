@@ -54,7 +54,7 @@ public class TestAddFacts {
         Eventbuffer eventbuffer = falkonry.createEventbuffer(eb);
         eventbuffers.add(eventbuffer);
 
-        String data = "time, tag, value\n2016-03-01 01:01:01, signal1_thing1, 3.4";
+        String data = "time, tag, value\n2016-03-01 01:01:01, signal1_entity1, 3.4";
         falkonry.addInput(eventbuffer.getId(), data, options);
 
         Interval interval = new Interval();
@@ -69,7 +69,7 @@ public class TestAddFacts {
                 .setInterval(interval);
         Pipeline pl = falkonry.createPipeline(pipeline);
 
-        data = "time,end,thing,Health\n2011-03-31T00:00:00Z,2011-04-01T00:00:00Z,thing1,Normal\n2011-03-31T00:00:00Z,2011-04-01T00:00:00Z,thing1,Normal";
+        data = "time,end,entity,Health\n2011-03-31T00:00:00Z,2011-04-01T00:00:00Z,entity1,Normal\n2011-03-31T00:00:00Z,2011-04-01T00:00:00Z,entity1,Normal";
         String response = falkonry.addFacts(pl.getId(), data, null);
         Assert.assertEquals(response,"{\"message\":\"Data submitted successfully\"}");
         falkonry.deletePipeline(pl.getId());
@@ -102,7 +102,7 @@ public class TestAddFacts {
         Eventbuffer eventbuffer = falkonry.createEventbuffer(eb);
         eventbuffers.add(eventbuffer);
 
-        String data = "time, tag, entity, signal1, signal2, signal3\n2016-03-01 01:01:01, signal1_thing1, thing1, 3.4, 4.8, 8.3";
+        String data = "time, tag, entity, signal1, signal2, signal3\n2016-03-01 01:01:01, signal1_entity1, entity1, 3.4, 4.8, 8.3";
         falkonry.addInput(eventbuffer.getId(), data, options);
 
         Interval interval = new Interval();
@@ -117,7 +117,7 @@ public class TestAddFacts {
                 .setInterval(interval);
         Pipeline pl = falkonry.createPipeline(pipeline);
 
-        data = "time,end,entity,Health\n2011-03-31T00:00:00Z,2011-04-01T00:00:00Z,thing1,Normal\n2011-03-31T00:00:00Z,2011-04-01T00:00:00Z,thing1,Normal";
+        data = "time,end,entity,Health\n2011-03-31T00:00:00Z,2011-04-01T00:00:00Z,entity1,Normal\n2011-03-31T00:00:00Z,2011-04-01T00:00:00Z,entity1,Normal";
         String response = falkonry.addFacts(pl.getId(), data, null);
         Assert.assertEquals(response,"{\"message\":\"Data submitted successfully\"}");
         falkonry.deletePipeline(pl.getId());
@@ -152,7 +152,7 @@ public class TestAddFacts {
         Eventbuffer eventbuffer = falkonry.createEventbuffer(eb);
         eventbuffers.add(eventbuffer);
 
-        String data = "{\"time\" : \"2016-03-01 01:01:01\", \"tag\" : \"signal1_thing1\", \"value\" : 3.4}";
+        String data = "{\"time\" : \"2016-03-01 01:01:01\", \"tag\" : \"signal1_entity1\", \"value\" : 3.4}";
         falkonry.addInput(eventbuffer.getId(), data, options);
 
         Interval interval = new Interval();
@@ -167,7 +167,7 @@ public class TestAddFacts {
                 .setInterval(interval);
         Pipeline pl = falkonry.createPipeline(pipeline);
 
-        data = "{\"time\" : \"2011-03-26T12:00:00Z\", \"entity\" : \"thing1\", \"end\" : \"2012-06-01T00:00:00Z\", \"Health\" : \"Normal\"}";
+        data = "{\"time\" : \"2011-03-26T12:00:00Z\", \"entity\" : \"entity1\", \"end\" : \"2012-06-01T00:00:00Z\", \"Health\" : \"Normal\"}";
         String response = falkonry.addFacts(pl.getId(), data, null);
         String response_id = response.split("(:)|(,)")[1];
         Assert.assertNotEquals(response_id,null);
@@ -201,7 +201,7 @@ public class TestAddFacts {
         Eventbuffer eventbuffer = falkonry.createEventbuffer(eb);
         eventbuffers.add(eventbuffer);
 
-        String data = "{\"time\":1467729675422,\"entity\":\"thing1\",\"signal1\":41.11,\"signal2\":82.34,\"signal3\":74.63,\"signal4\":4.8,\"signal5\":72.01}";
+        String data = "{\"time\":1467729675422,\"entity\":\"entity1\",\"signal1\":41.11,\"signal2\":82.34,\"signal3\":74.63,\"signal4\":4.8,\"signal5\":72.01}";
         falkonry.addInput(eventbuffer.getId(), data, options);
 
         Interval interval = new Interval();
@@ -216,7 +216,7 @@ public class TestAddFacts {
                 .setInterval(interval);
         Pipeline pl = falkonry.createPipeline(pipeline);
 
-        data = "{\"time\" : \"2011-03-26T12:00:00Z\", \"entity\" : \"thing1\", \"end\" : \"2012-06-01T00:00:00Z\", \"Health\" : \"Normal\"}";
+        data = "{\"time\" : \"2011-03-26T12:00:00Z\", \"entity\" : \"entity1\", \"end\" : \"2012-06-01T00:00:00Z\", \"Health\" : \"Normal\"}";
         String response = falkonry.addFacts(pl.getId(), data, null);
         String response_id = response.split("(:)|(,)")[1];
         Assert.assertNotEquals(response_id,null);

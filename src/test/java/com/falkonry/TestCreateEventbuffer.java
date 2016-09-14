@@ -63,7 +63,7 @@ public class TestCreateEventbuffer {
     eb.setName("Test-EB-"+Math.random());
     eb.setTimeIdentifier("time");
     eb.setTimeFormat("iso_8601");
-    eb.setThingIdentifier("thing");
+    eb.setEntityIdentifier("entity");
 
     Eventbuffer eventbuffer = falkonry.createEventbuffer(eb);
     eventbuffers.add(eventbuffer);
@@ -91,7 +91,7 @@ public class TestCreateEventbuffer {
     Eventbuffer eventbuffer = falkonry.createEventbuffer(eb);
     eventbuffers.add(eventbuffer);
 
-    String data = "{\"time\" : \"2016-03-01 01:01:01\", \"tag\" : \"signal1_thing1\", \"value\" : 3.4}";
+    String data = "{\"time\" : \"2016-03-01 01:01:01\", \"tag\" : \"signal1_entity1\", \"value\" : 3.4}";
     Map<String, String> options = new HashMap<String, String>();
     falkonry.addInput(eventbuffer.getId(), data, options);
 
@@ -113,15 +113,14 @@ public class TestCreateEventbuffer {
   public void createEventbufferWithWideJsonData() throws Exception {
     Eventbuffer eb = new Eventbuffer();
     eb.setName("Test-EB-"+Math.random());
-    eb.setThingIdentifier("thing");
+    eb.setEntityIdentifier("entity");
     eb.setTimeIdentifier("time");
-    eb.setThingIdentifier("thing");
     eb.setTimeFormat("millis");
 
     Eventbuffer eventbuffer = falkonry.createEventbuffer(eb);
     eventbuffers.add(eventbuffer);
 
-    String data = "{\"time\":1467729675422,\"thing\":\"thing1\",\"signal1\":41.11,\"signal2\":82.34,\"signal3\":74.63,\"signal4\":4.8,\"signal5\":72.01}";
+    String data = "{\"time\":1467729675422,\"entity\":\"entity1\",\"signal1\":41.11,\"signal2\":82.34,\"signal3\":74.63,\"signal4\":4.8,\"signal5\":72.01}";
     Map<String, String> options = new HashMap<String, String>();
     falkonry.addInput(eventbuffer.getId(), data, options);
 
@@ -153,7 +152,7 @@ public class TestCreateEventbuffer {
     Eventbuffer eventbuffer = falkonry.createEventbuffer(eb);
     eventbuffers.add(eventbuffer);
 
-    String data = "time, tag, value\n2016-03-01 01:01:01, signal1_thing1, 3.4";
+    String data = "time, tag, value\n2016-03-01 01:01:01, signal1_entity1, 3.4";
     Map<String, String> options = new HashMap<String, String>();
     falkonry.addInput(eventbuffer.getId(), data, options);
 
@@ -172,15 +171,14 @@ public class TestCreateEventbuffer {
   public void createEventbufferWithWideCsvData() throws Exception {
     Eventbuffer eb = new Eventbuffer();
     eb.setName("Test-EB-"+Math.random());
-    eb.setThingIdentifier("thing");
+    eb.setEntityIdentifier("entity");
     eb.setTimeIdentifier("time");
-    eb.setThingIdentifier("thing");
     eb.setTimeFormat("millis");
 
     Eventbuffer eventbuffer = falkonry.createEventbuffer(eb);
     eventbuffers.add(eventbuffer);
-    String data = "time,thing,signal1,signal2,signal3,signal4,signal5\n" +
-            "1467729675422,thing1,41.11,82.34,74.63,4.8,72.01";
+    String data = "time,entity,signal1,signal2,signal3,signal4,signal5\n" +
+            "1467729675422,entity1,41.11,82.34,74.63,4.8,72.01";
     Map<String, String> options = new HashMap<String, String>();
     falkonry.addInput(eventbuffer.getId(), data, options);
 
@@ -215,8 +213,8 @@ public class TestCreateEventbuffer {
 
     Eventbuffer eventbuffer = falkonry.createEventbuffer(eb);
 
-    String data = "time,thing,signal1,signal2,signal3,signal4,signal5\n" +
-            "1467729675422,thing1,41.11,82.34,74.63,4.8,72.01";
+    String data = "time,entity,signal1,signal2,signal3,signal4,signal5\n" +
+            "1467729675422,entity1,41.11,82.34,74.63,4.8,72.01";
     Map<String, String> options = new HashMap<String, String>();
     falkonry.addInput(eventbuffer.getId(), data, options);
 
@@ -259,8 +257,8 @@ public class TestCreateEventbuffer {
             .setPath("urn:falkonry:pipeline:zmusfprsf7zspf");
 
     Eventbuffer eventbuffer = falkonry.createEventbuffer(eb);
-    String data = "time,thing,signal1,signal2,signal3,signal4,signal5\n"
-            + "1467729675422,thing1,41.11,82.34,74.63,4.8,72.01";
+    String data = "time,entity,signal1,signal2,signal3,signal4,signal5\n"
+            + "1467729675422,entity1,41.11,82.34,74.63,4.8,72.01";
     Map<String, String> options = new HashMap<String, String>();
     falkonry.addInput(eventbuffer.getId(), data, options);
 
@@ -304,8 +302,8 @@ public class TestCreateEventbuffer {
             .setPassword("test");
 
     Eventbuffer eventbuffer = falkonry.createEventbuffer(eb);
-    String data = "time,thing,signal1,signal2,signal3,signal4,signal5\n" +
-            "1467729675422,thing1,41.11,82.34,74.63,4.8,72.01";
+    String data = "time,entity,signal1,signal2,signal3,signal4,signal5\n" +
+            "1467729675422,entity1,41.11,82.34,74.63,4.8,72.01";
     Map<String, String> options = new HashMap<String, String>();
     falkonry.addInput(eventbuffer.getId(), data, options);
 

@@ -53,7 +53,7 @@ public class TestPublication {
     Eventbuffer eventbuffer = falkonry.createEventbuffer(eb);
     eventbuffers.add(eventbuffer);
 
-    String data = "time, tag, value\n2016-03-01 01:01:01, signal1_thing1, 3.4";
+    String data = "time, tag, value\n2016-03-01 01:01:01, signal1_entity1, 3.4";
     falkonry.addInput(eventbuffer.getId(), data, options);
     Interval interval = new Interval();
     interval.setDuration("PT1S");

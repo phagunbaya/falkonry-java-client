@@ -52,7 +52,7 @@ public class TestGetPipelines {
     Eventbuffer eventbuffer = falkonry.createEventbuffer(eb);
     eventbuffers.add(eventbuffer);
 
-    String data = "time, tag, value\n2016-03-01 01:01:01, signal1_thing1, 3.4";
+    String data = "time, tag, value\n2016-03-01 01:01:01, signal1_entity1, 3.4";
     falkonry.addInput(eventbuffer.getId(), data, options);
 
     Interval interval = new Interval();
@@ -78,7 +78,7 @@ public class TestGetPipelines {
     eb.setName("Test-EB-"+Math.random());
     eb.setTimeIdentifier("time");
     eb.setTimeFormat("millis");
-    eb.setThingIdentifier("thing");
+    eb.setEntityIdentifier("entity");
 
     List<Signal> signals = new ArrayList<Signal>();
     signals.add(new Signal().setName("signal1").setValueType(new ValueType().setType("Numeric"))
@@ -103,7 +103,7 @@ public class TestGetPipelines {
     Eventbuffer eventbuffer = falkonry.createEventbuffer(eb);
     eventbuffers.add(eventbuffer);
 
-    String data = "{\"time\":1467729675422,\"thing\":\"thing1\",\"signal1\":41.11,\"signal2\":82.34,\"signal3\":74.63}";
+    String data = "{\"time\":1467729675422,\"entity\":\"entity1\",\"signal1\":41.11,\"signal2\":82.34,\"signal3\":74.63}";
     falkonry.addInput(eventbuffer.getId(), data, options);
 
     Interval interval = new Interval();

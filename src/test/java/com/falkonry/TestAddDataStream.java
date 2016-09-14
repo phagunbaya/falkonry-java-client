@@ -54,7 +54,7 @@ public class TestAddDataStream {
     eb.setName("Test-EB-"+Math.random());
     eb.setTimeIdentifier("time");
     eb.setTimeFormat("millis");
-    eb.setThingIdentifier("thing");
+    eb.setEntityIdentifier("entity");
     Map<String, String> options = new HashMap<String, String>();
     Eventbuffer eventbuffer = falkonry.createEventbuffer(eb);
     eventbuffers.add(eventbuffer);
@@ -91,7 +91,7 @@ public class TestAddDataStream {
     eb.setName("Test-EB-"+Math.random());
     eb.setTimeIdentifier("time");
     eb.setTimeFormat("millis");
-    eb.setThingIdentifier("thing");
+    eb.setEntityIdentifier("entity");
     Map<String, String> options = new HashMap<String, String>();
     Eventbuffer eventbuffer = falkonry.createEventbuffer(eb);
     eventbuffers.add(eventbuffer);

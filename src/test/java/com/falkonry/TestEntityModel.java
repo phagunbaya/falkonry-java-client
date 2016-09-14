@@ -37,7 +37,7 @@ public class TestEntityModel {
   }
 
   @Test
-  public void pipelineModelWithSingleThingWithDefaults(){
+  public void pipelineModelWithSingleEntityWithDefaults(){
     List<Signal> signals = new ArrayList<Signal>();
     signals.add(new Signal().setName("signal1").setValueType(new ValueType().setType("Numeric"))
             .setEventType(new EventType().setType("Samples")));
@@ -70,7 +70,7 @@ public class TestEntityModel {
   }
 
   @Test
-  public void pipelineModelWithMultipleThingsWithOverrides(){
+  public void pipelineModelWithMultipleEntitiesWithOverrides(){
     List<Signal> signals = new ArrayList<Signal>();
     signals.add(new Signal().setName("signal1").setValueType(new ValueType().setType("Numeric"))
         .setEventType(new EventType().setType("Samples")));

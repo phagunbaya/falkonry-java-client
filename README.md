@@ -11,7 +11,7 @@ Maven install
 <dependency>
   <groupId>com.falkonry</groupId>
   <artifactId>client</artifactId>
-  <version>0.1.3</version>
+  <version>0.1.4</version>
 </dependency>
 ```
 
@@ -82,18 +82,18 @@ Usage:
 
 Data:
 ```
-    {"time" :"2016-03-01 01:01:01", "tag" : "signal1_thing1", "value" : 3.4}
-    {"time" :"2016-03-01 01:01:01", "tag" : "signal2_thing1", "value" : 1.4}
-    {"time" :"2016-03-01 01:01:02", "tag" : "signal1_thing2", "value" : 9.3}
-    {"time" :"2016-03-01 01:01:02", "tag" : "signal2_thing2", "value" : 4.3}
+    {"time" :"2016-03-01 01:01:01", "tag" : "signal1_entity1", "value" : 3.4}
+    {"time" :"2016-03-01 01:01:01", "tag" : "signal2_entity1", "value" : 1.4}
+    {"time" :"2016-03-01 01:01:02", "tag" : "signal1_entity2", "value" : 9.3}
+    {"time" :"2016-03-01 01:01:02", "tag" : "signal2_entity2", "value" : 4.3}
 
     or
 
     time, tag, value
-    2016-03-01 01:01:01, signal1_thing1, 3.4
-    2016-03-01 01:01:01, signal2_thing1, 1.4
-    2016-03-01 01:01:02, signal1_thing2, 9.3
-    2016-03-01 01:01:02, signal2_thing2, 4.3
+    2016-03-01 01:01:01, signal1_entity1, 3.4
+    2016-03-01 01:01:01, signal2_entity1, 1.4
+    2016-03-01 01:01:02, signal1_entity2, 9.3
+    2016-03-01 01:01:02, signal2_entity2, 4.3
 ```
 
 Usage:
@@ -116,10 +116,10 @@ Usage:
     Eventbuffer eventbuffer = falkonry.createEventbuffer(eb);
 
     //Add data to eventbuffer
-    String data = "{\"time\" : \"2016-03-01 01:01:01\", \"tag\" : \"signal1_thing1\", \"value\" : 3.4}" + "\n"
-        + "{\"time\" : \"2016-03-01 01:01:01\", \"tag\" : \"signal2_thing1\", \"value\" : 1.4}" + "\n"
-        + "{\"time\" : \"2016-03-01 01:01:02\", \"tag\" : \"signal1_thing1\", \"value\" : 9.3}" + "\n"
-        + "{\"time\" : \"2016-03-01 01:01:02\", \"tag\" : \"signal2_thing2\", \"value\" : 4.3}";
+    String data = "{\"time\" : \"2016-03-01 01:01:01\", \"tag\" : \"signal1_entity1\", \"value\" : 3.4}" + "\n"
+        + "{\"time\" : \"2016-03-01 01:01:01\", \"tag\" : \"signal2_entity1\", \"value\" : 1.4}" + "\n"
+        + "{\"time\" : \"2016-03-01 01:01:02\", \"tag\" : \"signal1_entity1\", \"value\" : 9.3}" + "\n"
+        + "{\"time\" : \"2016-03-01 01:01:02\", \"tag\" : \"signal2_entity2\", \"value\" : 4.3}";
     InputStatus inputStatus = falkonry.addInput(eventbuffer.getId(), data, options);
 
 ```
@@ -163,14 +163,14 @@ Usage:
 
 Data:
 ```
-    {"time":1467729675422, "entities": "Thing1", "signal1":41.11, "signal2":82.34, "signal3":74.63, "signal4":4.8}
-    {"time":1467729668919, "entities": "Thing2", "signal1":78.11, "signal2":2.33, "signal3":4.6, "signal4":9.8}
+    {"time":1467729675422, "entities": "entity1", "signal1":41.11, "signal2":82.34, "signal3":74.63, "signal4":4.8}
+    {"time":1467729668919, "entities": "entity2", "signal1":78.11, "signal2":2.33, "signal3":4.6, "signal4":9.8}
 
     or
 
     time, entities, signal1, signal2, signal3, signal4
-    1467729675422, thing1, 41.11, 62.34, 77.63, 4.8
-    1467729675445, thing1, 43.91, 82.64, 73.63, 3.8
+    1467729675422, entity1, 41.11, 62.34, 77.63, 4.8
+    1467729675445, entity1, 43.91, 82.64, 73.63, 3.8
 ```
 
 Usage:
@@ -191,8 +191,8 @@ Usage:
 
     //Add data to eventbuffer
     String data = "time, entities, signal1, signal2, signal3, signal4" + "\n"
-        + "1467729675422, thing1, 41.11, 62.34, 77.63, 4.8" + "\n"
-        + "1467729675445, thing1, 43.91, 82.64, 73.63, 3.8";
+        + "1467729675422, entity1, 41.11, 62.34, 77.63, 4.8" + "\n"
+        + "1467729675445, entity1, 43.91, 82.64, 73.63, 3.8";
     InputStatus inputStatus = falkonry.addInput(eventbuffer.getId(), data, options);
 ```
 
@@ -324,7 +324,7 @@ Usage:
 
     Falkonry falkonry = new Falkonry("https://service.falkonry.io", "auth-token");
 
-    String data = "{\"time\" : \"2011-03-26T12:00:00Z\", \"entities\" : \"thing1\", \"end\" : \"2012-06-01T00:00:00Z\", \"Health\" : \"Normal\"}";
+    String data = "{\"time\" : \"2011-03-26T12:00:00Z\", \"entities\" : \"entity1\", \"end\" : \"2012-06-01T00:00:00Z\", \"Health\" : \"Normal\"}";
     String response = falkonry.addfacts(pipeline.getId(),data, options);
 ```
 
