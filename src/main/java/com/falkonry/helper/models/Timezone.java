@@ -23,7 +23,7 @@ public class Timezone {
     return this.offset;
   }
 
-  public Timezone setOffset(String offset) {
+  public Timezone setOffset(int offset) {
     this.offset = offset;
     return this;
   }
