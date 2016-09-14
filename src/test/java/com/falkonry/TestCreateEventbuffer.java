@@ -3,6 +3,7 @@ package com.falkonry;
 import com.falkonry.client.Falkonry;
 import com.falkonry.helper.models.Eventbuffer;
 import com.falkonry.helper.models.Subscription;
+import com.falkonry.helper.models.Timezone;
 import org.junit.*;
 
 import java.util.*;
@@ -26,7 +27,7 @@ public class TestCreateEventbuffer {
 
   //@Test
   public void createEventbuffer() throws Exception {
-    Timezone timezone = new Timezone()
+    Timezone timezone = new Timezone();
     timezone.setZone("GMT");
     timezone.setOffset(0);
 

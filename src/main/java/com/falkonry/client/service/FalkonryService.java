@@ -301,15 +301,15 @@ public class FalkonryService {
 
 
 
-  public Object streamOutput(String pipeline, Long start) {
-    String data;
-      try {
+  // public Observer streamOutput(String pipeline, Long start) {
+  //   String data;
+  //     try {
 
-      } catch (Exception e) {
-        System.out.println("Error instantiating streamingThread : " + e);
-      }
-    return null;
-  }
+  //     } catch (Exception e) {
+  //       System.out.println("Error instantiating streamingThread : " + e);
+  //     }
+  //   return null;
+  // }
 
   public Subscription createSubscription(String eventbuffer, Subscription subscription) throws Exception {
     ObjectMapper mapper = new ObjectMapper();
