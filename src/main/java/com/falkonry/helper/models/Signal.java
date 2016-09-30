@@ -7,6 +7,9 @@ package com.falkonry.helper.models;
  */
 
 
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown=true)
 public class Signal {
   private String key;
   private String name;

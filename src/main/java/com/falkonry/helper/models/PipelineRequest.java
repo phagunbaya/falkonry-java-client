@@ -1,5 +1,6 @@
 package com.falkonry.helper.models;
 
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.codehaus.jackson.annotate.JsonProperty;
 
 import java.util.List;
@@ -10,6 +11,7 @@ import java.util.List;
  * MIT Licensed
  */
 
+@JsonIgnoreProperties(ignoreUnknown=true)
 public class PipelineRequest {
   private String name;
   private String eventbuffer;

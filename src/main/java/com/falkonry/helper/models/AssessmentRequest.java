@@ -1,5 +1,7 @@
 package com.falkonry.helper.models;
 
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,6 +11,8 @@ import java.util.List;
  * MIT Licensed
  */
 
+
+@JsonIgnoreProperties(ignoreUnknown=true)
 public class AssessmentRequest {
   private String name;
   private List<String> inputList = new ArrayList<String>();
