@@ -6,6 +6,10 @@ package com.falkonry.helper.models;
  * MIT Licensed
  */
 
+
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown=true)
 public class Subscription {
   private String key;
   private String type;
