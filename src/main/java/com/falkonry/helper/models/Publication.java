@@ -6,8 +6,11 @@ package com.falkonry.helper.models;
  * MIT Licensed
  */
 
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+
 import java.util.Map;
 
+@JsonIgnoreProperties(ignoreUnknown=true)
 public class Publication {
   private String key;
   private String type;

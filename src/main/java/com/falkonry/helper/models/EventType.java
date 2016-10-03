@@ -6,6 +6,9 @@ package com.falkonry.helper.models;
  * MIT Licensed
  */
 
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown=true)
 public class EventType {
   private String type = "Samples";
 

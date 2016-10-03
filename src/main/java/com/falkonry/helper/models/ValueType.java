@@ -5,6 +5,9 @@ package com.falkonry.helper.models;
  * MIT Licensed
  */
 
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown=true)
 public class ValueType {
   private String type = "Numerical";
 

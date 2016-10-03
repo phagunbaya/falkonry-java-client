@@ -1,5 +1,7 @@
 package com.falkonry.helper.models;
 
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,6 +10,11 @@ import java.util.List;
  * Copyright(c) 2016 Falkonry Inc
  * MIT Licensed
  */
+
+
+
+@JsonIgnoreProperties(ignoreUnknown=true)
+
 
 public class Assessment {
   private String key;

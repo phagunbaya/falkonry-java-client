@@ -1,5 +1,6 @@
 package com.falkonry.helper.models;
 
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.codehaus.jackson.annotate.JsonProperty;
 
 /*!
@@ -8,6 +9,8 @@ import org.codehaus.jackson.annotate.JsonProperty;
  * MIT Licensed
  */
 
+
+@JsonIgnoreProperties(ignoreUnknown=true)
 public class StatsMeasurementMap {
   private String Data;
   private String Signal;
