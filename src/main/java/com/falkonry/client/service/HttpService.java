@@ -29,7 +29,7 @@ public class HttpService {
   public HttpService(String host, String token) throws Exception {
     this.host = (host == null) ? "https://service.falkonry.io" : host;
     try {
-      this.token = Base64.getEncoder().encodeToString(token.getBytes("UTF-8"));
+      this.token = token;
     } catch (Exception e) {
       throw new Exception("Invalid token");
     }
@@ -41,7 +41,7 @@ public class HttpService {
     HttpURLConnection con = (HttpURLConnection) obj.openConnection();
     con.setRequestMethod("GET");
     con.setRequestProperty("User-Agent", this.user_agent);
-    con.setRequestProperty("Authorization", "Token "+this.token);
+    con.setRequestProperty("Authorization", "Bearer "+this.token);
     int responseCode = con.getResponseCode();
     BufferedReader in = new BufferedReader(
         new InputStreamReader(con.getInputStream()));
@@ -71,7 +71,7 @@ public class HttpService {
     con.setRequestMethod("POST");
     con.setRequestProperty("User-Agent", this.user_agent);
     con.setRequestProperty("Content-Type", "application/json");
-    con.setRequestProperty("Authorization", "Token "+this.token);
+    con.setRequestProperty("Authorization", "Bearer "+this.token);
     con.setDoOutput(true);
     DataOutputStream wr = new DataOutputStream(con.getOutputStream());
     wr.writeBytes(data);
@@ -109,7 +109,7 @@ public class HttpService {
     con.setRequestMethod("POST");
     con.setRequestProperty("User-Agent", this.user_agent);
     con.setRequestProperty("Content-Type", "text/plain");
-    con.setRequestProperty("Authorization", "Token "+this.token);
+    con.setRequestProperty("Authorization", "Bearer "+this.token);
     con.setDoOutput(true);
     DataOutputStream wr = new DataOutputStream(con.getOutputStream());
     wr.writeBytes(data);
@@ -145,7 +145,7 @@ public class HttpService {
     con.setRequestMethod("PUT");
     con.setRequestProperty("User-Agent", this.user_agent);
     con.setRequestProperty("Content-Type", "application/json");
-    con.setRequestProperty("Authorization", "Token "+this.token);
+    con.setRequestProperty("Authorization", "Bearer "+this.token);
     con.setDoOutput(true);
     DataOutputStream wr = new DataOutputStream(con.getOutputStream());
     wr.writeBytes(data);
@@ -178,7 +178,7 @@ public class HttpService {
     CloseableHttpClient httpClient = HttpClients.createDefault();
     HttpDelete httpDelete = new HttpDelete(url);
     httpDelete.addHeader("User-Agent", this.user_agent);
-    httpDelete.addHeader("Authorization", "Token "+this.token);
+    httpDelete.addHeader("Authorization", "Bearer "+this.token);
     httpDelete.addHeader("Content-Type", "application/json");
     CloseableHttpResponse closeableHttpResponse = httpClient.execute(httpDelete);
     int responseCode = closeableHttpResponse.getStatusLine().getStatusCode();
@@ -196,7 +196,7 @@ public class HttpService {
     CloseableHttpClient httpClient = HttpClients.createDefault();
     HttpPost httpPost = new HttpPost(url);
     httpPost.addHeader("User-Agent", this.user_agent);
-    httpPost.addHeader("Authorization", "Token "+this.token);
+    httpPost.addHeader("Authorization", "Bearer "+this.token);
 
     MultipartEntityBuilder builder = MultipartEntityBuilder.create();
     builder.addTextBody("name",params.get("name"));
@@ -246,7 +246,7 @@ public class HttpService {
     con.setRequestMethod("POST");
     con.setRequestProperty("User-Agent", this.user_agent);
     con.setRequestProperty("Content-Type", "text/plain");
-    con.setRequestProperty("Authorization", "Token "+this.token);
+    con.setRequestProperty("Authorization", "Bearer "+this.token);
     con.setDoOutput(true);
     DataOutputStream wr = new DataOutputStream(con.getOutputStream());
     wr.write(data);
@@ -280,7 +280,7 @@ public class HttpService {
     HttpURLConnection con = (HttpURLConnection) obj.openConnection();
     con.setRequestMethod("GET");
     con.setRequestProperty("User-Agent", this.user_agent);
-    con.setRequestProperty("Authorization", "Token "+this.token);
+    con.setRequestProperty("Authorization", "Bearer "+this.token);
     int responseCode = con.getResponseCode();
     BufferedReader in = new BufferedReader(
         new InputStreamReader(con.getInputStream()));
