@@ -55,16 +55,27 @@ public class TestCreatePipeline {
     String data = "time, tag, value\n2016-03-01 01:01:01, signal1_entity1, 3.4";
     falkonry.addInput(eventbuffer.getId(), data, options);
 
+    Eventbuffer storedEventBuffer = falkonry.getUpdatedEventbuffer(eventbuffer.getId());
+    List<Object> schemaList = storedEventBuffer.getSchemaList();
+    LinkedHashMap schema = (LinkedHashMap) schemaList.get(0);
+    int count =0;
+    while(((List)schema.get("signalList")).size()==0 && count<3){
+      Thread.sleep(5000);
+      storedEventBuffer = falkonry.getUpdatedEventbuffer(eventbuffer.getId());
+      schemaList = storedEventBuffer.getSchemaList();
+      schema = (LinkedHashMap) schemaList.get(0);
+      count++;
+    }
+
     Interval interval = new Interval();
     interval.setDuration("PT1S");
-
     Pipeline pipeline = new Pipeline();
     String name = "Test-PL-" + Math.random();
     pipeline.setName(name)
-    .setEventbuffer(eventbuffer.getId())
-    .setInputList(signals)
-    .setAssessmentList(assessments)
-    .setInterval(interval);
+      .setEventbuffer(eventbuffer.getId())
+      .setInputList(signals)
+      .setAssessmentList(assessments)
+      .setInterval(interval);
 
     Pipeline pl = falkonry.createPipeline(pipeline);
     Assert.assertEquals(pl.getName(),pipeline.getName());
