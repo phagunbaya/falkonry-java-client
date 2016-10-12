@@ -11,7 +11,7 @@ Maven install
 <dependency>
   <groupId>com.falkonry</groupId>
   <artifactId>client</artifactId>
-  <version>0.1.6</version>
+  <version>0.1.7</version>
 </dependency>
 ```
 
