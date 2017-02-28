@@ -23,7 +23,6 @@ Maven install
     * Retrieve Pipelines
     * Add data to Eventbuffer (csv/json, stream)
     * Add facts to Pipeline (csv/json, stream)
-    * Retrieve output of Pipeline
 
 ## Quick Start
 
@@ -357,19 +356,6 @@ Usage:
     File file = new File("res/factsData.csv");      
     ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(FileUtils.readFileToByteArray(file));
     String response = falkonry.addFactsStream(pipeline.getId(),byteArrayInputStream, options);
-```
-
-#### Get output of a Pipeline
-
-```java
-    import com.falkonry.client.Falkonry;
-
-    Falkonry falkonry = new Falkonry("https://sandbox.falkonry.ai", "auth-token");
-    OutputStream os   = new FileOutputStream("/tmp/sample.json");
-    Long startTime    = "1457018017000"; //milliseconds since unix epoch
-    Long endTime      = "1457028017000"; //milliseconds since unix epoch
-
-    BufferedReader br = falkonry.getOutput("pipeline_id", startTime, endTime);
 ```
 
 ## Docs
