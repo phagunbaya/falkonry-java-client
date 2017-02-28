@@ -65,8 +65,7 @@ public class TestAddFactsStream {
         pipeline.setName(name)
                 .setEventbuffer(eventbuffer.getId())
                 .setInputList(signals)
-                .setAssessmentList(assessments)
-                .setInterval(interval);
+                .setAssessmentList(assessments);
         Pipeline pl = falkonry.createPipeline(pipeline);
 
         File file = new File("res/factsData.csv");
@@ -115,8 +114,7 @@ public class TestAddFactsStream {
         pipeline.setName(name)
                 .setEventbuffer(eventbuffer.getId())
                 .setInputList(signals)
-                .setAssessmentList(assessments)
-                .setInterval(interval);
+                .setAssessmentList(assessments);
         Pipeline pl = falkonry.createPipeline(pipeline);
 
         File file = new File("res/factsData.json");

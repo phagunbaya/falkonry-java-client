@@ -74,12 +74,11 @@ public class TestCreatePipeline {
     pipeline.setName(name)
       .setEventbuffer(eventbuffer.getId())
       .setInputList(signals)
-      .setAssessmentList(assessments)
-      .setInterval(interval);
+      .setAssessmentList(assessments);
 
     Pipeline pl = falkonry.createPipeline(pipeline);
     Assert.assertEquals(pl.getName(),pipeline.getName());
-    falkonry.deletePipeline(pl.getId());
+    //falkonry.deletePipeline(pl.getId());
   }
 
 
@@ -125,8 +124,7 @@ public class TestCreatePipeline {
     pipeline.setName(name)
             .setEventbuffer(eventbuffer.getId())
             .setInputList(signals)
-            .setAssessmentList(assessments)
-            .setInterval(interval);
+            .setAssessmentList(assessments);
 
     Pipeline pl = falkonry.createPipeline(pipeline);
     Assert.assertEquals(pl.getName(),pipeline.getName());

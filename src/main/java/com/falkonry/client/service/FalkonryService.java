@@ -100,7 +100,6 @@ public class FalkonryService {
     }
     pipelineRequest.setName(pipeline.getName())
         .setEntityIdentifier(pipeline.getEntityIdentifier())
-        .setInterval(pipeline.getInterval())
         .setEventbuffer(pipeline.getEventbuffer())
         .setInputList(signalRequestList)
         .setAssessmentList(assessmentRequestList)

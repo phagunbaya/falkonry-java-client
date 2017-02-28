@@ -59,13 +59,11 @@ public class TestEntityModel {
     pipeline.setEventbuffer("eventbuffer-id");
     pipeline.setInputList(signals);
     pipeline.setAssessmentList(assessments);
-    pipeline.setInterval(interval);
 
     Assert.assertEquals(pipeline.getName(),"Motor Health");
     Assert.assertEquals(pipeline.getEventbuffer(),"eventbuffer-id");
     Assert.assertEquals(pipeline.getInputList().size(),1);
     Assert.assertEquals(pipeline.getAssessmentList().size(),1);
-    Assert.assertEquals(pipeline.getInterval().getDuration(),"PT1S");
 
   }
 
@@ -92,13 +90,11 @@ public class TestEntityModel {
     pipeline.setEventbuffer("eventbuffer-id");
     pipeline.setInputList(signals);
     pipeline.setAssessmentList(assessments);
-    pipeline.setInterval(interval);
 
     Assert.assertEquals(pipeline.getName(),"Motor Health");
     Assert.assertEquals(pipeline.getEventbuffer(),"eventbuffer-id");
     Assert.assertEquals(pipeline.getInputList().size(),1);
     Assert.assertEquals(pipeline.getAssessmentList().size(),1);
-    Assert.assertEquals(pipeline.getInterval().getDuration(),"PT1S");
   }
 
   @Test

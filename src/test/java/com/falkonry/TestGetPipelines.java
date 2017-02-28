@@ -64,7 +64,6 @@ public class TestGetPipelines {
     pipeline.setEventbuffer(eventbuffer.getId());
     pipeline.setInputList(signals);
     pipeline.setAssessmentList(assessments);
-    pipeline.setInterval(interval);
 
     Pipeline pl = falkonry.createPipeline(pipeline);
     List<Pipeline> pipelines =  falkonry.getPipelines();
@@ -115,7 +114,6 @@ public class TestGetPipelines {
     pipeline.setEventbuffer(eventbuffer.getId());
     pipeline.setInputList(signals);
     pipeline.setAssessmentList(assessments);
-    pipeline.setInterval(interval);
 
     Pipeline pl = falkonry.createPipeline(pipeline);
     List<Pipeline> pipelines =  falkonry.getPipelines();

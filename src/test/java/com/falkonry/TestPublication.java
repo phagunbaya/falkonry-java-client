@@ -64,7 +64,6 @@ public class TestPublication {
     pipeline.setEventbuffer(eventbuffer.getId());
     pipeline.setInputList(signals);
     pipeline.setAssessmentList(assessments);
-    pipeline.setInterval(interval);
 
     Pipeline pl = falkonry.createPipeline(pipeline);
 

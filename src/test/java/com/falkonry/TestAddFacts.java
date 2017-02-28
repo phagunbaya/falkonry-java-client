@@ -65,8 +65,7 @@ public class TestAddFacts {
         pipeline.setName(name)
                 .setEventbuffer(eventbuffer.getId())
                 .setInputList(signals)
-                .setAssessmentList(assessments)
-                .setInterval(interval);
+                .setAssessmentList(assessments);
         Pipeline pl = falkonry.createPipeline(pipeline);
 
         data = "time,end,entity,Health\n2011-03-31T00:00:00Z,2011-04-01T00:00:00Z,entity1,Normal\n2011-03-31T00:00:00Z,2011-04-01T00:00:00Z,entity1,Normal";
@@ -113,8 +112,7 @@ public class TestAddFacts {
         pipeline.setName(name)
                 .setEventbuffer(eventbuffer.getId())
                 .setInputList(signals)
-                .setAssessmentList(assessments)
-                .setInterval(interval);
+                .setAssessmentList(assessments);
         Pipeline pl = falkonry.createPipeline(pipeline);
 
         data = "time,end,entity,Health\n2011-03-31T00:00:00Z,2011-04-01T00:00:00Z,entity1,Normal\n2011-03-31T00:00:00Z,2011-04-01T00:00:00Z,entity1,Normal";
@@ -163,8 +161,7 @@ public class TestAddFacts {
         pipeline.setName(name)
                 .setEventbuffer(eventbuffer.getId())
                 .setInputList(signals)
-                .setAssessmentList(assessments)
-                .setInterval(interval);
+                .setAssessmentList(assessments);
         Pipeline pl = falkonry.createPipeline(pipeline);
 
         data = "{\"time\" : \"2011-03-26T12:00:00Z\", \"entity\" : \"entity1\", \"end\" : \"2012-06-01T00:00:00Z\", \"Health\" : \"Normal\"}";
@@ -212,8 +209,7 @@ public class TestAddFacts {
         pipeline.setName(name)
                 .setEventbuffer(eventbuffer.getId())
                 .setInputList(signals)
-                .setAssessmentList(assessments)
-                .setInterval(interval);
+                .setAssessmentList(assessments);
         Pipeline pl = falkonry.createPipeline(pipeline);
 
         data = "{\"time\" : \"2011-03-26T12:00:00Z\", \"entity\" : \"entity1\", \"end\" : \"2012-06-01T00:00:00Z\", \"Health\" : \"Normal\"}";

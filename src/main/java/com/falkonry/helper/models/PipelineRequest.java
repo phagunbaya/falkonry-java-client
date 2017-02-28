@@ -19,7 +19,6 @@ public class PipelineRequest {
   private String entityName;
   private List<SignalRequest> inputList;
   private List<AssessmentRequest> assessmentList;
-  private Interval interval;
 
   public String getName() {
     return name;
@@ -27,15 +26,6 @@ public class PipelineRequest {
 
   public PipelineRequest setName(String name) {
     this.name = name;
-    return this;
-  }
-
-  public Interval getInterval() {
-    return interval;
-  }
-
-  public PipelineRequest setInterval(Interval interval) {
-    this.interval = interval;
     return this;
   }
 

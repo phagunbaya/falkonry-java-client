@@ -29,7 +29,6 @@ public class Pipeline {
   private List<Signal> inputList;
   private List<Assessment> assessmentList;
   private List<Publication> publicationList;
-  private Interval interval;
   private Long earliestDataPoint;
   private Long latestDataPoint;
   private List<Object> modelRevisionList;
@@ -183,15 +182,6 @@ public class Pipeline {
 
   public Pipeline setPublicationList(List<Publication> publicationList) {
     this.publicationList = publicationList;
-    return this;
-  }
-
-  public Interval getInterval() {
-    return interval;
-  }
-
-  public Pipeline setInterval(Interval interval) {
-    this.interval = interval;
     return this;
   }
 
