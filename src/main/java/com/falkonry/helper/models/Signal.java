@@ -5,50 +5,46 @@ package com.falkonry.helper.models;
  * Copyright(c) 2016 Falkonry Inc
  * MIT Licensed
  */
-
-
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
-@JsonIgnoreProperties(ignoreUnknown=true)
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Signal {
-  private String key;
-  private String name;
-  private ValueType valueType;
-  private EventType eventType;
 
-  public String getKey() {
-    return key;
-  }
+    private String tagIdentifier;
+    private String delimiter;
+    private String valueIdentifier;
+    private Boolean isSignalPrefix;
 
-  public Signal setKey(String key) {
-    this.key = key;
-    return this;
-  }
+    public String getTagIdentifier() {
+        return tagIdentifier;
+    }
 
-  public String getName() {
-    return name;
-  }
+    public void setTagIdentifier(String tagIdentifier) {
+        this.tagIdentifier = tagIdentifier;
+    }
 
-  public Signal setName(String name) {
-    this.name = name;
-    return this;
-  }
+    public void setDelimiter(String delimiter) {
+        this.delimiter = delimiter;
+    }
 
-  public ValueType getValueType() {
-    return valueType;
-  }
+    public String getDelimiter() {
+        return delimiter;
+    }
 
-  public Signal setValueType(ValueType valueType) {
-    this.valueType = valueType;
-    return this;
-  }
+    public String getValueIdentifier() {
+        return valueIdentifier;
+    }
 
-  public EventType getEventType() {
-    return eventType;
-  }
+    public void setValueIdentifier(String valueIdentifier) {
+        this.valueIdentifier = valueIdentifier;
+    }
 
-  public Signal setEventType(EventType eventType) {
-    this.eventType = eventType;
-    return this;
-  }
+    public Boolean getIsSignalPrefix() {
+        return isSignalPrefix;
+    }
+
+    public void setIsSignalPrefix(Boolean isSignalPrefix) {
+        this.isSignalPrefix = isSignalPrefix;
+    }
+
 }

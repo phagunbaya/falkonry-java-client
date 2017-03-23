@@ -24,7 +24,7 @@ public class TestAddFacts {
         falkonry = new Falkonry(host, token);
     }
 
-    //@Test
+    @Test
     public void createPipelineWithCsvFacts() throws Exception {
 
         Eventbuffer eb = new Eventbuffer();

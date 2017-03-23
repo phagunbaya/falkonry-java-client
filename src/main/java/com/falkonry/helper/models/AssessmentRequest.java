@@ -10,39 +10,35 @@ import java.util.List;
  * Copyright(c) 2016 Falkonry Inc
  * MIT Licensed
  */
-
-
-@JsonIgnoreProperties(ignoreUnknown=true)
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class AssessmentRequest {
-  private String name;
-  private List<String> inputList = new ArrayList<String>();
-  private List<String> aprioriConditionList = new ArrayList<String>();
 
-  public List<String> getInputList() {
-    return inputList;
-  }
+    private String name;
+    private String datastream;
+    private String assessmentRate;
 
-  public AssessmentRequest setInputList(List<String> inputList) {
-    this.inputList = inputList;
-    return this;
-  }
+    public String getDatastream() {
+        return datastream;
+    }
 
-  public List<String> getAprioriConditionList() {
-    return aprioriConditionList;
-  }
+    public void setDatastream(String datastream) {
+        this.datastream = datastream;
+    }
 
-  public AssessmentRequest setAprioriConditionList(List<String> aprioriConditionList) {
-    this.aprioriConditionList = aprioriConditionList;
-    return this;
-  }
+    public String getAssessmentRate() {
+        return assessmentRate;
+    }
 
-  public String getName() {
+    public void setAssessmentRate(String assessmentRate) {
+        this.assessmentRate = assessmentRate;
+    }
 
-    return name;
-  }
+    public String getName() {
+        return name;
+    }
 
-  public AssessmentRequest setName(String name) {
-    this.name = name;
-    return this;
-  }
+    public AssessmentRequest setName(String name) {
+        this.name = name;
+        return this;
+    }
 }
