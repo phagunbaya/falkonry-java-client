@@ -40,8 +40,8 @@ public class Falkonry {
     falkonryService.deleteDatastream(eventbuffer);
   }
 
-  public Assessment createAssessment(Assessment assessment) throws Exception {
-    return falkonryService.createAssessment(assessment);
+  public Assessment createAssessment(AssessmentRequest assessmentRequest) throws Exception {
+    return falkonryService.createAssessment(assessmentRequest);
   }
 
   public List<Assessment> getAssessment() throws Exception {

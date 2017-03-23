@@ -3,7 +3,6 @@ package com.falkonry;
 import com.falkonry.client.Falkonry;
 import com.falkonry.helper.models.Datastream;
 import com.falkonry.helper.models.TimeObject;
-import com.falkonry.helper.models.Signal;
 import com.falkonry.helper.models.Field;
 import com.falkonry.helper.models.Input;
 import com.falkonry.helper.models.ValueType;
@@ -22,16 +21,16 @@ public class TestAddData {
 
     Falkonry falkonry = null;
 
-    
+//    String host = "https://dev.falkonry.ai";
+//    String token = "6bvyjtb2mlh4f3v93stdoe6ai5ea6d3t";
     String host = "https://localhost:8080";
     String token = "yf15jw8igeppzqba86essum3ycdeqi9u";
     List<Datastream> datastreams = new ArrayList<Datastream>();
-    HttpsURLConnection.setDefaultHostnameVerifier (
-    (hostname, session) -> true);
 
     @Before
     public void setUp() throws Exception {
         falkonry = new Falkonry(host, token);
+
     }
 
     @Test
@@ -52,12 +51,12 @@ public class TestAddData {
 //        field.setSiganl(signal);
         field.setTime(time);
         field.setEntityIdentifier("unit");
-
-        Datasource datasource = new Datasource();
-        datasource.setType("PI");
-        datasource.sethost("https://test.piserver.com/piwebapi");
-        datasource.setElementTemplateName("SampleElementTempalte");
-        ds.setDatasource(datasource);
+        ds.setField(field);
+        Datasource dataSource = new Datasource();
+        dataSource.setType("PI");
+        dataSource.sethost("https://test.piserver.com/piwebapi");
+        dataSource.setElementTemplateName("SampleElementTempalte");
+        ds.setDatasource(dataSource);
 
         // Input List
 //        Input inputList = new TypeReference<List<Input>>(){};
@@ -103,6 +102,7 @@ public class TestAddData {
         falkonry.deleteDatastream(datastream.getId());
 //        Assert.assertEquals(1, datastream.getSchemaList().size());
     }
+
     /*
     //@Test
     public void addWideDataJson() throws Exception {

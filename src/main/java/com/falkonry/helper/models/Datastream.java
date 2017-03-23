@@ -23,7 +23,7 @@ public class Datastream {
   private Long updateTime;
   private Stats stats;
   private Field field;
-  private Datasource datasource;
+  private Datasource dataSource;
   private List<Input> inputList;
 
   public String getId() {
@@ -119,12 +119,14 @@ public class Datastream {
     return this;
   }
   
+  @JsonProperty("dataSource")
   public Datasource getDatasource() {
-    return datasource;
+    return dataSource;
   }
 
-  public Datastream setDatasource(Datasource datasource) {
-    this.datasource = datasource;
+  @JsonProperty("dataSource")
+  public Datastream setDatasource(Datasource dataSource) {
+    this.dataSource = dataSource;
     return this;
   }
   

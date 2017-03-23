@@ -42,7 +42,7 @@ public class FalkonryService {
         if (datastream.getField() != null) {
             ds.setField(datastream.getField());
         }
-
+        String temp = mapper.writeValueAsString(ds);
         String datastream_json = httpService.post("/datastream", mapper.writeValueAsString(ds));
         return mapper.readValue(datastream_json, Datastream.class);
     }
@@ -65,15 +65,15 @@ public class FalkonryService {
         httpService.delete("/datastream/" + datastream);
     }
 
-    public Assessment createAssessment(Assessment assessment) throws Exception {
+    public Assessment createAssessment(AssessmentRequest assessmentRequest) throws Exception {
         ObjectMapper mapper = new ObjectMapper();
-        AssessmentRequest assessmentRequest = new AssessmentRequest();
+        AssessmentRequest as = new AssessmentRequest();
 
-        assessmentRequest.setName(assessment.getName());
-        assessmentRequest.setAssessmentRate(assessmentRequest.getAssessmentRate());
-        assessmentRequest.setDatastream(assessmentRequest.getDatastream());
+        as.setName(assessmentRequest.getName());
+        as.setAssessmentRate(assessmentRequest.getAssessmentRate());
+        as.setDatastream(assessmentRequest.getDatastream());
 
-        String assessment_json = httpService.post("/assessment", mapper.writeValueAsString(assessmentRequest));
+        String assessment_json = httpService.post("/assessment", mapper.writeValueAsString(as));
         return mapper.readValue(assessment_json, Assessment.class);
     }
 
@@ -92,11 +92,12 @@ public class FalkonryService {
         ObjectMapper mapper = new ObjectMapper();
         Map<String, String> ops = new HashMap<String, String>();
         String url = "/datastream/" + datastream;
-        if (options.containsKey("subscription")) {
-            url += "?subscriptionKey=" + options.get("subscription");
+        if (options.containsKey("streaming")) {
+            url += "?streaming=" + options.get("streaming");
         }
-        byte[] data_bytes = data.getBytes(Charset.forName("UTF-8"));
-        InputStream stream = new ByteArrayInputStream(data_bytes);
+        if (options.containsKey("hasMoreData")) {
+            url += "?hasMoreData=" + options.get("hasMoreData");
+        }
         String status = this.httpService.postData(url, data);
         return mapper.readValue(status, InputStatus.class);
     }

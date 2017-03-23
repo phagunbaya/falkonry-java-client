@@ -9,10 +9,8 @@ import com.falkonry.helper.models.HttpResponseFormat;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.Base64;
 import java.util.Map;
 import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpPost;
@@ -20,6 +18,8 @@ import org.apache.http.entity.ContentType;
 import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
+import org.apache.http.conn.ssl.SSLSocketFactory;
+import javax.net.ssl.SSLContext; 
 
 public class HttpService {
 
@@ -28,6 +28,19 @@ public class HttpService {
     private String user_agent = "falkonry/java-client";
 
     public HttpService(String host, String token) throws Exception {
+
+        //for localhost testing only
+        javax.net.ssl.HttpsURLConnection.setDefaultHostnameVerifier(
+                new javax.net.ssl.HostnameVerifier() {
+
+            public boolean verify(String hostname,
+                    javax.net.ssl.SSLSession sslSession) {
+                if (hostname.equals("localhost")) {
+                    return true;
+                }
+                return false;
+            }
+        });
         this.host = (host == null) ? "https://service.falkonry.io" : host;
         try {
             this.token = token;
@@ -177,21 +190,52 @@ public class HttpService {
     }
 
     public String delete(String path) throws Exception {
+        
         String url = this.host + path;
-        CloseableHttpClient httpClient = HttpClients.createDefault();
-        HttpDelete httpDelete = new HttpDelete(url);
-        httpDelete.addHeader("User-Agent", this.user_agent);
-        httpDelete.addHeader("Authorization", "Bearer " + this.token);
-        httpDelete.addHeader("Content-Type", "application/json");
-        CloseableHttpResponse closeableHttpResponse = httpClient.execute(httpDelete);
-        int responseCode = closeableHttpResponse.getStatusLine().getStatusCode();
+        URL obj = new URL(url);
+        HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+        con.setRequestMethod("DELETE");
+        con.setRequestProperty("User-Agent", this.user_agent);
+        con.setRequestProperty("Authorization", "Bearer " + this.token);
+        int responseCode = con.getResponseCode();
+        BufferedReader in = new BufferedReader(
+                new InputStreamReader(con.getInputStream()));
+
+        String inputLine;
+        StringBuffer response = new StringBuffer();
+
+        while ((inputLine = in.readLine()) != null) {
+            response.append(inputLine);
+        }
+
+        in.close();
+
         if (responseCode == 401) {
             throw new Exception("Unauthorized : Invalid token");
         } else if (responseCode >= 400) {
-            throw new Exception("Error:" + responseCode);
+            throw new Exception(response.toString());
         } else {
-            return "Success";//response.toString();
+            return response.toString();
         }
+        
+        
+        
+        
+        
+//        CloseableHttpClient httpClient = HttpClients.createDefault();
+//        HttpDelete httpDelete = new HttpDelete(url);
+//        httpDelete.addHeader("User-Agent", this.user_agent);
+//        httpDelete.addHeader("Authorization", "Bearer " + this.token);
+//        httpDelete.addHeader("Content-Type", "application/json");
+//        CloseableHttpResponse closeableHttpResponse = httpClient.execute(httpDelete);
+//        int responseCode = closeableHttpResponse.getStatusLine().getStatusCode();
+//        if (responseCode == 401) {
+//            throw new Exception("Unauthorized : Invalid token");
+//        } else if (responseCode >= 400) {
+//            throw new Exception("Error:" + responseCode);
+//        } else {
+//            return "Success";//response.toString();
+//        }
     }
 
     public String sfpost(String path, Map<String, String> params, InputStream stream) throws Exception {
@@ -366,4 +410,3 @@ public class HttpService {
 
     }
 }
-

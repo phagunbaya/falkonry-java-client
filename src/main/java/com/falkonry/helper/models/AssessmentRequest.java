@@ -4,6 +4,7 @@ import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
 import java.util.ArrayList;
 import java.util.List;
+import org.codehaus.jackson.annotate.JsonProperty;
 
 /*!
  * falkonry-java-client
@@ -15,7 +16,7 @@ public class AssessmentRequest {
 
     private String name;
     private String datastream;
-    private String assessmentRate;
+    private String rate;
 
     public String getDatastream() {
         return datastream;
@@ -25,12 +26,14 @@ public class AssessmentRequest {
         this.datastream = datastream;
     }
 
+     @JsonProperty("rate")
     public String getAssessmentRate() {
-        return assessmentRate;
+        return rate;
     }
-
-    public void setAssessmentRate(String assessmentRate) {
-        this.assessmentRate = assessmentRate;
+    
+     @JsonProperty("rate")
+    public void setAssessmentRate(String rate) {
+        this.rate = rate;
     }
 
     public String getName() {
