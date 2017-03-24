@@ -53,6 +53,13 @@ public class FalkonryService {
         String datastream_json = httpService.get(url);
         return mapper.readValue(datastream_json, Datastream.class);
     }
+    
+    public Datastream updateDatastream(Datastream datastream) throws Exception {
+        ObjectMapper mapper = new ObjectMapper();
+        String url = "/datastream/" + datastream.getId();
+        String datastream_json = httpService.put(url,mapper.writeValueAsString(datastream));
+        return mapper.readValue(datastream_json, Datastream.class);
+    }
 
     public void deleteDatastream(String datastream) throws Exception {
         httpService.delete("/datastream/" + datastream);
@@ -76,10 +83,26 @@ public class FalkonryService {
         return mapper.readValue(assessment_json, new TypeReference<List<Assessment>>() {
         });
     }
+    
+    public Assessment getAssessment(String id) throws Exception {
+        ObjectMapper mapper = new ObjectMapper();
+        String url = "/assessment/" + id;
+        String assessment_json = httpService.get(url);
+        return mapper.readValue(assessment_json, Assessment.class);
+    }
+    
+    public Assessment updateAssessment(Assessment assessment) throws Exception {
+        ObjectMapper mapper = new ObjectMapper();
+        String url = "/assessment/" + assessment.getId();
+        String assessment_json = httpService.put(url,mapper.writeValueAsString(assessment));
+        return mapper.readValue(assessment_json, Assessment.class);
+    }
 
     public void deleteAssessment(String assessment) throws Exception {
         httpService.delete("/assessment/" + assessment);
     }
+    
+    
 
     public InputStatus addInputData(String datastream, String data, Map<String, String> options) throws Exception {
         ObjectMapper mapper = new ObjectMapper();
@@ -227,6 +250,63 @@ public class FalkonryService {
         return mapper.readValue(entityMeta_json, new TypeReference<List<EntityMeta>>() {
         });
     }
+    
+//    public HttpResponseFormat GetHistoricalOutput(Assessment assessment, Map<String, String> options)
+//        {
+//            var url = "/assessment/" + assessment.Id + "/output?";
+//            
+//            var firstReqParam = true;
+//
+//            if (options.containsKey("trackerId"))
+//            {
+//                firstReqParam = false;
+//                url += "trackerId=" + URLEncoder.encode(options.get("trackerId"), "UTF-8");
+//            }
+//            if (options.containsKey("modelIndex"))
+//            {
+//                if (firstReqParam)
+//                {
+//                    firstReqParam = false;
+//                    url += "model=" + URLEncoder.encode(options.get("modelIndex"), "UTF-8");
+//                }
+//                else
+//                    url += "&model=" + URLEncoder.encode(options.get("modelIndex"), "UTF-8");
+//
+//            }
+//            if (options.containsKey("startTime"))
+//            {
+//                if (firstReqParam)
+//                {
+//                    firstReqParam = false;
+//                    url += "startTime=" + URLEncoder.encode(options.get("startTime"), "UTF-8");
+//                }
+//                else
+//                    url += "&startTime=" + URLEncoder.encode(options.get("startTime"), "UTF-8");
+//
+//            }
+//            if (options.containsKey("endTime"))
+//            {
+//                if (firstReqParam)
+//                {
+//                    url += "endTime=" + + URLEncoder.encode(options.get("endTime"), "UTF-8");
+//                }
+//                else
+//                    url += "&endTime=" + + URLEncoder.encode(options.get("endTime"), "UTF-8");
+//
+//            }
+//            var responseFromat = "application/json";
+//            if (options.containsKey("responseFromat"))
+//            {
+//                if (options.get("responseFromat").Equals("text/csv"))
+//                {
+//                    responseFromat = "text/csv";
+//                }
+//            }
+//
+//            var outputData = HttpService.GetOutput(url, responseFromat);
+//            return outputData;
+//        }
+
 
     /*private class StreamingThread extends Observable implements Runnable {
     String assessment = "";

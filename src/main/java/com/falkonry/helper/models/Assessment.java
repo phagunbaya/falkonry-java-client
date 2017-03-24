@@ -20,16 +20,32 @@ public class Assessment {
     private String name;
     private String tenant;
     private String measurement;
-    private String Datastream;
-    private String Live;
+    private String datastream;
+    private String live;
     private String factsMesaurement;
     private String production;
     private String activeModel;
+    private String rate;
+
+    public String getRate() {
+        return rate;
+    }
+
+    public void setRate(String rate) {
+        this.rate = rate;
+    }
+
+    public String getMeasurement() {
+        return measurement;
+    }
+
+    public void setMeasurement(String measurement) {
+        this.measurement = measurement;
+    }
 
 //    public Assessment() {
 //
 //    }
-
     public String getId() {
         return this.id;
     }
@@ -44,11 +60,15 @@ public class Assessment {
     }
 
     public String getDatastream() {
-        return Datastream;
+        return datastream;
     }
 
     public String getLive() {
-        return Live;
+        return live;
+    }
+
+    public void setLive(String live) {
+        this.live = live;
     }
 
     public String getFactsMesaurement() {

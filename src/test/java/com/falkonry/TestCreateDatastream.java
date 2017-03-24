@@ -71,7 +71,181 @@ public class TestCreateDatastream {
         Assert.assertEquals(datastream.getField().getSignal().getTagIdentifier(), ds.getField().getSignal().getTagIdentifier());
         Assert.assertEquals(datastream.getField().getSignal().getValueIdentifier(), ds.getField().getSignal().getValueIdentifier());
     }
+    
+    @Test
+    public void getDatastreamList() throws Exception {
+        Datastream ds = new Datastream();
+        ds.setName("Test-DS-" + Math.random());
 
+        TimeObject time = new TimeObject();
+        time.setIdentifier("time");
+        time.setFormat("iso_8601");
+        time.setZone("GMT");
+
+        Signal signal = new Signal();
+        signal.setTagIdentifier("tag");
+        signal.setValueIdentifier("value");
+        signal.setDelimiter("_");
+        signal.setIsSignalPrefix(false);
+
+        Datasource dataSource = new Datasource();
+        dataSource.setType("STANDALONE");
+
+        Field field = new Field();
+        field.setSiganl(signal);
+        field.setTime(time);
+//        field.setEntityIdentifier("unit");
+
+        ds.setDatasource(dataSource);
+        ds.setField(field);
+
+        Datastream datastream = falkonry.createDatastream(ds);
+        datastreams.add(datastream);
+
+        Assert.assertEquals(ds.getName(), datastream.getName());
+        Assert.assertNotEquals(null, datastream.getId());
+
+        Assert.assertEquals(datastream.getField().getTime().getFormat(), ds.getField().getTime().getFormat());
+        Assert.assertEquals(datastream.getField().getTime().getIdentifier(), ds.getField().getTime().getIdentifier());
+        Assert.assertEquals(datastream.getField().getTime().getZone(), ds.getField().getTime().getZone());
+
+        Assert.assertEquals(datastream.getDatasource().getType(), ds.getDatasource().getType());
+
+        Assert.assertEquals(datastream.getField().getSignal().getDelimiter(), ds.getField().getSignal().getDelimiter());
+        Assert.assertEquals(datastream.getField().getSignal().getIsSignalPrefix(), ds.getField().getSignal().getIsSignalPrefix());
+        Assert.assertEquals(datastream.getField().getSignal().getTagIdentifier(), ds.getField().getSignal().getTagIdentifier());
+        Assert.assertEquals(datastream.getField().getSignal().getValueIdentifier(), ds.getField().getSignal().getValueIdentifier());
+    
+        List<Datastream> datastream1 = falkonry.getDatastreams();
+        Assert.assertEquals(true,datastream1.size()>1);
+        
+    }
+    
+    @Test
+    public void getDatastreamById() throws Exception {
+        Datastream ds = new Datastream();
+        ds.setName("Test-DS-" + Math.random());
+
+        TimeObject time = new TimeObject();
+        time.setIdentifier("time");
+        time.setFormat("iso_8601");
+        time.setZone("GMT");
+
+        Signal signal = new Signal();
+        signal.setTagIdentifier("tag");
+        signal.setValueIdentifier("value");
+        signal.setDelimiter("_");
+        signal.setIsSignalPrefix(false);
+
+        Datasource dataSource = new Datasource();
+        dataSource.setType("STANDALONE");
+
+        Field field = new Field();
+        field.setSiganl(signal);
+        field.setTime(time);
+//        field.setEntityIdentifier("unit");
+
+        ds.setDatasource(dataSource);
+        ds.setField(field);
+
+        Datastream datastream = falkonry.createDatastream(ds);
+        datastreams.add(datastream);
+
+        Assert.assertEquals(ds.getName(), datastream.getName());
+        Assert.assertNotEquals(null, datastream.getId());
+
+        Assert.assertEquals(datastream.getField().getTime().getFormat(), ds.getField().getTime().getFormat());
+        Assert.assertEquals(datastream.getField().getTime().getIdentifier(), ds.getField().getTime().getIdentifier());
+        Assert.assertEquals(datastream.getField().getTime().getZone(), ds.getField().getTime().getZone());
+
+        Assert.assertEquals(datastream.getDatasource().getType(), ds.getDatasource().getType());
+
+        Assert.assertEquals(datastream.getField().getSignal().getDelimiter(), ds.getField().getSignal().getDelimiter());
+        Assert.assertEquals(datastream.getField().getSignal().getIsSignalPrefix(), ds.getField().getSignal().getIsSignalPrefix());
+        Assert.assertEquals(datastream.getField().getSignal().getTagIdentifier(), ds.getField().getSignal().getTagIdentifier());
+        Assert.assertEquals(datastream.getField().getSignal().getValueIdentifier(), ds.getField().getSignal().getValueIdentifier());
+    
+        Datastream datastream1 = falkonry.getUpdatedDatastream(datastream.getId());
+        Assert.assertEquals(datastream1.getName(),datastream.getName());
+        Assert.assertEquals(datastream1.getId(),datastream.getId());
+        
+        Assert.assertEquals(datastream.getField().getTime().getFormat(), datastream1.getField().getTime().getFormat());
+        Assert.assertEquals(datastream.getField().getTime().getIdentifier(), datastream1.getField().getTime().getIdentifier());
+        Assert.assertEquals(datastream.getField().getTime().getZone(), datastream1.getField().getTime().getZone());
+
+        Assert.assertEquals(datastream.getDatasource().getType(), datastream1.getDatasource().getType());
+
+        Assert.assertEquals(datastream.getField().getSignal().getDelimiter(), datastream1.getField().getSignal().getDelimiter());
+        Assert.assertEquals(datastream.getField().getSignal().getIsSignalPrefix(), datastream1.getField().getSignal().getIsSignalPrefix());
+        Assert.assertEquals(datastream.getField().getSignal().getTagIdentifier(), datastream1.getField().getSignal().getTagIdentifier());
+        Assert.assertEquals(datastream.getField().getSignal().getValueIdentifier(), datastream1.getField().getSignal().getValueIdentifier());
+        
+    }
+
+    
+    //@Test
+    public void updateDatastream() throws Exception {
+        Datastream ds = new Datastream();
+        ds.setName("Test-DS-" + Math.random());
+
+        TimeObject time = new TimeObject();
+        time.setIdentifier("time");
+        time.setFormat("iso_8601");
+        time.setZone("GMT");
+
+        Signal signal = new Signal();
+        signal.setTagIdentifier("tag");
+        signal.setValueIdentifier("value");
+        signal.setDelimiter("_");
+        signal.setIsSignalPrefix(false);
+
+        Datasource dataSource = new Datasource();
+        dataSource.setType("STANDALONE");
+
+        Field field = new Field();
+        field.setSiganl(signal);
+        field.setTime(time);
+//        field.setEntityIdentifier("unit");
+
+        ds.setDatasource(dataSource);
+        ds.setField(field);
+
+        Datastream datastream = falkonry.createDatastream(ds);
+        datastreams.add(datastream);
+
+        Assert.assertEquals(ds.getName(), datastream.getName());
+        Assert.assertNotEquals(null, datastream.getId());
+
+        Assert.assertEquals(datastream.getField().getTime().getFormat(), ds.getField().getTime().getFormat());
+        Assert.assertEquals(datastream.getField().getTime().getIdentifier(), ds.getField().getTime().getIdentifier());
+        Assert.assertEquals(datastream.getField().getTime().getZone(), ds.getField().getTime().getZone());
+
+        Assert.assertEquals(datastream.getDatasource().getType(), ds.getDatasource().getType());
+
+        Assert.assertEquals(datastream.getField().getSignal().getDelimiter(), ds.getField().getSignal().getDelimiter());
+        Assert.assertEquals(datastream.getField().getSignal().getIsSignalPrefix(), ds.getField().getSignal().getIsSignalPrefix());
+        Assert.assertEquals(datastream.getField().getSignal().getTagIdentifier(), ds.getField().getSignal().getTagIdentifier());
+        Assert.assertEquals(datastream.getField().getSignal().getValueIdentifier(), ds.getField().getSignal().getValueIdentifier());
+    
+        datastream.setName("Test-DS-" + Math.random());
+        Datastream datastream1 = falkonry.updateDatastream(datastream);
+        Assert.assertEquals(datastream1.getName(),datastream.getName());
+        Assert.assertEquals(datastream1.getId(),datastream.getId());
+        
+        Assert.assertEquals(datastream.getField().getTime().getFormat(), datastream1.getField().getTime().getFormat());
+        Assert.assertEquals(datastream.getField().getTime().getIdentifier(), datastream1.getField().getTime().getIdentifier());
+        Assert.assertEquals(datastream.getField().getTime().getZone(), datastream1.getField().getTime().getZone());
+
+        Assert.assertEquals(datastream.getDatasource().getType(), datastream1.getDatasource().getType());
+
+        Assert.assertEquals(datastream.getField().getSignal().getDelimiter(), datastream1.getField().getSignal().getDelimiter());
+        Assert.assertEquals(datastream.getField().getSignal().getIsSignalPrefix(), datastream1.getField().getSignal().getIsSignalPrefix());
+        Assert.assertEquals(datastream.getField().getSignal().getTagIdentifier(), datastream1.getField().getSignal().getTagIdentifier());
+        Assert.assertEquals(datastream.getField().getSignal().getValueIdentifier(), datastream1.getField().getSignal().getValueIdentifier());
+        
+    }
+    
+    
     @Test
     public void createWideDatastream() throws Exception {
 
