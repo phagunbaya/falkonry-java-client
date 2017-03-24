@@ -18,8 +18,8 @@ import java.util.*;
 public class TestCreateDatastream {
 
     Falkonry falkonry = null;
-    String host = "http://localhost:8080";
-    String token = "";
+    String host = "https://localhost:8080";
+    String token = "yf15jw8igeppzqba86essum3ycdeqi9u";
     List<Datastream> datastreams = new ArrayList<Datastream>();
 
     @Before
@@ -27,7 +27,7 @@ public class TestCreateDatastream {
         falkonry = new Falkonry(host, token);
     }
 
-    //@Test
+    @Test
     public void createDatastream() throws Exception {
         Datastream ds = new Datastream();
         ds.setName("Test-DS-" + Math.random());
@@ -49,7 +49,7 @@ public class TestCreateDatastream {
         Field field = new Field();
         field.setSiganl(signal);
         field.setTime(time);
-        field.setEntityIdentifier("unit");
+//        field.setEntityIdentifier("unit");
 
         ds.setDatasource(dataSource);
         ds.setField(field);
@@ -72,7 +72,7 @@ public class TestCreateDatastream {
         Assert.assertEquals(datastream.getField().getSignal().getValueIdentifier(), ds.getField().getSignal().getValueIdentifier());
     }
 
-    //@Test
+    @Test
     public void createWideDatastream() throws Exception {
 
         Datastream ds = new Datastream();
@@ -105,7 +105,7 @@ public class TestCreateDatastream {
         Assert.assertEquals(datastream.getDatasource().getType(), ds.getDatasource().getType());
     }
 
-    //@Test
+    @Test
     public void createDatastreamWithJsonData() throws Exception {
 
         Datastream ds = new Datastream();
@@ -128,7 +128,7 @@ public class TestCreateDatastream {
         Field field = new Field();
         field.setSiganl(signal);
         field.setTime(time);
-        field.setEntityIdentifier("unit");
+//        field.setEntityIdentifier("unit");
 
         ds.setDatasource(dataSource);
         ds.setField(field);
@@ -156,7 +156,7 @@ public class TestCreateDatastream {
 
     }
 
-    //@Test
+    @Test
     public void createDatastreamWithWideJsonData() throws Exception {
 
         Datastream ds = new Datastream();
@@ -179,7 +179,7 @@ public class TestCreateDatastream {
         Field field = new Field();
         field.setSiganl(signal);
         field.setTime(time);
-        field.setEntityIdentifier("entity");
+//        field.setEntityIdentifier("entity");
 
         ds.setDatasource(dataSource);
         ds.setField(field);
@@ -207,7 +207,7 @@ public class TestCreateDatastream {
 
     }
 
-    //@Test
+    @Test
     public void createDatastreamWithCsvData() throws Exception {
 
         Datastream ds = new Datastream();
@@ -257,7 +257,7 @@ public class TestCreateDatastream {
 
     }
 
-    //@Test
+    @Test
     public void createDatastreamWithWideCsvData() throws Exception {
 
         Datastream ds = new Datastream();
@@ -280,7 +280,7 @@ public class TestCreateDatastream {
         Field field = new Field();
         field.setSiganl(signal);
         field.setTime(time);
-        field.setEntityIdentifier("unit");
+//        field.setEntityIdentifier("unit");
 
         ds.setDatasource(dataSource);
         ds.setField(field);

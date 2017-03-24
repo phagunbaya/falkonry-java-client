@@ -95,7 +95,9 @@ public class TestAddData {
         String data = "{\"time\" :\"2016-03-01 01:01:01\",\"Unit\":\"Unit1\", \"current\" : 12.4, \"vibration\" : 3.4, \"state\" : \"On\"}";
 
         Map<String, String> options = new HashMap<String, String>();
-
+        options.put("timeIdentifier", "time");
+        options.put("timeFormat", "iso_8601");
+        options.put("fileFormat", "csv");
         falkonry.addInput(datastream.getId(), data, options);
 
         datastream = falkonry.getUpdatedDatastream(datastream.getId());

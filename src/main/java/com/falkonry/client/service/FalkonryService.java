@@ -6,22 +6,15 @@ package com.falkonry.client.service;
  * MIT Licensed
  */
 import com.falkonry.helper.models.*;
-import com.sun.org.apache.xpath.internal.operations.Bool;
-import javafx.beans.*;
 import org.apache.commons.io.IOUtils;
 import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.map.util.JSONPObject;
 import org.codehaus.jackson.type.TypeReference;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
-import java.io.InputStream;
-import java.nio.charset.Charset;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.*;
-import java.util.Observable;
-import java.util.concurrent.*;
-import java.util.stream.Stream;
-import org.json.JSONObject;
 
 public class FalkonryService {
 
@@ -93,10 +86,10 @@ public class FalkonryService {
         Map<String, String> ops = new HashMap<String, String>();
         String url = "/datastream/" + datastream;
         if (options.containsKey("streaming")) {
-            url += "?streaming=" + options.get("streaming");
+            url += "?streaming=" + URLEncoder.encode(options.get("streaming"), "UTF-8");
         }
         if (options.containsKey("hasMoreData")) {
-            url += "?hasMoreData=" + options.get("hasMoreData");
+            url += "?hasMoreData=" + URLEncoder.encode(options.get("hasMoreData"), "UTF-8");
         }
         String status = this.httpService.postData(url, data);
         return mapper.readValue(status, InputStatus.class);
@@ -104,15 +97,21 @@ public class FalkonryService {
 
     public String addFacts(String assessment, String data, Map<String, String> options) throws Exception {
         String url = "/assessment/" + assessment + "/facts";
-        return this.httpService.postData(url, data);
+        String status = this.httpService.postData(url, data);
+        return status;
     }
 
     public InputStatus addInputFromStream(String datastream, ByteArrayInputStream stream, Map<String, String> options) throws Exception {
         ObjectMapper mapper = new ObjectMapper();
         String url = "/datastream/" + datastream;
-        if (options.containsKey("subscription")) {
-            url += "?subscriptionKey=" + options.get("subscription");
+        
+        if (options.containsKey("streaming")) {
+            url += "?streaming=" + URLEncoder.encode(options.get("streaming"), "UTF-8");
         }
+        if (options.containsKey("hasMoreData")) {
+            url += "?hasMoreData=" + URLEncoder.encode(options.get("hasMoreData"), "UTF-8");
+        }
+        
         byte[] data_bytes = IOUtils.toByteArray(stream);
         String status = this.httpService.upstream(url, data_bytes);
         return mapper.readValue(status, InputStatus.class);
@@ -139,7 +138,7 @@ public class FalkonryService {
         return this.httpService.downstream(url);
     }
 
-    public HttpResponseFormat GetHistoricalOutput(Assessment assessment, Map<String, String> options) {
+    public HttpResponseFormat GetHistoricalOutput(Assessment assessment, Map<String, String> options) throws UnsupportedEncodingException {
         String url = "/assessment/" + assessment.getId() + "/output?";
         String trackerId;
         String modelIndex;
@@ -150,16 +149,16 @@ public class FalkonryService {
         if (options.containsKey("trackerId")) {
 
             firstReqParam = false;
-            url += "trackerId=" + options.get("trackerId");
+            url += "trackerId=" + URLEncoder.encode(options.get("trackerId"), "UTF-8");
         }
 
         if (options.containsKey("modelIndex")) {
 
             if (firstReqParam) {
                 firstReqParam = false;
-                url += "model=" + options.get("modelIndex");
+                url += "model=" + URLEncoder.encode(options.get("modelIndex"), "UTF-8");
             } else {
-                url += "&model=" + options.get("modelIndex");
+                url += "&model=" + URLEncoder.encode(options.get("modelIndex"), "UTF-8");
             }
         }
 
@@ -167,18 +166,18 @@ public class FalkonryService {
 
             if (firstReqParam) {
                 firstReqParam = false;
-                url += "startTime=" + options.get("startTime");
+                url += "startTime=" + URLEncoder.encode(options.get("startTime"), "UTF-8");
             } else {
-                url += "&startTime=" + options.get("startTime");
+                url += "&startTime=" + URLEncoder.encode(options.get("startTime"), "UTF-8");
             }
         }
 
         if (options.containsKey("endTime")) {
 
             if (firstReqParam) {
-                url += "endTime=" + options.get("endTime");
+                url += "endTime=" +  URLEncoder.encode(options.get("endTime"), "UTF-8");
             } else {
-                url += "&endTime=" + options.get("endTime");
+                url += "&endTime=" +  URLEncoder.encode(options.get("endTime"), "UTF-8");
             }
         }
 

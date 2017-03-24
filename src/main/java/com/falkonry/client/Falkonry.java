@@ -24,8 +24,8 @@ public class Falkonry {
     this.falkonryService = new FalkonryService(host, token);
   }
 
-  public Datastream createDatastream(Datastream eventbuffer) throws Exception {
-    return falkonryService.createDatastream(eventbuffer);
+  public Datastream createDatastream(Datastream datastream) throws Exception {
+    return falkonryService.createDatastream(datastream);
 }
 
   public List<Datastream> getDatastreams() throws Exception {
@@ -36,8 +36,8 @@ public class Falkonry {
     return falkonryService.getUpdatedDatastream(id);
   }
 
-  public void deleteDatastream(String eventbuffer) throws Exception {
-    falkonryService.deleteDatastream(eventbuffer);
+  public void deleteDatastream(String datastream) throws Exception {
+    falkonryService.deleteDatastream(datastream);
   }
 
   public Assessment createAssessment(AssessmentRequest assessmentRequest) throws Exception {
@@ -52,16 +52,16 @@ public class Falkonry {
     this.falkonryService.deleteAssessment(assessment);
   }
 
-  public InputStatus addInput(String eventbuffer, String data, Map<String, String> options) throws Exception {
-    return this.falkonryService.addInputData(eventbuffer, data, options);
+  public InputStatus addInput(String datastream, String data, Map<String, String> options) throws Exception {
+    return this.falkonryService.addInputData(datastream, data, options);
   }
 
   public String addFacts(String assessment,  String data, Map<String, String> options) throws Exception{
     return this.falkonryService.addFacts(assessment, data, options);
   }
 
-  public InputStatus addInputStream(String eventbuffer, ByteArrayInputStream stream, Map<String, String> options) throws Exception {
-    return this.falkonryService.addInputFromStream(eventbuffer, stream, options);
+  public InputStatus addInputStream(String datastream, ByteArrayInputStream stream, Map<String, String> options) throws Exception {
+    return this.falkonryService.addInputFromStream(datastream, stream, options);
   }
 
   public String addFactsStream(String assessment, ByteArrayInputStream stream, Map<String, String> options) throws Exception{

@@ -64,11 +64,12 @@ public class TestAddFacts {
         assessments.add(assessment);
 
         Map<String, String> options = new HashMap<String, String>();
-
-        String data = "time, tag, value\n2016-03-01 01:01:01, signal1_entity1, 3.4";
+        String data = "{\"time\" : \"2016-03-01 01:01:01\", \"tag\" : \"signal1_entity1\", \"value\" : 3.4}";
+//        String data = "time, tag, value\n2016-03-01 01:01:01, signal1_entity1, 3.4";
+        options.put("timeIdentifier", "time");
+        options.put("timeFormat", "iso_8601");
+        options.put("fileFormat", "csv");
         falkonry.addInput(datastream.getId(), data, options);
-
-      
 
         data = "time,end,entity,Health\n2011-03-31T00:00:00Z,2011-04-01T00:00:00Z,entity1,Normal\n2011-03-31T00:00:00Z,2011-04-01T00:00:00Z,entity1,Normal";
         String response = falkonry.addFacts(assessment.getId(), data, null);
@@ -77,7 +78,7 @@ public class TestAddFacts {
         falkonry.deleteDatastream(datastream.getId());
     }
 
-    @Test
+    //@Test
     public void createDatastreamWithWideCsvFacts() throws Exception {
 
         Datastream ds = new Datastream();
@@ -108,7 +109,7 @@ public class TestAddFacts {
         datastreams.add(datastream);
 
         Map<String, String> options = new HashMap<String, String>();
-
+//        String data = "{\"time\" : \"2016-03-01 01:01:01\", \"tag\" : \"signal1_entity1\", \"value\" : 3.4}";
         String data = "time, tag, entity, signal1, signal2, signal3\n2016-03-01 01:01:01, signal1_entity1, entity1, 3.4, 4.8, 8.3";
         falkonry.addInput(datastream.getId(), data, options);
 
@@ -126,7 +127,7 @@ public class TestAddFacts {
         falkonry.deleteAssessment(assessment.getId());
     }
 
-    //@Test
+    @Test
     public void createDatastremWithJsonFacts() throws Exception {
 
         Datastream ds = new Datastream();
