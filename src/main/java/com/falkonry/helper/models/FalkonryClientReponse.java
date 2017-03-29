@@ -14,24 +14,25 @@ import org.codehaus.jackson.annotate.JsonIgnoreProperties;
  * @author dev-falkonry-10
  */
 @JsonIgnoreProperties(ignoreUnknown=true)
-public class HttpResponseFormat {
-  private int statusCode;
+public class FalkonryClientReponse {
+    
+  private int code;
   private String response;
 
     /**
      *
      * @return
      */
-    public int getStatusCode() {
-        return statusCode;
+    public int getCode() {
+        return code;
     }
 
     /**
      *
-     * @param statusCode
+     * @param code
      */
-    public void setStatusCode(int statusCode) {
-        this.statusCode = statusCode;
+    public void setCode(int code) {
+        this.code = code;
     }
 
     /**
@@ -50,5 +51,5 @@ public class HttpResponseFormat {
         this.response = response;
     }
 
-  
+    
 }

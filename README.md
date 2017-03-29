@@ -23,6 +23,13 @@ Maven install
     * Retrieve Assessments
     * Add data to Datastream (csv/json, stream)
     * Add facts to Assessment (csv/json, stream)
+    * Add data in wide format
+    * Add historian data to datastream
+    * Add streaming data to datastream
+    * Get HistorianOutput from assessment
+    * Get Streaming Output from assessment
+    * Delete datastream
+    * Delete assessment
 
 ## Quick Start
 
@@ -30,6 +37,48 @@ Maven install
     * Read below examples for integration with various data formats.
 
 ## Examples
+
+### Create datastream
+Usage:
+```java
+    import com.falkonry.client.Falkonry;
+    import com.falkonry.helper.models.Datasource;
+    import com.falkonry.helper.models.Datastream;
+    import com.falkonry.helper.models.Field;
+    import com.falkonry.helper.models.TimeObject;
+    import com.falkonry.helper.models.Signal;
+
+    //instantiate Falkonry
+    Falkonry falkonry = new Falkonry("https://sandbox.falkonry.ai", "auth-token");
+    Datastream ds = new Datastream();
+    ds.setName("Test-DS-" + Math.random());
+
+    TimeObject time = new TimeObject();
+    time.setIdentifier("time");
+    time.setFormat("iso_8601");
+    time.setZone("GMT");
+
+    Signal signal = new Signal();
+    signal.setTagIdentifier("tag");
+    signal.setValueIdentifier("value");
+    signal.setDelimiter("_");
+    signal.setIsSignalPrefix(false);
+
+    Datasource dataSource = new Datasource();
+    dataSource.setType("STANDALONE");
+
+    Field field = new Field();
+    field.setSiganl(signal);
+    field.setTime(time);
+    //field.setEntityIdentifier("unit");
+
+    ds.setDatasource(dataSource);
+    ds.setField(field);
+
+    Datastream datastream = falkonry.createDatastream(ds);
+
+```
+
 
 #### Setup Datastream for narrow/historian style data from a single entity
 
@@ -298,14 +347,24 @@ Usage:
     falkonry.addInput(datastream.getId(), data, options);
 ```
 
-#### Get an Datastream
+#### Get a Datastream
 
 ```java
     import com.falkonry.client.Falkonry;
 
     Falkonry falkonry = new Falkonry("https://sandbox.falkonry.ai", "auth-token");
 
-    datastream = falkonry.getUpdatedDatastream("datastream_id"); //datastream's id
+    datastream = falkonry.getDatastream("datastream_id"); //datastream's id
+```
+
+#### Delete a Datastream
+
+```java
+    import com.falkonry.client.Falkonry;
+
+    Falkonry falkonry = new Falkonry("https://sandbox.falkonry.ai", "auth-token");
+
+    datastream = falkonry.deleteDatastream("datastream_id"); //datastream's id
 ```
 
 #### Add json data from a stream to an Datastream
@@ -338,7 +397,7 @@ Usage:
     InputStatus inputStatus = falkonry.addInputStream(datastream.getId(),byteArrayInputStream,options);
 ```
 
-#### Setup Assessment from Datastream
+#### Create Assessment from Datastream
     
 ```java
     import com.falkonry.client.Falkonry;
@@ -413,6 +472,27 @@ Usage:
     List<Assessment> datastreams = falkonry.getAssessments();
 ```
 
+#### To get individual assessment
+    
+```java
+    import com.falkonry.client.Falkonry;
+
+    Falkonry falkonry = new Falkonry("https://sandbox.falkonry.ai", "auth-token");
+
+    Assessment assesssment = falkonry.getAssessment('assessment_id');
+```
+
+
+#### To Delete an assessment
+    
+```java
+    import com.falkonry.client.Falkonry;
+
+    Falkonry falkonry = new Falkonry("https://sandbox.falkonry.ai", "auth-token");
+
+    Assessment assesssment = falkonry.deleteAssessment('assessment_id');
+```
+
 #### Add facts data (json format) to a Assessment
 
 ```java
@@ -458,6 +538,31 @@ Usage:
     ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(FileUtils.readFileToByteArray(file));
     String response = falkonry.addFactsStream(assessment.getId(),byteArrayInputStream, options);
 ```
+
+
+#### Get Historical Output
+
+````
+
+    Map<String, String> options = new HashMap<String, String>();
+    options.put("startTime", "2011-07-17T01:00:00.000Z"); // in the format YYYY-MM-DDTHH:mm:ss.SSSZ
+    options.put("endTime", "2011-08-18T01:00:00.000Z");  // in the format YYYY-MM-DDTHH:mm:ss.SSSZ
+    options.put("responseFormat", "application/json");  // also avaibale options 1. text/csv 2. application/json
+
+    assessment.setId("wpyred1glh6c5r");
+    HttpResponseFormat httpResponse = falkonry.GetHistoricalOutput(assessment_id, options);
+
+````
+
+#### Get Streaming Output
+
+````
+
+    String assessment = "wpyred1glh6c5r";
+    BufferedReader outputBuffer;
+    outputBuffer = falkonry.getOutput(assessment,null,null);
+
+````
 
 ## Docs
 

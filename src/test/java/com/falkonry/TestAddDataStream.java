@@ -19,6 +19,12 @@ import java.util.*;
  * Copyright(c) 2016 Falkonry Inc
  * MIT Licensed
  */
+
+/**
+ *
+ * @author dev-falkonry-10
+ */
+
 public class TestAddDataStream {
 
     Falkonry falkonry = null;
@@ -26,11 +32,19 @@ public class TestAddDataStream {
     String token = "yf15jw8igeppzqba86essum3ycdeqi9u";
     List<Datastream> datastreams = new ArrayList<Datastream>();
 
+    /**
+     *
+     * @throws Exception
+     */
     @Before
     public void setUp() throws Exception {
         falkonry = new Falkonry(host, token);
     }
 
+    /**
+     *
+     * @throws Exception
+     */
     @Test
     public void addDataJsonStream() throws Exception {
 
@@ -66,9 +80,13 @@ public class TestAddDataStream {
         File file = new File("res/data.json");
         ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(FileUtils.readFileToByteArray(file));
         InputStatus inputStatus = falkonry.addInputStream(datastream.getId(), byteArrayInputStream, options);
-        datastream = falkonry.getUpdatedDatastream(datastream.getId());
+        datastream = falkonry.getDatastream(datastream.getId());
     }
 
+    /**
+     *
+     * @throws Exception
+     */
     @Test
     public void addWideDataJsonStream() throws Exception {
 
@@ -104,9 +122,13 @@ public class TestAddDataStream {
         File file = new File("res/data_wide.json");
         ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(FileUtils.readFileToByteArray(file));
         InputStatus inputStatus = falkonry.addInputStream(datastream.getId(), byteArrayInputStream, options);
-        datastream = falkonry.getUpdatedDatastream(datastream.getId());
+        datastream = falkonry.getDatastream(datastream.getId());
     }
 
+    /**
+     *
+     * @throws Exception
+     */
     @Test
     public void addDataCsvStream() throws Exception {
 
@@ -142,9 +164,13 @@ public class TestAddDataStream {
         File file = new File("res/data.csv");
         ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(FileUtils.readFileToByteArray(file));
         InputStatus inputStatus = falkonry.addInputStream(datastream.getId(), byteArrayInputStream, options);
-        datastream = falkonry.getUpdatedDatastream(datastream.getId());
+        datastream = falkonry.getDatastream(datastream.getId());
     }
 
+    /**
+     *
+     * @throws Exception
+     */
     @Test
     public void addWideDataCsvStream() throws Exception {
 
@@ -179,9 +205,13 @@ public class TestAddDataStream {
         File file = new File("res/data_wide.csv");
         ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(FileUtils.readFileToByteArray(file));
         InputStatus inputStatus = falkonry.addInputStream(datastream.getId(), byteArrayInputStream, options);
-        datastream = falkonry.getUpdatedDatastream(datastream.getId());
+        datastream = falkonry.getDatastream(datastream.getId());
     }
 
+    /**
+     *
+     * @throws Exception
+     */
     @After
     public void cleanUp() throws Exception {
         Iterator<Datastream> itr = datastreams.iterator();

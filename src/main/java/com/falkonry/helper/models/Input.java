@@ -9,6 +9,10 @@ package com.falkonry.helper.models;
 
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
+/**
+ *
+ * @author dev-falkonry-10
+ */
 @JsonIgnoreProperties(ignoreUnknown=true)
 public class Input {
   private String key;
@@ -16,38 +20,74 @@ public class Input {
   private ValueType valueType;
   private EventType eventType;
 
-  public String getKey() {
+    /**
+     *
+     * @return
+     */
+    public String getKey() {
     return key;
   }
 
-  public Input setKey(String key) {
+    /**
+     *
+     * @param key
+     * @return
+     */
+    public Input setKey(String key) {
     this.key = key;
     return this;
   }
 
-  public String getName() {
+    /**
+     *
+     * @return
+     */
+    public String getName() {
     return name;
   }
 
-  public Input setName(String name) {
+    /**
+     *
+     * @param name
+     * @return
+     */
+    public Input setName(String name) {
     this.name = name;
     return this;
   }
 
-  public ValueType getValueType() {
+    /**
+     *
+     * @return
+     */
+    public ValueType getValueType() {
     return valueType;
   }
 
-  public Input setValueType(ValueType valueType) {
+    /**
+     *
+     * @param valueType
+     * @return
+     */
+    public Input setValueType(ValueType valueType) {
     this.valueType = valueType;
     return this;
   }
 
-  public EventType getEventType() {
+    /**
+     *
+     * @return
+     */
+    public EventType getEventType() {
     return eventType;
   }
 
-  public Input setEventType(EventType eventType) {
+    /**
+     *
+     * @param eventType
+     * @return
+     */
+    public Input setEventType(EventType eventType) {
     this.eventType = eventType;
     return this;
   }

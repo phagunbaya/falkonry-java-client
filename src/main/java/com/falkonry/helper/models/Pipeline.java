@@ -11,6 +11,10 @@ import org.codehaus.jackson.annotate.JsonProperty;
 
 import java.util.List;
 
+/**
+ *
+ * @author dev-falkonry-10
+ */
 @JsonIgnoreProperties(ignoreUnknown=true)
 
 public class Pipeline {
@@ -38,202 +42,395 @@ public class Pipeline {
   private StatsMeasurementMap statsMeasurementMap;
   private String type;
 
-
-  public String getOutflowStatus() {
+    /**
+     *
+     * @return
+     */
+    public String getOutflowStatus() {
     return outflowStatus;
   }
 
-  public void setOutflowStatus(String outflowStatus) {
+    /**
+     *
+     * @param outflowStatus
+     */
+    public void setOutflowStatus(String outflowStatus) {
     this.outflowStatus = outflowStatus;
   }
 
-  public String getStatus() {
+    /**
+     *
+     * @return
+     */
+    public String getStatus() {
     return status;
   }
 
-  public void setStatus(String status) {
+    /**
+     *
+     * @param status
+     */
+    public void setStatus(String status) {
     this.status = status;
   }
 
-  public String getName() {
+    /**
+     *
+     * @return
+     */
+    public String getName() {
     return name;
   }
 
-  public Pipeline setName(String name) {
+    /**
+     *
+     * @param name
+     * @return
+     */
+    public Pipeline setName(String name) {
     this.name = name;
     return this;
   }
 
-  public String getId(){
+    /**
+     *
+     * @return
+     */
+    public String getId(){
     return this.id;
   }
 
-  public Pipeline setId(String id) {
+    /**
+     *
+     * @param id
+     * @return
+     */
+    public Pipeline setId(String id) {
     this.id = id;
     return this;
   }
 
-  public String getSourceId() {
+    /**
+     *
+     * @return
+     */
+    public String getSourceId() {
     return sourceId;
   }
 
-  public Pipeline setSourceId(String sourceId) {
+    /**
+     *
+     * @param sourceId
+     * @return
+     */
+    public Pipeline setSourceId(String sourceId) {
     this.sourceId = sourceId;
     return this;
   }
 
-  @JsonProperty("tenant")
+    /**
+     *
+     * @return
+     */
+    @JsonProperty("tenant")
   public String getAccount() {
     return tenant;
   }
 
-  @JsonProperty("tenant")
+    /**
+     *
+     * @param account
+     * @return
+     */
+    @JsonProperty("tenant")
   public Pipeline setAccount(String account) {
     this.tenant = account;
     return this;
   }
 
-  @JsonProperty("input")
+    /**
+     *
+     * @return
+     */
+    @JsonProperty("input")
   public String getEventbuffer() {
     return eventbuffer;
   }
 
-  @JsonProperty("input")
+    /**
+     *
+     * @param eventbuffer
+     * @return
+     */
+    @JsonProperty("input")
   public Pipeline setEventbuffer(String eventbuffer) {
     this.eventbuffer = eventbuffer;
     return this;
   }
 
-  public String getInputMeasurement() {
+    /**
+     *
+     * @return
+     */
+    public String getInputMeasurement() {
     return inputMeasurement;
   }
 
-  public Pipeline setInputMeasurement(String inputMeasurement) {
+    /**
+     *
+     * @param inputMeasurement
+     * @return
+     */
+    public Pipeline setInputMeasurement(String inputMeasurement) {
     this.inputMeasurement = inputMeasurement;
     return this;
   }
 
-  public String getEntityIdentifier() {
+    /**
+     *
+     * @return
+     */
+    public String getEntityIdentifier() {
     return entityIdentifier;
   }
 
-  @JsonProperty("entityName")
+    /**
+     *
+     * @return
+     */
+    @JsonProperty("entityName")
   public String getEntityName() {
     return entityName;
   }
 
-  public String getCreatedBy() {
+    /**
+     *
+     * @return
+     */
+    public String getCreatedBy() {
     return createdBy;
   }
 
-  public Pipeline setCreatedBy(String createdBy) {
+    /**
+     *
+     * @param createdBy
+     * @return
+     */
+    public Pipeline setCreatedBy(String createdBy) {
     this.createdBy = createdBy;
     return this;
   }
 
-  public Long getCreateTime() {
+    /**
+     *
+     * @return
+     */
+    public Long getCreateTime() {
     return createTime;
   }
 
-  public Pipeline setCreateTime(Long createTime) {
+    /**
+     *
+     * @param createTime
+     * @return
+     */
+    public Pipeline setCreateTime(Long createTime) {
     this.createTime = createTime;
     return this;
   }
 
-  public String getUpdatedBy() {
+    /**
+     *
+     * @return
+     */
+    public String getUpdatedBy() {
     return updatedBy;
   }
 
-  public Pipeline setUpdatedBy(String updatedBy) {
+    /**
+     *
+     * @param updatedBy
+     * @return
+     */
+    public Pipeline setUpdatedBy(String updatedBy) {
     this.updatedBy = updatedBy;
     return this;
   }
 
-  public Long getUpdateTime() {
+    /**
+     *
+     * @return
+     */
+    public Long getUpdateTime() {
     return updateTime;
   }
 
-  public Pipeline setUpdateTime(Long updateTime) {
+    /**
+     *
+     * @param updateTime
+     * @return
+     */
+    public Pipeline setUpdateTime(Long updateTime) {
     this.updateTime = updateTime;
     return this;
   }
 
-  public List<Signal> getInputList() {
+    /**
+     *
+     * @return
+     */
+    public List<Signal> getInputList() {
     return inputList;
   }
 
-  public Pipeline setInputList(List<Signal> inputList) {
+    /**
+     *
+     * @param inputList
+     * @return
+     */
+    public Pipeline setInputList(List<Signal> inputList) {
     this.inputList = inputList;
     return this;
   }
 
-  public List<Assessment> getAssessmentList() {
+    /**
+     *
+     * @return
+     */
+    public List<Assessment> getAssessmentList() {
     return assessmentList;
   }
 
-  public Pipeline setAssessmentList(List<Assessment> assessmentList) {
+    /**
+     *
+     * @param assessmentList
+     * @return
+     */
+    public Pipeline setAssessmentList(List<Assessment> assessmentList) {
     this.assessmentList = assessmentList;
     return this;
   }
 
-  public List<Publication> getPublicationList() {
+    /**
+     *
+     * @return
+     */
+    public List<Publication> getPublicationList() {
     return publicationList;
   }
 
-  public Pipeline setPublicationList(List<Publication> publicationList) {
+    /**
+     *
+     * @param publicationList
+     * @return
+     */
+    public Pipeline setPublicationList(List<Publication> publicationList) {
     this.publicationList = publicationList;
     return this;
   }
 
-  public Long getEarliestDataPoint() {
+    /**
+     *
+     * @return
+     */
+    public Long getEarliestDataPoint() {
     return earliestDataPoint;
   }
 
-  public Pipeline setEarliestDataPoint(Long earliestDataPoint) {
+    /**
+     *
+     * @param earliestDataPoint
+     * @return
+     */
+    public Pipeline setEarliestDataPoint(Long earliestDataPoint) {
     this.earliestDataPoint = earliestDataPoint;
     return this;
   }
 
-  public Long getLatestDataPoint() {
+    /**
+     *
+     * @return
+     */
+    public Long getLatestDataPoint() {
     return latestDataPoint;
   }
 
-  public Pipeline setLatestDataPoint(Long latestDataPoint) {
+    /**
+     *
+     * @param latestDataPoint
+     * @return
+     */
+    public Pipeline setLatestDataPoint(Long latestDataPoint) {
     this.latestDataPoint = latestDataPoint;
     return this;
   }
 
-  public List<Object> getModelRevisionList() {
+    /**
+     *
+     * @return
+     */
+    public List<Object> getModelRevisionList() {
     return modelRevisionList;
   }
 
-  public Pipeline setModelRevisionList(List<Object> modelRevisionList) {
+    /**
+     *
+     * @param modelRevisionList
+     * @return
+     */
+    public Pipeline setModelRevisionList(List<Object> modelRevisionList) {
     this.modelRevisionList = modelRevisionList;
     return this;
   }
 
-  public List<Object> getOutflowHistory() {
+    /**
+     *
+     * @return
+     */
+    public List<Object> getOutflowHistory() {
     return outflowHistory;
   }
 
-  public Pipeline setOutflowHistory(List<Object> outflowHistory) {
+    /**
+     *
+     * @param outflowHistory
+     * @return
+     */
+    public Pipeline setOutflowHistory(List<Object> outflowHistory) {
     this.outflowHistory = outflowHistory;
     return this;
   }
 
-  public StatsMeasurementMap getStatsMeasurementMap() {
+    /**
+     *
+     * @return
+     */
+    public StatsMeasurementMap getStatsMeasurementMap() {
     return statsMeasurementMap;
   }
 
-  public void setStatsMeasurementMap(StatsMeasurementMap statsMeasurementMap) {
+    /**
+     *
+     * @param statsMeasurementMap
+     */
+    public void setStatsMeasurementMap(StatsMeasurementMap statsMeasurementMap) {
     this.statsMeasurementMap = statsMeasurementMap;
   }
 
-  public String getType() {
+    /**
+     *
+     * @return
+     */
+    public String getType() {
     return type;
   }
 
-  public Pipeline setType(String type) {
+    /**
+     *
+     * @param type
+     * @return
+     */
+    public Pipeline setType(String type) {
     this.type = type;
     return this;
   }

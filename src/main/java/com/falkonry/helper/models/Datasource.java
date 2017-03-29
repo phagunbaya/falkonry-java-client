@@ -9,6 +9,10 @@ package com.falkonry.helper.models;
 
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
+/**
+ *
+ * @author dev-falkonry-10
+ */
 @JsonIgnoreProperties(ignoreUnknown=true)
 public class Datasource {
   private String type;
@@ -19,66 +23,128 @@ public class Datasource {
   private String password;
   private String elementTemplateName;
   
-
-  public String getType() {
+    /**
+     *
+     * @return
+     */
+    public String getType() {
     return this.type;
   }
 
-  public Datasource setType(String type) {
+    /**
+     *
+     * @param type
+     * @return
+     */
+    public Datasource setType(String type) {
     this.type = type;
     return this;
   }
   
-  public String getProtocol() {
+    /**
+     *
+     * @return
+     */
+    public String getProtocol() {
     return this.protocol;
   }
 
-  public Datasource setProtocol(String protocol) {
+    /**
+     *
+     * @param protocol
+     * @return
+     */
+    public Datasource setProtocol(String protocol) {
     this.protocol = protocol;
     return this;
   }
   
-  public String gethost() {
+    /**
+     *
+     * @return
+     */
+    public String gethost() {
     return this.host;
   }
 
-  public Datasource sethost(String host) {
+    /**
+     *
+     * @param host
+     * @return
+     */
+    public Datasource sethost(String host) {
     this.host = host;
     return this;
   }
   
-  public Long getPort() {
+    /**
+     *
+     * @return
+     */
+    public Long getPort() {
     return this.port;
   }
 
-  public Datasource setPort(Long port) {
+    /**
+     *
+     * @param port
+     * @return
+     */
+    public Datasource setPort(Long port) {
     this.port = port;
     return this;
   }
   
-  public String getUsername() {
+    /**
+     *
+     * @return
+     */
+    public String getUsername() {
     return this.username;
   }
 
-  public Datasource setUsername(String username) {
+    /**
+     *
+     * @param username
+     * @return
+     */
+    public Datasource setUsername(String username) {
     this.username = username;
     return this;
   }
   
-  public String getPassword() {
+    /**
+     *
+     * @return
+     */
+    public String getPassword() {
     return this.password;
   }
 
-  public Datasource setPassword(String password) {
+    /**
+     *
+     * @param password
+     * @return
+     */
+    public Datasource setPassword(String password) {
     this.password = password;
     return this;
   }
   
-  public String getElementTemplateName() {
+    /**
+     *
+     * @return
+     */
+    public String getElementTemplateName() {
     return this.elementTemplateName;
   }
 
-  public Datasource setElementTemplateName(String elementTemplateName) {
+    /**
+     *
+     * @param elementTemplateName
+     * @return
+     */
+    public Datasource setElementTemplateName(String elementTemplateName) {
     this.elementTemplateName = elementTemplateName;
     return this;
   }

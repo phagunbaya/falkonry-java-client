@@ -14,6 +14,12 @@ import java.util.*;
  * Copyright(c) 2016 Falkonry Inc
  * MIT Licensed
  */
+
+/**
+ *
+ * @author dev-falkonry-10
+ */
+
 public class TestAddFactsStream {
 
     Falkonry falkonry = null;
@@ -22,11 +28,19 @@ public class TestAddFactsStream {
     List<Datastream> datastreams = new ArrayList<Datastream>();
     List<Assessment> assessments = new ArrayList<Assessment>();
 
+    /**
+     *
+     * @throws Exception
+     */
     @Before
     public void setUp() throws Exception {
         falkonry = new Falkonry(host, token);
     }
 
+    /**
+     *
+     * @throws Exception
+     */
     @Test
     public void createDatastreamWithCsvFactsStream() throws Exception {
 
@@ -72,12 +86,17 @@ public class TestAddFactsStream {
 
         File file = new File("res/factsData.csv");
         ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(FileUtils.readFileToByteArray(file));
-        String response = falkonry.addFactsStream(assessment.getId(), byteArrayInputStream, null);
-        Assert.assertEquals(response, "{\"message\":\"Data submitted successfully\"}");
+        FalkonryClientReponse response = falkonry.addFactsStream(assessment.getId(), byteArrayInputStream, null);
+        Assert.assertEquals(response.getResponse(), "{\"message\":\"Data submitted successfully\"}");
         falkonry.deleteAssessment(assessment.getId());
     }
 
     //@Test
+
+    /**
+     *
+     * @throws Exception
+     */
     public void createDatastreamWithJsonFacts() throws Exception {
         
         Datastream ds = new Datastream();
@@ -122,13 +141,17 @@ public class TestAddFactsStream {
 
         File file = new File("res/factsData.json");
         ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(FileUtils.readFileToByteArray(file));
-        String response = falkonry.addFactsStream(assessment.getId(), byteArrayInputStream, null);
-        String response_id = response.split("(:)|(,)")[1];
+        FalkonryClientReponse response = falkonry.addFactsStream(assessment.getId(), byteArrayInputStream, null);
+        String response_id = response.getResponse().split("(:)|(,)")[1];
         Assert.assertNotEquals(response_id, null);
         Assert.assertEquals(assessment.getName(), assessmentRequest.getName());
         falkonry.deleteAssessment(assessment.getId());
     }
 
+    /**
+     *
+     * @throws Exception
+     */
     @After
     public void cleanUp() throws Exception {
         Iterator<Datastream> itr = datastreams.iterator();

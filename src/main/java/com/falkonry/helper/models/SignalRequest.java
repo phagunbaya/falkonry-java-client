@@ -8,35 +8,66 @@ package com.falkonry.helper.models;
 
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
+/**
+ *
+ * @author dev-falkonry-10
+ */
 @JsonIgnoreProperties(ignoreUnknown=true)
 public class SignalRequest {
   private String name;
   private ValueType valueType;
   private EventType eventType;
 
-  public String getName() {
+    /**
+     *
+     * @return
+     */
+    public String getName() {
     return name;
   }
 
-  public SignalRequest setName(String name) {
+    /**
+     *
+     * @param name
+     * @return
+     */
+    public SignalRequest setName(String name) {
     this.name = name;
     return this;
   }
 
-  public ValueType getValueType() {
+    /**
+     *
+     * @return
+     */
+    public ValueType getValueType() {
     return valueType;
   }
 
-  public SignalRequest setValueType(ValueType valueType) {
+    /**
+     *
+     * @param valueType
+     * @return
+     */
+    public SignalRequest setValueType(ValueType valueType) {
     this.valueType = valueType;
     return this;
   }
 
-  public EventType getEventType() {
+    /**
+     *
+     * @return
+     */
+    public EventType getEventType() {
     return eventType;
   }
 
-  public SignalRequest setEventType(EventType eventType) {
+    /**
+     *
+     * @param eventType
+     * @return
+     */
+    public SignalRequest setEventType(EventType eventType) {
     this.eventType = eventType;
     return this;
   }

@@ -18,6 +18,12 @@ import java.util.*;
  * Copyright(c) 2016 Falkonry Inc
  * MIT Licensed
  */
+
+/**
+ *
+ * @author dev-falkonry-10
+ */
+
 public class TestAddData {
 
     Falkonry falkonry = null;
@@ -28,12 +34,20 @@ public class TestAddData {
     String token = "yf15jw8igeppzqba86essum3ycdeqi9u";
     List<Datastream> datastreams = new ArrayList<Datastream>();
 
+    /**
+     *
+     * @throws Exception
+     */
     @Before
     public void setUp() throws Exception {
         falkonry = new Falkonry(host, token);
 
     }
 
+    /**
+     *
+     * @throws Exception
+     */
     @Test
     public void addDataJson() throws Exception {
         Datastream ds = new Datastream();
@@ -99,13 +113,19 @@ public class TestAddData {
         options.put("timeIdentifier", "time");
         options.put("timeFormat", "iso_8601");
         options.put("fileFormat", "csv");
+        options.put("streaming", "false");
+        options.put("hasMoreData", "false");
         falkonry.addInput(datastream.getId(), data, options);
 
-        datastream = falkonry.getUpdatedDatastream(datastream.getId());
+        datastream = falkonry.getDatastream(datastream.getId());
         falkonry.deleteDatastream(datastream.getId());
 //        Assert.assertEquals(1, datastream.getSchemaList().size());
     }
 
+    /**
+     *
+     * @throws Exception
+     */
     @Test
     public void addDataCsv() throws Exception {
 
@@ -142,7 +162,7 @@ public class TestAddData {
         options.put("hasMoreData", "false");
         falkonry.addInput(datastream.getId(), data, options);
 
-        datastream = falkonry.getUpdatedDatastream(datastream.getId());
+        datastream = falkonry.getDatastream(datastream.getId());
         falkonry.deleteDatastream(datastream.getId());
     }
 
@@ -161,7 +181,7 @@ public class TestAddData {
         Map<String, String> options = new HashMap<String, String>();
         falkonry.addInput(eventbuffer.getId(), data, options);
 
-        eventbuffer = falkonry.getUpdatedDatastream(eventbuffer.getId());
+        eventbuffer = falkonry.getDatastream(eventbuffer.getId());
         Assert.assertEquals(1, eventbuffer.getSchemaList().size());
     }
 
@@ -182,7 +202,7 @@ public class TestAddData {
         Map<String, String> options = new HashMap<String, String>();
         falkonry.addInput(eventbuffer.getId(), data, options);
 
-        eventbuffer = falkonry.getUpdatedDatastream(eventbuffer.getId());
+        eventbuffer = falkonry.getDatastream(eventbuffer.getId());
         Assert.assertEquals(1, eventbuffer.getSchemaList().size());
     }
 

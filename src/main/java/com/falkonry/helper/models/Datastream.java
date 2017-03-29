@@ -11,6 +11,10 @@ import org.codehaus.jackson.annotate.JsonProperty;
 
 import java.util.List;
 
+/**
+ *
+ * @author dev-falkonry-10
+ */
 @JsonIgnoreProperties(ignoreUnknown=true)
 public class Datastream {
   private String id;
@@ -26,115 +30,223 @@ public class Datastream {
   private Datasource dataSource;
   private List<Input> inputList;
 
-  public String getId() {
+    /**
+     *
+     * @return
+     */
+    public String getId() {
     return id;
   }
 
-  public Datastream setId(String id) {
+    /**
+     *
+     * @param id
+     * @return
+     */
+    public Datastream setId(String id) {
     this.id = id;
     return this;
   }
 
-  public String getSourceId() {
+    /**
+     *
+     * @return
+     */
+    public String getSourceId() {
     return sourceId;
   }
 
-  public Datastream setSourceId(String sourceId) {
+    /**
+     *
+     * @param sourceId
+     * @return
+     */
+    public Datastream setSourceId(String sourceId) {
     this.sourceId = sourceId;
     return this;
   }
 
-  public String getName() {
+    /**
+     *
+     * @return
+     */
+    public String getName() {
     return name;
   }
 
-  public Datastream setName(String name) {
+    /**
+     *
+     * @param name
+     * @return
+     */
+    public Datastream setName(String name) {
     this.name = name;
     return this;
   }
 
-  @JsonProperty("tenant")
+    /**
+     *
+     * @return
+     */
+    @JsonProperty("tenant")
   public String getAccount() {
     return tenant;
   }
 
-  @JsonProperty("tenant")
+    /**
+     *
+     * @param account
+     * @return
+     */
+    @JsonProperty("tenant")
   public Datastream setAccount(String account) {
     this.tenant = account;
     return this;
   }
 
-  public String getCreatedBy() {
+    /**
+     *
+     * @return
+     */
+    public String getCreatedBy() {
     return createdBy;
   }
 
-  public Datastream setCreatedBy(String createdBy) {
+    /**
+     *
+     * @param createdBy
+     * @return
+     */
+    public Datastream setCreatedBy(String createdBy) {
     this.createdBy = createdBy;
     return this;
   }
 
-  public Long getCreateTime() {
+    /**
+     *
+     * @return
+     */
+    public Long getCreateTime() {
     return createTime;
   }
 
-  public Datastream setCreateTime(Long createTime) {
+    /**
+     *
+     * @param createTime
+     * @return
+     */
+    public Datastream setCreateTime(Long createTime) {
     this.createTime = createTime;
     return this;
   }
 
-  public String getUpdatedBy() {
+    /**
+     *
+     * @return
+     */
+    public String getUpdatedBy() {
     return updatedBy;
   }
 
-  public Datastream setUpdatedBy(String updatedBy) {
+    /**
+     *
+     * @param updatedBy
+     * @return
+     */
+    public Datastream setUpdatedBy(String updatedBy) {
     this.updatedBy = updatedBy;
     return this;
   }
 
-  public Long getUpdateTime() {
+    /**
+     *
+     * @return
+     */
+    public Long getUpdateTime() {
     return updateTime;
   }
 
-  public Datastream setUpdateTime(Long updateTime) {
+    /**
+     *
+     * @param updateTime
+     * @return
+     */
+    public Datastream setUpdateTime(Long updateTime) {
     this.updateTime = updateTime;
     return this;
   }
 
-  public Stats getStats() {
+    /**
+     *
+     * @return
+     */
+    public Stats getStats() {
     return stats;
   }
 
-  public Datastream setStats(Stats stats)
+    /**
+     *
+     * @param stats
+     * @return
+     */
+    public Datastream setStats(Stats stats)
   {
     this.stats = stats;
     return this;
   }
 
-  public Field getField() {
+    /**
+     *
+     * @return
+     */
+    public Field getField() {
     return field;
   }
 
-  public Datastream setField(Field field) {
+    /**
+     *
+     * @param field
+     * @return
+     */
+    public Datastream setField(Field field) {
     this.field = field;
     return this;
   }
   
-  @JsonProperty("dataSource")
+    /**
+     *
+     * @return
+     */
+    @JsonProperty("dataSource")
   public Datasource getDatasource() {
     return dataSource;
   }
 
-  @JsonProperty("dataSource")
+    /**
+     *
+     * @param dataSource
+     * @return
+     */
+    @JsonProperty("dataSource")
   public Datastream setDatasource(Datasource dataSource) {
     this.dataSource = dataSource;
     return this;
   }
   
-  public List<Input> getInputList() {
+    /**
+     *
+     * @return
+     */
+    public List<Input> getInputList() {
     return inputList;
   }
 
-  public Datastream setInputList(List<Input> inputList) {
+    /**
+     *
+     * @param inputList
+     * @return
+     */
+    public Datastream setInputList(List<Input> inputList) {
     this.inputList = inputList;
     return this;
   }

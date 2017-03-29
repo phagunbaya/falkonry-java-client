@@ -15,6 +15,12 @@ import java.util.*;
  * Copyright(c) 2016 Falkonry Inc
  * MIT Licensed
  */
+
+/**
+ *
+ * @author dev-falkonry-10
+ */
+
 public class TestCreateDatastream {
 
     Falkonry falkonry = null;
@@ -22,11 +28,19 @@ public class TestCreateDatastream {
     String token = "yf15jw8igeppzqba86essum3ycdeqi9u";
     List<Datastream> datastreams = new ArrayList<Datastream>();
 
+    /**
+     *
+     * @throws Exception
+     */
     @Before
     public void setUp() throws Exception {
         falkonry = new Falkonry(host, token);
     }
 
+    /**
+     *
+     * @throws Exception
+     */
     @Test
     public void createDatastream() throws Exception {
         Datastream ds = new Datastream();
@@ -72,6 +86,10 @@ public class TestCreateDatastream {
         Assert.assertEquals(datastream.getField().getSignal().getValueIdentifier(), ds.getField().getSignal().getValueIdentifier());
     }
     
+    /**
+     *
+     * @throws Exception
+     */
     @Test
     public void getDatastreamList() throws Exception {
         Datastream ds = new Datastream();
@@ -121,6 +139,10 @@ public class TestCreateDatastream {
         
     }
     
+    /**
+     *
+     * @throws Exception
+     */
     @Test
     public void getDatastreamById() throws Exception {
         Datastream ds = new Datastream();
@@ -165,7 +187,7 @@ public class TestCreateDatastream {
         Assert.assertEquals(datastream.getField().getSignal().getTagIdentifier(), ds.getField().getSignal().getTagIdentifier());
         Assert.assertEquals(datastream.getField().getSignal().getValueIdentifier(), ds.getField().getSignal().getValueIdentifier());
     
-        Datastream datastream1 = falkonry.getUpdatedDatastream(datastream.getId());
+        Datastream datastream1 = falkonry.getDatastream(datastream.getId());
         Assert.assertEquals(datastream1.getName(),datastream.getName());
         Assert.assertEquals(datastream1.getId(),datastream.getId());
         
@@ -184,6 +206,11 @@ public class TestCreateDatastream {
 
     
     //@Test
+
+    /**
+     *
+     * @throws Exception
+     */
     public void updateDatastream() throws Exception {
         Datastream ds = new Datastream();
         ds.setName("Test-DS-" + Math.random());
@@ -245,7 +272,10 @@ public class TestCreateDatastream {
         
     }
     
-    
+    /**
+     *
+     * @throws Exception
+     */
     @Test
     public void createWideDatastream() throws Exception {
 
@@ -279,6 +309,10 @@ public class TestCreateDatastream {
         Assert.assertEquals(datastream.getDatasource().getType(), ds.getDatasource().getType());
     }
 
+    /**
+     *
+     * @throws Exception
+     */
     @Test
     public void createDatastreamWithJsonData() throws Exception {
 
@@ -330,6 +364,10 @@ public class TestCreateDatastream {
 
     }
 
+    /**
+     *
+     * @throws Exception
+     */
     @Test
     public void createDatastreamWithWideJsonData() throws Exception {
 
@@ -381,6 +419,10 @@ public class TestCreateDatastream {
 
     }
 
+    /**
+     *
+     * @throws Exception
+     */
     @Test
     public void createDatastreamWithCsvData() throws Exception {
 
@@ -431,6 +473,10 @@ public class TestCreateDatastream {
 
     }
 
+    /**
+     *
+     * @throws Exception
+     */
     @Test
     public void createDatastreamWithWideCsvData() throws Exception {
 
@@ -483,6 +529,10 @@ public class TestCreateDatastream {
 
     }
 
+    /**
+     *
+     * @throws Exception
+     */
     @After
     public void cleanUp() throws Exception {
         Iterator<Datastream> itr = datastreams.iterator();

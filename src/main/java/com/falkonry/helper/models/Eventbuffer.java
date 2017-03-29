@@ -11,6 +11,10 @@ import org.codehaus.jackson.annotate.JsonProperty;
 
 import java.util.List;
 
+/**
+ *
+ * @author dev-falkonry-10
+ */
 @JsonIgnoreProperties(ignoreUnknown=true)
 public class Eventbuffer {
   private String id;
@@ -34,187 +38,365 @@ public class Eventbuffer {
   private String valueColumn;
   private Timezone timezone;
 
-  public String getId() {
+    /**
+     *
+     * @return
+     */
+    public String getId() {
     return id;
   }
 
-  public Eventbuffer setId(String id) {
+    /**
+     *
+     * @param id
+     * @return
+     */
+    public Eventbuffer setId(String id) {
     this.id = id;
     return this;
   }
 
-  public String getSourceId() {
+    /**
+     *
+     * @return
+     */
+    public String getSourceId() {
     return sourceId;
   }
 
-  public Eventbuffer setSourceId(String sourceId) {
+    /**
+     *
+     * @param sourceId
+     * @return
+     */
+    public Eventbuffer setSourceId(String sourceId) {
     this.sourceId = sourceId;
     return this;
   }
 
-  public String getName() {
+    /**
+     *
+     * @return
+     */
+    public String getName() {
     return name;
   }
 
-  public Eventbuffer setName(String name) {
+    /**
+     *
+     * @param name
+     * @return
+     */
+    public Eventbuffer setName(String name) {
     this.name = name;
     return this;
   }
 
-  @JsonProperty("tenant")
+    /**
+     *
+     * @return
+     */
+    @JsonProperty("tenant")
   public String getAccount() {
     return tenant;
   }
 
-  @JsonProperty("tenant")
+    /**
+     *
+     * @param account
+     * @return
+     */
+    @JsonProperty("tenant")
   public Eventbuffer setAccount(String account) {
     this.tenant = account;
     return this;
   }
 
-  public String getCreatedBy() {
+    /**
+     *
+     * @return
+     */
+    public String getCreatedBy() {
     return createdBy;
   }
 
-  public Eventbuffer setCreatedBy(String createdBy) {
+    /**
+     *
+     * @param createdBy
+     * @return
+     */
+    public Eventbuffer setCreatedBy(String createdBy) {
     this.createdBy = createdBy;
     return this;
   }
 
-  public Long getCreateTime() {
+    /**
+     *
+     * @return
+     */
+    public Long getCreateTime() {
     return createTime;
   }
 
-  public Eventbuffer setCreateTime(Long createTime) {
+    /**
+     *
+     * @param createTime
+     * @return
+     */
+    public Eventbuffer setCreateTime(Long createTime) {
     this.createTime = createTime;
     return this;
   }
 
-  public String getUpdatedBy() {
+    /**
+     *
+     * @return
+     */
+    public String getUpdatedBy() {
     return updatedBy;
   }
 
-  public Eventbuffer setUpdatedBy(String updatedBy) {
+    /**
+     *
+     * @param updatedBy
+     * @return
+     */
+    public Eventbuffer setUpdatedBy(String updatedBy) {
     this.updatedBy = updatedBy;
     return this;
   }
 
-  public Long getUpdateTime() {
+    /**
+     *
+     * @return
+     */
+    public Long getUpdateTime() {
     return updateTime;
   }
 
-  public Eventbuffer setUpdateTime(Long updateTime) {
+    /**
+     *
+     * @param updateTime
+     * @return
+     */
+    public Eventbuffer setUpdateTime(Long updateTime) {
     this.updateTime = updateTime;
     return this;
   }
 
-  public List<Object> getSchemaList() {
+    /**
+     *
+     * @return
+     */
+    public List<Object> getSchemaList() {
     return schemaList;
   }
 
-  public Eventbuffer setSchemaList(List<Object> schemaList) {
+    /**
+     *
+     * @param schemaList
+     * @return
+     */
+    public Eventbuffer setSchemaList(List<Object> schemaList) {
     this.schemaList = schemaList;
     return this;
   }
 
-  public List<Subscription> getSubscriptionList() {
+    /**
+     *
+     * @return
+     */
+    public List<Subscription> getSubscriptionList() {
     return subscriptionList;
   }
 
-  public Eventbuffer setSubscriptionList(List<Subscription> subscriptionList) {
+    /**
+     *
+     * @param subscriptionList
+     * @return
+     */
+    public Eventbuffer setSubscriptionList(List<Subscription> subscriptionList) {
     this.subscriptionList = subscriptionList;
     return this;
   }
 
-  public Stats getStats() {
+    /**
+     *
+     * @return
+     */
+    public Stats getStats() {
     return stats;
   }
 
-  public Eventbuffer setStats(Stats stats)
+    /**
+     *
+     * @param stats
+     * @return
+     */
+    public Eventbuffer setStats(Stats stats)
   {
     this.stats = stats;
     return this;
   }
 
-  public String getTimeIdentifier() {
+    /**
+     *
+     * @return
+     */
+    public String getTimeIdentifier() {
     return timeIdentifier;
   }
 
-  public Eventbuffer setTimeIdentifier(String timeIdentifier) {
+    /**
+     *
+     * @param timeIdentifier
+     * @return
+     */
+    public Eventbuffer setTimeIdentifier(String timeIdentifier) {
     this.timeIdentifier = timeIdentifier;
     return this;
   }
 
-  public String getTimeFormat() {
+    /**
+     *
+     * @return
+     */
+    public String getTimeFormat() {
     return timeFormat;
   }
 
-  public Eventbuffer setTimeFormat(String timeFormat) {
+    /**
+     *
+     * @param timeFormat
+     * @return
+     */
+    public Eventbuffer setTimeFormat(String timeFormat) {
     this.timeFormat = timeFormat;
     return this;
   }
 
-  public String getEntityIdentifier() {
+    /**
+     *
+     * @return
+     */
+    public String getEntityIdentifier() {
     return entityIdentifier;
   }
 
-  public Eventbuffer setEntityIdentifier(String entityIdentifier) {
+    /**
+     *
+     * @param entityIdentifier
+     * @return
+     */
+    public Eventbuffer setEntityIdentifier(String entityIdentifier) {
     this.entityIdentifier = entityIdentifier;
     return this;
   }
 
-  public String getEntityName() {
+    /**
+     *
+     * @return
+     */
+    public String getEntityName() {
     return entityName;
   }
 
-  public Eventbuffer setEntityName(String entityName) {
+    /**
+     *
+     * @param entityName
+     * @return
+     */
+    public Eventbuffer setEntityName(String entityName) {
     this.entityName = entityName;
     return this;
   }
 
-
-  public String getSignalsTagField() {
+    /**
+     *
+     * @return
+     */
+    public String getSignalsTagField() {
     return signalsTagField;
   }
 
-
-  public Eventbuffer setSignalsTagField(String signalsTagField) {
+    /**
+     *
+     * @param signalsTagField
+     * @return
+     */
+    public Eventbuffer setSignalsTagField(String signalsTagField) {
     this.signalsTagField = signalsTagField;
     return this;
   }
 
-  public String getSignalsDelimiter() {
+    /**
+     *
+     * @return
+     */
+    public String getSignalsDelimiter() {
     return signalsDelimiter;
   }
 
-  public Eventbuffer setSignalsDelimiter(String signalsDelimiter) {
+    /**
+     *
+     * @param signalsDelimiter
+     * @return
+     */
+    public Eventbuffer setSignalsDelimiter(String signalsDelimiter) {
     this.signalsDelimiter = signalsDelimiter;
     return this;
   }
 
-  public String getSignalsLocation() {
+    /**
+     *
+     * @return
+     */
+    public String getSignalsLocation() {
     return signalsLocation;
   }
 
-  public Eventbuffer setSignalsLocation(String signalsLocation) {
+    /**
+     *
+     * @param signalsLocation
+     * @return
+     */
+    public Eventbuffer setSignalsLocation(String signalsLocation) {
     this.signalsLocation = signalsLocation;
     return this;
   }
 
-  public String getValueColumn() {
+    /**
+     *
+     * @return
+     */
+    public String getValueColumn() {
     return valueColumn;
   }
 
-  public Eventbuffer setValueColumn(String valueColumn) {
+    /**
+     *
+     * @param valueColumn
+     * @return
+     */
+    public Eventbuffer setValueColumn(String valueColumn) {
     this.valueColumn = valueColumn;
     return this;
   }
 
-  public Timezone getTimezone() {
+    /**
+     *
+     * @return
+     */
+    public Timezone getTimezone() {
     return timezone;
   }
 
-  public Eventbuffer setTimezone(Timezone timezone) {
+    /**
+     *
+     * @param timezone
+     * @return
+     */
+    public Eventbuffer setTimezone(Timezone timezone) {
     this.timezone = timezone;
     return this;
   }

@@ -11,6 +11,12 @@ import java.util.*;
  * Copyright(c) 2016 Falkonry Inc
  * MIT Licensed
  */
+
+/**
+ *
+ * @author dev-falkonry-10
+ */
+
 public class TestAddFacts {
 
     Falkonry falkonry = null;
@@ -19,12 +25,21 @@ public class TestAddFacts {
     List<Datastream> datastreams = new ArrayList<Datastream>();
     List<Assessment> assessments = new ArrayList<Assessment>();
 
+    /**
+     *
+     * @throws Exception
+     */
     @Before
     public void setUp() throws Exception {
         falkonry = new Falkonry(host, token);
     }
 
     //@Test
+
+    /**
+     *
+     * @throws Exception
+     */
     public void createDatastreamWithCsvFacts() throws Exception {
 
         Datastream ds = new Datastream();
@@ -72,13 +87,18 @@ public class TestAddFacts {
         falkonry.addInput(datastream.getId(), data, options);
 
         data = "time,end,entity,Health\n2011-03-31T00:00:00Z,2011-04-01T00:00:00Z,entity1,Normal\n2011-03-31T00:00:00Z,2011-04-01T00:00:00Z,entity1,Normal";
-        String response = falkonry.addFacts(assessment.getId(), data, null);
+        FalkonryClientReponse response = falkonry.addFacts(assessment.getId(), data, null);
         Assert.assertEquals(response, "{\"message\":\"Data submitted successfully\"}");
 //        falkonry.deleteAssessment(assessment.getId());
         falkonry.deleteDatastream(datastream.getId());
     }
 
     //@Test
+
+    /**
+     *
+     * @throws Exception
+     */
     public void createDatastreamWithWideCsvFacts() throws Exception {
 
         Datastream ds = new Datastream();
@@ -122,11 +142,15 @@ public class TestAddFacts {
         assessments.add(assessment);
 
         data = "time,end,entity,Health\n2011-03-31T00:00:00Z,2011-04-01T00:00:00Z,entity1,Normal\n2011-03-31T00:00:00Z,2011-04-01T00:00:00Z,entity1,Normal";
-        String response = falkonry.addFacts(assessment.getId(), data, null);
+        FalkonryClientReponse response = falkonry.addFacts(assessment.getId(), data, null);
         Assert.assertEquals(response, "{\"message\":\"Data submitted successfully\"}");
         falkonry.deleteAssessment(assessment.getId());
     }
 
+    /**
+     *
+     * @throws Exception
+     */
     @Test
     public void createDatastremWithJsonFacts() throws Exception {
 
@@ -174,14 +198,19 @@ public class TestAddFacts {
         interval.setDuration("PT1S");
 
         data = "{\"time\" : \"2011-03-26T12:00:00Z\", \"entity\" : \"entity1\", \"end\" : \"2012-06-01T00:00:00Z\", \"Health\" : \"Normal\"}";
-        String response = falkonry.addFacts(assessment.getId(), data, null);
-        String response_id = response.split("(:)|(,)")[1];
+        FalkonryClientReponse response = falkonry.addFacts(assessment.getId(), data, null);
+        String response_id = response.getResponse().split("(:)|(,)")[1];
         Assert.assertNotEquals(response_id, null);
         Assert.assertEquals(assessment.getName(), assessmentRequest.getName());
         falkonry.deleteAssessment(assessment.getId());
     }
 
     //@Test
+
+    /**
+     *
+     * @throws Exception
+     */
     public void createPipelineWithWideJsonFacts() throws Exception {
 
         Datastream ds = new Datastream();
@@ -222,13 +251,17 @@ public class TestAddFacts {
         interval.setDuration("PT1S");
 
         data = "{\"time\" : \"2011-03-26T12:00:00Z\", \"entity\" : \"entity1\", \"end\" : \"2012-06-01T00:00:00Z\", \"Health\" : \"Normal\"}";
-        String response = falkonry.addFacts(assessment.getId(), data, null);
-        String response_id = response.split("(:)|(,)")[1];
+        FalkonryClientReponse response = falkonry.addFacts(assessment.getId(), data, null);
+        String response_id = response.getResponse().split("(:)|(,)")[1];
         Assert.assertNotEquals(response_id, null);
         Assert.assertEquals(assessment.getName(), assessment.getName());
         falkonry.deleteAssessment(assessment.getId());
     }
 
+    /**
+     *
+     * @throws Exception
+     */
     @After
     public void cleanUp() throws Exception {
         Iterator<Datastream> itr = datastreams.iterator();

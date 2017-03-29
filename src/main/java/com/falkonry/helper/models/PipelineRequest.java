@@ -11,6 +11,12 @@ import java.util.List;
  * MIT Licensed
  */
 
+/**
+ *
+ * @author dev-falkonry-10
+ */
+
+
 @JsonIgnoreProperties(ignoreUnknown=true)
 public class PipelineRequest {
   private String name;
@@ -20,59 +26,113 @@ public class PipelineRequest {
   private List<SignalRequest> inputList;
   private List<AssessmentRequest> assessmentList;
 
-  public String getName() {
+    /**
+     *
+     * @return
+     */
+    public String getName() {
     return name;
   }
 
-  public PipelineRequest setName(String name) {
+    /**
+     *
+     * @param name
+     * @return
+     */
+    public PipelineRequest setName(String name) {
     this.name = name;
     return this;
   }
 
-  public List<AssessmentRequest> getAssessmentList() {
+    /**
+     *
+     * @return
+     */
+    public List<AssessmentRequest> getAssessmentList() {
     return assessmentList;
   }
 
-  public PipelineRequest setAssessmentList(List<AssessmentRequest> assessmentList) {
+    /**
+     *
+     * @param assessmentList
+     * @return
+     */
+    public PipelineRequest setAssessmentList(List<AssessmentRequest> assessmentList) {
     this.assessmentList = assessmentList;
     return this;
   }
 
-  public List<SignalRequest> getInputList() {
+    /**
+     *
+     * @return
+     */
+    public List<SignalRequest> getInputList() {
     return inputList;
   }
 
-  public PipelineRequest setInputList(List<SignalRequest> inputList) {
+    /**
+     *
+     * @param inputList
+     * @return
+     */
+    public PipelineRequest setInputList(List<SignalRequest> inputList) {
     this.inputList = inputList;
     return this;
   }
 
-  @JsonProperty("entityName")
+    /**
+     *
+     * @return
+     */
+    @JsonProperty("entityName")
   public String getEntityName() {
     return entityName;
   }
 
-  @JsonProperty("entityName")
+    /**
+     *
+     * @param entityName
+     * @return
+     */
+    @JsonProperty("entityName")
   public PipelineRequest setEntityName(String entityName) {
     this.entityName = entityName;
     return this;
   }
 
-  public String getEntityIdentifier() {
+    /**
+     *
+     * @return
+     */
+    public String getEntityIdentifier() {
     return entityIdentifier;
   }
 
-  public PipelineRequest setEntityIdentifier(String entityIdentifier) {
+    /**
+     *
+     * @param entityIdentifier
+     * @return
+     */
+    public PipelineRequest setEntityIdentifier(String entityIdentifier) {
     this.entityIdentifier = entityIdentifier;
     return this;
   }
 
-  @JsonProperty("input")
+    /**
+     *
+     * @return
+     */
+    @JsonProperty("input")
   public String getEventbuffer() {
     return eventbuffer;
   }
 
-  @JsonProperty("input")
+    /**
+     *
+     * @param eventbuffer
+     * @return
+     */
+    @JsonProperty("input")
   public PipelineRequest setEventbuffer(String eventbuffer) {
     this.eventbuffer = eventbuffer;
     return this;

@@ -17,6 +17,12 @@ import java.util.*;
  * Copyright(c) 2016 Falkonry Inc
  * MIT Licensed
  */
+
+/**
+ *
+ * @author dev-falkonry-10
+ */
+
 public class TestCreateAssessment {
 
     Falkonry falkonry = null;
@@ -25,11 +31,19 @@ public class TestCreateAssessment {
     List<Datastream> datastreams = new ArrayList<Datastream>();
     List<Assessment> assessments = new ArrayList<Assessment>();
 
+    /**
+     *
+     * @throws Exception
+     */
     @Before
     public void setUp() throws Exception {
         falkonry = new Falkonry(host, token);
     }
 
+    /**
+     *
+     * @throws Exception
+     */
     @Test
     public void createAssessment() throws Exception {
         Datastream ds = new Datastream();
@@ -74,6 +88,10 @@ public class TestCreateAssessment {
 
     }
     
+    /**
+     *
+     * @throws Exception
+     */
     @Test
     public void deleteAssessment() throws Exception {
         Datastream ds = new Datastream();
@@ -121,6 +139,10 @@ public class TestCreateAssessment {
 
     }
 
+    /**
+     *
+     * @throws Exception
+     */
     @Test
     public void getAssessmentList() throws Exception {
 
@@ -169,6 +191,10 @@ public class TestCreateAssessment {
         falkonry.deleteAssessment(assessment.getId());
     }
 
+    /**
+     *
+     * @throws Exception
+     */
     @Test
     public void getAssessmentById() throws Exception {
 
@@ -220,6 +246,11 @@ public class TestCreateAssessment {
     }
 
     //@Test
+
+    /**
+     *
+     * @throws Exception
+     */
     public void updateAssessment() throws Exception {
 
         Datastream ds = new Datastream();
@@ -278,6 +309,10 @@ public class TestCreateAssessment {
         falkonry.deleteAssessment(assessment.getId());
     }
 
+    /**
+     *
+     * @throws Exception
+     */
     @Test
     public void createDatastreamWithCsvData() throws Exception {
 
@@ -328,6 +363,10 @@ public class TestCreateAssessment {
 
     }
 
+    /**
+     *
+     * @throws Exception
+     */
     @Test
     public void createDatastreamWithWideCsvData() throws Exception {
 
@@ -380,6 +419,10 @@ public class TestCreateAssessment {
 
     }
 
+    /**
+     *
+     * @throws Exception
+     */
     @After
     public void cleanUp() throws Exception {
         Iterator<Datastream> itr = datastreams.iterator();

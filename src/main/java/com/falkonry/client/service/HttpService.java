@@ -21,26 +21,36 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.conn.ssl.SSLSocketFactory;
 import javax.net.ssl.SSLContext; 
 
+/**
+ *
+ * @author dev-falkonry-10
+ */
 public class HttpService {
 
     private String host;
     private String token;
     private String user_agent = "falkonry/java-client";
 
+    /**
+     *
+     * @param host
+     * @param token
+     * @throws Exception
+     */
     public HttpService(String host, String token) throws Exception {
 
         //for localhost testing only
-        javax.net.ssl.HttpsURLConnection.setDefaultHostnameVerifier(
-                new javax.net.ssl.HostnameVerifier() {
-
-            public boolean verify(String hostname,
-                    javax.net.ssl.SSLSession sslSession) {
-                if (hostname.equals("localhost")) {
-                    return true;
-                }
-                return false;
-            }
-        });
+//        javax.net.ssl.HttpsURLConnection.setDefaultHostnameVerifier(
+//                new javax.net.ssl.HostnameVerifier() {
+//
+//            public boolean verify(String hostname,
+//                    javax.net.ssl.SSLSession sslSession) {
+//                if (hostname.equals("localhost")) {
+//                    return true;
+//                }
+//                return false;
+//            }
+//        });
         this.host = (host == null) ? "https://service.falkonry.io" : host;
         try {
             this.token = token;
@@ -49,6 +59,12 @@ public class HttpService {
         }
     }
 
+    /**
+     *
+     * @param path
+     * @return
+     * @throws Exception
+     */
     public String get(String path) throws Exception {
         String url = this.host + path;
         URL obj = new URL(url);
@@ -56,6 +72,7 @@ public class HttpService {
         con.setRequestMethod("GET");
         con.setRequestProperty("User-Agent", this.user_agent);
         con.setRequestProperty("Authorization", "Bearer " + this.token);
+        con.setRequestProperty("x-falkonry-source", "falkonry-java-client");
         int responseCode = con.getResponseCode();
         BufferedReader in = new BufferedReader(
                 new InputStreamReader(con.getInputStream()));
@@ -78,6 +95,13 @@ public class HttpService {
         }
     }
 
+    /**
+     *
+     * @param path
+     * @param data
+     * @return
+     * @throws Exception
+     */
     public String post(String path, String data) throws Exception {
         String url = this.host + path;
 
@@ -87,6 +111,7 @@ public class HttpService {
         con.setRequestProperty("User-Agent", this.user_agent);
         con.setRequestProperty("Content-Type", "application/json");
         con.setRequestProperty("Authorization", "Bearer " + this.token);
+        con.setRequestProperty("x-falkonry-source", "falkonry-java-client");
         con.setDoOutput(true);
         DataOutputStream wr = new DataOutputStream(con.getOutputStream());
         wr.writeBytes(data);
@@ -116,6 +141,13 @@ public class HttpService {
 
     }
 
+    /**
+     *
+     * @param path
+     * @param data
+     * @return
+     * @throws Exception
+     */
     public String postData(String path, String data) throws Exception {
         String url = this.host + path;
         URL obj = new URL(url);
@@ -124,6 +156,7 @@ public class HttpService {
         con.setRequestProperty("User-Agent", this.user_agent);
         con.setRequestProperty("Content-Type", "text/plain");
         con.setRequestProperty("Authorization", "Bearer " + this.token);
+        con.setRequestProperty("x-falkonry-source", "falkonry-java-client");
         con.setDoOutput(true);
         DataOutputStream wr = new DataOutputStream(con.getOutputStream());
         wr.writeBytes(data);
@@ -153,6 +186,13 @@ public class HttpService {
 
     }
 
+    /**
+     *
+     * @param path
+     * @param data
+     * @return
+     * @throws Exception
+     */
     public String put(String path, String data) throws Exception {
         String url = this.host + path;
         URL obj = new URL(url);
@@ -161,6 +201,7 @@ public class HttpService {
         con.setRequestProperty("User-Agent", this.user_agent);
         con.setRequestProperty("Content-Type", "application/json");
         con.setRequestProperty("Authorization", "Bearer " + this.token);
+        con.setRequestProperty("x-falkonry-source", "falkonry-java-client");
         con.setDoOutput(true);
         DataOutputStream wr = new DataOutputStream(con.getOutputStream());
         wr.writeBytes(data);
@@ -189,6 +230,12 @@ public class HttpService {
         }
     }
 
+    /**
+     *
+     * @param path
+     * @return
+     * @throws Exception
+     */
     public String delete(String path) throws Exception {
         
         String url = this.host + path;
@@ -197,6 +244,7 @@ public class HttpService {
         con.setRequestMethod("DELETE");
         con.setRequestProperty("User-Agent", this.user_agent);
         con.setRequestProperty("Authorization", "Bearer " + this.token);
+        con.setRequestProperty("x-falkonry-source", "falkonry-java-client");
         int responseCode = con.getResponseCode();
         BufferedReader in = new BufferedReader(
                 new InputStreamReader(con.getInputStream()));
@@ -238,6 +286,14 @@ public class HttpService {
 //        }
     }
 
+    /**
+     *
+     * @param path
+     * @param params
+     * @param stream
+     * @return
+     * @throws Exception
+     */
     public String sfpost(String path, Map<String, String> params, InputStream stream) throws Exception {
         String url = this.host + path;
         String tempFileName;
@@ -245,6 +301,8 @@ public class HttpService {
         HttpPost httpPost = new HttpPost(url);
         httpPost.addHeader("User-Agent", this.user_agent);
         httpPost.addHeader("Authorization", "Bearer " + this.token);
+        httpPost.addHeader("x-falkonry-source", "falkonry-java-client");
+        
 
         MultipartEntityBuilder builder = MultipartEntityBuilder.create();
         builder.addTextBody("name", params.get("name"));
@@ -287,6 +345,13 @@ public class HttpService {
 
     }
 
+    /**
+     *
+     * @param path
+     * @param data
+     * @return
+     * @throws Exception
+     */
     public String upstream(String path, byte[] data) throws Exception {
         String url = this.host + path;
         URL obj = new URL(url);
@@ -295,6 +360,7 @@ public class HttpService {
         con.setRequestProperty("User-Agent", this.user_agent);
         con.setRequestProperty("Content-Type", "text/plain");
         con.setRequestProperty("Authorization", "Bearer " + this.token);
+        con.setRequestProperty("x-falkonry-source", "falkonry-java-client");
         con.setDoOutput(true);
         DataOutputStream wr = new DataOutputStream(con.getOutputStream());
         wr.write(data);
@@ -323,6 +389,12 @@ public class HttpService {
         }
     }
 
+    /**
+     *
+     * @param path
+     * @return
+     * @throws Exception
+     */
     public BufferedReader downstream(String path) throws Exception {
         String url = this.host + path;
         URL obj = new URL(url);
@@ -330,6 +402,7 @@ public class HttpService {
         con.setRequestMethod("GET");
         con.setRequestProperty("User-Agent", this.user_agent);
         con.setRequestProperty("Authorization", "Bearer " + this.token);
+        con.setRequestProperty("x-falkonry-source", "falkonry-java-client");
         int responseCode = con.getResponseCode();
         BufferedReader in = new BufferedReader(
                 new InputStreamReader(con.getInputStream()));
@@ -350,6 +423,12 @@ public class HttpService {
         }
     }
 
+    /**
+     *
+     * @param path
+     * @param responseFormat
+     * @return
+     */
     public HttpResponseFormat GetOutput(String path, String responseFormat) {
 
         HttpResponseFormat httpResponseFormat = new HttpResponseFormat();
@@ -381,7 +460,7 @@ public class HttpService {
             } else if (responseCode >= 400) {
                 throw new Exception(response.toString());
             } else {
-                httpResponseFormat.setResponse(responseFormat);
+                httpResponseFormat.setResponse(response.toString());
                 httpResponseFormat.setStatusCode(responseCode);
                 return httpResponseFormat;
             }

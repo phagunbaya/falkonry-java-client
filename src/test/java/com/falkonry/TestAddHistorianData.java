@@ -15,12 +15,19 @@ import org.junit.*;
 import java.util.*;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.type.TypeReference;
+import org.json.JSONObject;
 
 /*!
  * falkonry-java-client
  * Copyright(c) 2016 Falkonry Inc
  * MIT Licensed
  */
+
+/**
+ *
+ * @author dev-falkonry-10
+ */
+
 public class TestAddHistorianData {
 
     Falkonry falkonry = null;
@@ -32,12 +39,20 @@ public class TestAddHistorianData {
     List<Datastream> datastreams = new ArrayList<Datastream>();
     List<Assessment> assessments = new ArrayList<Assessment>();
 
+    /**
+     *
+     * @throws Exception
+     */
     @Before
     public void setUp() throws Exception {
         falkonry = new Falkonry(host, token);
 
     }
 
+    /**
+     *
+     * @throws Exception
+     */
     @Test
     public void AddDataNarrowFormatCsvForLearning() throws Exception {
         Datastream ds = new Datastream();
@@ -74,10 +89,14 @@ public class TestAddHistorianData {
         options.put("hasMoreData", "false");
         falkonry.addInput(datastream.getId(), data, options);
 
-        datastream = falkonry.getUpdatedDatastream(datastream.getId());
+        datastream = falkonry.getDatastream(datastream.getId());
         falkonry.deleteDatastream(datastream.getId());
     }
 
+    /**
+     *
+     * @throws Exception
+     */
     @Test
     public void AddDataNarrowFormatCsvForStreaming() throws Exception {
 
@@ -115,12 +134,17 @@ public class TestAddHistorianData {
         options.put("hasMoreData", "false");
         falkonry.addInput(datastream.getId(), data, options);
 
-        datastream = falkonry.getUpdatedDatastream(datastream.getId());
+        datastream = falkonry.getDatastream(datastream.getId());
         falkonry.deleteDatastream(datastream.getId());
     }
 
     //Set assessment if before calling GetHistoricalOutput
-    //@Test
+
+    /**
+     *
+     * @throws Exception
+     */
+    @Test
     public void TestHistoricalOutput() throws Exception {
 
         Datastream ds = new Datastream();
@@ -144,7 +168,7 @@ public class TestAddHistorianData {
         dataSource.setType("PI");
         dataSource.sethost("https://test.piserver.com/piwebapi");
         dataSource.setElementTemplateName("SampleElementTempalte");
-        
+
         ds.setDatasource(dataSource);
 
         Datastream datastream = falkonry.createDatastream(ds);
@@ -162,12 +186,11 @@ public class TestAddHistorianData {
         // Got TO Falkonry UI and run a model revision
         // Fetch Historical output data for given assessment, startTime , endtime
         Map<String, String> options = new HashMap<String, String>();
-        options.put("startTime", "2011-04-04T01:00:00.000Z"); // in the format YYYY-MM-DDTHH:mm:ss.SSSZ
-        options.put("endTime", "2011-05-05T01:00:00.000Z");  // in the format YYYY-MM-DDTHH:mm:ss.SSSZ
+        options.put("startTime", "2011-07-17T01:00:00.000Z"); // in the format YYYY-MM-DDTHH:mm:ss.SSSZ
+        options.put("endTime", "2011-08-18T01:00:00.000Z");  // in the format YYYY-MM-DDTHH:mm:ss.SSSZ
         options.put("responseFormat", "application/json");  // also avaibale options 1. text/csv 2. application/json
-        
-        assessment.setId("0flzqnkz75u7ov");
 
+        assessment.setId("wpyred1glh6c5r");
         HttpResponseFormat httpResponse = falkonry.GetHistoricalOutput(assessment, options);
 
         // If data is not readily avaiable then, a tracker id will be sent with 202 status code. While falkonry will genrate ouptut data
@@ -176,14 +199,17 @@ public class TestAddHistorianData {
         if (httpResponse.getStatusCode() == 202) {
             ObjectMapper mapper = new ObjectMapper();
             String trackerResponse_json = httpResponse.getResponse();
-            
+
             TrackerReponse trackerResponse = mapper.readValue(trackerResponse_json, TrackerReponse.class);
             // get id from the tracker
             String id = trackerResponse.getId();
             //string __id = "phzpfmvwsgiy7ojc";
 
+            
+
             // use this tracker for checking the status of the process.
             Map<String, String> options1 = new HashMap<String, String>();
+
             options1.put("trackerId", id);
             options1.put("responseFormat", "application/json");
 
@@ -196,7 +222,7 @@ public class TestAddHistorianData {
             // Some Error has occured. Please httpResponse.response for detail message
         }
 
-        datastream = falkonry.getUpdatedDatastream(datastream.getId());
+        datastream = falkonry.getDatastream(datastream.getId());
         falkonry.deleteDatastream(datastream.getId());
     }
 
@@ -215,7 +241,7 @@ public class TestAddHistorianData {
         Map<String, String> options = new HashMap<String, String>();
         falkonry.addInput(eventbuffer.getId(), data, options);
 
-        eventbuffer = falkonry.getUpdatedDatastream(eventbuffer.getId());
+        eventbuffer = falkonry.getDatastream(eventbuffer.getId());
         Assert.assertEquals(1, eventbuffer.getSchemaList().size());
     }
 
@@ -236,7 +262,7 @@ public class TestAddHistorianData {
         Map<String, String> options = new HashMap<String, String>();
         falkonry.addInput(eventbuffer.getId(), data, options);
 
-        eventbuffer = falkonry.getUpdatedDatastream(eventbuffer.getId());
+        eventbuffer = falkonry.getDatastream(eventbuffer.getId());
         Assert.assertEquals(1, eventbuffer.getSchemaList().size());
     }
 

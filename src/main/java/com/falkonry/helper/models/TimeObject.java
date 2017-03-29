@@ -9,35 +9,66 @@ package com.falkonry.helper.models;
 
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
+/**
+ *
+ * @author dev-falkonry-10
+ */
 @JsonIgnoreProperties(ignoreUnknown=true)
 public class TimeObject {
   private String zone;
   private String format;
   private String identifier;
 
-  public String getZone() {
+    /**
+     *
+     * @return
+     */
+    public String getZone() {
     return this.zone;
   }
 
-  public TimeObject setZone(String zone) {
+    /**
+     *
+     * @param zone
+     * @return
+     */
+    public TimeObject setZone(String zone) {
     this.zone = zone;
     return this;
   }
   
-  public String getFormat() {
+    /**
+     *
+     * @return
+     */
+    public String getFormat() {
     return this.format;
   }
 
-  public TimeObject setFormat(String format) {
+    /**
+     *
+     * @param format
+     * @return
+     */
+    public TimeObject setFormat(String format) {
     this.format = format;
     return this;
   }
   
-  public String getIdentifier() {
+    /**
+     *
+     * @return
+     */
+    public String getIdentifier() {
     return this.identifier;
   }
 
-  public TimeObject setIdentifier(String identifier) {
+    /**
+     *
+     * @param identifier
+     * @return
+     */
+    public TimeObject setIdentifier(String identifier) {
     this.identifier = identifier;
     return this;
   }

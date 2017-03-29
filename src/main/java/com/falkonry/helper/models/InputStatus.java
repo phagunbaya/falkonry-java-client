@@ -9,6 +9,12 @@ import org.codehaus.jackson.annotate.JsonProperty;
  * MIT Licensed
  */
 
+/**
+ *
+ * @author dev-falkonry-10
+ */
+
+
 @JsonIgnoreProperties(ignoreUnknown=true)
 public class InputStatus {
   private String status;
@@ -20,75 +26,141 @@ public class InputStatus {
   private String eventBuffer;
   private String action;
 
-  public String getAction() {
+    /**
+     *
+     * @return
+     */
+    public String getAction() {
     return action;
   }
 
-  public void setAction(String action) {
+    /**
+     *
+     * @param action
+     */
+    public void setAction(String action) {
     this.action = action;
   }
 
-  public String getEventBuffer() {
+    /**
+     *
+     * @return
+     */
+    public String getEventBuffer() {
 
     return eventBuffer;
   }
 
-  public void setEventBuffer(String eventBuffer) {
+    /**
+     *
+     * @param eventBuffer
+     */
+    public void setEventBuffer(String eventBuffer) {
     this.eventBuffer = eventBuffer;
   }
 
-  public String getStatus(){
+    /**
+     *
+     * @return
+     */
+    public String getStatus(){
     return this.status;
   }
 
-  public InputStatus setStatus(String status) {
+    /**
+     *
+     * @param status
+     * @return
+     */
+    public InputStatus setStatus(String status) {
     this.status = status;
     return this;
   }
 
-  public int getRequestPending() {
+    /**
+     *
+     * @return
+     */
+    public int getRequestPending() {
     return requestPending;
   }
 
-  public void setRequestPending(int requestPending) {
+    /**
+     *
+     * @param requestPending
+     */
+    public void setRequestPending(int requestPending) {
     this.requestPending = requestPending;
   }
 
-  public int getRequestCompleted() {
+    /**
+     *
+     * @return
+     */
+    public int getRequestCompleted() {
     return requestCompleted;
   }
 
-  public void setRequestCompleted(int requestCompleted) {
+    /**
+     *
+     * @param requestCompleted
+     */
+    public void setRequestCompleted(int requestCompleted) {
     this.requestCompleted = requestCompleted;
   }
 
-  @JsonProperty("__$id")
+    /**
+     *
+     * @return
+     */
+    @JsonProperty("__$id")
   public String getId(){
     return this.id;
   }
 
-  @JsonProperty("__$id")
+    /**
+     *
+     * @param id
+     * @return
+     */
+    @JsonProperty("__$id")
   public InputStatus setId(String id) {
     this.id = id;
     return this;
   }
 
-  @JsonProperty("__$tenant")
+    /**
+     *
+     * @return
+     */
+    @JsonProperty("__$tenant")
   public String getTenant() {
     return tenant;
   }
 
-  @JsonProperty("__$tenant")
+    /**
+     *
+     * @param tenant
+     */
+    @JsonProperty("__$tenant")
   public void setTenant(String tenant) {
     this.tenant = tenant;
   }
 
-  @JsonProperty("__$createTime")
+    /**
+     *
+     * @return
+     */
+    @JsonProperty("__$createTime")
   public Long getCreateTime() {
     return createTime;
   }
 
-  @JsonProperty("__$createTime")
+    /**
+     *
+     * @param createTime
+     */
+    @JsonProperty("__$createTime")
   public void setCreateTime(Long createTime) {
     this.createTime = createTime;
   }

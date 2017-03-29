@@ -9,6 +9,10 @@ package com.falkonry.helper.models;
 
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
+/**
+ *
+ * @author dev-falkonry-10
+ */
 @JsonIgnoreProperties(ignoreUnknown=true)
 public class Subscription {
   private String key;
@@ -26,97 +30,192 @@ public class Subscription {
   private Boolean streaming;
   private Boolean archived;
 
-  public String getKey() {
+    /**
+     *
+     * @return
+     */
+    public String getKey() {
     return key;
   }
 
-  public void setKey(String key) {
+    /**
+     *
+     * @param key
+     */
+    public void setKey(String key) {
     this.key = key;
   }
 
-  public String getType() {
+    /**
+     *
+     * @return
+     */
+    public String getType() {
     return type;
   }
 
-  public Subscription setType(String type) {
+    /**
+     *
+     * @param type
+     * @return
+     */
+    public Subscription setType(String type) {
     this.type = type;
     return this;
   }
 
-  public String getTopic() {
+    /**
+     *
+     * @return
+     */
+    public String getTopic() {
     return topic;
   }
 
-  public Subscription setTopic(String topic) {
+    /**
+     *
+     * @param topic
+     * @return
+     */
+    public Subscription setTopic(String topic) {
     this.topic = topic;
     return this;
   }
 
-  public String getPath() {
+    /**
+     *
+     * @return
+     */
+    public String getPath() {
     return path;
   }
 
-  public Subscription setPath(String path) {
+    /**
+     *
+     * @param path
+     * @return
+     */
+    public Subscription setPath(String path) {
     this.path = path;
     return this;
   }
 
-  public String getUsername() {
+    /**
+     *
+     * @return
+     */
+    public String getUsername() {
     return username;
   }
 
-  public Subscription setUsername(String username) {
+    /**
+     *
+     * @param username
+     * @return
+     */
+    public Subscription setUsername(String username) {
     this.username = username;
     return this;
   }
 
-  public String getPassword() {
+    /**
+     *
+     * @return
+     */
+    public String getPassword() {
     return password;
   }
 
-  public Subscription setPassword(String password) {
+    /**
+     *
+     * @param password
+     * @return
+     */
+    public Subscription setPassword(String password) {
     this.password = password;
     return this;
   }
 
-  public String getTimeIdentifier() {
+    /**
+     *
+     * @return
+     */
+    public String getTimeIdentifier() {
     return timeIdentifier;
   }
 
-  public String getTimeFormat() {
+    /**
+     *
+     * @return
+     */
+    public String getTimeFormat() {
     return timeFormat;
   }
 
-  public String getSignalsTagField() {
+    /**
+     *
+     * @return
+     */
+    public String getSignalsTagField() {
     return signalsTagField;
   }
 
-  public String getSignalsDelimiter() {
+    /**
+     *
+     * @return
+     */
+    public String getSignalsDelimiter() {
     return signalsDelimiter;
   }
 
-  public String getSignalsLocation() {
+    /**
+     *
+     * @return
+     */
+    public String getSignalsLocation() {
     return signalsLocation;
   }
 
-  public String getValueColumn() {
+    /**
+     *
+     * @return
+     */
+    public String getValueColumn() {
     return valueColumn;
   }
 
-  public Boolean getStreaming() {
+    /**
+     *
+     * @return
+     */
+    public Boolean getStreaming() {
     return streaming;
   }
 
-  public Subscription setStreaming(Boolean streaming) {
+    /**
+     *
+     * @param streaming
+     * @return
+     */
+    public Subscription setStreaming(Boolean streaming) {
     this.streaming = streaming;
     return this;
   }
 
-  public Boolean getArchived() {
+    /**
+     *
+     * @return
+     */
+    public Boolean getArchived() {
     return archived;
   }
 
-  public Subscription setArchived(Boolean archived) {
+    /**
+     *
+     * @param archived
+     * @return
+     */
+    public Subscription setArchived(Boolean archived) {
     this.archived = archived;
     return this;
   }

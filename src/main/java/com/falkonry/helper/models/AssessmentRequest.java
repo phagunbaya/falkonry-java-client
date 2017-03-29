@@ -11,6 +11,12 @@ import org.codehaus.jackson.annotate.JsonProperty;
  * Copyright(c) 2016 Falkonry Inc
  * MIT Licensed
  */
+
+/**
+ *
+ * @author dev-falkonry-10
+ */
+
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class AssessmentRequest {
 
@@ -18,28 +24,53 @@ public class AssessmentRequest {
     private String datastream;
     private String rate;
 
+    /**
+     *
+     * @return
+     */
     public String getDatastream() {
         return datastream;
     }
 
+    /**
+     *
+     * @param datastream
+     */
     public void setDatastream(String datastream) {
         this.datastream = datastream;
     }
 
-     @JsonProperty("rate")
+    /**
+     *
+     * @return
+     */
+    @JsonProperty("rate")
     public String getAssessmentRate() {
         return rate;
     }
     
-     @JsonProperty("rate")
+    /**
+     *
+     * @param rate
+     */
+    @JsonProperty("rate")
     public void setAssessmentRate(String rate) {
         this.rate = rate;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     *
+     * @param name
+     * @return
+     */
     public AssessmentRequest setName(String name) {
         this.name = name;
         return this;

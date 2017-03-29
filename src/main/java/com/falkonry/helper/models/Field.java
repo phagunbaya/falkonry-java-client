@@ -9,6 +9,10 @@ package com.falkonry.helper.models;
 
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
+/**
+ *
+ * @author dev-falkonry-10
+ */
 @JsonIgnoreProperties(ignoreUnknown=true)
 public class Field {
   private String entityIdentifier;
@@ -16,39 +20,74 @@ public class Field {
   private Signal signal;
   private TimeObject time;
   
-
-  public String getEntityIdentifier() {
+    /**
+     *
+     * @return
+     */
+    public String getEntityIdentifier() {
     return this.entityIdentifier;
   }
 
-  public Field setEntityIdentifier(String entityIdentifier) {
+    /**
+     *
+     * @param entityIdentifier
+     * @return
+     */
+    public Field setEntityIdentifier(String entityIdentifier) {
     this.entityIdentifier = entityIdentifier;
     return this;
   }
   
-  public String getEntityName() {
+    /**
+     *
+     * @return
+     */
+    public String getEntityName() {
     return this.entityName;
   }
 
-  public Field setEntityName(String entityName) {
+    /**
+     *
+     * @param entityName
+     * @return
+     */
+    public Field setEntityName(String entityName) {
     this.entityName = entityName;
     return this;
   }
   
-  public Signal getSignal() {
+    /**
+     *
+     * @return
+     */
+    public Signal getSignal() {
     return signal;
   }
 
-  public Field setSiganl(Signal signal) {
+    /**
+     *
+     * @param signal
+     * @return
+     */
+    public Field setSiganl(Signal signal) {
     this.signal = signal;
     return this;
   }
   
-  public TimeObject getTime() {
+    /**
+     *
+     * @return
+     */
+    public TimeObject getTime() {
     return time;
   }
 
-  public Field setTime(TimeObject time) {
+    /**
+     *
+     * @param time
+     * @return
+     */
+    public Field setTime(TimeObject time) {
     this.time = time;
     return this;
   }

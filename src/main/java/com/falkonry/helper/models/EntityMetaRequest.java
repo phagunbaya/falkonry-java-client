@@ -10,6 +10,10 @@ import org.codehaus.jackson.annotate.JsonProperty;
 
 import java.util.List;
 
+/**
+ *
+ * @author dev-falkonry-10
+ */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class EntityMetaRequest {
 
@@ -17,26 +21,50 @@ public class EntityMetaRequest {
     private String path;
     private String label;
 
+    /**
+     *
+     * @return
+     */
     public String getSourceId() {
         return sourceId;
     }
 
+    /**
+     *
+     * @param sourceId
+     */
     public void setSourceId(String sourceId) {
         this.sourceId = sourceId;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getPath() {
         return path;
     }
 
+    /**
+     *
+     * @param path
+     */
     public void setPath(String path) {
         this.path = path;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getLabel() {
         return label;
     }
 
+    /**
+     *
+     * @param label
+     */
     public void setLabel(String label) {
         this.label = label;
     }
