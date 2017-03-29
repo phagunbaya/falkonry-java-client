@@ -119,7 +119,8 @@ public class TestAddHistorianData {
         falkonry.deleteDatastream(datastream.getId());
     }
 
-    @Test
+    //Set assessment if before calling GetHistoricalOutput
+    //@Test
     public void TestHistoricalOutput() throws Exception {
 
         Datastream ds = new Datastream();
@@ -164,6 +165,8 @@ public class TestAddHistorianData {
         options.put("startTime", "2011-04-04T01:00:00.000Z"); // in the format YYYY-MM-DDTHH:mm:ss.SSSZ
         options.put("endTime", "2011-05-05T01:00:00.000Z");  // in the format YYYY-MM-DDTHH:mm:ss.SSSZ
         options.put("responseFormat", "application/json");  // also avaibale options 1. text/csv 2. application/json
+        
+        assessment.setId("0flzqnkz75u7ov");
 
         HttpResponseFormat httpResponse = falkonry.GetHistoricalOutput(assessment, options);
 
