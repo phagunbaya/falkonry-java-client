@@ -24,7 +24,7 @@ public class TestStreamOutput {
 
     Falkonry falkonry = null;
     String host = "https://localhost:8080";
-    String token = "yf15jw8igeppzqba86essum3ycdeqi9u";
+    String token = "8g462njx92e1yc0fxzrbdxqtx90hsr1s";
 
     /**
      *
@@ -35,7 +35,7 @@ public class TestStreamOutput {
         falkonry = new Falkonry(host, token);
     }
 
-    //To run this test case, data should be continously streamed
+    //To run this test case, data should be continuously streamed
     //@Test
 
     /**
@@ -44,13 +44,19 @@ public class TestStreamOutput {
      */
     public void getOutput() throws Exception {
         try {
-            String assessment = "wpyred1glh6c5r";
+            String assessment = "suix1o014tyj97";
             BufferedReader outputBuffer;
             outputBuffer = falkonry.getOutput(assessment,null,null);
             String inputLine;
             StringBuffer response = new StringBuffer();
-            while ((inputLine = outputBuffer.readLine()) != null) {
-                response.append(inputLine);
+            inputLine = outputBuffer.readLine();
+            while (inputLine != null) {
+            	try {
+            		inputLine = outputBuffer.readLine();
+                    response.append(inputLine);
+            	} catch(Exception e) {
+            		break;
+            	}
             }
             outputBuffer.close();
 

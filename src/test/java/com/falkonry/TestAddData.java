@@ -28,10 +28,8 @@ public class TestAddData {
 
     Falkonry falkonry = null;
 
-//    String host = "https://dev.falkonry.ai";
-//    String token = "6bvyjtb2mlh4f3v93stdoe6ai5ea6d3t";
     String host = "https://localhost:8080";
-    String token = "yf15jw8igeppzqba86essum3ycdeqi9u";
+    String token = "8g462njx92e1yc0fxzrbdxqtx90hsr1s";
     List<Datastream> datastreams = new ArrayList<Datastream>();
 
     /**
@@ -205,6 +203,7 @@ public class TestAddData {
         eventbuffer = falkonry.getDatastream(eventbuffer.getId());
         Assert.assertEquals(1, eventbuffer.getSchemaList().size());
     }
+    */
 
     @After
     public void cleanUp() throws Exception {
@@ -214,5 +213,4 @@ public class TestAddData {
             falkonry.deleteDatastream(ds.getId());
         }
     }
-     */
 }

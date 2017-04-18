@@ -14,6 +14,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.Map;
 import java.util.Observer;
+import com.falkonry.client.service.FalkonryException;
 
 /**
  *
@@ -59,7 +60,7 @@ public class Falkonry {
      * @throws Exception
      */
     public Datastream getDatastream(String id) throws Exception {
-        return falkonryService.getDatastream(id);
+    	return falkonryService.getDatastream(id);
     }
     
     /**
@@ -149,7 +150,7 @@ public class Falkonry {
      * @return
      * @throws Exception
      */
-    public FalkonryClientReponse addFacts(String id, String data, Map<String, String> options) throws Exception {
+    public InputStatus addFacts(String id, String data, Map<String, String> options) throws Exception {
         return this.falkonryService.addFacts(id, data, options);
     }
 
@@ -173,7 +174,7 @@ public class Falkonry {
      * @return
      * @throws Exception
      */
-    public FalkonryClientReponse addFactsStream(String id, ByteArrayInputStream stream, Map<String, String> options) throws Exception {
+    public InputStatus addFactsStream(String id, ByteArrayInputStream stream, Map<String, String> options) throws Exception {
         return this.falkonryService.addFactsStream(id, stream, options);
     }
 
@@ -194,15 +195,31 @@ public class Falkonry {
      * @param assessment
      * @param options
      * @return
-     * @throws UnsupportedEncodingException
+     * @throws Exception 
      */
-    public HttpResponseFormat GetHistoricalOutput(Assessment assessment, Map<String, String> options) throws UnsupportedEncodingException {
-        return this.falkonryService.GetHistoricalOutput(assessment, options);
+    public HttpResponseFormat getHistoricalOutput(Assessment assessment, Map<String, String> options) throws Exception {
+        return this.falkonryService.getHistoricalOutput(assessment, options);
     }
+
+	public List<Assessment> datastreamLiveOn(String id) throws Exception {
+		return this.falkonryService.datastreamLiveOn(id);
+	}
+
+	public List<Assessment> datastreamLiveOff(String id) throws Exception {
+		return this.falkonryService.datastreamLiveOff(id);
+	}
 
 //   public Observer streamOutput(String assessment, Long start) throws Exception {
 //     return this.falkonryService.streamOutput(assessment, start);
 //   }
+	
+	public List<EntityMeta> getEntityMeta(String datastreamId) throws Exception {
+		return this.falkonryService.getEntityMeta(datastreamId);
+	}
+	
+	public List<EntityMeta> postEntityMeta(List<EntityMetaRequest> entityMetaRequest, String datastreamId) throws Exception{
+		return this.falkonryService.postEntityMeta(entityMetaRequest, datastreamId);
+	}
 
    
 }

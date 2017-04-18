@@ -23,11 +23,6 @@ public class EntityMeta {
     private String path;
     private String label;
     private String tenant;
-    private String createdBy;
-    private Long createTime;
-    private String updatedBy;
-    private Long updateTime;
-    private Long type;
 
     /**
      *
@@ -83,22 +78,6 @@ public class EntityMeta {
      */
     public void setLabel(String label) {
         this.label = label;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public Long getType() {
-        return type;
-    }
-
-    /**
-     *
-     * @param type
-     */
-    public void setType(Long type) {
-        this.type = type;
     }
 
     /**
@@ -162,78 +141,6 @@ public class EntityMeta {
     @JsonProperty("tenant")
     public EntityMeta setAccount(String account) {
         this.tenant = account;
-        return this;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public String getCreatedBy() {
-        return createdBy;
-    }
-
-    /**
-     *
-     * @param createdBy
-     * @return
-     */
-    public EntityMeta setCreatedBy(String createdBy) {
-        this.createdBy = createdBy;
-        return this;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public Long getCreateTime() {
-        return createTime;
-    }
-
-    /**
-     *
-     * @param createTime
-     * @return
-     */
-    public EntityMeta setCreateTime(Long createTime) {
-        this.createTime = createTime;
-        return this;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public String getUpdatedBy() {
-        return updatedBy;
-    }
-
-    /**
-     *
-     * @param updatedBy
-     * @return
-     */
-    public EntityMeta setUpdatedBy(String updatedBy) {
-        this.updatedBy = updatedBy;
-        return this;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public Long getUpdateTime() {
-        return updateTime;
-    }
-
-    /**
-     *
-     * @param updateTime
-     * @return
-     */
-    public EntityMeta setUpdateTime(Long updateTime) {
-        this.updateTime = updateTime;
         return this;
     }
 }

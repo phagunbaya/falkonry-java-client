@@ -32,10 +32,8 @@ public class TestAddHistorianData {
 
     Falkonry falkonry = null;
 
-//    String host = "https://dev.falkonry.ai";
-//    String token = "6bvyjtb2mlh4f3v93stdoe6ai5ea6d3t";
     String host = "https://localhost:8080";
-    String token = "yf15jw8igeppzqba86essum3ycdeqi9u";
+    String token = "8g462njx92e1yc0fxzrbdxqtx90hsr1s";
     List<Datastream> datastreams = new ArrayList<Datastream>();
     List<Assessment> assessments = new ArrayList<Assessment>();
 
@@ -191,11 +189,11 @@ public class TestAddHistorianData {
         options.put("responseFormat", "application/json");  // also avaibale options 1. text/csv 2. application/json
 
         assessment.setId("wpyred1glh6c5r");
-        HttpResponseFormat httpResponse = falkonry.GetHistoricalOutput(assessment, options);
+        HttpResponseFormat httpResponse = falkonry.getHistoricalOutput(assessment, options);
 
-        // If data is not readily avaiable then, a tracker id will be sent with 202 status code. While falkonry will genrate ouptut data
+        // If data is not readily available then, a tracker id will be sent with 202 status code. While falkonry will genrate ouptut data
         // Client should do timely pooling on the using same method, sending tracker id (__id) in the query params
-        // Once data is avaiable server will response with 200 status code and data in json/csv format.
+        // Once data is available server will response with 200 status code and data in json/csv format.
         if (httpResponse.getStatusCode() == 202) {
             ObjectMapper mapper = new ObjectMapper();
             String trackerResponse_json = httpResponse.getResponse();
@@ -213,13 +211,13 @@ public class TestAddHistorianData {
             options1.put("trackerId", id);
             options1.put("responseFormat", "application/json");
 
-            httpResponse = falkonry.GetHistoricalOutput(assessment, options);
+            httpResponse = falkonry.getHistoricalOutput(assessment, options);
 
             // if status is 202 call the same request again
-            // if statsu is 200, output data will be present in httpResponse.response field
+            // if status is 200, output data will be present in httpResponse.response field
         }
         if (httpResponse.getStatusCode() > 400) {
-            // Some Error has occured. Please httpResponse.response for detail message
+            // Some Error has occurred. Please httpResponse.response for detail message
         }
 
         datastream = falkonry.getDatastream(datastream.getId());

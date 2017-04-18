@@ -24,7 +24,7 @@ public class TestAddFactsStream {
 
     Falkonry falkonry = null;
     String host = "https://localhost:8080";
-    String token = "yf15jw8igeppzqba86essum3ycdeqi9u";
+    String token = "8g462njx92e1yc0fxzrbdxqtx90hsr1s";
     List<Datastream> datastreams = new ArrayList<Datastream>();
     List<Assessment> assessments = new ArrayList<Assessment>();
 
@@ -80,14 +80,13 @@ public class TestAddFactsStream {
 
         Map<String, String> options = new HashMap<String, String>();
        
-        String data = "time, tag, value\n2016-03-01 01:01:01, signal1_entity1, 3.4";
+        String data = "time, tag, value\n2016-03-01 01:01:01, entity1_signal1, 3.4";
         falkonry.addInput(datastream.getId(), data, options);
 
 
         File file = new File("res/factsData.csv");
         ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(FileUtils.readFileToByteArray(file));
-        FalkonryClientReponse response = falkonry.addFactsStream(assessment.getId(), byteArrayInputStream, null);
-        Assert.assertEquals(response.getResponse(), "{\"message\":\"Data submitted successfully\"}");
+        InputStatus response = falkonry.addFactsStream(assessment.getId(), byteArrayInputStream, null);
         falkonry.deleteAssessment(assessment.getId());
     }
 
@@ -141,9 +140,7 @@ public class TestAddFactsStream {
 
         File file = new File("res/factsData.json");
         ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(FileUtils.readFileToByteArray(file));
-        FalkonryClientReponse response = falkonry.addFactsStream(assessment.getId(), byteArrayInputStream, null);
-        String response_id = response.getResponse().split("(:)|(,)")[1];
-        Assert.assertNotEquals(response_id, null);
+        InputStatus response = falkonry.addFactsStream(assessment.getId(), byteArrayInputStream, null);
         Assert.assertEquals(assessment.getName(), assessmentRequest.getName());
         falkonry.deleteAssessment(assessment.getId());
     }

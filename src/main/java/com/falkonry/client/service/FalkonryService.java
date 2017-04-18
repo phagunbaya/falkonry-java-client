@@ -6,12 +6,18 @@ package com.falkonry.client.service;
  * MIT Licensed
  */
 import com.falkonry.helper.models.*;
+
+import sun.security.util.PropertyExpander.ExpandException;
+
 import org.apache.commons.io.IOUtils;
+import org.codehaus.jackson.JsonParseException;
+import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.type.TypeReference;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.*;
@@ -71,13 +77,17 @@ public class FalkonryService {
      *
      * @param id is datastrean.id
      * @return
+     * @throws IOException 
+     * @throws JsonMappingException 
+     * @throws JsonParseException 
      * @throws Exception
      */
     public Datastream getDatastream(String id) throws Exception {
-        ObjectMapper mapper = new ObjectMapper();
-        String url = "/datastream/" + id;
-        String datastream_json = httpService.get(url);
-        return mapper.readValue(datastream_json, Datastream.class);
+	    ObjectMapper mapper = new ObjectMapper();
+	    String url = "/datastream/" + id;
+	    String datastream_json = httpService.get(url);
+	    return mapper.readValue(datastream_json, Datastream.class);
+
     }
     
     /**
@@ -109,15 +119,19 @@ public class FalkonryService {
      * @throws Exception
      */
     public Assessment createAssessment(AssessmentRequest assessmentRequest) throws Exception {
-        ObjectMapper mapper = new ObjectMapper();
-        AssessmentRequest as = new AssessmentRequest();
-
-        as.setName(assessmentRequest.getName());
-        as.setAssessmentRate(assessmentRequest.getAssessmentRate());
-        as.setDatastream(assessmentRequest.getDatastream());
-
-        String assessment_json = httpService.post("/assessment", mapper.writeValueAsString(as));
-        return mapper.readValue(assessment_json, Assessment.class);
+    	try {
+	        ObjectMapper mapper = new ObjectMapper();
+	        AssessmentRequest as = new AssessmentRequest();
+	
+	        as.setName(assessmentRequest.getName());
+	        as.setAssessmentRate(assessmentRequest.getAssessmentRate());
+	        as.setDatastream(assessmentRequest.getDatastream());
+	
+	        String assessment_json = httpService.post("/assessment", mapper.writeValueAsString(as));
+	        return mapper.readValue(assessment_json, Assessment.class);
+    	} catch (Exception e) {
+    		return new Assessment();
+    	}
     }
 
     /**
@@ -197,11 +211,11 @@ public class FalkonryService {
      * @return
      * @throws Exception
      */
-    public FalkonryClientReponse addFacts(String id, String data, Map<String, String> options) throws Exception {
+    public InputStatus addFacts(String id, String data, Map<String, String> options) throws Exception {
         ObjectMapper mapper = new ObjectMapper();
         String url = "/assessment/" + id + "/facts";
         String status = this.httpService.postData(url, data);
-        return mapper.readValue(status, FalkonryClientReponse.class);
+        return mapper.readValue(status, InputStatus.class);
     }
 
     /**
@@ -236,12 +250,12 @@ public class FalkonryService {
      * @return
      * @throws Exception
      */
-    public FalkonryClientReponse addFactsStream(String id, ByteArrayInputStream stream, Map<String, String> options) throws Exception {
+    public InputStatus addFactsStream(String id, ByteArrayInputStream stream, Map<String, String> options) throws Exception {
         ObjectMapper mapper = new ObjectMapper();
         String url = "/assessment/" + id + "/facts";
         byte[] data_bytes = IOUtils.toByteArray(stream);
         String status =  this.httpService.upstream(url, data_bytes);
-        return mapper.readValue(status, FalkonryClientReponse.class);
+        return mapper.readValue(status, InputStatus.class);
     }
 
     /**
@@ -258,13 +272,41 @@ public class FalkonryService {
     }
 
     /**
+    *
+    * @param id is datastream.id
+    * @return
+    * @throws Exception
+    */
+    public List<Assessment> datastreamLiveOn(String id) throws Exception {
+    	ObjectMapper mapper = new ObjectMapper();
+    	String url = "/datastream/" + id + "/on";
+    	String assessment_json = httpService.post(url, "");
+    	return mapper.readValue(assessment_json, new TypeReference<List<Assessment>>() {
+        });
+    }
+    
+    /**
+    *
+    * @param id is datastream.id
+    * @return
+    * @throws Exception
+    */
+    public List<Assessment> datastreamLiveOff(String id) throws Exception {
+    	ObjectMapper mapper = new ObjectMapper();
+    	String url = "/datastream/" + id + "/off";
+    	String assessment_json = httpService.post(url, "");
+    	return mapper.readValue(assessment_json, new TypeReference<List<Assessment>>() {
+        });
+    }
+    
+    /**
      *
      * @param assessment
      * @param options
      * @return
-     * @throws UnsupportedEncodingException
+     * @throws Exception 
      */
-    public HttpResponseFormat GetHistoricalOutput(Assessment assessment, Map<String, String> options) throws UnsupportedEncodingException {
+    public HttpResponseFormat getHistoricalOutput(Assessment assessment, Map<String, String> options) throws Exception {
         String url = "/assessment/" + assessment.getId() + "/output?";
         String trackerId;
         String modelIndex;
@@ -317,7 +359,7 @@ public class FalkonryService {
             }
         }
 
-        HttpResponseFormat outputData = httpService.GetOutput(url, responseFromat);
+        HttpResponseFormat outputData = httpService.getOutput(url, responseFromat);
         return outputData;
     }
 
@@ -330,28 +372,19 @@ public class FalkonryService {
      * @return
      * @throws Exception
      */
-    public List<EntityMeta> PostEntityMeta(List<EntityMetaRequest> entityMetaRequest, Datastream datastream) throws Exception{
+    public List<EntityMeta> postEntityMeta(List<EntityMetaRequest> entityMetaRequest, String datastreamId) throws Exception{
         ObjectMapper mapper = new ObjectMapper();
-        String entityMetaRequest_json = httpService.post("/datastream", mapper.writeValueAsString(entityMetaRequest));
-        return mapper.readValue(entityMetaRequest_json, List.class);
-    }
-
-    // Get EntityMeta
-
-    /**
-     *
-     * @param datastream
-     * @return
-     * @throws Exception
-     */
-    public List<EntityMeta> GetEntityMeta(Datastream datastream) throws Exception{
-        
-        
-        ObjectMapper mapper = new ObjectMapper();
-        String entityMeta_json = httpService.get("/datastream/" + datastream.getId() + "/entityMeta");
-        return mapper.readValue(entityMeta_json, new TypeReference<List<EntityMeta>>() {
+        String entityMetaRequest_json = httpService.post("/datastream/"+datastreamId+"/entityMeta", mapper.writeValueAsString(entityMetaRequest));
+        return mapper.readValue(entityMetaRequest_json, new TypeReference<List<EntityMeta>>() {
         });
     }
+
+	public List<EntityMeta> getEntityMeta(String datastreamId) throws Exception {
+		ObjectMapper mapper = new ObjectMapper();
+        String entityMeta_json = httpService.get("/datastream/" + datastreamId + "/entityMeta");
+        return mapper.readValue(entityMeta_json, new TypeReference<List<EntityMeta>>() {
+        });
+	}
     
 //    public HttpResponseFormat GetHistoricalOutput(Assessment assessment, Map<String, String> options)
 //        {

@@ -27,7 +27,7 @@ public class TestCreateAssessment {
 
     Falkonry falkonry = null;
     String host = "https://localhost:8080";
-    String token = "yf15jw8igeppzqba86essum3ycdeqi9u";
+    String token = "8g462njx92e1yc0fxzrbdxqtx90hsr1s";
     List<Datastream> datastreams = new ArrayList<Datastream>();
     List<Assessment> assessments = new ArrayList<Assessment>();
 

@@ -21,7 +21,7 @@ public class TestAddFacts {
 
     Falkonry falkonry = null;
     String host = "https://localhost:8080";
-    String token = "yf15jw8igeppzqba86essum3ycdeqi9u";
+    String token = "8g462njx92e1yc0fxzrbdxqtx90hsr1s";
     List<Datastream> datastreams = new ArrayList<Datastream>();
     List<Assessment> assessments = new ArrayList<Assessment>();
 
@@ -87,8 +87,7 @@ public class TestAddFacts {
         falkonry.addInput(datastream.getId(), data, options);
 
         data = "time,end,entity,Health\n2011-03-31T00:00:00Z,2011-04-01T00:00:00Z,entity1,Normal\n2011-03-31T00:00:00Z,2011-04-01T00:00:00Z,entity1,Normal";
-        FalkonryClientReponse response = falkonry.addFacts(assessment.getId(), data, null);
-        Assert.assertEquals(response, "{\"message\":\"Data submitted successfully\"}");
+        InputStatus response = falkonry.addFacts(assessment.getId(), data, null);
 //        falkonry.deleteAssessment(assessment.getId());
         falkonry.deleteDatastream(datastream.getId());
     }
@@ -142,8 +141,7 @@ public class TestAddFacts {
         assessments.add(assessment);
 
         data = "time,end,entity,Health\n2011-03-31T00:00:00Z,2011-04-01T00:00:00Z,entity1,Normal\n2011-03-31T00:00:00Z,2011-04-01T00:00:00Z,entity1,Normal";
-        FalkonryClientReponse response = falkonry.addFacts(assessment.getId(), data, null);
-        Assert.assertEquals(response, "{\"message\":\"Data submitted successfully\"}");
+        InputStatus response = falkonry.addFacts(assessment.getId(), data, null);
         falkonry.deleteAssessment(assessment.getId());
     }
 
@@ -198,9 +196,7 @@ public class TestAddFacts {
         interval.setDuration("PT1S");
 
         data = "{\"time\" : \"2011-03-26T12:00:00Z\", \"entity\" : \"entity1\", \"end\" : \"2012-06-01T00:00:00Z\", \"Health\" : \"Normal\"}";
-        FalkonryClientReponse response = falkonry.addFacts(assessment.getId(), data, null);
-        String response_id = response.getResponse().split("(:)|(,)")[1];
-        Assert.assertNotEquals(response_id, null);
+        InputStatus response = falkonry.addFacts(assessment.getId(), data, null);
         Assert.assertEquals(assessment.getName(), assessmentRequest.getName());
         falkonry.deleteAssessment(assessment.getId());
     }
@@ -251,9 +247,7 @@ public class TestAddFacts {
         interval.setDuration("PT1S");
 
         data = "{\"time\" : \"2011-03-26T12:00:00Z\", \"entity\" : \"entity1\", \"end\" : \"2012-06-01T00:00:00Z\", \"Health\" : \"Normal\"}";
-        FalkonryClientReponse response = falkonry.addFacts(assessment.getId(), data, null);
-        String response_id = response.getResponse().split("(:)|(,)")[1];
-        Assert.assertNotEquals(response_id, null);
+        InputStatus response = falkonry.addFacts(assessment.getId(), data, null);
         Assert.assertEquals(assessment.getName(), assessment.getName());
         falkonry.deleteAssessment(assessment.getId());
     }

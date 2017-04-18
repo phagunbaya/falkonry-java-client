@@ -25,7 +25,7 @@ public class TestCreateDatastream {
 
     Falkonry falkonry = null;
     String host = "https://localhost:8080";
-    String token = "yf15jw8igeppzqba86essum3ycdeqi9u";
+    String token = "8g462njx92e1yc0fxzrbdxqtx90hsr1s";
     List<Datastream> datastreams = new ArrayList<Datastream>();
 
     /**
@@ -135,7 +135,7 @@ public class TestCreateDatastream {
         Assert.assertEquals(datastream.getField().getSignal().getValueIdentifier(), ds.getField().getSignal().getValueIdentifier());
     
         List<Datastream> datastream1 = falkonry.getDatastreams();
-        Assert.assertEquals(true,datastream1.size()>1);
+        Assert.assertEquals(true,datastream1.size()!=0);
         
     }
     
