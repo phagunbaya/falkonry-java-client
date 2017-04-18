@@ -14,9 +14,10 @@ import org.codehaus.jackson.annotate.JsonIgnoreProperties;
  * @author dev-falkonry-10
  */
 @JsonIgnoreProperties(ignoreUnknown=true)
-public class Timezone {
+public class TimeObject {
   private String zone;
-  private int offset;
+  private String format;
+  private String identifier;
 
     /**
      *
@@ -31,26 +32,45 @@ public class Timezone {
      * @param zone
      * @return
      */
-    public Timezone setZone(String zone) {
+    public TimeObject setZone(String zone) {
     this.zone = zone;
     return this;
   }
-
+  
     /**
      *
      * @return
      */
-    public int getOffset() {
-    return this.offset;
+    public String getFormat() {
+    return this.format;
   }
 
     /**
      *
-     * @param offset
+     * @param format
      * @return
      */
-    public Timezone setOffset(int offset) {
-    this.offset = offset;
+    public TimeObject setFormat(String format) {
+    this.format = format;
     return this;
   }
+  
+    /**
+     *
+     * @return
+     */
+    public String getIdentifier() {
+    return this.identifier;
+  }
+
+    /**
+     *
+     * @param identifier
+     * @return
+     */
+    public TimeObject setIdentifier(String identifier) {
+    this.identifier = identifier;
+    return this;
+  }
+
 }

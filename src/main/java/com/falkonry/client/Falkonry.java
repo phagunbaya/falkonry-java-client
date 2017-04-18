@@ -5,98 +5,221 @@ package com.falkonry.client;
  * Copyright(c) 2016 Falkonry Inc
  * MIT Licensed
  */
-
 import com.falkonry.client.service.FalkonryService;
 import com.falkonry.helper.models.*;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.Map;
 import java.util.Observer;
+import com.falkonry.client.service.FalkonryException;
 
-
+/**
+ *
+ * @author dev-falkonry-10
+ */
 public class Falkonry {
 
-  private FalkonryService falkonryService;
+    private FalkonryService falkonryService;
 
-  public Falkonry(String host, String token) throws Exception {
-    this.falkonryService = new FalkonryService(host, token);
-  }
+    /**
+     *
+     * @param host
+     * @param token
+     * @throws Exception
+     */
+    public Falkonry(String host, String token) throws Exception {
+        this.falkonryService = new FalkonryService(host, token);
+    }
 
-  public Eventbuffer createEventbuffer(Eventbuffer eventbuffer) throws Exception {
-    return falkonryService.createEventbuffer(eventbuffer);
-}
+    /**
+     *
+     * @param datastream
+     * @return
+     * @throws Exception
+     */
+    public Datastream createDatastream(Datastream datastream) throws Exception {
+        return falkonryService.createDatastream(datastream);
+    }
 
-  public List<Eventbuffer> getEventbuffers() throws Exception {
-    return falkonryService.getEventbuffers();
-  }
+    /**
+     *
+     * @return
+     * @throws Exception
+     */
+    public List<Datastream> getDatastreams() throws Exception {
+        return falkonryService.getDatastreams();
+    }
 
-  public Eventbuffer getUpdatedEventbuffer(String id) throws Exception{
-    return falkonryService.getUpdatedEventbuffer(id);
-  }
+    /**
+     *
+     * @param id is datastream.id
+     * @return
+     * @throws Exception
+     */
+    public Datastream getDatastream(String id) throws Exception {
+    	return falkonryService.getDatastream(id);
+    }
+    
+    /**
+     *
+     * @param datastream
+     * @return
+     * @throws Exception
+     */
+    public Datastream updateDatastream(Datastream datastream) throws Exception {
+        return falkonryService.updateDatastream(datastream);
+    }
 
-  public void deleteEventbuffer(String eventbuffer) throws Exception {
-    falkonryService.deleteEventbuffer(eventbuffer);
-  }
+    /**
+     *
+     * @param id is datastream.id
+     * @throws Exception
+     */
+    public void deleteDatastream(String id) throws Exception {
+        falkonryService.deleteDatastream(id);
+    }
 
-  public Pipeline createPipeline(Pipeline pipeline) throws Exception {
-    return falkonryService.createPipeline(pipeline);
-  }
+    /**
+     *
+     * @param assessmentRequest
+     * @return
+     * @throws Exception
+     */
+    public Assessment createAssessment(AssessmentRequest assessmentRequest) throws Exception {
+        return falkonryService.createAssessment(assessmentRequest);
+    }
 
-  public List<Pipeline> getPipelines() throws Exception {
-    return falkonryService.getPipelines();
-  }
+    /**
+     *
+     * @param id is assessment.id
+     * @return
+     * @throws Exception
+     */
+    public Assessment getAssessment(String id) throws Exception {
+        return falkonryService.getAssessment(id);
+    }
+    
+    /**
+     *
+     * @param assessment
+     * @return
+     * @throws Exception
+     */
+    public Assessment updateAssessment(Assessment assessment) throws Exception {
+        return falkonryService.updateAssessment(assessment);
+    }
 
-  public void deletePipeline(String pipeline) throws Exception {
-    this.falkonryService.deletePipeline(pipeline);
-  }
+    /**
+     *
+     * @return
+     * @throws Exception
+     */
+    public List<Assessment> getAssessments() throws Exception {
+        return falkonryService.getAssessments();
+    }
 
-  public InputStatus addInput(String eventbuffer, String data, Map<String, String> options) throws Exception {
-    return this.falkonryService.addInputData(eventbuffer, data, options);
-  }
+    /**
+     *
+     * @param id is assessment.id
+     * @throws Exception
+     */
+    public void deleteAssessment(String id) throws Exception {
+        this.falkonryService.deleteAssessment(id);
+    }
 
-  public String addFacts(String pipeline,  String data, Map<String, String> options) throws Exception{
-    return this.falkonryService.addFacts(pipeline, data, options);
-  }
+    /**
+     *
+     * @param id is datastream.id
+     * @param data
+     * @param options
+     * @return
+     * @throws Exception
+     */
+    public InputStatus addInput(String id, String data, Map<String, String> options) throws Exception {
+        return this.falkonryService.addInputData(id, data, options);
+    }
 
-  public InputStatus addInputStream(String eventbuffer, ByteArrayInputStream stream, Map<String, String> options) throws Exception {
-    return this.falkonryService.addInputFromStream(eventbuffer, stream, options);
-  }
+    /**
+     *
+     * @param id is assessment.id
+     * @param data
+     * @param options
+     * @return
+     * @throws Exception
+     */
+    public InputStatus addFacts(String id, String data, Map<String, String> options) throws Exception {
+        return this.falkonryService.addFacts(id, data, options);
+    }
 
-  public String addFactsStream(String pipeline, ByteArrayInputStream stream, Map<String, String> options) throws Exception{
-    return this.falkonryService.addFactsStream(pipeline,stream,options);
-  }
+    /**
+     *
+     * @param id is datastream.id
+     * @param stream
+     * @param options
+     * @return
+     * @throws Exception
+     */
+    public InputStatus addInputStream(String id, ByteArrayInputStream stream, Map<String, String> options) throws Exception {
+        return this.falkonryService.addInputFromStream(id, stream, options);
+    }
 
-  public BufferedReader getOutput(String pipeline, Long start, Long end) throws Exception {
-    return this.falkonryService.getOutput(pipeline, start, end);
-  }
+    /**
+     *
+     * @param id is assessment.id
+     * @param stream
+     * @param options
+     * @return
+     * @throws Exception
+     */
+    public InputStatus addFactsStream(String id, ByteArrayInputStream stream, Map<String, String> options) throws Exception {
+        return this.falkonryService.addFactsStream(id, stream, options);
+    }
 
-  // public Observer streamOutput(String pipeline, Long start) throws Exception {
-  //   return this.falkonryService.streamOutput(pipeline, start);
-  // }
+    /**
+     *
+     * @param id is assessment.id
+     * @param start
+     * @param end
+     * @return
+     * @throws Exception
+     */
+    public BufferedReader getOutput(String id, Long start, Long end) throws Exception {
+        return this.falkonryService.getOutput(id, start, end);
+    }
 
-  public Subscription createSubscription(String eventbuffer, Subscription subscription) throws Exception {
-    return falkonryService.createSubscription(eventbuffer, subscription);
-  }
+    /**
+     *
+     * @param assessment
+     * @param options
+     * @return
+     * @throws Exception 
+     */
+    public HttpResponseFormat getHistoricalOutput(Assessment assessment, Map<String, String> options) throws Exception {
+        return this.falkonryService.getHistoricalOutput(assessment, options);
+    }
 
-  public Subscription updateSubscription(String eventbuffer, Subscription subscription) throws Exception {
-    return falkonryService.updateSubscription(eventbuffer, subscription);
-  }
+	public List<Assessment> datastreamLiveOn(String id) throws Exception {
+		return this.falkonryService.datastreamLiveOn(id);
+	}
 
-  public void deleteSubscription(String eventbuffer, String subscription) throws Exception {
-    falkonryService.deleteSubscription(eventbuffer, subscription);
-  }
+	public List<Assessment> datastreamLiveOff(String id) throws Exception {
+		return this.falkonryService.datastreamLiveOff(id);
+	}
 
-  public Publication createPublication(String pipeline, Publication publication) throws Exception {
-    return falkonryService.createPublication(pipeline, publication);
-  }
+//   public Observer streamOutput(String assessment, Long start) throws Exception {
+//     return this.falkonryService.streamOutput(assessment, start);
+//   }
+	
+	public List<EntityMeta> getEntityMeta(String datastreamId) throws Exception {
+		return this.falkonryService.getEntityMeta(datastreamId);
+	}
+	
+	public List<EntityMeta> postEntityMeta(List<EntityMetaRequest> entityMetaRequest, String datastreamId) throws Exception{
+		return this.falkonryService.postEntityMeta(entityMetaRequest, datastreamId);
+	}
 
-  public Publication updatePublication(String pipeline, Publication publication) throws Exception {
-    return falkonryService.updatePublication(pipeline, publication);
-  }
-
-  public void deletePublication(String pipeline, String publication) throws Exception {
-    falkonryService.deletePublication(pipeline, publication);
-  }
+   
 }

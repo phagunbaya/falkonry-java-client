@@ -6,6 +6,7 @@ package com.falkonry.helper.models;
  * MIT Licensed
  */
 
+
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
 /**
@@ -13,10 +14,29 @@ import org.codehaus.jackson.annotate.JsonIgnoreProperties;
  * @author dev-falkonry-10
  */
 @JsonIgnoreProperties(ignoreUnknown=true)
-public class SignalRequest {
+public class Input {
+  private String key;
   private String name;
   private ValueType valueType;
   private EventType eventType;
+
+    /**
+     *
+     * @return
+     */
+    public String getKey() {
+    return key;
+  }
+
+    /**
+     *
+     * @param key
+     * @return
+     */
+    public Input setKey(String key) {
+    this.key = key;
+    return this;
+  }
 
     /**
      *
@@ -31,7 +51,7 @@ public class SignalRequest {
      * @param name
      * @return
      */
-    public SignalRequest setName(String name) {
+    public Input setName(String name) {
     this.name = name;
     return this;
   }
@@ -49,7 +69,7 @@ public class SignalRequest {
      * @param valueType
      * @return
      */
-    public SignalRequest setValueType(ValueType valueType) {
+    public Input setValueType(ValueType valueType) {
     this.valueType = valueType;
     return this;
   }
@@ -67,7 +87,7 @@ public class SignalRequest {
      * @param eventType
      * @return
      */
-    public SignalRequest setEventType(EventType eventType) {
+    public Input setEventType(EventType eventType) {
     this.eventType = eventType;
     return this;
   }

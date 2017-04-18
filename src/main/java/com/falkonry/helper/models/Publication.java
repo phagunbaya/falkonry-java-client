@@ -10,6 +10,10 @@ import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
 import java.util.Map;
 
+/**
+ *
+ * @author dev-falkonry-10
+ */
 @JsonIgnoreProperties(ignoreUnknown=true)
 public class Publication {
   private String key;
@@ -22,83 +26,164 @@ public class Publication {
   private Boolean streaming;
   private Map<String, String> headers;
 
-  public String getKey() {
+    /**
+     *
+     * @return
+     */
+    public String getKey() {
     return key;
   }
 
-  public Publication setKey(String key) {
+    /**
+     *
+     * @param key
+     * @return
+     */
+    public Publication setKey(String key) {
     this.key = key;
     return this;
   }
 
-  public String getType() {
+    /**
+     *
+     * @return
+     */
+    public String getType() {
     return type;
   }
 
-  public Publication setType(String type) {
+    /**
+     *
+     * @param type
+     * @return
+     */
+    public Publication setType(String type) {
     this.type = type;
     return this;
   }
 
-  public String getTopic() {
+    /**
+     *
+     * @return
+     */
+    public String getTopic() {
     return topic;
   }
 
-  public Publication setTopic(String topic) {
+    /**
+     *
+     * @param topic
+     * @return
+     */
+    public Publication setTopic(String topic) {
     this.topic = topic;
     return this;
   }
 
-  public String getPath() {
+    /**
+     *
+     * @return
+     */
+    public String getPath() {
     return path;
   }
 
-  public Publication setPath(String path) {
+    /**
+     *
+     * @param path
+     * @return
+     */
+    public Publication setPath(String path) {
     this.path = path;
     return this;
   }
 
-  public String getUsername() {
+    /**
+     *
+     * @return
+     */
+    public String getUsername() {
     return username;
   }
 
-  public Publication setUsername(String username) {
+    /**
+     *
+     * @param username
+     * @return
+     */
+    public Publication setUsername(String username) {
     this.username = username;
     return this;
   }
 
-  public String getPassword() {
+    /**
+     *
+     * @return
+     */
+    public String getPassword() {
     return password;
   }
 
-  public Publication setPassword(String password) {
+    /**
+     *
+     * @param password
+     * @return
+     */
+    public Publication setPassword(String password) {
     this.password = password;
     return this;
   }
 
-  public String getContentType() {
+    /**
+     *
+     * @return
+     */
+    public String getContentType() {
     return contentType;
   }
 
-  public Publication setContentType(String contentType) {
+    /**
+     *
+     * @param contentType
+     * @return
+     */
+    public Publication setContentType(String contentType) {
     this.contentType = contentType;
     return this;
   }
 
-  public Boolean getStreaming() {
+    /**
+     *
+     * @return
+     */
+    public Boolean getStreaming() {
     return streaming;
   }
 
-  public Publication setStreaming(Boolean streaming) {
+    /**
+     *
+     * @param streaming
+     * @return
+     */
+    public Publication setStreaming(Boolean streaming) {
     this.streaming = streaming;
     return this;
   }
 
-  public Map<String, String> getHeaders() {
+    /**
+     *
+     * @return
+     */
+    public Map<String, String> getHeaders() {
     return headers;
   }
 
-  public Publication setHeaders(Map<String, String> headers) {
+    /**
+     *
+     * @param headers
+     * @return
+     */
+    public Publication setHeaders(Map<String, String> headers) {
     this.headers = headers;
     return this;
   }

@@ -9,7 +9,10 @@ import org.codehaus.jackson.annotate.JsonProperty;
  * MIT Licensed
  */
 
-
+/**
+ *
+ * @author dev-falkonry-10
+ */
 @JsonIgnoreProperties(ignoreUnknown=true)
 public class StatsMeasurementMap {
   private String Data;
@@ -20,72 +23,128 @@ public class StatsMeasurementMap {
   private String DataRateAverage;
   private String ConditionLatency;
 
-  @JsonProperty("Data")
+    /**
+     *
+     * @return
+     */
+    @JsonProperty("Data")
   public String getData() {
     return Data;
   }
 
-  @JsonProperty("Data")
+    /**
+     *
+     * @param data
+     */
+    @JsonProperty("Data")
   public void setData(String data) {
     this.Data = data;
   }
 
-  @JsonProperty("Signal")
+    /**
+     *
+     * @return
+     */
+    @JsonProperty("Signal")
   public String getSignal() {
     return Signal;
   }
 
-  @JsonProperty("Signal")
+    /**
+     *
+     * @param signal
+     */
+    @JsonProperty("Signal")
   public void setSignal(String signal) {
     this.Signal = signal;
   }
 
-  @JsonProperty("Thing")
+    /**
+     *
+     * @return
+     */
+    @JsonProperty("Thing")
   public String getThing() {
     return this.Thing;
   }
 
-  @JsonProperty("Thing")
+    /**
+     *
+     * @param thing
+     */
+    @JsonProperty("Thing")
   public void setThing(String thing) {
     this.Thing = thing;
   }
 
-  @JsonProperty("ThingSignalMap")
+    /**
+     *
+     * @return
+     */
+    @JsonProperty("ThingSignalMap")
   public String getThingSignalMap() {
     return this.ThingSignalMap;
   }
 
-  @JsonProperty("ThingSignalMap")
+    /**
+     *
+     * @param thingSignalMap
+     */
+    @JsonProperty("ThingSignalMap")
   public void setThingSignalMap(String thingSignalMap) {
     this.ThingSignalMap = thingSignalMap;
   }
 
-  @JsonProperty("DataRate")
+    /**
+     *
+     * @return
+     */
+    @JsonProperty("DataRate")
   public String getDataRate() {
     return this.DataRate;
   }
 
-  @JsonProperty("DataRate")
+    /**
+     *
+     * @param dataRate
+     */
+    @JsonProperty("DataRate")
   public void setDataRate(String dataRate) {
     this.DataRate = dataRate;
   }
 
-  @JsonProperty("DataRateAverage")
+    /**
+     *
+     * @return
+     */
+    @JsonProperty("DataRateAverage")
   public String getDataRateAverage() {
     return this.DataRateAverage;
   }
 
-  @JsonProperty("DataRateAverage")
+    /**
+     *
+     * @param dataRateAverage
+     */
+    @JsonProperty("DataRateAverage")
   public void setDataRateAverage(String dataRateAverage) {
     this.DataRateAverage = dataRateAverage;
   }
 
-  @JsonProperty("ConditionLatency")
+    /**
+     *
+     * @return
+     */
+    @JsonProperty("ConditionLatency")
   public String getConditionLatency() {
     return this.ConditionLatency;
   }
 
-  @JsonProperty("ConditionLatency")
+    /**
+     *
+     * @param conditionLatency
+     */
+    @JsonProperty("ConditionLatency")
   public void setConditionLatency(String conditionLatency) {
     this.ConditionLatency = conditionLatency;
   }

@@ -5,194 +5,469 @@ package com.falkonry.client.service;
  * Copyright(c) 2016 Falkonry Inc
  * MIT Licensed
  */
-
 import com.falkonry.helper.models.*;
-import com.sun.org.apache.xpath.internal.operations.Bool;
-import javafx.beans.*;
+
+import sun.security.util.PropertyExpander.ExpandException;
+
 import org.apache.commons.io.IOUtils;
+import org.codehaus.jackson.JsonParseException;
+import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.map.util.JSONPObject;
 import org.codehaus.jackson.type.TypeReference;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
-import java.io.InputStream;
-import java.nio.charset.Charset;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.*;
-import java.util.Observable;
-import java.util.concurrent.*;
-import java.util.stream.Stream;
-import org.json.JSONObject;
 
+/**
+ *
+ * @author dev-falkonry-10
+ */
 public class FalkonryService {
-  private HttpService httpService;
 
-  public FalkonryService (String host, String token) throws Exception {
-    this.httpService = new HttpService(host, token);
-  }
+    private HttpService httpService;
 
-  public Eventbuffer createEventbuffer(Eventbuffer eventbuffer) throws Exception {
-    ObjectMapper mapper = new ObjectMapper();
-    Eventbuffer eb = new Eventbuffer();
-
-    eb.setName(eventbuffer.getName());
-    if(eventbuffer.getEntityIdentifier()!=null)
-    eb.setEntityIdentifier(eventbuffer.getEntityIdentifier());
-    if(eventbuffer.getTimeFormat()!=null)
-      eb.setTimeFormat(eventbuffer.getTimeFormat());
-    if(eventbuffer.getTimeIdentifier()!=null)
-      eb.setTimeIdentifier(eventbuffer.getTimeIdentifier());
-    if(eventbuffer.getSignalsTagField()!=null)
-      eb.setSignalsTagField(eventbuffer.getSignalsTagField());
-    if(eventbuffer.getSignalsDelimiter()!=null)
-      eb.setSignalsDelimiter(eventbuffer.getSignalsDelimiter());
-    if(eventbuffer.getValueColumn()!=null)
-      eb.setValueColumn(eventbuffer.getValueColumn());
-    if(eventbuffer.getSignalsLocation()!=null)
-      eb.setSignalsLocation(eventbuffer.getSignalsLocation());
-
-    String eventbuffer_json = httpService.post("/eventbuffer", mapper.writeValueAsString(eb));
-    return mapper.readValue(eventbuffer_json, Eventbuffer.class);
-  }
-
-  public List<Eventbuffer> getEventbuffers() throws Exception {
-    ObjectMapper mapper = new ObjectMapper();
-    String eventbuffer_json = httpService.get("/eventbuffer");
-    return mapper.readValue(eventbuffer_json, new TypeReference<List<Eventbuffer>>(){});
-  }
-
-  public Eventbuffer getUpdatedEventbuffer(String id) throws Exception {
-    ObjectMapper mapper = new ObjectMapper();
-    String url = "/eventbuffer/" + id;
-    String eventbuffer_json = httpService.get(url);
-    return mapper.readValue(eventbuffer_json,Eventbuffer.class);
-  }
-
-  public void deleteEventbuffer(String eventbuffer) throws Exception {
-    httpService.delete("/eventbuffer/" + eventbuffer);
-  }
-
-  public Pipeline createPipeline(Pipeline pipeline) throws Exception {
-    ObjectMapper mapper = new ObjectMapper();
-    PipelineRequest pipelineRequest = new PipelineRequest();
-    List<Signal> signalList;
-    List<SignalRequest> signalRequestList = new ArrayList<SignalRequest>();
-    int len_input_list = pipeline.getInputList().size();
-    signalList = pipeline.getInputList();
-    for(int i = 0; i < len_input_list; i++)
-    {
-      SignalRequest signalRequest = new SignalRequest();
-      signalRequest.setName(signalList.get(i).getName());
-      signalRequest.setEventType(signalList.get(i).getEventType());
-      signalRequest.setValueType(signalList.get(i).getValueType());
-      signalRequestList.add(signalRequest);
+    /**
+     *
+     * @param host
+     * @param token
+     * @throws Exception
+     */
+    public FalkonryService(String host, String token) throws Exception {
+        this.httpService = new HttpService(host, token);
     }
-    int len_assessment_list = pipeline.getAssessmentList().size();
-    List<Assessment> assessmentList = pipeline.getAssessmentList();
-    List<AssessmentRequest> assessmentRequestList = new ArrayList<AssessmentRequest>();
-    for(int i = 0; i < len_assessment_list; i++)
-    {
-      AssessmentRequest assessmentRequest = new AssessmentRequest();
-      assessmentRequest.setName(assessmentList.get(i).getName());
-      assessmentRequest.setInputList(assessmentList.get(i).getInputList());
-      assessmentRequest.setAprioriConditionList(assessmentList.get(i).getAprioriConditionList());
-      assessmentRequestList.add(assessmentRequest);
+
+    /**
+     *
+     * @param datastream
+     * @return
+     * @throws Exception
+     */
+    public Datastream createDatastream(Datastream datastream) throws Exception {
+        ObjectMapper mapper = new ObjectMapper();
+        Datastream ds = new Datastream();
+
+        ds.setName(datastream.getName());
+        if (datastream.getDatasource() != null) {
+            ds.setDatasource(datastream.getDatasource());
+        }
+        if (datastream.getField() != null) {
+            ds.setField(datastream.getField());
+        }
+        String datastream_json = httpService.post("/datastream", mapper.writeValueAsString(ds));
+        return mapper.readValue(datastream_json, Datastream.class);
     }
-    pipelineRequest.setName(pipeline.getName())
-        .setEntityIdentifier(pipeline.getEntityIdentifier())
-        .setInterval(pipeline.getInterval())
-        .setEventbuffer(pipeline.getEventbuffer())
-        .setInputList(signalRequestList)
-        .setAssessmentList(assessmentRequestList)
-        .setEntityName(pipeline.getEntityName());
-    String pipeline_json = httpService.post("/pipeline", mapper.writeValueAsString(pipelineRequest));
-    return mapper.readValue(pipeline_json, Pipeline.class);
-  }
 
-  public List<Pipeline> getPipelines() throws Exception {
-    ObjectMapper mapper = new ObjectMapper();
-    String pipeline_json = httpService.get("/pipeline");
-    return mapper.readValue(pipeline_json, new TypeReference<List<Pipeline>>(){});
-  }
-
-  public void deletePipeline(String pipeline) throws Exception {
-    httpService.delete("/pipeline/"+pipeline);
-  }
-
-  public InputStatus addInputData(String eventbuffer, String data, Map<String, String> options) throws Exception {
-    ObjectMapper mapper = new ObjectMapper();
-    Map<String, String> ops = new HashMap<String, String>();
-    String url = "/eventbuffer/"+eventbuffer;
-    if(options.containsKey("subscription")){
-      url += "?subscriptionKey="+options.get("subscription");
+    /**
+     *
+     * @return
+     * @throws Exception
+     */
+    public List<Datastream> getDatastreams() throws Exception {
+        ObjectMapper mapper = new ObjectMapper();
+        String datastream_json = httpService.get("/datastream");
+        return mapper.readValue(datastream_json, new TypeReference<List<Datastream>>() {
+        });
     }
-    byte[] data_bytes = data.getBytes(Charset.forName("UTF-8"));
-    InputStream stream = new ByteArrayInputStream(data_bytes);
-    String status = this.httpService.postData(url, data);
-    return mapper.readValue(status, InputStatus.class);
-  }
 
-  public String addFacts(String pipeline, String data, Map<String, String > options) throws Exception{
-    String url = "/pipeline/" + pipeline + "/facts";
-    return this.httpService.postData(url, data);
-  }
+    /**
+     *
+     * @param id is datastrean.id
+     * @return
+     * @throws IOException 
+     * @throws JsonMappingException 
+     * @throws JsonParseException 
+     * @throws Exception
+     */
+    public Datastream getDatastream(String id) throws Exception {
+	    ObjectMapper mapper = new ObjectMapper();
+	    String url = "/datastream/" + id;
+	    String datastream_json = httpService.get(url);
+	    return mapper.readValue(datastream_json, Datastream.class);
 
-  public InputStatus addInputFromStream(String eventbuffer, ByteArrayInputStream stream, Map<String, String> options) throws Exception {
-    ObjectMapper mapper = new ObjectMapper();
-    String url = "/eventbuffer/"+eventbuffer;
-    if(options.containsKey("subscription")){
-      url += "?subscriptionKey="+options.get("subscription");
     }
-    byte[] data_bytes = IOUtils.toByteArray(stream);
-    String status = this.httpService.upstream(url, data_bytes);
-    return mapper.readValue(status, InputStatus.class);
-  }
-
-  public String addFactsStream(String pipeline, ByteArrayInputStream stream, Map<String, String> options) throws Exception{
-    String url = "/pipeline/" + pipeline + "/facts";
-    byte[] data_bytes = IOUtils.toByteArray(stream);
-    return this.httpService.upstream(url, data_bytes);
-  }
-
-  public BufferedReader getOutput(String pipeline, Long start, Long end) throws Exception {
-    String url = "/pipeline/"+pipeline+"/output?";
-    if(end != null) {
-      url += "lastTime=" + end;
-      if(start != null)
-        url += "&startTime="+start;
+    
+    /**
+     *
+     * @param datastream
+     * @return
+     * @throws Exception
+     */
+    public Datastream updateDatastream(Datastream datastream) throws Exception {
+        ObjectMapper mapper = new ObjectMapper();
+        String url = "/datastream/" + datastream.getId();
+        String datastream_json = httpService.put(url,mapper.writeValueAsString(datastream));
+        return mapper.readValue(datastream_json, Datastream.class);
     }
-    else {
-      if(start != null)
-        url += "startTime="+start;
-    }
-    return this.httpService.downstream(url);
-  }
 
-  /*private class StreamingThread extends Observable implements Runnable {
-    String pipeline = "";
+    /**
+     *
+     * @param id is datastrean.id
+     * @throws Exception
+     */
+    public void deleteDatastream(String id) throws Exception {
+        httpService.delete("/datastream/" + id);
+    }
+
+    /**
+     *
+     * @param assessmentRequest
+     * @return
+     * @throws Exception
+     */
+    public Assessment createAssessment(AssessmentRequest assessmentRequest) throws Exception {
+    	try {
+	        ObjectMapper mapper = new ObjectMapper();
+	        AssessmentRequest as = new AssessmentRequest();
+	
+	        as.setName(assessmentRequest.getName());
+	        as.setAssessmentRate(assessmentRequest.getAssessmentRate());
+	        as.setDatastream(assessmentRequest.getDatastream());
+	
+	        String assessment_json = httpService.post("/assessment", mapper.writeValueAsString(as));
+	        return mapper.readValue(assessment_json, Assessment.class);
+    	} catch (Exception e) {
+    		return new Assessment();
+    	}
+    }
+
+    /**
+     *
+     * @return
+     * @throws Exception
+     */
+    public List<Assessment> getAssessments() throws Exception {
+        ObjectMapper mapper = new ObjectMapper();
+        String assessment_json = httpService.get("/assessment");
+        return mapper.readValue(assessment_json, new TypeReference<List<Assessment>>() {
+        });
+    }
+    
+    /**
+     *
+     * @param id is assessment.id
+     * @return
+     * @throws Exception
+     */
+    public Assessment getAssessment(String id) throws Exception {
+        ObjectMapper mapper = new ObjectMapper();
+        String url = "/assessment/" + id;
+        String assessment_json = httpService.get(url);
+        return mapper.readValue(assessment_json, Assessment.class);
+    }
+    
+    /**
+     *
+     * @param assessment
+     * @return
+     * @throws Exception
+     */
+    public Assessment updateAssessment(Assessment assessment) throws Exception {
+        ObjectMapper mapper = new ObjectMapper();
+        String url = "/assessment/" + assessment.getId();
+        String assessment_json = httpService.put(url,mapper.writeValueAsString(assessment));
+        return mapper.readValue(assessment_json, Assessment.class);
+    }
+
+    /**
+     *
+     * @param id is assessment.id
+     * @throws Exception
+     */
+    public void deleteAssessment(String id) throws Exception {
+        httpService.delete("/assessment/" + id);
+    }
+    
+    /**
+     *
+     * @param  id is datastream.id
+     * @param data
+     * @param options
+     * @return
+     * @throws Exception
+     */
+    public InputStatus addInputData(String id, String data, Map<String, String> options) throws Exception {
+        ObjectMapper mapper = new ObjectMapper();
+        Map<String, String> ops = new HashMap<String, String>();
+        String url = "/datastream/" + id;
+        if (options.containsKey("streaming")) {
+            url += "?streaming=" + URLEncoder.encode(options.get("streaming"), "UTF-8");
+        }
+        if (options.containsKey("hasMoreData")) {
+            url += "?hasMoreData=" + URLEncoder.encode(options.get("hasMoreData"), "UTF-8");
+        }
+        String status = this.httpService.postData(url, data);
+        return mapper.readValue(status, InputStatus.class);
+    }
+
+    /**
+     *
+     * @param id is assessment.id
+     * @param data
+     * @param options
+     * @return
+     * @throws Exception
+     */
+    public InputStatus addFacts(String id, String data, Map<String, String> options) throws Exception {
+        ObjectMapper mapper = new ObjectMapper();
+        String url = "/assessment/" + id + "/facts";
+        String status = this.httpService.postData(url, data);
+        return mapper.readValue(status, InputStatus.class);
+    }
+
+    /**
+     *
+     * @param id is datastream.id
+     * @param stream
+     * @param options
+     * @return
+     * @throws Exception
+     */
+    public InputStatus addInputFromStream(String id, ByteArrayInputStream stream, Map<String, String> options) throws Exception {
+        ObjectMapper mapper = new ObjectMapper();
+        String url = "/datastream/" + id;
+        
+        if (options.containsKey("streaming")) {
+            url += "?streaming=" + URLEncoder.encode(options.get("streaming"), "UTF-8");
+        }
+        if (options.containsKey("hasMoreData")) {
+            url += "?hasMoreData=" + URLEncoder.encode(options.get("hasMoreData"), "UTF-8");
+        }
+        
+        byte[] data_bytes = IOUtils.toByteArray(stream);
+        String status = this.httpService.upstream(url, data_bytes);
+        return mapper.readValue(status, InputStatus.class);
+    }
+
+    /**
+     *
+     * @param id is assessment.id
+     * @param stream
+     * @param options
+     * @return
+     * @throws Exception
+     */
+    public InputStatus addFactsStream(String id, ByteArrayInputStream stream, Map<String, String> options) throws Exception {
+        ObjectMapper mapper = new ObjectMapper();
+        String url = "/assessment/" + id + "/facts";
+        byte[] data_bytes = IOUtils.toByteArray(stream);
+        String status =  this.httpService.upstream(url, data_bytes);
+        return mapper.readValue(status, InputStatus.class);
+    }
+
+    /**
+     *
+     * @param id is assessment.id
+     * @param start
+     * @param end
+     * @return
+     * @throws Exception
+     */
+    public BufferedReader getOutput(String id, Long start, Long end) throws Exception {
+        String url = "/assessment/" + id + "/output?";
+        return this.httpService.downstream(url);
+    }
+
+    /**
+    *
+    * @param id is datastream.id
+    * @return
+    * @throws Exception
+    */
+    public List<Assessment> datastreamLiveOn(String id) throws Exception {
+    	ObjectMapper mapper = new ObjectMapper();
+    	String url = "/datastream/" + id + "/on";
+    	String assessment_json = httpService.post(url, "");
+    	return mapper.readValue(assessment_json, new TypeReference<List<Assessment>>() {
+        });
+    }
+    
+    /**
+    *
+    * @param id is datastream.id
+    * @return
+    * @throws Exception
+    */
+    public List<Assessment> datastreamLiveOff(String id) throws Exception {
+    	ObjectMapper mapper = new ObjectMapper();
+    	String url = "/datastream/" + id + "/off";
+    	String assessment_json = httpService.post(url, "");
+    	return mapper.readValue(assessment_json, new TypeReference<List<Assessment>>() {
+        });
+    }
+    
+    /**
+     *
+     * @param assessment
+     * @param options
+     * @return
+     * @throws Exception 
+     */
+    public HttpResponseFormat getHistoricalOutput(Assessment assessment, Map<String, String> options) throws Exception {
+        String url = "/assessment/" + assessment.getId() + "/output?";
+        String trackerId;
+        String modelIndex;
+        String startTime;
+        String endTime;
+        Boolean firstReqParam = true;
+
+        if (options.containsKey("trackerId")) {
+
+            firstReqParam = false;
+            url += "trackerId=" + URLEncoder.encode(options.get("trackerId"), "UTF-8");
+        }
+
+        if (options.containsKey("modelIndex")) {
+
+            if (firstReqParam) {
+                firstReqParam = false;
+                url += "model=" + URLEncoder.encode(options.get("modelIndex"), "UTF-8");
+            } else {
+                url += "&model=" + URLEncoder.encode(options.get("modelIndex"), "UTF-8");
+            }
+        }
+
+        if (options.containsKey("startTime")) {
+
+            if (firstReqParam) {
+                firstReqParam = false;
+                url += "startTime=" + URLEncoder.encode(options.get("startTime"), "UTF-8");
+            } else {
+                url += "&startTime=" + URLEncoder.encode(options.get("startTime"), "UTF-8");
+            }
+        }
+
+        if (options.containsKey("endTime")) {
+
+            if (firstReqParam) {
+                url += "endTime=" +  URLEncoder.encode(options.get("endTime"), "UTF-8");
+            } else {
+                url += "&endTime=" +  URLEncoder.encode(options.get("endTime"), "UTF-8");
+            }
+        }
+
+        String format;
+        String responseFromat = "application/json";
+        if (options.containsKey("responseFromat")) {
+
+            format = options.get("responseFromat");
+            if (format.equals("text/csv")) {
+                responseFromat = format;
+            }
+        }
+
+        HttpResponseFormat outputData = httpService.getOutput(url, responseFromat);
+        return outputData;
+    }
+
+    // Post EntityMeta
+
+    /**
+     *
+     * @param entityMetaRequest
+     * @param datastream
+     * @return
+     * @throws Exception
+     */
+    public List<EntityMeta> postEntityMeta(List<EntityMetaRequest> entityMetaRequest, String datastreamId) throws Exception{
+        ObjectMapper mapper = new ObjectMapper();
+        String entityMetaRequest_json = httpService.post("/datastream/"+datastreamId+"/entityMeta", mapper.writeValueAsString(entityMetaRequest));
+        return mapper.readValue(entityMetaRequest_json, new TypeReference<List<EntityMeta>>() {
+        });
+    }
+
+	public List<EntityMeta> getEntityMeta(String datastreamId) throws Exception {
+		ObjectMapper mapper = new ObjectMapper();
+        String entityMeta_json = httpService.get("/datastream/" + datastreamId + "/entityMeta");
+        return mapper.readValue(entityMeta_json, new TypeReference<List<EntityMeta>>() {
+        });
+	}
+    
+//    public HttpResponseFormat GetHistoricalOutput(Assessment assessment, Map<String, String> options)
+//        {
+//            var url = "/assessment/" + assessment.Id + "/output?";
+//            
+//            var firstReqParam = true;
+//
+//            if (options.containsKey("trackerId"))
+//            {
+//                firstReqParam = false;
+//                url += "trackerId=" + URLEncoder.encode(options.get("trackerId"), "UTF-8");
+//            }
+//            if (options.containsKey("modelIndex"))
+//            {
+//                if (firstReqParam)
+//                {
+//                    firstReqParam = false;
+//                    url += "model=" + URLEncoder.encode(options.get("modelIndex"), "UTF-8");
+//                }
+//                else
+//                    url += "&model=" + URLEncoder.encode(options.get("modelIndex"), "UTF-8");
+//
+//            }
+//            if (options.containsKey("startTime"))
+//            {
+//                if (firstReqParam)
+//                {
+//                    firstReqParam = false;
+//                    url += "startTime=" + URLEncoder.encode(options.get("startTime"), "UTF-8");
+//                }
+//                else
+//                    url += "&startTime=" + URLEncoder.encode(options.get("startTime"), "UTF-8");
+//
+//            }
+//            if (options.containsKey("endTime"))
+//            {
+//                if (firstReqParam)
+//                {
+//                    url += "endTime=" + + URLEncoder.encode(options.get("endTime"), "UTF-8");
+//                }
+//                else
+//                    url += "&endTime=" + + URLEncoder.encode(options.get("endTime"), "UTF-8");
+//
+//            }
+//            var responseFromat = "application/json";
+//            if (options.containsKey("responseFromat"))
+//            {
+//                if (options.get("responseFromat").Equals("text/csv"))
+//                {
+//                    responseFromat = "text/csv";
+//                }
+//            }
+//
+//            var outputData = HttpService.GetOutput(url, responseFromat);
+//            return outputData;
+//        }
+
+
+    /*private class StreamingThread extends Observable implements Runnable {
+    String assessment = "";
     Long start = 0l;
     Boolean awaitingResponse = false;
-    private StreamingThread (String pipeline, Long start) throws Exception {
-      pipeline = this.pipeline;
+    private StreamingThread (String assessment, Long start) throws Exception {
+      assessment = this.assessment;
       start = this.start;
     }
     public void run() {
       BufferedReader data = null;
       if (!awaitingResponse) {
-        data = outflowData(pipeline);
+        data = outflowData(assessment);
       }
       if (data != null) {
         setChanged();
         notifyObservers(data);
       }
     }
-    private BufferedReader outflowData (String pipeline) {
-      //BufferedReader pipelineOutflowData = null;
+    private BufferedReader outflowData (String assessment) {
+      //BufferedReader assessmentOutflowData = null;
       try {
-        if(pipelineOpen()) {
+        if(assessmentOpen()) {
           System.out.println("Start : " + start);
-          String url = "/pipeline/" + pipeline + "/output?startTime=" + start;
-          //pipelineOutflowData =
+          String url = "/assessment/" + assessment + "/output?startTime=" + start;
+          //assessmentOutflowData =
           return httpService.downstream(url);
         }
         else {
@@ -204,13 +479,13 @@ public class FalkonryService {
       return null;
     }
 
-    private boolean pipelineOpen() throws Exception {
-      String url = "/Pipeline/" + pipeline;
-      String pipeline_json = httpService.get("/pipeline");
-      //JSONPObject pipeline_jsonpobject = new JSONPObject(, pipeline_json);
+    private boolean assessmentOpen() throws Exception {
+      String url = "/Assessment/" + assessment;
+      String assessment_json = httpService.get("/assessment");
+      //JSONPObject assessment_jsonpobject = new JSONPObject(, assessment_json);
       //ObjectMapper mapper = new ObjectMapper();
-      //if(mapper.readValue(pipeline_json, Object[].class) == "CLOSED") {}
-      JSONObject outflowStatus = new JSONObject(pipeline_json);
+      //if(mapper.readValue(assessment_json, Object[].class) == "CLOSED") {}
+      JSONObject outflowStatus = new JSONObject(assessment_json);
       return (outflowStatus.get("outflowStatus") == "OPEN");
     }
   }
@@ -228,13 +503,13 @@ public class FalkonryService {
     }
   }
 
-  public Observable streamOutput(String pipeline, Long start) {
+  public Observable streamOutput(String assessment, Long start) {
     String data;
     //StreamObserver outflowObserver = new StreamObserver();
     try {
-      //StreamingThread streamingThread = new StreamingThread(pipeline, start);
+      //StreamingThread streamingThread = new StreamingThread(assessment, start);
       //streamingThread.addObserver(outflowObserver);
-      return (new StreamingThread(pipeline, start));
+      return (new StreamingThread(assessment, start));
     } catch (Exception e) {
       System.out.println("Error instantiating streamingThread : " + e);
     }
@@ -252,30 +527,30 @@ public class FalkonryService {
               }
             }, 5, TimeUnit.SECONDS);
 
-    String pipeline = "";
+    String assessment = "";
     Long start = 0l;
     Boolean awaitingResponse = false;
-    private StreamingThread (String pipeline, Long start) throws Exception {
-      pipeline = this.pipeline;
+    private StreamingThread (String assessment, Long start) throws Exception {
+      assessment = this.assessment;
       start = this.start;
     }
     public void run() {
       BufferedReader data = null;
       if (!awaitingResponse) {
-        data = outflowData(pipeline);
+        data = outflowData(assessment);
       }
       if (data != null) {
         //setChanged();
         //notifyObservers(data);
       }
     }
-    private BufferedReader outflowData (String pipeline) {
-      //BufferedReader pipelineOutflowData = null;
+    private BufferedReader outflowData (String assessment) {
+      //BufferedReader assessmentOutflowData = null;
       try {
-        if(pipelineOpen()) {
+        if(assessmentOpen()) {
           System.out.println("Start : " + start);
-          String url = "/pipeline/" + pipeline + "/output?startTime=" + start;
-          //pipelineOutflowData =
+          String url = "/assessment/" + assessment + "/output?startTime=" + start;
+          //assessmentOutflowData =
           return httpService.downstream(url);
         }
         else {
@@ -287,59 +562,23 @@ public class FalkonryService {
       return null;
     }
 
-    private boolean pipelineOpen() throws Exception {
-      String url = "/Pipeline/" + pipeline;
-      String pipeline_json = httpService.get("/pipeline");
-      //JSONPObject pipeline_jsonpobject = new JSONPObject(, pipeline_json);
+    private boolean assessmentOpen() throws Exception {
+      String url = "/Assessment/" + assessment;
+      String assessment_json = httpService.get("/assessment");
+      //JSONPObject assessment_jsonpobject = new JSONPObject(, assessment_json);
       //ObjectMapper mapper = new ObjectMapper();
-      //if(mapper.readValue(pipeline_json, Object[].class) == "CLOSED") {}
-      JSONObject outflowStatus = new JSONObject(pipeline_json);
+      //if(mapper.readValue(assessment_json, Object[].class) == "CLOSED") {}
+      JSONObject outflowStatus = new JSONObject(assessment_json);
       return (outflowStatus.get("outflowStatus") == "OPEN");
     }
   }
-*/
-
-
-
-  // public Observer streamOutput(String pipeline, Long start) {
-  //   String data;
-  //     try {
-
-  //     } catch (Exception e) {
-  //       System.out.println("Error instantiating streamingThread : " + e);
-  //     }
-  //   return null;
-  // }
-
-  public Subscription createSubscription(String eventbuffer, Subscription subscription) throws Exception {
-    ObjectMapper mapper = new ObjectMapper();
-    String subscription_json = httpService.post("/eventbuffer/"+eventbuffer+"/subscription", mapper.writeValueAsString(subscription));
-    return mapper.readValue(subscription_json, Subscription.class);
-  }
-
-  public Subscription updateSubscription(String eventbuffer, Subscription subscription) throws Exception {
-    ObjectMapper mapper = new ObjectMapper();
-    String subscription_json = httpService.put("/eventbuffer/"+eventbuffer+"/subscription/"+subscription.getKey(), mapper.writeValueAsString(subscription));
-    return mapper.readValue(subscription_json, Subscription.class);
-  }
-
-  public void deleteSubscription(String eventbuffer, String subscription) throws Exception {
-    httpService.delete("/eventbuffer/"+eventbuffer+"/subscription/"+subscription);
-  }
-
-  public Publication createPublication(String pipeline, Publication publication) throws Exception {
-    ObjectMapper mapper = new ObjectMapper();
-    String publication_json = httpService.post("/pipeline/"+pipeline+"/publication", mapper.writeValueAsString(publication));
-    return mapper.readValue(publication_json, Publication.class);
-  }
-
-  public Publication updatePublication(String pipeline, Publication publication) throws Exception {
-    ObjectMapper mapper = new ObjectMapper();
-    String publication_json = httpService.put("/pipeline"+pipeline+"/publication/"+publication.getKey(), mapper.writeValueAsString(publication));
-    return mapper.readValue(publication_json, Publication.class);
-  }
-
-  public void deletePublication(String pipeline, String publication) throws Exception {
-    httpService.delete("/pipeline/"+pipeline+"/publication/"+publication);
-  }
+     */
+    // public Observer streamOutput(String assessment, Long start) {
+    //   String data;
+    //     try {
+    //     } catch (Exception e) {
+    //       System.out.println("Error instantiating streamingThread : " + e);
+    //     }
+    //   return null;
+    // }
 }
