@@ -11,7 +11,6 @@ import org.codehaus.jackson.annotate.JsonProperty;
 
 /**
  *
- * @author dev-falkonry-10
  */
 @JsonIgnoreProperties(ignoreUnknown=true)
 public class StatsMeasurementMap {

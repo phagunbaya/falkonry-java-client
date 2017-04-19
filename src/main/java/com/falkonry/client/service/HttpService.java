@@ -23,486 +23,451 @@ import javax.net.ssl.SSLContext;
 
 /**
  *
- * @author dev-falkonry-10
  */
 public class HttpService {
 
-    private String host;
-    private String token;
-    private String user_agent = "falkonry/java-client";
+	private String host;
+	private String token;
+	private String user_agent = "falkonry/java-client";
 
-    /**
-     *
-     * @param host
-     * @param token
-     * @throws Exception
-     */
-    public HttpService(String host, String token) throws Exception {
+	/**
+	 *
+	 * @param host
+	 * @param token
+	 * @throws Exception
+	 */
+	public HttpService(String host, String token) throws Exception {
 
-        //for localhost testing only
-        javax.net.ssl.HttpsURLConnection.setDefaultHostnameVerifier(
-                new javax.net.ssl.HostnameVerifier() {
+		// for localhost testing only
+		javax.net.ssl.HttpsURLConnection.setDefaultHostnameVerifier(new javax.net.ssl.HostnameVerifier() {
 
-            public boolean verify(String hostname,
-                    javax.net.ssl.SSLSession sslSession) {
-                if (hostname.equals("localhost")) {
-                    return true;
-                }
-                return false;
-            }
-        });
-    	
-        this.host = (host == null) ? "https://service.falkonry.io" : host;
-        try {
-            this.token = token;
-        } catch (Exception e) {
-            throw new Exception("Invalid token");
-        }
-    }
+			public boolean verify(String hostname, javax.net.ssl.SSLSession sslSession) {
+				if (hostname.equals("localhost")) {
+					return true;
+				}
+				return false;
+			}
+		});
 
-    /**
-     *
-     * @param path
-     * @return
-     * @throws Exception
-     */
-    public String get(String path) throws Exception {
-    	try {
-    		String url = this.host + path;
-            URL obj = new URL(url);
-            HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-            con.setRequestMethod("GET");
-            con.setRequestProperty("User-Agent", this.user_agent);
-            con.setRequestProperty("Authorization", "Bearer " + this.token);
-            con.setRequestProperty("x-falkonry-source", "falkonry-java-client");
-            int responseCode = con.getResponseCode();
-            if(responseCode >= 400) {
-            	String responseMessage = con.getResponseMessage();
-            	throw new FalkonryException(responseMessage);
-            }
-            
-            BufferedReader in = new BufferedReader(
-                    new InputStreamReader(con.getInputStream()));
+		this.host = (host == null) ? "https://sandbox.falkonry.ai" : host;
+		try {
+			this.token = token;
+		} catch (Exception e) {
+			throw new Exception("Invalid token");
+		}
+	}
 
-            String inputLine;
-            StringBuffer response = new StringBuffer();
+	/**
+	 *
+	 * @param path
+	 * @return
+	 * @throws Exception
+	 */
+	public String get(String path) throws Exception {
+		String url = this.host + path;
+		URL obj = new URL(url);
+		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+		con.setRequestMethod("GET");
+		con.setRequestProperty("User-Agent", this.user_agent);
+		con.setRequestProperty("Authorization", "Bearer " + this.token);
+		con.setRequestProperty("x-falkonry-source", "falkonry-java-client");
+		int responseCode = con.getResponseCode();
+		if (responseCode >= 400) {
+			InputStream errorStream = con.getErrorStream();
+			BufferedReader in = new BufferedReader(new InputStreamReader(errorStream));
+			String inputLine;
+			StringBuffer response = new StringBuffer();
 
-            while ((inputLine = in.readLine()) != null) {
-                response.append(inputLine);
-            }
+			while ((inputLine = in.readLine()) != null) {
+				response.append(inputLine);
+			}
+			in.close();
+			throw new FalkonryException(response.toString());
+		}
 
-            in.close();
+		BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
 
-        	return response.toString();
-            
-    	} catch(Exception e) {
-    		if(e instanceof FalkonryException){
-    			throw e;
-    		} else {
-    			String msg = e.getMessage();
-    			throw new FalkonryException("Error: " + msg);
-    		}
-    	}
-    }
+		String inputLine;
+		StringBuffer response = new StringBuffer();
 
-    /**
-     *
-     * @param path
-     * @param data
-     * @return
-     * @throws Exception
-     */
-    public String post(String path, String data) throws Exception {
-    	try {
-	        String url = this.host + path;
-	
-	        URL obj = new URL(url);
-	        HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-	        con.setRequestMethod("POST");
-	        con.setRequestProperty("User-Agent", this.user_agent);
-	        con.setRequestProperty("Content-Type", "application/json");
-	        con.setRequestProperty("Authorization", "Bearer " + this.token);
-	        con.setRequestProperty("x-falkonry-source", "falkonry-java-client");
-	        con.setDoOutput(true);
-	        DataOutputStream wr = new DataOutputStream(con.getOutputStream());
-	        wr.writeBytes(data);
-	        wr.flush();
-	        wr.close();
-	        int responseCode = con.getResponseCode();
-	        if(responseCode >= 400) {
-            	String responseMessage = con.getResponseMessage();
-            	throw new FalkonryException(responseMessage);
-            }
-	        InputStream is = con.getInputStream();
-	        BufferedReader in = new BufferedReader(
-	                new InputStreamReader(is));
-	
-	        String inputLine;
-	        StringBuffer response = new StringBuffer();
-	
-	        while ((inputLine = in.readLine()) != null) {
-	            response.append(inputLine);
-	        }
-	
-	        in.close();
+		while ((inputLine = in.readLine()) != null) {
+			response.append(inputLine);
+		}
 
-            return response.toString();
-	        
-    	} catch(Exception e) {
-    		if(e instanceof FalkonryException){
-    			throw e;
-    		} else {
-    			String msg = e.getMessage();
-    			throw new FalkonryException("Error: " + msg);
-    		}
-    	}
+		in.close();
 
-    }
+		return response.toString();
+	}
 
-    /**
-     *
-     * @param path
-     * @param data
-     * @return
-     * @throws Exception
-     */
-    public String postData(String path, String data) throws Exception {
-    	try {
-	        String url = this.host + path;
-	        URL obj = new URL(url);
-	        HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-	        con.setRequestMethod("POST");
-	        con.setRequestProperty("User-Agent", this.user_agent);
-	        con.setRequestProperty("Content-Type", "text/plain");
-	        con.setRequestProperty("Authorization", "Bearer " + this.token);
-	        con.setRequestProperty("x-falkonry-source", "falkonry-java-client");
-	        con.setDoOutput(true);
-	        DataOutputStream wr = new DataOutputStream(con.getOutputStream());
-	        wr.writeBytes(data);
-	        wr.flush();
-	        wr.close();
-	        int responseCode = con.getResponseCode();
-	        if(responseCode >= 400) {
-	        	String responseMessage = con.getResponseMessage();
-	        	throw new FalkonryException(responseMessage);
-	        }
-	        InputStream is = con.getInputStream();
-	        BufferedReader in = new BufferedReader(
-	                new InputStreamReader(is));
-	
-	        String inputLine;
-	        StringBuffer response = new StringBuffer();
-	
-	        while ((inputLine = in.readLine()) != null) {
-	            response.append(inputLine);
-	        }
-	
-	        in.close();
-	
-	        return response.toString();
-    	} catch(Exception e) {
-    		if(e instanceof FalkonryException){
-    			throw e;
-    		} else {
-    			String msg = e.getMessage();
-    			throw new FalkonryException("Error: " + msg);
-    		}
-    	}
+	/**
+	 *
+	 * @param path
+	 * @param data
+	 * @return
+	 * @throws Exception
+	 */
+	public String post(String path, String data) throws Exception {
+		String url = this.host + path;
 
-    }
+		URL obj = new URL(url);
+		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+		con.setRequestMethod("POST");
+		con.setRequestProperty("User-Agent", this.user_agent);
+		con.setRequestProperty("Content-Type", "application/json");
+		con.setRequestProperty("Authorization", "Bearer " + this.token);
+		con.setRequestProperty("x-falkonry-source", "falkonry-java-client");
+		con.setDoOutput(true);
+		DataOutputStream wr = new DataOutputStream(con.getOutputStream());
+		wr.writeBytes(data);
+		wr.flush();
+		wr.close();
+		int responseCode = con.getResponseCode();
+		if (responseCode >= 400) {
+			InputStream errorStream = con.getErrorStream();
+			BufferedReader in = new BufferedReader(new InputStreamReader(errorStream));
+			String inputLine;
+			StringBuffer response = new StringBuffer();
 
-    /**
-     *
-     * @param path
-     * @param data
-     * @return
-     * @throws Exception
-     */
-    public String put(String path, String data) throws Exception {
-    	try {
-	        String url = this.host + path;
-	        URL obj = new URL(url);
-	        HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-	        con.setRequestMethod("PUT");
-	        con.setRequestProperty("User-Agent", this.user_agent);
-	        con.setRequestProperty("Content-Type", "application/json");
-	        con.setRequestProperty("Authorization", "Bearer " + this.token);
-	        con.setRequestProperty("x-falkonry-source", "falkonry-java-client");
-	        con.setDoOutput(true);
-	        DataOutputStream wr = new DataOutputStream(con.getOutputStream());
-	        wr.writeBytes(data);
-	        wr.flush();
-	        wr.close();
-	
-	        int responseCode = con.getResponseCode();
-	        if(responseCode >= 400) {
-	        	String responseMessage = con.getResponseMessage();
-	        	throw new FalkonryException(responseMessage);
-	        }
-	        BufferedReader in = new BufferedReader(
-	                new InputStreamReader(con.getInputStream()));
-	
-	        String inputLine;
-	        StringBuffer response = new StringBuffer();
-	
-	        while ((inputLine = in.readLine()) != null) {
-	            response.append(inputLine);
-	        }
-	
-	        in.close();
-	
-	        return response.toString();
-    	} catch(Exception e) {
-    		if(e instanceof FalkonryException){
-    			throw e;
-    		} else {
-    			String msg = e.getMessage();
-    			throw new FalkonryException("Error: " + msg);
-    		}
-    	}
-    }
+			while ((inputLine = in.readLine()) != null) {
+				response.append(inputLine);
+			}
+			in.close();
+			throw new FalkonryException(response.toString());
+		}
+		InputStream is = con.getInputStream();
+		BufferedReader in = new BufferedReader(new InputStreamReader(is));
 
-    /**
-     *
-     * @param path
-     * @return
-     * @throws Exception
-     */
-    public String delete(String path) throws Exception {
-        try {
-	        String url = this.host + path;
-	        URL obj = new URL(url);
-	        HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-	        con.setRequestMethod("DELETE");
-	        con.setRequestProperty("User-Agent", this.user_agent);
-	        con.setRequestProperty("Authorization", "Bearer " + this.token);
-	        con.setRequestProperty("x-falkonry-source", "falkonry-java-client");
-	        int responseCode = con.getResponseCode();
-	        if(responseCode >= 400) {
-	        	String responseMessage = con.getResponseMessage();
-	        	throw new FalkonryException(responseMessage);
-	        }
-	        BufferedReader in = new BufferedReader(
-	                new InputStreamReader(con.getInputStream()));
-	
-	        String inputLine;
-	        StringBuffer response = new StringBuffer();
-	
-	        while ((inputLine = in.readLine()) != null) {
-	            response.append(inputLine);
-	        }
-	
-	        in.close();
-	
-	        return response.toString();
-        } catch(Exception e) {
-    		if(e instanceof FalkonryException){
-    			throw e;
-    		} else {
-    			String msg = e.getMessage();
-    			throw new FalkonryException("Error: " + msg);
-    		}
-    	}
-    }
+		String inputLine;
+		StringBuffer response = new StringBuffer();
 
-    /**
-     *
-     * @param path
-     * @param params
-     * @param stream
-     * @return
-     * @throws Exception
-     */
-    public String sfpost(String path, Map<String, String> params, InputStream stream) throws Exception {
-    	try {
-	        String url = this.host + path;
-	        String tempFileName;
-	        CloseableHttpClient httpClient = HttpClients.createDefault();
-	        HttpPost httpPost = new HttpPost(url);
-	        httpPost.addHeader("User-Agent", this.user_agent);
-	        httpPost.addHeader("Authorization", "Bearer " + this.token);
-	        httpPost.addHeader("x-falkonry-source", "falkonry-java-client");
-	        
-	        MultipartEntityBuilder builder = MultipartEntityBuilder.create();
-	        builder.addTextBody("name", params.get("name"));
-	        builder.addTextBody("timeIdentifier", params.get("timeIdentifier"));
-	        builder.addTextBody("timeFormat", params.get("timeFormat"));
-	
-	        if (stream != null) {
-	            tempFileName = "input-" + Math.random() + "." + params.get("fileFormat");
-	            String content_type = "text/" + params.get("fileFormat");
-	            builder.addBinaryBody("data", stream, ContentType.create(content_type), tempFileName);
-	        }
-	
-	        HttpEntity multipart = builder.build();
-	        httpPost.setEntity(multipart);
-	
-	        CloseableHttpResponse closeableHttpResponse = httpClient.execute(httpPost);
-	        int responseCode = closeableHttpResponse.getStatusLine().getStatusCode();
-	        if(responseCode >= 400) {
-	        	String responseMessage = closeableHttpResponse.getStatusLine().getReasonPhrase();
-	        	throw new FalkonryException(responseMessage);
-	        }
-	        HttpEntity responseEntity = closeableHttpResponse.getEntity();
-	
-	        InputStream is = responseEntity.getContent();
-	        BufferedReader in = new BufferedReader(
-	                new InputStreamReader(is));
-	
-	        String inputLine;
-	        StringBuffer response = new StringBuffer();
-	
-	        while ((inputLine = in.readLine()) != null) {
-	            response.append(inputLine);
-	        }
-	
-	        in.close();
-	
-	        return response.toString();
-    	} catch(Exception e) {
-    		if(e instanceof FalkonryException){
-    			throw e;
-    		} else {
-    			String msg = e.getMessage();
-    			throw new FalkonryException("Error: " + msg);
-    		}
-    	}
+		while ((inputLine = in.readLine()) != null) {
+			response.append(inputLine);
+		}
 
-    }
+		in.close();
 
-    /**
-     *
-     * @param path
-     * @param data
-     * @return
-     * @throws Exception
-     */
-    public String upstream(String path, byte[] data) throws Exception {
-    	try {
-	        String url = this.host + path;
-	        URL obj = new URL(url);
-	        HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-	        con.setRequestMethod("POST");
-	        con.setRequestProperty("User-Agent", this.user_agent);
-	        con.setRequestProperty("Content-Type", "text/plain");
-	        con.setRequestProperty("Authorization", "Bearer " + this.token);
-	        con.setRequestProperty("x-falkonry-source", "falkonry-java-client");
-	        con.setDoOutput(true);
-	        DataOutputStream wr = new DataOutputStream(con.getOutputStream());
-	        wr.write(data);
-	        wr.flush();
-	        wr.close();
+		return response.toString();
+	}
+
+	/**
+	 *
+	 * @param path
+	 * @param data
+	 * @return
+	 * @throws Exception
+	 */
+	public String postData(String path, String data) throws Exception {
+		String url = this.host + path;
+		URL obj = new URL(url);
+		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+		con.setRequestMethod("POST");
+		con.setRequestProperty("User-Agent", this.user_agent);
+		con.setRequestProperty("Content-Type", "text/plain");
+		con.setRequestProperty("Authorization", "Bearer " + this.token);
+		con.setRequestProperty("x-falkonry-source", "falkonry-java-client");
+		con.setDoOutput(true);
+		DataOutputStream wr = new DataOutputStream(con.getOutputStream());
+		wr.writeBytes(data);
+		wr.flush();
+		wr.close();
+		int responseCode = con.getResponseCode();
+		if (responseCode >= 400) {
+			InputStream errorStream = con.getErrorStream();
+			BufferedReader in = new BufferedReader(new InputStreamReader(errorStream));
+			String inputLine;
+			StringBuffer response = new StringBuffer();
+
+			while ((inputLine = in.readLine()) != null) {
+				response.append(inputLine);
+			}
+			in.close();
+			throw new FalkonryException(response.toString());
+		}
+		InputStream is = con.getInputStream();
+		BufferedReader in = new BufferedReader(new InputStreamReader(is));
+
+		String inputLine;
+		StringBuffer response = new StringBuffer();
+
+		while ((inputLine = in.readLine()) != null) {
+			response.append(inputLine);
+		}
+
+		in.close();
+
+		return response.toString();
+	}
+
+	/**
+	 *
+	 * @param path
+	 * @param data
+	 * @return
+	 * @throws Exception
+	 */
+	public String put(String path, String data) throws Exception {
+		String url = this.host + path;
+		URL obj = new URL(url);
+		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+		con.setRequestMethod("PUT");
+		con.setRequestProperty("User-Agent", this.user_agent);
+		con.setRequestProperty("Content-Type", "application/json");
+		con.setRequestProperty("Authorization", "Bearer " + this.token);
+		con.setRequestProperty("x-falkonry-source", "falkonry-java-client");
+		con.setDoOutput(true);
+		DataOutputStream wr = new DataOutputStream(con.getOutputStream());
+		wr.writeBytes(data);
+		wr.flush();
+		wr.close();
+
+		int responseCode = con.getResponseCode();
+		if (responseCode >= 400) {
+			InputStream errorStream = con.getErrorStream();
+			BufferedReader in = new BufferedReader(new InputStreamReader(errorStream));
+			String inputLine;
+			StringBuffer response = new StringBuffer();
+
+			while ((inputLine = in.readLine()) != null) {
+				response.append(inputLine);
+			}
+			in.close();
+			throw new FalkonryException(response.toString());
+		}
+		BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+
+		String inputLine;
+		StringBuffer response = new StringBuffer();
+
+		while ((inputLine = in.readLine()) != null) {
+			response.append(inputLine);
+		}
+
+		in.close();
+
+		return response.toString();
 	
-	        int responseCode = con.getResponseCode();
-	        if(responseCode >= 400) {
-	        	String responseMessage = con.getResponseMessage();
-	        	throw new FalkonryException(responseMessage);
-	        }
-	        BufferedReader in = new BufferedReader(
-	                new InputStreamReader(con.getInputStream()));
-	
-	        String inputLine;
-	        StringBuffer response = new StringBuffer();
-	
-	        while ((inputLine = in.readLine()) != null) {
-	            response.append(inputLine);
-	        }
-	
-	        in.close();
-	
-	        return response.toString();
-    	} catch(Exception e) {
-    		if(e instanceof FalkonryException){
-    			throw e;
-    		} else {
-    			String msg = e.getMessage();
-    			throw new FalkonryException("Error: " + msg);
-    		}
-    	}
-    }
+	}
 
-    /**
-     *
-     * @param path
-     * @return
-     * @throws Exception
-     */
-    public BufferedReader downstream(String path) throws Exception {
-    	try {
-	        String url = this.host + path;
-	        URL obj = new URL(url);
-	        HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-	        con.setRequestMethod("GET");
-	        con.setRequestProperty("User-Agent", this.user_agent);
-	        con.setRequestProperty("Authorization", "Bearer " + this.token);
-	        con.setRequestProperty("x-falkonry-source", "falkonry-java-client");
-	        int responseCode = con.getResponseCode();
-	        if(responseCode >= 400) {
-	        	String responseMessage = con.getResponseMessage();
-	        	throw new FalkonryException(responseMessage);
-	        }
-	        BufferedReader in = new BufferedReader(
-	                new InputStreamReader(con.getInputStream()));
-	
-	        return in;
-    	} catch(Exception e) {
-    		if(e instanceof FalkonryException){
-    			throw e;
-    		} else {
-    			String msg = e.getMessage();
-    			throw new FalkonryException("Error: " + msg);
-    		}
-    	}
-    }
+	/**
+	 *
+	 * @param path
+	 * @return
+	 * @throws Exception
+	 */
+	public String delete(String path) throws Exception {
+		String url = this.host + path;
+		URL obj = new URL(url);
+		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+		con.setRequestMethod("DELETE");
+		con.setRequestProperty("User-Agent", this.user_agent);
+		con.setRequestProperty("Authorization", "Bearer " + this.token);
+		con.setRequestProperty("x-falkonry-source", "falkonry-java-client");
+		int responseCode = con.getResponseCode();
+		if (responseCode >= 400) {
+			InputStream errorStream = con.getErrorStream();
+			BufferedReader in = new BufferedReader(new InputStreamReader(errorStream));
+			String inputLine;
+			StringBuffer response = new StringBuffer();
 
-    /**
-     *
-     * @param path
-     * @param responseFormat
-     * @return
-     */
-    public HttpResponseFormat getOutput(String path, String responseFormat) throws Exception {
+			while ((inputLine = in.readLine()) != null) {
+				response.append(inputLine);
+			}
+			in.close();
+			throw new FalkonryException(response.toString());
+		}
+		BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
 
-        HttpResponseFormat httpResponseFormat = new HttpResponseFormat();
-        try {
-            String url = this.host + path;
-            URL obj = new URL(url);
-            HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-            con.setRequestMethod("GET");
-            con.setRequestProperty("User-Agent", this.user_agent);
-            con.setRequestProperty("Authorization", "Bearer " + this.token);
-            con.setRequestProperty("Content-Type", "application/json");
-            con.setRequestProperty("Accept", responseFormat);
-            con.setRequestProperty("x-falkonry-source", "falkonry-java-client");
-            int responseCode = con.getResponseCode();
-            if(responseCode >= 400) {
-	        	String responseMessage = con.getResponseMessage();
-	        	throw new FalkonryException(responseMessage);
-	        }
-            BufferedReader in = new BufferedReader(
-                    new InputStreamReader(con.getInputStream()));
+		String inputLine;
+		StringBuffer response = new StringBuffer();
 
-            String inputLine;
-            StringBuffer response = new StringBuffer();
+		while ((inputLine = in.readLine()) != null) {
+			response.append(inputLine);
+		}
 
-            while ((inputLine = in.readLine()) != null) {
-                response.append(inputLine);
-            }
+		in.close();
 
-            in.close();
+		return response.toString();
+	}
 
-            httpResponseFormat.setResponse(response.toString());
-            httpResponseFormat.setStatusCode(responseCode);
-            return httpResponseFormat;
+	/**
+	 *
+	 * @param path
+	 * @param params
+	 * @param stream
+	 * @return
+	 * @throws Exception
+	 */
+	public String sfpost(String path, Map<String, String> params, InputStream stream) throws Exception {
+		String url = this.host + path;
+		String tempFileName;
+		CloseableHttpClient httpClient = HttpClients.createDefault();
+		HttpPost httpPost = new HttpPost(url);
+		httpPost.addHeader("User-Agent", this.user_agent);
+		httpPost.addHeader("Authorization", "Bearer " + this.token);
+		httpPost.addHeader("x-falkonry-source", "falkonry-java-client");
 
-        } catch(Exception e) {
-    		if(e instanceof FalkonryException){
-    			throw e;
-    		} else {
-    			String msg = e.getMessage();
-    			throw new FalkonryException("Error: " + msg);
-    		}
-    	}
+		MultipartEntityBuilder builder = MultipartEntityBuilder.create();
+		builder.addTextBody("name", params.get("name"));
+		builder.addTextBody("timeIdentifier", params.get("timeIdentifier"));
+		builder.addTextBody("timeFormat", params.get("timeFormat"));
 
-    }
+		if (stream != null) {
+			tempFileName = "input-" + Math.random() + "." + params.get("fileFormat");
+			String content_type = "text/" + params.get("fileFormat");
+			builder.addBinaryBody("data", stream, ContentType.create(content_type), tempFileName);
+		}
+
+		HttpEntity multipart = builder.build();
+		httpPost.setEntity(multipart);
+
+		CloseableHttpResponse closeableHttpResponse = httpClient.execute(httpPost);
+		int responseCode = closeableHttpResponse.getStatusLine().getStatusCode();
+		if (responseCode >= 400) {
+			String responseMessage = closeableHttpResponse.getStatusLine().getReasonPhrase();
+			throw new FalkonryException(responseMessage);
+		}
+		HttpEntity responseEntity = closeableHttpResponse.getEntity();
+
+		InputStream is = responseEntity.getContent();
+		BufferedReader in = new BufferedReader(new InputStreamReader(is));
+
+		String inputLine;
+		StringBuffer response = new StringBuffer();
+
+		while ((inputLine = in.readLine()) != null) {
+			response.append(inputLine);
+		}
+
+		in.close();
+
+		return response.toString();
+	}
+
+	/**
+	 *
+	 * @param path
+	 * @param data
+	 * @return
+	 * @throws Exception
+	 */
+	public String upstream(String path, byte[] data) throws Exception {
+		String url = this.host + path;
+		URL obj = new URL(url);
+		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+		con.setRequestMethod("POST");
+		con.setRequestProperty("User-Agent", this.user_agent);
+		con.setRequestProperty("Content-Type", "text/plain");
+		con.setRequestProperty("Authorization", "Bearer " + this.token);
+		con.setRequestProperty("x-falkonry-source", "falkonry-java-client");
+		con.setDoOutput(true);
+		DataOutputStream wr = new DataOutputStream(con.getOutputStream());
+		wr.write(data);
+		wr.flush();
+		wr.close();
+
+		int responseCode = con.getResponseCode();
+		if (responseCode >= 400) {
+			InputStream errorStream = con.getErrorStream();
+			BufferedReader in = new BufferedReader(new InputStreamReader(errorStream));
+			String inputLine;
+			StringBuffer response = new StringBuffer();
+
+			while ((inputLine = in.readLine()) != null) {
+				response.append(inputLine);
+			}
+			in.close();
+			throw new FalkonryException(response.toString());
+		}
+		BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+
+		String inputLine;
+		StringBuffer response = new StringBuffer();
+
+		while ((inputLine = in.readLine()) != null) {
+			response.append(inputLine);
+		}
+
+		in.close();
+
+		return response.toString();
+	}
+
+	/**
+	 *
+	 * @param path
+	 * @return
+	 * @throws Exception
+	 */
+	public BufferedReader downstream(String path) throws Exception {
+		String url = this.host + path;
+		URL obj = new URL(url);
+		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+		con.setRequestMethod("GET");
+		con.setRequestProperty("User-Agent", this.user_agent);
+		con.setRequestProperty("Authorization", "Bearer " + this.token);
+		con.setRequestProperty("x-falkonry-source", "falkonry-java-client");
+		int responseCode = con.getResponseCode();
+		if (responseCode >= 400) {
+			InputStream errorStream = con.getErrorStream();
+			BufferedReader in = new BufferedReader(new InputStreamReader(errorStream));
+			String inputLine;
+			StringBuffer response = new StringBuffer();
+
+			while ((inputLine = in.readLine()) != null) {
+				response.append(inputLine);
+			}
+			in.close();
+			throw new FalkonryException(response.toString());
+		}
+		BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+
+		return in;
+	}
+
+	/**
+	 *
+	 * @param path
+	 * @param responseFormat
+	 * @return
+	 */
+	public HttpResponseFormat getOutput(String path, String responseFormat) throws Exception {
+
+		HttpResponseFormat httpResponseFormat = new HttpResponseFormat();
+		String url = this.host + path;
+		URL obj = new URL(url);
+		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+		con.setRequestMethod("GET");
+		con.setRequestProperty("User-Agent", this.user_agent);
+		con.setRequestProperty("Authorization", "Bearer " + this.token);
+		con.setRequestProperty("Content-Type", "application/json");
+		con.setRequestProperty("Accept", responseFormat);
+		con.setRequestProperty("x-falkonry-source", "falkonry-java-client");
+		int responseCode = con.getResponseCode();
+		if (responseCode >= 400) {
+			InputStream errorStream = con.getErrorStream();
+			BufferedReader in = new BufferedReader(new InputStreamReader(errorStream));
+			String inputLine;
+			StringBuffer response = new StringBuffer();
+
+			while ((inputLine = in.readLine()) != null) {
+				response.append(inputLine);
+			}
+			in.close();
+			throw new FalkonryException(response.toString());
+		}
+		BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+
+		String inputLine;
+		StringBuffer response = new StringBuffer();
+
+		while ((inputLine = in.readLine()) != null) {
+			response.append(inputLine);
+		}
+
+		in.close();
+
+		httpResponseFormat.setResponse(response.toString());
+		httpResponseFormat.setStatusCode(responseCode);
+		return httpResponseFormat;
+	}
 }

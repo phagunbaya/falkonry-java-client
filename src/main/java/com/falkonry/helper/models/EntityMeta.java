@@ -12,7 +12,6 @@ import java.util.List;
 
 /**
  *
- * @author dev-falkonry-10
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class EntityMeta {

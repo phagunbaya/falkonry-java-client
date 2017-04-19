@@ -9,7 +9,6 @@ import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
 /**
  *
- * @author dev-falkonry-10
  */
 @JsonIgnoreProperties(ignoreUnknown=true)
 public class ValueType {

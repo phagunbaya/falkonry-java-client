@@ -26,296 +26,321 @@ import java.util.*;
 
 /**
  *
- * @author dev-falkonry-10
  */
 
 public class TestAddDataStream {
 
-    Falkonry falkonry = null;
-    String host = "https://localhost:8080";
-    String token = "8g462njx92e1yc0fxzrbdxqtx90hsr1s";
-    List<Datastream> datastreams = new ArrayList<Datastream>();
+	Falkonry falkonry = null;
+	String host = "https://localhost:8080";
+	String token = "8g462njx92e1yc0fxzrbdxqtx90hsr1s";
+	List<Datastream> datastreams = new ArrayList<Datastream>();
 
-    /**
-     *
-     * @throws Exception
-     */
-    @Before
-    public void setUp() throws Exception {
-        falkonry = new Falkonry(host, token);
-    }
+	/**
+	 *
+	 * @throws Exception
+	 */
+	@Before
+	public void setUp() throws Exception {
+		falkonry = new Falkonry(host, token);
+	}
 
-    /**
-     *
-     * @throws Exception
-     */
-    @Test
-    public void addDataJsonStream() throws Exception {
+	/**
+	 *
+	 * @throws Exception
+	 */
+	@Test
+	public void addDataJsonStream() throws Exception {
 
-        Datastream ds = new Datastream();
-        ds.setName("Test-DS1-" + Math.random());
+		Datastream ds = new Datastream();
+		ds.setName("Test-DS1-" + Math.random());
 
-        TimeObject time = new TimeObject();
-        time.setIdentifier("time");
-        time.setFormat("iso_8601");
-        time.setZone("GMT");
+		TimeObject time = new TimeObject();
+		time.setIdentifier("time");
+		time.setFormat("iso_8601");
+		time.setZone("GMT");
 
-        Signal signal = new Signal();
-        signal.setTagIdentifier("tag");
-        signal.setValueIdentifier("value");
-        signal.setDelimiter("_");
-        signal.setIsSignalPrefix(false);
+		Signal signal = new Signal();
+		signal.setTagIdentifier("tag");
+		signal.setValueIdentifier("value");
+		signal.setDelimiter("_");
+		signal.setIsSignalPrefix(false);
 
-        Datasource dataSource = new Datasource();
-        dataSource.setType("STANDALONE");
+		Datasource dataSource = new Datasource();
+		dataSource.setType("STANDALONE");
 
-        Field field = new Field();
-        field.setSiganl(signal);
-        field.setTime(time);
+		Field field = new Field();
+		field.setSiganl(signal);
+		field.setTime(time);
 
-        ds.setDatasource(dataSource);
-        ds.setField(field);
+		ds.setDatasource(dataSource);
+		ds.setField(field);
 
-        Datastream datastream = falkonry.createDatastream(ds);
-        datastreams.add(datastream);
+		Datastream datastream = falkonry.createDatastream(ds);
+		datastreams.add(datastream);
 
-        Map<String, String> options = new HashMap<String, String>();
-        
-        File file = new File("res/data.json");
-        ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(FileUtils.readFileToByteArray(file));
-        InputStatus inputStatus = falkonry.addInputStream(datastream.getId(), byteArrayInputStream, options);
-        datastream = falkonry.getDatastream(datastream.getId());
-    }
+		Map<String, String> options = new HashMap<String, String>();
 
-    /**
-     *
-     * @throws Exception
-     */
-    @Test
-    public void addWideDataJsonStream() throws Exception {
+		File file = new File("res/data.json");
+		ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(FileUtils.readFileToByteArray(file));
+		InputStatus inputStatus = falkonry.addInputStream(datastream.getId(), byteArrayInputStream, options);
+		Datastream datastream1 = falkonry.getDatastream(datastream.getId());
+		Assert.assertEquals(datastream1.getId(), datastream.getId());
+		Assert.assertEquals(datastream1.getName(), datastream.getName());
+		Field field1 = datastream1.getField();
+		Signal signal1 = field1.getSignal();
+		Assert.assertEquals(signal1.getDelimiter(), signal.getDelimiter());
+		Assert.assertEquals(signal1.getTagIdentifier(), signal.getTagIdentifier());
+		Assert.assertEquals(signal1.getValueIdentifier(), signal.getValueIdentifier());
+		Assert.assertEquals(signal1.getIsSignalPrefix(), signal.getIsSignalPrefix());
+	}
 
-    	Datastream ds = new Datastream();
-        ds.setName("Test-DS2-" + Math.random());
-        TimeObject time = new TimeObject();
-        time.setIdentifier("time");
-        time.setFormat("millis");
-        time.setZone("GMT");
+	/**
+	 *
+	 * @throws Exception
+	 */
+	@Test
+	public void addWideDataJsonStream() throws Exception {
 
-        Datasource dataSource = new Datasource();
-        dataSource.setType("STANDALONE");
-        
-        List<Input> inputList = new ArrayList<Input>();;
-        Input input1 = new Input();
-        input1.setName("signal1");
-        EventType eventType1 = new EventType();
-        eventType1.setType("Samples");
-        input1.setEventType(eventType1);
-        ValueType valueType1 = new ValueType();
-        valueType1.setType("Numeric");
-        input1.setValueType(valueType1);
-        inputList.add(input1);
+		Datastream ds = new Datastream();
+		ds.setName("Test-DS2-" + Math.random());
+		TimeObject time = new TimeObject();
+		time.setIdentifier("time");
+		time.setFormat("millis");
+		time.setZone("GMT");
 
-        Input input2 = new Input();
-        input2.setName("signal2");
-        EventType eventType2 = new EventType();
-        eventType2.setType("Samples");
-        input2.setEventType(eventType2);
-        ValueType valueType2 = new ValueType();
-        valueType2.setType("Numeric");
-        input2.setValueType(valueType2);
-        inputList.add(input2);
-        
-        Input input3 = new Input();
-        input3.setName("signal3");
-        EventType eventType3 = new EventType();
-        eventType3.setType("Samples");
-        input3.setEventType(eventType3);
-        ValueType valueType3 = new ValueType();
-        valueType3.setType("Numeric");
-        input3.setValueType(valueType3);
-        inputList.add(input3);
-        
-        Input input4 = new Input();
-        input4.setName("signal4");
-        EventType eventType4 = new EventType();
-        eventType4.setType("Samples");
-        input4.setEventType(eventType4);
-        ValueType valueType4 = new ValueType();
-        valueType4.setType("Numeric");
-        input4.setValueType(valueType4);
-        inputList.add(input4);
-        
-        Input input5 = new Input();
-        input5.setName("signal5");
-        EventType eventType5 = new EventType();
-        eventType5.setType("Samples");
-        input5.setEventType(eventType5);
-        ValueType valueType5 = new ValueType();
-        valueType5.setType("Numeric");
-        input5.setValueType(valueType5);
-        inputList.add(input5);
-        
-        ds.setInputList(inputList);
+		Datasource dataSource = new Datasource();
+		dataSource.setType("STANDALONE");
 
-        Field field = new Field();
-        field.setTime(time);
-        field.setEntityIdentifier("thing");
+		List<Input> inputList = new ArrayList<Input>();
+		;
+		Input input1 = new Input();
+		input1.setName("signal1");
+		EventType eventType1 = new EventType();
+		eventType1.setType("Samples");
+		input1.setEventType(eventType1);
+		ValueType valueType1 = new ValueType();
+		valueType1.setType("Numeric");
+		input1.setValueType(valueType1);
+		inputList.add(input1);
 
-        ds.setDatasource(dataSource);
-        ds.setField(field);
+		Input input2 = new Input();
+		input2.setName("signal2");
+		EventType eventType2 = new EventType();
+		eventType2.setType("Samples");
+		input2.setEventType(eventType2);
+		ValueType valueType2 = new ValueType();
+		valueType2.setType("Numeric");
+		input2.setValueType(valueType2);
+		inputList.add(input2);
 
-        Datastream datastream = falkonry.createDatastream(ds);
-        datastreams.add(datastream);
+		Input input3 = new Input();
+		input3.setName("signal3");
+		EventType eventType3 = new EventType();
+		eventType3.setType("Samples");
+		input3.setEventType(eventType3);
+		ValueType valueType3 = new ValueType();
+		valueType3.setType("Numeric");
+		input3.setValueType(valueType3);
+		inputList.add(input3);
 
-        Map<String, String> options = new HashMap<String, String>();
+		Input input4 = new Input();
+		input4.setName("signal4");
+		EventType eventType4 = new EventType();
+		eventType4.setType("Samples");
+		input4.setEventType(eventType4);
+		ValueType valueType4 = new ValueType();
+		valueType4.setType("Numeric");
+		input4.setValueType(valueType4);
+		inputList.add(input4);
 
-        File file = new File("res/data_wide.json");
-        ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(FileUtils.readFileToByteArray(file));
-        InputStatus inputStatus = falkonry.addInputStream(datastream.getId(), byteArrayInputStream, options);
-        datastream = falkonry.getDatastream(datastream.getId());
-    }
+		Input input5 = new Input();
+		input5.setName("signal5");
+		EventType eventType5 = new EventType();
+		eventType5.setType("Samples");
+		input5.setEventType(eventType5);
+		ValueType valueType5 = new ValueType();
+		valueType5.setType("Numeric");
+		input5.setValueType(valueType5);
+		inputList.add(input5);
 
-    /**
-     *
-     * @throws Exception
-     */
-    @Test
-    public void addDataCsvStream() throws Exception {
+		ds.setInputList(inputList);
 
-        Datastream ds = new Datastream();
-        ds.setName("Test-DS3-" + Math.random());
+		Field field = new Field();
+		field.setTime(time);
+		field.setEntityIdentifier("thing");
 
-        TimeObject time = new TimeObject();
-        time.setIdentifier("time");
-        time.setFormat("iso_8601");
-        time.setZone("GMT");
+		ds.setDatasource(dataSource);
+		ds.setField(field);
 
-        Signal signal = new Signal();
-        signal.setTagIdentifier("tag");
-        signal.setValueIdentifier("value");
-        signal.setDelimiter("_");
-        signal.setIsSignalPrefix(false);
+		Datastream datastream = falkonry.createDatastream(ds);
+		datastreams.add(datastream);
 
-        Datasource dataSource = new Datasource();
-        dataSource.setType("STANDALONE");
+		Map<String, String> options = new HashMap<String, String>();
 
-        Field field = new Field();
-        field.setSiganl(signal);
-        field.setTime(time);
+		File file = new File("res/data_wide.json");
+		ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(FileUtils.readFileToByteArray(file));
+		InputStatus inputStatus = falkonry.addInputStream(datastream.getId(), byteArrayInputStream, options);
+		Datastream datastream1 = falkonry.getDatastream(datastream.getId());
+		Assert.assertEquals(datastream1.getId(), datastream.getId());
+		Assert.assertEquals(datastream1.getName(), datastream.getName());
+		Assert.assertEquals(datastream1.getInputList().size(), datastream.getInputList().size());
+		Field field1 = datastream1.getField();
+	}
 
-        ds.setDatasource(dataSource);
-        ds.setField(field);
+	/**
+	 *
+	 * @throws Exception
+	 */
+	@Test
+	public void addDataCsvStream() throws Exception {
 
-        Datastream datastream = falkonry.createDatastream(ds);
-        datastreams.add(datastream);
+		Datastream ds = new Datastream();
+		ds.setName("Test-DS3-" + Math.random());
 
-        Map<String, String> options = new HashMap<String, String>();
+		TimeObject time = new TimeObject();
+		time.setIdentifier("time");
+		time.setFormat("iso_8601");
+		time.setZone("GMT");
 
-        File file = new File("res/data.csv");
-        ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(FileUtils.readFileToByteArray(file));
-        InputStatus inputStatus = falkonry.addInputStream(datastream.getId(), byteArrayInputStream, options);
-        datastream = falkonry.getDatastream(datastream.getId());
-    }
+		Signal signal = new Signal();
+		signal.setTagIdentifier("tag");
+		signal.setValueIdentifier("value");
+		signal.setDelimiter("_");
+		signal.setIsSignalPrefix(false);
 
-    /**
-     *
-     * @throws Exception
-     */
-    @Test
-    public void addWideDataCsvStream() throws Exception {
+		Datasource dataSource = new Datasource();
+		dataSource.setType("STANDALONE");
 
-        Datastream ds = new Datastream();
-        ds.setName("Test-DS4-" + Math.random());
+		Field field = new Field();
+		field.setSiganl(signal);
+		field.setTime(time);
 
-        TimeObject time = new TimeObject();
-        time.setIdentifier("time");
-        time.setFormat("millis");
-        time.setZone("GMT");
+		ds.setDatasource(dataSource);
+		ds.setField(field);
 
-        Datasource dataSource = new Datasource();
-        dataSource.setType("STANDALONE");
-        
-        List<Input> inputList = new ArrayList<Input>();;
-        Input input1 = new Input();
-        input1.setName("signal1");
-        EventType eventType1 = new EventType();
-        eventType1.setType("Samples");
-        input1.setEventType(eventType1);
-        ValueType valueType1 = new ValueType();
-        valueType1.setType("Numeric");
-        input1.setValueType(valueType1);
-        inputList.add(input1);
+		Datastream datastream = falkonry.createDatastream(ds);
+		datastreams.add(datastream);
 
-        Input input2 = new Input();
-        input2.setName("signal2");
-        EventType eventType2 = new EventType();
-        eventType2.setType("Samples");
-        input2.setEventType(eventType2);
-        ValueType valueType2 = new ValueType();
-        valueType2.setType("Numeric");
-        input2.setValueType(valueType2);
-        inputList.add(input2);
-        
-        Input input3 = new Input();
-        input3.setName("signal3");
-        EventType eventType3 = new EventType();
-        eventType3.setType("Samples");
-        input3.setEventType(eventType3);
-        ValueType valueType3 = new ValueType();
-        valueType3.setType("Numeric");
-        input3.setValueType(valueType3);
-        inputList.add(input3);
-        
-        Input input4 = new Input();
-        input4.setName("signal4");
-        EventType eventType4 = new EventType();
-        eventType4.setType("Samples");
-        input4.setEventType(eventType4);
-        ValueType valueType4 = new ValueType();
-        valueType4.setType("Numeric");
-        input4.setValueType(valueType4);
-        inputList.add(input4);
-        
-        Input input5 = new Input();
-        input5.setName("signal5");
-        EventType eventType5 = new EventType();
-        eventType5.setType("Samples");
-        input5.setEventType(eventType5);
-        ValueType valueType5 = new ValueType();
-        valueType5.setType("Numeric");
-        input5.setValueType(valueType5);
-        inputList.add(input5);
-        
-        ds.setInputList(inputList);
+		Map<String, String> options = new HashMap<String, String>();
 
-        Field field = new Field();
-        field.setTime(time);
-        field.setEntityIdentifier("thing");
+		File file = new File("res/data.csv");
+		ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(FileUtils.readFileToByteArray(file));
+		InputStatus inputStatus = falkonry.addInputStream(datastream.getId(), byteArrayInputStream, options);
+		Datastream datastream1 = falkonry.getDatastream(datastream.getId());
+		Assert.assertEquals(datastream1.getId(), datastream.getId());
+		Assert.assertEquals(datastream1.getName(), datastream.getName());
+		Field field1 = datastream1.getField();
+		Signal signal1 = field1.getSignal();
+		Assert.assertEquals(signal1.getDelimiter(), signal.getDelimiter());
+		Assert.assertEquals(signal1.getTagIdentifier(), signal.getTagIdentifier());
+		Assert.assertEquals(signal1.getValueIdentifier(), signal.getValueIdentifier());
+		Assert.assertEquals(signal1.getIsSignalPrefix(), signal.getIsSignalPrefix());
+	}
 
-        ds.setDatasource(dataSource);
-        ds.setField(field);
+	/**
+	 *
+	 * @throws Exception
+	 */
+	@Test
+	public void addWideDataCsvStream() throws Exception {
 
-        Datastream datastream = falkonry.createDatastream(ds);
-        datastreams.add(datastream);
+		Datastream ds = new Datastream();
+		ds.setName("Test-DS4-" + Math.random());
 
-        Map<String, String> options = new HashMap<String, String>();
-        File file = new File("res/data_wide.csv");
-        ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(FileUtils.readFileToByteArray(file));
-        InputStatus inputStatus = falkonry.addInputStream(datastream.getId(), byteArrayInputStream, options);
-        datastream = falkonry.getDatastream(datastream.getId());
-    }
+		TimeObject time = new TimeObject();
+		time.setIdentifier("time");
+		time.setFormat("millis");
+		time.setZone("GMT");
 
-    /**
-     *
-     * @throws Exception
-     */
-    @After
-    public void cleanUp() throws Exception {
-        Iterator<Datastream> itr = datastreams.iterator();
-        while (itr.hasNext()) {
-            Datastream ds = itr.next();
-            falkonry.deleteDatastream(ds.getId());
-        }
-    }
+		Datasource dataSource = new Datasource();
+		dataSource.setType("STANDALONE");
+
+		List<Input> inputList = new ArrayList<Input>();
+		;
+		Input input1 = new Input();
+		input1.setName("signal1");
+		EventType eventType1 = new EventType();
+		eventType1.setType("Samples");
+		input1.setEventType(eventType1);
+		ValueType valueType1 = new ValueType();
+		valueType1.setType("Numeric");
+		input1.setValueType(valueType1);
+		inputList.add(input1);
+
+		Input input2 = new Input();
+		input2.setName("signal2");
+		EventType eventType2 = new EventType();
+		eventType2.setType("Samples");
+		input2.setEventType(eventType2);
+		ValueType valueType2 = new ValueType();
+		valueType2.setType("Numeric");
+		input2.setValueType(valueType2);
+		inputList.add(input2);
+
+		Input input3 = new Input();
+		input3.setName("signal3");
+		EventType eventType3 = new EventType();
+		eventType3.setType("Samples");
+		input3.setEventType(eventType3);
+		ValueType valueType3 = new ValueType();
+		valueType3.setType("Numeric");
+		input3.setValueType(valueType3);
+		inputList.add(input3);
+
+		Input input4 = new Input();
+		input4.setName("signal4");
+		EventType eventType4 = new EventType();
+		eventType4.setType("Samples");
+		input4.setEventType(eventType4);
+		ValueType valueType4 = new ValueType();
+		valueType4.setType("Numeric");
+		input4.setValueType(valueType4);
+		inputList.add(input4);
+
+		Input input5 = new Input();
+		input5.setName("signal5");
+		EventType eventType5 = new EventType();
+		eventType5.setType("Samples");
+		input5.setEventType(eventType5);
+		ValueType valueType5 = new ValueType();
+		valueType5.setType("Numeric");
+		input5.setValueType(valueType5);
+		inputList.add(input5);
+
+		ds.setInputList(inputList);
+
+		Field field = new Field();
+		field.setTime(time);
+		field.setEntityIdentifier("thing");
+
+		ds.setDatasource(dataSource);
+		ds.setField(field);
+
+		Datastream datastream = falkonry.createDatastream(ds);
+		datastreams.add(datastream);
+
+		Map<String, String> options = new HashMap<String, String>();
+		File file = new File("res/data_wide.csv");
+		ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(FileUtils.readFileToByteArray(file));
+		InputStatus inputStatus = falkonry.addInputStream(datastream.getId(), byteArrayInputStream, options);
+		Datastream datastream1 = falkonry.getDatastream(datastream.getId());
+		Assert.assertEquals(datastream1.getId(), datastream.getId());
+		Assert.assertEquals(datastream1.getName(), datastream.getName());
+		Assert.assertEquals(datastream1.getInputList().size(), datastream.getInputList().size());
+		Field field1 = datastream1.getField();
+	}
+
+	/**
+	 *
+	 * @throws Exception
+	 */
+	@After
+	public void cleanUp() throws Exception {
+		Iterator<Datastream> itr = datastreams.iterator();
+		while (itr.hasNext()) {
+			Datastream ds = itr.next();
+			falkonry.deleteDatastream(ds.getId());
+		}
+	}
 
 }

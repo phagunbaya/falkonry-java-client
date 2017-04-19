@@ -1,13 +1,21 @@
 package com.falkonry.client.service;
 
-import org.omg.CORBA.portable.ApplicationException;
-import org.omg.CORBA.portable.InputStream;
+/*!
+ * falkonry-java-client
+ * Copyright(c) 2016 Falkonry Inc
+ * MIT Licensed
+ */
 
+/**
+ *
+ */
 public class FalkonryException extends Exception {
-	
+
+	/**
+	 * @param id
+	 */
 	public FalkonryException(String id) {
 		super(id);
-		// TODO Auto-generated constructor stub
 	}
 
 }

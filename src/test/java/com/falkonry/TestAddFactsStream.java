@@ -17,144 +17,135 @@ import java.util.*;
 
 /**
  *
- * @author dev-falkonry-10
  */
 
 public class TestAddFactsStream {
 
-    Falkonry falkonry = null;
-    String host = "https://localhost:8080";
-    String token = "8g462njx92e1yc0fxzrbdxqtx90hsr1s";
-    List<Datastream> datastreams = new ArrayList<Datastream>();
-    List<Assessment> assessments = new ArrayList<Assessment>();
+	Falkonry falkonry = null;
+	String host = "https://localhost:8080";
+	String token = "8g462njx92e1yc0fxzrbdxqtx90hsr1s";
+	List<Datastream> datastreams = new ArrayList<Datastream>();
+	List<Assessment> assessments = new ArrayList<Assessment>();
 
-    /**
-     *
-     * @throws Exception
-     */
-    @Before
-    public void setUp() throws Exception {
-        falkonry = new Falkonry(host, token);
-    }
+	/**
+	 *
+	 * @throws Exception
+	 */
+	@Before
+	public void setUp() throws Exception {
+		falkonry = new Falkonry(host, token);
+	}
 
-    /**
-     *
-     * @throws Exception
-     */
-    @Test
-    public void createDatastreamWithCsvFactsStream() throws Exception {
+	/**
+	 *
+	 * @throws Exception
+	 */
+	@Test
+	public void createDatastreamWithCsvFactsStream() throws Exception {
 
-        Datastream ds = new Datastream();
-        ds.setName("Test-DS-" + Math.random());
-        TimeObject time = new TimeObject();
-        time.setIdentifier("time");
-        time.setFormat("iso_8601");
-        time.setZone("GMT");
-        Signal signal = new Signal();
-        signal.setTagIdentifier("tag");
-        signal.setValueIdentifier("value");
-        signal.setDelimiter("_");
-        signal.setIsSignalPrefix(false);
+		Datastream ds = new Datastream();
+		ds.setName("Test-DS-" + Math.random());
+		TimeObject time = new TimeObject();
+		time.setIdentifier("time");
+		time.setFormat("iso_8601");
+		time.setZone("GMT");
+		Signal signal = new Signal();
+		signal.setTagIdentifier("tag");
+		signal.setValueIdentifier("value");
+		signal.setDelimiter("_");
+		signal.setIsSignalPrefix(false);
 
-        Field field = new Field();
-        field.setSiganl(signal);
-        field.setTime(time);
-        ds.setField(field);
-        Datasource dataSource = new Datasource();
-        dataSource.setType("STANDALONE");
-        ds.setDatasource(dataSource);
-        
-        Datastream datastream = falkonry.createDatastream(ds);
-        datastreams.add(datastream);
+		Field field = new Field();
+		field.setSiganl(signal);
+		field.setTime(time);
+		ds.setField(field);
+		Datasource dataSource = new Datasource();
+		dataSource.setType("STANDALONE");
+		ds.setDatasource(dataSource);
 
-       
-        List<Assessment> assessments = new ArrayList<Assessment>();
-        AssessmentRequest assessmentRequest = new AssessmentRequest();
-        assessmentRequest.setName("Health");
-        assessmentRequest.setDatastream(datastream.getId());
-        assessmentRequest.setAssessmentRate("PT1S");
-        Assessment assessment = falkonry.createAssessment(assessmentRequest);
-        assessments.add(assessment);
+		Datastream datastream = falkonry.createDatastream(ds);
+		datastreams.add(datastream);
 
-        
+		List<Assessment> assessments = new ArrayList<Assessment>();
+		AssessmentRequest assessmentRequest = new AssessmentRequest();
+		assessmentRequest.setName("Health");
+		assessmentRequest.setDatastream(datastream.getId());
+		assessmentRequest.setAssessmentRate("PT1S");
+		Assessment assessment = falkonry.createAssessment(assessmentRequest);
+		assessments.add(assessment);
 
-        Map<String, String> options = new HashMap<String, String>();
-       
-        String data = "time, tag, value\n2016-03-01 01:01:01, entity1_signal1, 3.4";
-        falkonry.addInput(datastream.getId(), data, options);
+		Map<String, String> options = new HashMap<String, String>();
 
+		String data = "time, tag, value\n2016-03-01 01:01:01, entity1_signal1, 3.4";
+		falkonry.addInput(datastream.getId(), data, options);
 
-        File file = new File("res/factsData.csv");
-        ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(FileUtils.readFileToByteArray(file));
-        InputStatus response = falkonry.addFactsStream(assessment.getId(), byteArrayInputStream, null);
-        falkonry.deleteAssessment(assessment.getId());
-    }
+		File file = new File("res/factsData.csv");
+		ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(FileUtils.readFileToByteArray(file));
+		InputStatus response = falkonry.addFactsStream(assessment.getId(), byteArrayInputStream, null);
+		falkonry.deleteAssessment(assessment.getId());
+	}
 
-    //@Test
+	// @Test
 
-    /**
-     *
-     * @throws Exception
-     */
-    public void createDatastreamWithJsonFacts() throws Exception {
-        
-        Datastream ds = new Datastream();
-        ds.setName("Test-DS-" + Math.random());
-        TimeObject time = new TimeObject();
-        time.setIdentifier("time");
-        time.setFormat("iso_8601");
-        time.setZone("GMT");
-        Signal signal = new Signal();
-        signal.setTagIdentifier("tag");
-        signal.setValueIdentifier("value");
-        signal.setDelimiter("_");
-        signal.setIsSignalPrefix(false);
+	/**
+	 *
+	 * @throws Exception
+	 */
+	public void createDatastreamWithJsonFacts() throws Exception {
 
-        Field field = new Field();
-        field.setSiganl(signal);
-        field.setTime(time);
-        ds.setField(field);
-        Datasource dataSource = new Datasource();
-        dataSource.setType("STANDALONE");
-        ds.setDatasource(dataSource);
-        
-        Datastream datastream = falkonry.createDatastream(ds);
-        datastreams.add(datastream);
+		Datastream ds = new Datastream();
+		ds.setName("Test-DS-" + Math.random());
+		TimeObject time = new TimeObject();
+		time.setIdentifier("time");
+		time.setFormat("iso_8601");
+		time.setZone("GMT");
+		Signal signal = new Signal();
+		signal.setTagIdentifier("tag");
+		signal.setValueIdentifier("value");
+		signal.setDelimiter("_");
+		signal.setIsSignalPrefix(false);
 
-       
-        List<Assessment> assessments = new ArrayList<Assessment>();
-        AssessmentRequest assessmentRequest = new AssessmentRequest();
-        assessmentRequest.setName("Health");
-        assessmentRequest.setDatastream(ds.getId());
-        assessmentRequest.setAssessmentRate("PT1S");
-        Assessment assessment = falkonry.createAssessment(assessmentRequest);
-        assessments.add(assessment);
-        
-        Map<String, String> options = new HashMap<String, String>();
-        
+		Field field = new Field();
+		field.setSiganl(signal);
+		field.setTime(time);
+		ds.setField(field);
+		Datasource dataSource = new Datasource();
+		dataSource.setType("STANDALONE");
+		ds.setDatasource(dataSource);
 
-        String data = "{\"time\" : \"2016-03-01 01:01:01\", \"tag\" : \"signal1_entity1\", \"value\" : 3.4}";
-        falkonry.addInput(ds.getId(), data, options);
+		Datastream datastream = falkonry.createDatastream(ds);
+		datastreams.add(datastream);
 
-        
+		List<Assessment> assessments = new ArrayList<Assessment>();
+		AssessmentRequest assessmentRequest = new AssessmentRequest();
+		assessmentRequest.setName("Health");
+		assessmentRequest.setDatastream(ds.getId());
+		assessmentRequest.setAssessmentRate("PT1S");
+		Assessment assessment = falkonry.createAssessment(assessmentRequest);
+		assessments.add(assessment);
 
-        File file = new File("res/factsData.json");
-        ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(FileUtils.readFileToByteArray(file));
-        InputStatus response = falkonry.addFactsStream(assessment.getId(), byteArrayInputStream, null);
-        Assert.assertEquals(assessment.getName(), assessmentRequest.getName());
-        falkonry.deleteAssessment(assessment.getId());
-    }
+		Map<String, String> options = new HashMap<String, String>();
 
-    /**
-     *
-     * @throws Exception
-     */
-    @After
-    public void cleanUp() throws Exception {
-        Iterator<Datastream> itr = datastreams.iterator();
-        while (itr.hasNext()) {
-            Datastream ds = itr.next();
-            falkonry.deleteDatastream(ds.getId());
-        }
-    }
+		String data = "{\"time\" : \"2016-03-01 01:01:01\", \"tag\" : \"signal1_entity1\", \"value\" : 3.4}";
+		falkonry.addInput(ds.getId(), data, options);
+
+		File file = new File("res/factsData.json");
+		ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(FileUtils.readFileToByteArray(file));
+		InputStatus response = falkonry.addFactsStream(assessment.getId(), byteArrayInputStream, null);
+		Assert.assertEquals(assessment.getName(), assessmentRequest.getName());
+		falkonry.deleteAssessment(assessment.getId());
+	}
+
+	/**
+	 *
+	 * @throws Exception
+	 */
+	@After
+	public void cleanUp() throws Exception {
+		Iterator<Datastream> itr = datastreams.iterator();
+		while (itr.hasNext()) {
+			Datastream ds = itr.next();
+			falkonry.deleteDatastream(ds.getId());
+		}
+	}
 }

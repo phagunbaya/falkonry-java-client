@@ -24,12 +24,16 @@ Maven install
     * Add data to Datastream (csv/json, stream)
     * Add facts to Assessment (csv/json, stream)
     * Add data in wide format
-    * Add historian data to datastream
-    * Add streaming data to datastream
-    * Get HistorianOutput from assessment
-    * Get Streaming Output from assessment
-    * Delete datastream
-    * Delete assessment
+    * Add historian data to Datastream
+    * Add streaming data to Datastream
+    * Get HistorianOutput from Assessment
+    * Get Streaming Output from Assessment
+    * Delete Datastream
+    * Delete Assessment
+    * Datastream On/Off
+    * Get Datastream by Id
+    * Get Assessment by Id
+    * Add EntityMeta
 
 ## Quick Start
 
@@ -542,7 +546,7 @@ Usage:
 
 #### Get Historical Output
 
-````
+```java
 
     Map<String, String> options = new HashMap<String, String>();
     options.put("startTime", "2011-07-17T01:00:00.000Z"); // in the format YYYY-MM-DDTHH:mm:ss.SSSZ
@@ -550,19 +554,46 @@ Usage:
     options.put("responseFormat", "application/json");  // also avaibale options 1. text/csv 2. application/json
 
     assessment.setId("wpyred1glh6c5r");
-    HttpResponseFormat httpResponse = falkonry.GetHistoricalOutput(assessment_id, options);
-
-````
+    HttpResponseFormat httpResponse = falkonry.getHistoricalOutput(assessment_id, options);
+```
 
 #### Get Streaming Output
 
-````
+```java
+	import com.falkonry.client.Falkonry;
 
+    Falkonry falkonry   = new Falkonry("https://sandbox.falkonry.ai", "auth-token");
     String assessment = "wpyred1glh6c5r";
     BufferedReader outputBuffer;
     outputBuffer = falkonry.getOutput(assessment,null,null);
+```
 
-````
+#### Datastream On/Off
+
+```java
+	import com.falkonry.client.Falkonry;
+
+    Falkonry falkonry   = new Falkonry("https://sandbox.falkonry.ai", "auth-token");
+	String datastreamId = "hk7cgt56r3yln0";
+    List<Assessment> liveAssessments = falkonry.onDatastream(datastreamId);
+    List<Assessment> assessments = falkonry.offDatastream(datastreamId);
+```
+
+#### Add EntityMeta
+
+```java
+	import com.falkonry.client.Falkonry;
+    
+    Falkonry falkonry   = new Falkonry("https://sandbox.falkonry.ai", "auth-token");
+	String datastreamId = "hk7cgt56r3yln0";
+    datastream = falkonry.getDatastream(datastreamId);
+    EntityMetaRequest entityMetaRequest = new EntityMetaRequest();
+    entityMetaRequest.setSourceId("entity1"); // Entity name which you have to change
+    entityMetaRequest.setLabel("UNIT1"); // New Entity name
+    entityMetaRequest.setPath(""); // For future use
+    entityMetaRequests.add(entityMetaRequest);
+    List<EntityMeta> entityMetas = falkonry.postEntityMeta(entityMetaRequests, datastream.getId());
+```
 
 ## Docs
 

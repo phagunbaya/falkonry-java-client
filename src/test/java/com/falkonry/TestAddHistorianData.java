@@ -25,252 +25,226 @@ import org.json.JSONObject;
 
 /**
  *
- * @author dev-falkonry-10
+ * 
  */
 
 public class TestAddHistorianData {
 
-    Falkonry falkonry = null;
+	Falkonry falkonry = null;
 
-    String host = "https://localhost:8080";
-    String token = "8g462njx92e1yc0fxzrbdxqtx90hsr1s";
-    List<Datastream> datastreams = new ArrayList<Datastream>();
-    List<Assessment> assessments = new ArrayList<Assessment>();
+	String host = "https://localhost:8080";
+	String token = "8g462njx92e1yc0fxzrbdxqtx90hsr1s";
+	List<Datastream> datastreams = new ArrayList<Datastream>();
+	List<Assessment> assessments = new ArrayList<Assessment>();
 
-    /**
-     *
-     * @throws Exception
-     */
-    @Before
-    public void setUp() throws Exception {
-        falkonry = new Falkonry(host, token);
+	/**
+	 *
+	 * @throws Exception
+	 */
+	@Before
+	public void setUp() throws Exception {
+		falkonry = new Falkonry(host, token);
 
-    }
+	}
 
-    /**
-     *
-     * @throws Exception
-     */
-    @Test
-    public void AddDataNarrowFormatCsvForLearning() throws Exception {
-        Datastream ds = new Datastream();
-        ds.setName("Test-DS-" + Math.random());
-        TimeObject time = new TimeObject();
-        time.setIdentifier("time");
-        time.setFormat("iso_8601");
-        time.setZone("GMT");
-        Signal signal = new Signal();
-        signal.setTagIdentifier("tag");
-        signal.setValueIdentifier("value");
-        signal.setDelimiter("_");
-        signal.setIsSignalPrefix(false);
+	/**
+	 *
+	 * @throws Exception
+	 */
+	@Test
+	public void AddDataNarrowFormatCsvForLearning() throws Exception {
+		Datastream ds = new Datastream();
+		ds.setName("Test-DS-" + Math.random());
+		TimeObject time = new TimeObject();
+		time.setIdentifier("time");
+		time.setFormat("iso_8601");
+		time.setZone("GMT");
+		Signal signal = new Signal();
+		signal.setTagIdentifier("tag");
+		signal.setValueIdentifier("value");
+		signal.setDelimiter("_");
+		signal.setIsSignalPrefix(false);
 
-        Field field = new Field();
-        field.setSiganl(signal);
-        field.setTime(time);
-//        field.setEntityIdentifier("unit");
-        ds.setField(field);
-        Datasource dataSource = new Datasource();
-        dataSource.setType("STANDALONE");
-        ds.setDatasource(dataSource);
+		Field field = new Field();
+		field.setSiganl(signal);
+		field.setTime(time);
+		// field.setEntityIdentifier("unit");
+		ds.setField(field);
+		Datasource dataSource = new Datasource();
+		dataSource.setType("STANDALONE");
+		ds.setDatasource(dataSource);
 
-        Datastream datastream = falkonry.createDatastream(ds);
-        datastreams.add(datastream);
-//        String data1 = "{\"time\" : \"2016-03-01 01:01:01\", \"tag\" : \"signal1_entity1\", \"value\" : 3.4}";
-        String data = "time, tag, value \n" + "2016-05-05T12:00:00Z, Unit1_current, 12.4 \n 2016-03-01 01:01:01, Unit1_vibration, 20.4";
+		Datastream datastream = falkonry.createDatastream(ds);
+		datastreams.add(datastream);
+		// String data1 = "{\"time\" : \"2016-03-01 01:01:01\", \"tag\" :
+		// \"signal1_entity1\", \"value\" : 3.4}";
+		String data = "time, tag, value \n"
+				+ "2016-05-05T12:00:00Z, Unit1_current, 12.4 \n 2016-03-01 01:01:01, Unit1_vibration, 20.4";
 
-        Map<String, String> options = new HashMap<String, String>();
-        options.put("timeIdentifier", "time");
-        options.put("timeFormat", "iso_8601");
-        options.put("fileFormat", "csv");
-        options.put("streaming", "false");
-        options.put("hasMoreData", "false");
-        falkonry.addInput(datastream.getId(), data, options);
+		Map<String, String> options = new HashMap<String, String>();
+		options.put("timeIdentifier", "time");
+		options.put("timeFormat", "iso_8601");
+		options.put("fileFormat", "csv");
+		options.put("streaming", "false");
+		options.put("hasMoreData", "false");
+		falkonry.addInput(datastream.getId(), data, options);
 
-        datastream = falkonry.getDatastream(datastream.getId());
-        falkonry.deleteDatastream(datastream.getId());
-    }
+		datastream = falkonry.getDatastream(datastream.getId());
+	}
 
-    /**
-     *
-     * @throws Exception
-     */
-    @Test
-    public void AddDataNarrowFormatCsvForStreaming() throws Exception {
+	/**
+	 *
+	 * @throws Exception
+	 */
+	@Test
+	public void AddDataNarrowFormatCsvForStreaming() throws Exception {
 
-        Datastream ds = new Datastream();
-        ds.setName("Test-DS-" + Math.random());
-        TimeObject time = new TimeObject();
-        time.setIdentifier("time");
-        time.setFormat("iso_8601");
-        time.setZone("GMT");
-        Signal signal = new Signal();
-        signal.setTagIdentifier("tag");
-        signal.setValueIdentifier("value");
-        signal.setDelimiter("_");
-        signal.setIsSignalPrefix(false);
+		Datastream ds = new Datastream();
+		ds.setName("Test-DS-" + Math.random());
+		TimeObject time = new TimeObject();
+		time.setIdentifier("time");
+		time.setFormat("iso_8601");
+		time.setZone("GMT");
+		Signal signal = new Signal();
+		signal.setTagIdentifier("tag");
+		signal.setValueIdentifier("value");
+		signal.setDelimiter("_");
+		signal.setIsSignalPrefix(false);
 
-        Field field = new Field();
-        field.setSiganl(signal);
-        field.setTime(time);
-//        field.setEntityIdentifier("unit");
-        ds.setField(field);
-        Datasource dataSource = new Datasource();
-        dataSource.setType("STANDALONE");
-        ds.setDatasource(dataSource);
+		Field field = new Field();
+		field.setSiganl(signal);
+		field.setTime(time);
+		// field.setEntityIdentifier("unit");
+		ds.setField(field);
+		Datasource dataSource = new Datasource();
+		dataSource.setType("STANDALONE");
+		ds.setDatasource(dataSource);
 
-        Datastream datastream = falkonry.createDatastream(ds);
-        datastreams.add(datastream);
-//        String data1 = "{\"time\" : \"2016-03-01 01:01:01\", \"tag\" : \"signal1_entity1\", \"value\" : 3.4}";
-        String data = "time, tag, value \n" + "2016-05-05T12:00:00Z, Unit1_current, 12.4 \n 2016-03-01 01:01:01, Unit1_vibration, 20.4";
+		Datastream datastream = falkonry.createDatastream(ds);
+		datastreams.add(datastream);
+		// String data1 = "{\"time\" : \"2016-03-01 01:01:01\", \"tag\" :
+		// \"signal1_entity1\", \"value\" : 3.4}";
+		String data = "time, tag, value \n"
+				+ "2016-05-05T12:00:00Z, Unit1_current, 12.4 \n 2016-03-01 01:01:01, Unit1_vibration, 20.4";
 
-        Map<String, String> options = new HashMap<String, String>();
-        options.put("timeIdentifier", "time");
-        options.put("timeFormat", "iso_8601");
-        options.put("fileFormat", "csv");
-        options.put("streaming", "true");
-        options.put("hasMoreData", "false");
-        falkonry.addInput(datastream.getId(), data, options);
+		Map<String, String> options = new HashMap<String, String>();
+		options.put("timeIdentifier", "time");
+		options.put("timeFormat", "iso_8601");
+		options.put("fileFormat", "csv");
+		options.put("streaming", "true");
+		options.put("hasMoreData", "false");
+		falkonry.addInput(datastream.getId(), data, options);
 
-        datastream = falkonry.getDatastream(datastream.getId());
-        falkonry.deleteDatastream(datastream.getId());
-    }
+		datastream = falkonry.getDatastream(datastream.getId());
+	}
 
-    //Set assessment if before calling GetHistoricalOutput
+	// Set assessment if before calling GetHistoricalOutput
 
-    /**
-     *
-     * @throws Exception
-     */
-    @Test
-    public void TestHistoricalOutput() throws Exception {
+	/**
+	 *
+	 * @throws Exception
+	 */
+	@Test
+	public void TestHistoricalOutput() throws Exception {
 
-        Datastream ds = new Datastream();
-        ds.setName("Test-DS-" + Math.random());
-        TimeObject time = new TimeObject();
-        time.setIdentifier("time");
-        time.setFormat("iso_8601");
-        time.setZone("GMT");
-        Signal signal = new Signal();
-        signal.setTagIdentifier("tag");
-        signal.setValueIdentifier("value");
-        signal.setDelimiter("_");
-        signal.setIsSignalPrefix(true);
+		Datastream ds = new Datastream();
+		ds.setName("Test-DS-" + Math.random());
+		TimeObject time = new TimeObject();
+		time.setIdentifier("time");
+		time.setFormat("iso_8601");
+		time.setZone("GMT");
+		Signal signal = new Signal();
+		signal.setTagIdentifier("tag");
+		signal.setValueIdentifier("value");
+		signal.setDelimiter("_");
+		signal.setIsSignalPrefix(true);
 
-        Field field = new Field();
-        field.setSiganl(signal);
-        field.setTime(time);
-//        field.setEntityIdentifier("unit");
-        ds.setField(field);
-        Datasource dataSource = new Datasource();
-        dataSource.setType("PI");
-        dataSource.sethost("https://test.piserver.com/piwebapi");
-        dataSource.setElementTemplateName("SampleElementTempalte");
+		Field field = new Field();
+		field.setSiganl(signal);
+		field.setTime(time);
+		// field.setEntityIdentifier("unit");
+		ds.setField(field);
+		Datasource dataSource = new Datasource();
+		dataSource.setType("PI");
+		dataSource.sethost("https://test.piserver.com/piwebapi");
+		dataSource.setElementTemplateName("SampleElementTempalte");
 
-        ds.setDatasource(dataSource);
+		ds.setDatasource(dataSource);
 
-        Datastream datastream = falkonry.createDatastream(ds);
-        datastreams.add(datastream);
+		Datastream datastream = falkonry.createDatastream(ds);
+		datastreams.add(datastream);
 
-        AssessmentRequest assessmentRequest = new AssessmentRequest();
-        String name = "Test-AS-" + Math.random();
-        assessmentRequest.setName(name);
-        assessmentRequest.setDatastream(datastream.getId());
-        assessmentRequest.setAssessmentRate("PT0S");
-        Assessment assessment = falkonry.createAssessment(assessmentRequest);
-        assessments.add(assessment);
+		AssessmentRequest assessmentRequest = new AssessmentRequest();
+		String name = "Test-AS-" + Math.random();
+		assessmentRequest.setName(name);
+		assessmentRequest.setDatastream(datastream.getId());
+		assessmentRequest.setAssessmentRate("PT0S");
+		Assessment assessment = falkonry.createAssessment(assessmentRequest);
+		assessments.add(assessment);
 
-        //assessment.id = "lqv606xtcxnlca";
-        // Got TO Falkonry UI and run a model revision
-        // Fetch Historical output data for given assessment, startTime , endtime
-        Map<String, String> options = new HashMap<String, String>();
-        options.put("startTime", "2011-07-17T01:00:00.000Z"); // in the format YYYY-MM-DDTHH:mm:ss.SSSZ
-        options.put("endTime", "2011-08-18T01:00:00.000Z");  // in the format YYYY-MM-DDTHH:mm:ss.SSSZ
-        options.put("responseFormat", "application/json");  // also avaibale options 1. text/csv 2. application/json
+		// assessment.id = "lqv606xtcxnlca";
+		// Go to Falkonry UI and run a model revision
+		// Fetch Historical output data for given assessment, startTime ,
+		// endtime
+		Map<String, String> options = new HashMap<String, String>();
+		options.put("startTime", "2011-02-02T02:53:00Z"); // in the format
+															// YYYY-MM-DDTHH:mm:ss.SSSZ
+		options.put("endTime", "2011-03-01T02:53:00Z"); // in the format
+														// YYYY-MM-DDTHH:mm:ss.SSSZ
+		options.put("responseFormat", "application/json"); // also avaibale
+															// options 1.
+															// text/csv 2.
+															// application/json
 
-        assessment.setId("wpyred1glh6c5r");
-        HttpResponseFormat httpResponse = falkonry.getHistoricalOutput(assessment, options);
+		// assessment.setId("wpyred1glh6c5r");
+		Assessment asmt = falkonry.getAssessment("hq1b0xg2f2a4hh");
+		HttpResponseFormat httpResponse = falkonry.getHistoricalOutput(asmt, options);
 
-        // If data is not readily available then, a tracker id will be sent with 202 status code. While falkonry will genrate ouptut data
-        // Client should do timely pooling on the using same method, sending tracker id (__id) in the query params
-        // Once data is available server will response with 200 status code and data in json/csv format.
-        if (httpResponse.getStatusCode() == 202) {
-            ObjectMapper mapper = new ObjectMapper();
-            String trackerResponse_json = httpResponse.getResponse();
+		// If data is not readily available then, a tracker id will be sent with
+		// 202 status code. While falkonry will genrate ouptut data
+		// Client should do timely pooling on the using same method, sending
+		// tracker id (__id) in the query params
+		// Once data is available server will response with 200 status code and
+		// data in json/csv format.
+		if (httpResponse.getStatusCode() == 202) {
+			ObjectMapper mapper = new ObjectMapper();
+			String trackerResponse_json = httpResponse.getResponse();
 
-            TrackerReponse trackerResponse = mapper.readValue(trackerResponse_json, TrackerReponse.class);
-            // get id from the tracker
-            String id = trackerResponse.getId();
-            //string __id = "phzpfmvwsgiy7ojc";
+			TrackerReponse trackerResponse = mapper.readValue(trackerResponse_json, TrackerReponse.class);
+			// get id from the tracker
+			String id = trackerResponse.getId();
+			// string __id = "phzpfmvwsgiy7ojc";
 
-            
+			// use this tracker for checking the status of the process.
+			Map<String, String> options1 = new HashMap<String, String>();
 
-            // use this tracker for checking the status of the process.
-            Map<String, String> options1 = new HashMap<String, String>();
+			options1.put("trackerId", id);
+			options1.put("responseFormat", "application/json");
 
-            options1.put("trackerId", id);
-            options1.put("responseFormat", "application/json");
+			httpResponse = falkonry.getHistoricalOutput(assessment, options);
 
-            httpResponse = falkonry.getHistoricalOutput(assessment, options);
+			// if status is 202 call the same request again
+			// if status is 200, output data will be present in
+			// httpResponse.response field
+		}
+		if (httpResponse.getStatusCode() > 400) {
+			// Some Error has occurred. Please httpResponse.response for detail
+			// message
+		}
 
-            // if status is 202 call the same request again
-            // if status is 200, output data will be present in httpResponse.response field
-        }
-        if (httpResponse.getStatusCode() > 400) {
-            // Some Error has occurred. Please httpResponse.response for detail message
-        }
+		datastream = falkonry.getDatastream(datastream.getId());
+	}
 
-        datastream = falkonry.getDatastream(datastream.getId());
-        falkonry.deleteDatastream(datastream.getId());
-    }
-
-    /*
-    //@Test
-    public void addWideDataJson() throws Exception {
-        Datastream ds = new Datastream();
-        ds.setName("Test-EB-" + Math.random());
-        ds.setEntityIdentifier("entity");
-        ds.setTimeIdentifier("time");
-        ds.setTimeFormat("millis");
-
-        Datastream eventbuffer = falkonry.createDatastream(ds);
-        datastreams.add(eventbuffer);
-        String data = "{\"time\":1467729675422,\"entity\":\"entity1\",\"signal1\":41.11,\"signal2\":82.34,\"signal3\":74.63,\"signal4\":4.8,\"signal5\":72.01}";
-        Map<String, String> options = new HashMap<String, String>();
-        falkonry.addInput(eventbuffer.getId(), data, options);
-
-        eventbuffer = falkonry.getDatastream(eventbuffer.getId());
-        Assert.assertEquals(1, eventbuffer.getSchemaList().size());
-    }
-
-    
-
-    //@Test
-    public void addWideDataCsv() throws Exception {
-        Datastream ds = new Datastream();
-        ds.setName("Test-EB-" + Math.random());
-        ds.setEntityIdentifier("entity");
-        ds.setTimeIdentifier("time");
-        ds.setTimeFormat("millis");
-
-        Datastream eventbuffer = falkonry.createDatastream(ds);
-        datastreams.add(eventbuffer);
-        String data = "time,entity,signal1,signal2,signal3,signal4,signal5\n"
-                + "1467729675422,entity1,41.11,82.34,74.63,4.8,72.01";
-        Map<String, String> options = new HashMap<String, String>();
-        falkonry.addInput(eventbuffer.getId(), data, options);
-
-        eventbuffer = falkonry.getDatastream(eventbuffer.getId());
-        Assert.assertEquals(1, eventbuffer.getSchemaList().size());
-    }
-
-    @After
-    public void cleanUp() throws Exception {
-        Iterator<Datastream> itr = datastreams.iterator();
-        while (itr.hasNext()) {
-            Datastream ds = itr.next();
-            falkonry.deleteDatastream(ds.getId());
-        }
-    }
-     */
+	/**
+	 * @throws Exception
+	 * @return void
+	 */
+	@After
+	public void cleanUp() throws Exception {
+		Iterator<Datastream> itr = datastreams.iterator();
+		while (itr.hasNext()) {
+			Datastream ds = itr.next();
+			falkonry.deleteDatastream(ds.getId());
+		}
+	}
 }

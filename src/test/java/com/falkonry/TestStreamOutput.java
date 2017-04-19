@@ -18,51 +18,50 @@ import java.util.Observer;
 
 /**
  *
- * @author dev-falkonry-10
  */
 public class TestStreamOutput {
 
-    Falkonry falkonry = null;
-    String host = "https://localhost:8080";
-    String token = "8g462njx92e1yc0fxzrbdxqtx90hsr1s";
+	Falkonry falkonry = null;
+	String host = "https://localhost:8080";
+	String token = "8g462njx92e1yc0fxzrbdxqtx90hsr1s";
 
-    /**
-     *
-     * @throws Exception
-     */
-    @Before
-    public void setUp() throws Exception {
-        falkonry = new Falkonry(host, token);
-    }
+	/**
+	 *
+	 * @throws Exception
+	 */
+	@Before
+	public void setUp() throws Exception {
+		falkonry = new Falkonry(host, token);
+	}
 
-    //To run this test case, data should be continuously streamed
-    //@Test
+	// To run this test case, data should be continuously streamed
+	// @Test
 
-    /**
-     *
-     * @throws Exception
-     */
-    public void getOutput() throws Exception {
-        try {
-            String assessment = "suix1o014tyj97";
-            BufferedReader outputBuffer;
-            outputBuffer = falkonry.getOutput(assessment,null,null);
-            String inputLine;
-            StringBuffer response = new StringBuffer();
-            inputLine = outputBuffer.readLine();
-            while (inputLine != null) {
-            	try {
-            		inputLine = outputBuffer.readLine();
-                    response.append(inputLine);
-            	} catch(Exception e) {
-            		break;
-            	}
-            }
-            outputBuffer.close();
+	/**
+	 *
+	 * @throws Exception
+	 */
+	public void getOutput() throws Exception {
+		try {
+			String assessment = "suix1o014tyj97";
+			BufferedReader outputBuffer;
+			outputBuffer = falkonry.getOutput(assessment, null, null);
+			String inputLine;
+			StringBuffer response = new StringBuffer();
+			inputLine = outputBuffer.readLine();
+			while (inputLine != null) {
+				try {
+					inputLine = outputBuffer.readLine();
+					response.append(inputLine);
+				} catch (Exception e) {
+					break;
+				}
+			}
+			outputBuffer.close();
 
-        } catch (Exception e) {
-            System.out.println(e.toString() + "\nError in getting output");
-            Assert.assertEquals(0, 1);
-        }
-    }
+		} catch (Exception e) {
+			System.out.println(e.toString() + "\nError in getting output");
+			Assert.assertEquals(0, 1);
+		}
+	}
 }
