@@ -2,9 +2,10 @@ package com.falkonry.client.service;
 
 /*!
  * falkonry-java-client
- * Copyright(c) 2016 Falkonry Inc
+ * Copyright(c) 2017 Falkonry Inc
  * MIT Licensed
  */
+
 import com.falkonry.helper.models.HttpResponseFormat;
 import java.io.*;
 import java.net.HttpURLConnection;

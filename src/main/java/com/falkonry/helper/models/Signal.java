@@ -2,9 +2,10 @@ package com.falkonry.helper.models;
 
 /*!
  * falkonry-java-client
- * Copyright(c) 2016 Falkonry Inc
+ * Copyright(c) 2017 Falkonry Inc
  * MIT Licensed
  */
+
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
 /**

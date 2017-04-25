@@ -2,7 +2,7 @@ package com.falkonry.client.service;
 
 /*!
  * falkonry-java-client
- * Copyright(c) 2016 Falkonry Inc
+ * Copyright(c) 2017 Falkonry Inc
  * MIT Licensed
  */
 

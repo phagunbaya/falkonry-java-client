@@ -2,12 +2,12 @@ package com.falkonry.client;
 
 /*!
  * falkonry-java-client
- * Copyright(c) 2016 Falkonry Inc
+ * Copyright(c) 2017 Falkonry Inc
  * MIT Licensed
  */
+
 import com.falkonry.client.service.FalkonryService;
 import com.falkonry.helper.models.*;
-
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.util.List;

@@ -1,5 +1,11 @@
 package com.falkonry;
 
+/*!
+ * falkonry-java-client
+ * Copyright(c) 2017 Falkonry Inc
+ * MIT Licensed
+ */
+
 import com.falkonry.client.Falkonry;
 import com.falkonry.helper.models.Assessment;
 import com.falkonry.helper.models.AssessmentRequest;
@@ -12,23 +18,12 @@ import com.falkonry.helper.models.InputStatus;
 import com.falkonry.helper.models.Signal;
 import com.falkonry.helper.models.TrackerReponse;
 import org.junit.*;
-
 import java.util.*;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.type.TypeReference;
 import org.json.JSONObject;
 
-/*!
- * falkonry-java-client
- * Copyright(c) 2016 Falkonry Inc
- * MIT Licensed
- */
-
-/**
- *
- * 
- */
-
+@Ignore
 public class TestAddHistorianData {
 
 	Falkonry falkonry = null;

@@ -2,23 +2,21 @@ package com.falkonry;
 
 /*!
  * falkonry-java-client
- * Copyright(c) 2016 Falkonry Inc
+ * Copyright(c) 2017 Falkonry Inc
  * MIT Licensed
  */
+
 import com.falkonry.client.Falkonry;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.InputStreamReader;
 import java.util.Observer;
 
-/**
- *
- */
+@Ignore
 public class TestStreamOutput {
 
 	Falkonry falkonry = null;

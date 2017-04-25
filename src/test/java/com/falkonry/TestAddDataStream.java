@@ -1,5 +1,11 @@
 package com.falkonry;
 
+/*!
+ * falkonry-java-client
+ * Copyright(c) 2017 Falkonry Inc
+ * MIT Licensed
+ */
+
 import com.falkonry.client.Falkonry;
 import com.falkonry.helper.models.Datasource;
 import com.falkonry.helper.models.Datastream;
@@ -10,24 +16,13 @@ import com.falkonry.helper.models.Signal;
 import com.falkonry.helper.models.TimeObject;
 import com.falkonry.helper.models.ValueType;
 import com.falkonry.helper.models.EventType;
-
 import org.apache.commons.io.FileUtils;
 import org.junit.*;
-
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.util.*;
 
-/*!
- * falkonry-java-client
- * Copyright(c) 2016 Falkonry Inc
- * MIT Licensed
- */
-
-/**
- *
- */
-
+@Ignore
 public class TestAddDataStream {
 
 	Falkonry falkonry = null;

@@ -2,7 +2,7 @@ package com.falkonry;
 
 /*!
  * falkonry-java-client
- * Copyright(c) 2016 Falkonry Inc
+ * Copyright(c) 2017 Falkonry Inc
  * MIT Licensed
  */
 
@@ -14,11 +14,10 @@ import com.falkonry.helper.models.EntityMetaRequest;
 import com.falkonry.helper.models.Field;
 import com.falkonry.helper.models.Signal;
 import com.falkonry.helper.models.TimeObject;
-
 import org.junit.*;
-
 import java.util.*;
 
+@Ignore
 public class TestEntityMeta {
 
 	Falkonry falkonry = null;

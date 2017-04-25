@@ -1,20 +1,15 @@
 package com.falkonry.helper.models;
 
-import org.codehaus.jackson.annotate.JsonIgnoreProperties;
-
-import java.util.ArrayList;
-import java.util.List;
-import org.codehaus.jackson.annotate.JsonProperty;
-
 /*!
  * falkonry-java-client
- * Copyright(c) 2016 Falkonry Inc
+ * Copyright(c) 2017 Falkonry Inc
  * MIT Licensed
  */
 
-/**
- *
- */
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+import java.util.ArrayList;
+import java.util.List;
+import org.codehaus.jackson.annotate.JsonProperty;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class AssessmentRequest {

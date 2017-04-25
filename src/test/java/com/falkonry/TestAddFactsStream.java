@@ -1,24 +1,20 @@
 package com.falkonry;
 
+/*!
+ * falkonry-java-client
+ * Copyright(c) 2017 Falkonry Inc
+ * MIT Licensed
+ */
+
 import com.falkonry.client.Falkonry;
 import com.falkonry.helper.models.*;
 import org.apache.commons.io.FileUtils;
 import org.junit.*;
-
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.util.*;
 
-/*!
- * falkonry-java-client
- * Copyright(c) 2016 Falkonry Inc
- * MIT Licensed
- */
-
-/**
- *
- */
-
+@Ignore
 public class TestAddFactsStream {
 
 	Falkonry falkonry = null;

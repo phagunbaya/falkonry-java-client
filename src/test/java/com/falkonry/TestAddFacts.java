@@ -1,21 +1,17 @@
 package com.falkonry;
 
-import com.falkonry.client.Falkonry;
-import com.falkonry.helper.models.*;
-import org.junit.*;
-
-import java.util.*;
-
 /*!
  * falkonry-java-client
- * Copyright(c) 2016 Falkonry Inc
+ * Copyright(c) 2017 Falkonry Inc
  * MIT Licensed
  */
 
-/**
- *
- */
+import com.falkonry.client.Falkonry;
+import com.falkonry.helper.models.*;
+import org.junit.*;
+import java.util.*;
 
+@Ignore
 public class TestAddFacts {
 
 	Falkonry falkonry = null;
