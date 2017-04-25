@@ -14,16 +14,14 @@ import java.util.List;
 import java.util.Map;
 
 /**
- *
+ * Falkonry client class to access APIs
  */
 public class Falkonry {
 
-	/**
-	 * 
-	 */
 	private FalkonryService falkonryService;
 
 	/**
+	 * Constructor
 	 * @param host
 	 * @param token
 	 * @throws Exception
@@ -53,7 +51,7 @@ public class Falkonry {
 
 	/**
 	 * getDatastream
-	 * @param id of the datastream
+	 * @param id
 	 * @throws Exception
 	 * @return Datastream
 	 */
@@ -73,7 +71,7 @@ public class Falkonry {
 
 	/**
 	 * deleteDatastream
-	 * @param id of the datastream
+	 * @param id
 	 * @throws Exception
 	 * @return void
 	 */
@@ -93,7 +91,7 @@ public class Falkonry {
 
 	/**
 	 * getAssessment
-	 * @param id of the assessment
+	 * @param id
 	 * @throws Exception
 	 * @return Assessment
 	 */
@@ -122,7 +120,7 @@ public class Falkonry {
 
 	/**
 	 * deleteAssessment
-	 * @param id of the assessment
+	 * @param id
 	 * @throws Exception
 	 * @return void
 	 */
@@ -132,7 +130,7 @@ public class Falkonry {
 
 	/**
 	 * addInput
-	 * @param id of the datastream
+	 * @param id
 	 * @param data
 	 * @param options
 	 * @throws Exception
@@ -144,7 +142,7 @@ public class Falkonry {
 
 	/**
 	 * addFacts
-	 * @param id of the assessment
+	 * @param id
 	 * @param data
 	 * @param options
 	 * @throws Exception
@@ -156,7 +154,7 @@ public class Falkonry {
 
 	/**
 	 * addInputStream
-	 * @param id of the datastream
+	 * @param id
 	 * @param stream
 	 * @param options
 	 * @throws Exception
@@ -169,7 +167,7 @@ public class Falkonry {
 
 	/**
 	 * addFactsStream
-	 * @param id of the assessment
+	 * @param id
 	 * @param stream
 	 * @param options
 	 * @throws Exception
@@ -182,7 +180,7 @@ public class Falkonry {
 
 	/**
 	 * getOutput
-	 * @param id of the assessment
+	 * @param id
 	 * @throws Exception
 	 * @return BufferedReader
 	 */
@@ -203,7 +201,7 @@ public class Falkonry {
 
 	/**
 	 * onDatastream
-	 * @param id of the datastream
+	 * @param id
 	 * @throws Exception
 	 * @return List<Assessment>
 	 */
@@ -213,7 +211,7 @@ public class Falkonry {
 
 	/**
 	 * offDatastream
-	 * @param id of the datastream
+	 * @param id
 	 * @throws Exception
 	 * @return List<Assessment>
 	 */

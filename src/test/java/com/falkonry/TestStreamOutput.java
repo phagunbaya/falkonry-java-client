@@ -7,9 +7,7 @@ package com.falkonry;
  */
 
 import com.falkonry.client.Falkonry;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
