@@ -24,7 +24,7 @@ import java.util.*;
 public class TestDatastreamLive {
 
 	Falkonry falkonry = null;
-	String host = "https://dev.falkonry.ai";
+	String host = "https://localhost:8080";
 	String token = "267ummc4hjyywop631wfogkwhb6t95wr";
 	List<Datastream> datastreams = new ArrayList<Datastream>();
 
@@ -86,7 +86,7 @@ public class TestDatastreamLive {
 	@Test
 	public void testOnDatastream() throws Exception {
 		// Id of datastream which has assessment with active model available
-		String datastreamId = "hk7cgt56r3yln0";
+		String datastreamId = "rphrzm34udl4z4";
 
 		List<Assessment> assessments = falkonry.onDatastream(datastreamId);
 		Assert.assertEquals(true, assessments.size() != 0);
@@ -99,7 +99,7 @@ public class TestDatastreamLive {
 	@Test
 	public void testOffDatastream() throws Exception {
 		// Id of datastream which has assessment with active model available
-		String datastreamId = "hk7cgt56r3yln0";
+		String datastreamId = "rphrzm34udl4z5";
 
 		List<Assessment> assessments1 = falkonry.onDatastream(datastreamId);
 		Assert.assertEquals(true, assessments1.size() != 0);

@@ -22,7 +22,7 @@ import java.util.Observer;
 public class TestStreamOutput {
 
 	Falkonry falkonry = null;
-	String host = "https://dev.falkonry.ai";
+	String host = "https://localhost:8080";
 	String token = "267ummc4hjyywop631wfogkwhb6t95wr";
 
 	/**
@@ -35,7 +35,7 @@ public class TestStreamOutput {
 	}
 
 	// To run this test case, data should be continuously streamed
-	// @Test
+	@Test
 
 	/**
 	 * Should get output data
@@ -43,7 +43,7 @@ public class TestStreamOutput {
 	 */
 	public void getOutput() throws Exception {
 		try {
-			String assessment = "hq1b0xg2f2a4hh";
+			String assessment = "suix1o014tyj97";
 			BufferedReader outputBuffer;
 			outputBuffer = falkonry.getOutput(assessment);
 			String inputLine;

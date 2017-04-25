@@ -26,7 +26,7 @@ import java.util.*;
 public class TestCreateDatastream {
 
 	Falkonry falkonry = null;
-	String host = "https://dev.falkonry.ai";
+	String host = "https://localhost:8080";
 	String token = "267ummc4hjyywop631wfogkwhb6t95wr";
 	List<Datastream> datastreams = new ArrayList<Datastream>();
 
