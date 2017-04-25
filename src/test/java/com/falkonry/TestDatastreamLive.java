@@ -24,8 +24,8 @@ import java.util.*;
 public class TestDatastreamLive {
 
 	Falkonry falkonry = null;
-	String host = "https://localhost:8080";
-	String token = "8g462njx92e1yc0fxzrbdxqtx90hsr1s";
+	String host = "https://dev.falkonry.ai";
+	String token = "267ummc4hjyywop631wfogkwhb6t95wr";
 	List<Datastream> datastreams = new ArrayList<Datastream>();
 
 	/**
@@ -38,7 +38,7 @@ public class TestDatastreamLive {
 	}
 
 	/**
-	 *
+	 * Should get exception when turning on the datastream 
 	 * @throws Exception
 	 */
 	@Test
@@ -80,7 +80,7 @@ public class TestDatastreamLive {
 	}
 
 	/**
-	 *
+	 * Should turn on the datastream
 	 * @throws Exception
 	 */
 	@Test
@@ -93,7 +93,7 @@ public class TestDatastreamLive {
 	}
 
 	/**
-	 *
+	 * Should turn off the datastream
 	 * @throws Exception
 	 */
 	@Test

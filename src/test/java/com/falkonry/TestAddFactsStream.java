@@ -22,8 +22,8 @@ import java.util.*;
 public class TestAddFactsStream {
 
 	Falkonry falkonry = null;
-	String host = "https://localhost:8080";
-	String token = "8g462njx92e1yc0fxzrbdxqtx90hsr1s";
+	String host = "https://dev.falkonry.ai";
+	String token = "267ummc4hjyywop631wfogkwhb6t95wr";
 	List<Datastream> datastreams = new ArrayList<Datastream>();
 	List<Assessment> assessments = new ArrayList<Assessment>();
 
@@ -37,7 +37,7 @@ public class TestAddFactsStream {
 	}
 
 	/**
-	 *
+	 * Should create datastream and add fact stream data in CSV format
 	 * @throws Exception
 	 */
 	@Test
@@ -81,16 +81,17 @@ public class TestAddFactsStream {
 
 		File file = new File("res/factsData.csv");
 		ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(FileUtils.readFileToByteArray(file));
+		
 		InputStatus response = falkonry.addFactsStream(assessment.getId(), byteArrayInputStream, null);
-		falkonry.deleteAssessment(assessment.getId());
+		Assert.assertEquals(response.getAction(), "ADD_FACT_DATA");
+		Assert.assertEquals(response.getStatus(), "PENDING");
 	}
 
-	// @Test
-
 	/**
-	 *
+	 * Should create datastream and add fact data in JSON format
 	 * @throws Exception
 	 */
+	@Test
 	public void createDatastreamWithJsonFacts() throws Exception {
 
 		Datastream ds = new Datastream();
@@ -119,21 +120,23 @@ public class TestAddFactsStream {
 		List<Assessment> assessments = new ArrayList<Assessment>();
 		AssessmentRequest assessmentRequest = new AssessmentRequest();
 		assessmentRequest.setName("Health");
-		assessmentRequest.setDatastream(ds.getId());
+		assessmentRequest.setDatastream(datastream.getId());
 		assessmentRequest.setAssessmentRate("PT1S");
 		Assessment assessment = falkonry.createAssessment(assessmentRequest);
 		assessments.add(assessment);
+		Assert.assertEquals(assessment.getName(), assessmentRequest.getName());
 
 		Map<String, String> options = new HashMap<String, String>();
 
 		String data = "{\"time\" : \"2016-03-01 01:01:01\", \"tag\" : \"signal1_entity1\", \"value\" : 3.4}";
-		falkonry.addInput(ds.getId(), data, options);
+		falkonry.addInput(datastream.getId(), data, options);
 
 		File file = new File("res/factsData.json");
 		ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(FileUtils.readFileToByteArray(file));
+		
 		InputStatus response = falkonry.addFactsStream(assessment.getId(), byteArrayInputStream, null);
-		Assert.assertEquals(assessment.getName(), assessmentRequest.getName());
-		falkonry.deleteAssessment(assessment.getId());
+		Assert.assertEquals(response.getAction(), "ADD_FACT_DATA");
+		Assert.assertEquals(response.getStatus(), "PENDING");
 	}
 
 	/**

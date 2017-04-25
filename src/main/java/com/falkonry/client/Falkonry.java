@@ -33,6 +33,7 @@ public class Falkonry {
 	}
 
 	/**
+	 * createDatastream
 	 * @param datastream
 	 * @throws Exception
 	 * @return Datastream
@@ -42,6 +43,7 @@ public class Falkonry {
 	}
 
 	/**
+	 * getDatastreams
 	 * @throws Exception
 	 * @return List<Datastream>
 	 */
@@ -50,7 +52,8 @@ public class Falkonry {
 	}
 
 	/**
-	 * @param id
+	 * getDatastream
+	 * @param id of the datastream
 	 * @throws Exception
 	 * @return Datastream
 	 */
@@ -59,6 +62,7 @@ public class Falkonry {
 	}
 
 	/**
+	 * updateDatastream
 	 * @param datastream
 	 * @throws Exception
 	 * @return Datastream
@@ -68,7 +72,8 @@ public class Falkonry {
 	}
 
 	/**
-	 * @param id
+	 * deleteDatastream
+	 * @param id of the datastream
 	 * @throws Exception
 	 * @return void
 	 */
@@ -77,6 +82,7 @@ public class Falkonry {
 	}
 
 	/**
+	 * createAssessment
 	 * @param assessmentRequest
 	 * @throws Exception
 	 * @return Assessment
@@ -86,7 +92,8 @@ public class Falkonry {
 	}
 
 	/**
-	 * @param id
+	 * getAssessment
+	 * @param id of the assessment
 	 * @throws Exception
 	 * @return Assessment
 	 */
@@ -95,6 +102,7 @@ public class Falkonry {
 	}
 
 	/**
+	 * updateAssessment
 	 * @param assessment
 	 * @throws Exception
 	 * @return Assessment
@@ -104,7 +112,7 @@ public class Falkonry {
 	}
 
 	/**
-	 * 
+	 * getAssessments
 	 * @throws Exception
 	 * @return List<Assessment>
 	 */
@@ -113,7 +121,8 @@ public class Falkonry {
 	}
 
 	/**
-	 * @param id
+	 * deleteAssessment
+	 * @param id of the assessment
 	 * @throws Exception
 	 * @return void
 	 */
@@ -122,7 +131,8 @@ public class Falkonry {
 	}
 
 	/**
-	 * @param id
+	 * addInput
+	 * @param id of the datastream
 	 * @param data
 	 * @param options
 	 * @throws Exception
@@ -133,7 +143,8 @@ public class Falkonry {
 	}
 
 	/**
-	 * @param id
+	 * addFacts
+	 * @param id of the assessment
 	 * @param data
 	 * @param options
 	 * @throws Exception
@@ -144,7 +155,8 @@ public class Falkonry {
 	}
 
 	/**
-	 * @param id
+	 * addInputStream
+	 * @param id of the datastream
 	 * @param stream
 	 * @param options
 	 * @throws Exception
@@ -156,7 +168,8 @@ public class Falkonry {
 	}
 
 	/**
-	 * @param id
+	 * addFactsStream
+	 * @param id of the assessment
 	 * @param stream
 	 * @param options
 	 * @throws Exception
@@ -168,17 +181,17 @@ public class Falkonry {
 	}
 
 	/**
-	 * @param id
-	 * @param start
-	 * @param end
+	 * getOutput
+	 * @param id of the assessment
 	 * @throws Exception
 	 * @return BufferedReader
 	 */
-	public BufferedReader getOutput(String id, Long start, Long end) throws Exception {
-		return this.falkonryService.getOutput(id, start, end);
+	public BufferedReader getOutput(String id) throws Exception {
+		return this.falkonryService.getOutput(id);
 	}
 
 	/**
+	 * getHistoricalOutput
 	 * @param assessment
 	 * @param options
 	 * @throws Exception
@@ -189,7 +202,8 @@ public class Falkonry {
 	}
 
 	/**
-	 * @param id
+	 * onDatastream
+	 * @param id of the datastream
 	 * @throws Exception
 	 * @return List<Assessment>
 	 */
@@ -198,7 +212,8 @@ public class Falkonry {
 	}
 
 	/**
-	 * @param id
+	 * offDatastream
+	 * @param id of the datastream
 	 * @throws Exception
 	 * @return List<Assessment>
 	 */
@@ -207,6 +222,7 @@ public class Falkonry {
 	}
 
 	/**
+	 * getEntityMeta
 	 * @param datastreamId
 	 * @throws Exception
 	 * @return List<EntityMeta>
@@ -216,6 +232,7 @@ public class Falkonry {
 	}
 
 	/**
+	 * postEntityMeta
 	 * @param entityMetaRequest
 	 * @param datastreamId
 	 * @throws Exception

@@ -22,8 +22,8 @@ import java.util.*;
 public class TestEntityMeta {
 
 	Falkonry falkonry = null;
-	String host = "https://localhost:8080";
-	String token = "8g462njx92e1yc0fxzrbdxqtx90hsr1s";
+	String host = "https://dev.falkonry.ai";
+	String token = "267ummc4hjyywop631wfogkwhb6t95wr";
 	List<Datastream> datastreams = new ArrayList<Datastream>();
 	List<EntityMetaRequest> entityMetaRequests = new ArrayList<EntityMetaRequest>();
 
@@ -37,7 +37,7 @@ public class TestEntityMeta {
 	}
 
 	/**
-	 *
+	 * Should create entity meta
 	 * @throws Exception
 	 */
 	@Test

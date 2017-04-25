@@ -20,8 +20,8 @@ import java.util.*;
 public class TestFalkonryException {
 
 	Falkonry falkonry = null;
-	String host = "https://localhost:8080";
-	String token = "8g462njx92e1yc0fxzrbdxqtx90hsr1s";
+	String host = "https://dev.falkonry.ai";
+	String token = "267ummc4hjyywop631wfogkwhb6t95wr";
 
 	/**
 	 *
@@ -33,7 +33,7 @@ public class TestFalkonryException {
 	}
 
 	/**
-	 *
+	 * Should test falkonry exception when fetching incorrect datastream
 	 * @throws Exception
 	 */
 	@Test
@@ -47,7 +47,7 @@ public class TestFalkonryException {
 	}
 
 	/**
-	 *
+	 * Should test falkonry exception when fetching incorrect assessment
 	 * @throws Exception
 	 */
 	@Test

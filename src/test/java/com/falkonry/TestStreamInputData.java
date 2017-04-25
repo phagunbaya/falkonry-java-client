@@ -17,8 +17,8 @@ import java.util.*;
 public class TestStreamInputData {
 
 	Falkonry falkonry = null;
-	String host = "https://localhost:8080";
-	String token = "8g462njx92e1yc0fxzrbdxqtx90hsr1s";
+	String host = "https://dev.falkonry.ai";
+	String token = "267ummc4hjyywop631wfogkwhb6t95wr";
 	String datastreamId = "nb37s0ll4itfo7";
 	List<Datastream> datastreams = new ArrayList<Datastream>();
 
@@ -32,7 +32,7 @@ public class TestStreamInputData {
 	}
 
 	/**
-	 *
+	 * Should add CSV format data stream
 	 * @throws Exception
 	 */
 	@Test

@@ -3,8 +3,11 @@ package com.falkonry;
 import com.falkonry.client.Falkonry;
 import com.falkonry.helper.models.Datasource;
 import com.falkonry.helper.models.Datastream;
+import com.falkonry.helper.models.EventType;
 import com.falkonry.helper.models.Field;
+import com.falkonry.helper.models.Input;
 import com.falkonry.helper.models.TimeObject;
+import com.falkonry.helper.models.ValueType;
 import com.falkonry.helper.models.Signal;
 import org.junit.*;
 
@@ -23,8 +26,8 @@ import java.util.*;
 public class TestCreateDatastream {
 
 	Falkonry falkonry = null;
-	String host = "https://localhost:8080";
-	String token = "8g462njx92e1yc0fxzrbdxqtx90hsr1s";
+	String host = "https://dev.falkonry.ai";
+	String token = "267ummc4hjyywop631wfogkwhb6t95wr";
 	List<Datastream> datastreams = new ArrayList<Datastream>();
 
 	/**
@@ -37,7 +40,7 @@ public class TestCreateDatastream {
 	}
 
 	/**
-	 *
+	 * Should create datastream
 	 * @throws Exception
 	 */
 	@Test
@@ -89,7 +92,7 @@ public class TestCreateDatastream {
 	}
 
 	/**
-	 *
+	 * Should get datastream list
 	 * @throws Exception
 	 */
 	@Test
@@ -145,7 +148,7 @@ public class TestCreateDatastream {
 	}
 
 	/**
-	 *
+	 * Should get datstream by ID
 	 * @throws Exception
 	 */
 	@Test
@@ -220,7 +223,7 @@ public class TestCreateDatastream {
 	// @Test
 
 	/**
-	 *
+	 * Should update datastream
 	 * @throws Exception
 	 */
 	public void updateDatastream() throws Exception {
@@ -293,7 +296,7 @@ public class TestCreateDatastream {
 	}
 
 	/**
-	 *
+	 * Should create wide format datastream
 	 * @throws Exception
 	 */
 	@Test
@@ -330,7 +333,7 @@ public class TestCreateDatastream {
 	}
 
 	/**
-	 *
+	 * Should create narrow format datastream and add JSON format data
 	 * @throws Exception
 	 */
 	@Test
@@ -388,7 +391,7 @@ public class TestCreateDatastream {
 	}
 
 	/**
-	 *
+	 * Should create wide format datastream and add JSON format data
 	 * @throws Exception
 	 */
 	@Test
@@ -446,7 +449,7 @@ public class TestCreateDatastream {
 	}
 
 	/**
-	 *
+	 * Should create narrow format datastream and add CSV format data
 	 * @throws Exception
 	 */
 	@Test
@@ -503,7 +506,7 @@ public class TestCreateDatastream {
 	}
 
 	/**
-	 *
+	 * Should create wide format datastream and add CSV format data
 	 * @throws Exception
 	 */
 	@Test
@@ -517,17 +520,67 @@ public class TestCreateDatastream {
 		time.setFormat("millis");
 		time.setZone("GMT");
 
-		Signal signal = new Signal();
-		signal.setTagIdentifier("tag");
-		signal.setValueIdentifier("value");
-		signal.setDelimiter("_");
-		signal.setIsSignalPrefix(false);
+		List<Input> inputList = new ArrayList<Input>();
+
+		Input input1 = new Input();
+		input1.setName("signal1");
+		EventType eventType1 = new EventType();
+		eventType1.setType("Samples");
+		input1.setEventType(eventType1);
+		ValueType valueType1 = new ValueType();
+		valueType1.setType("Numeric");
+		input1.setValueType(valueType1);
+		inputList.add(input1);
+
+		Input input2 = new Input();
+		input2.setName("signal2");
+		EventType eventType2 = new EventType();
+		eventType2.setType("Samples");
+		input2.setEventType(eventType2);
+		ValueType valueType2 = new ValueType();
+		valueType2.setType("Numeric");
+		input2.setValueType(valueType2);
+		inputList.add(input2);
+
+		Input input3 = new Input();
+		input3.setName("signal3");
+		EventType eventType3 = new EventType();
+		eventType3.setType("Samples");
+		input3.setEventType(eventType3);
+		ValueType valueType3 = new ValueType();
+		valueType3.setType("Numeric");
+		input3.setValueType(valueType3);
+		inputList.add(input3);
+
+		Input input4 = new Input();
+		input4.setName("signal4");
+		EventType eventType4 = new EventType();
+		eventType4.setType("Samples");
+		input4.setEventType(eventType4);
+		ValueType valueType4 = new ValueType();
+		valueType4.setType("Numeric");
+		input4.setValueType(valueType4);
+		inputList.add(input4);
+
+		Input input5 = new Input();
+		input5.setName("signal5");
+		EventType eventType5 = new EventType();
+		eventType5.setType("Samples");
+		input5.setEventType(eventType5);
+		ValueType valueType5 = new ValueType();
+		valueType5.setType("Numeric");
+		input5.setValueType(valueType5);
+		inputList.add(input5);
+
+		ds.setInputList(inputList);
+
+		Field field = new Field();
+		field.setTime(time);
+		field.setEntityIdentifier("entity");
 
 		Datasource dataSource = new Datasource();
 		dataSource.setType("STANDALONE");
 
-		Field field = new Field();
-		field.setSiganl(signal);
 		field.setTime(time);
 		// field.setEntityIdentifier("unit");
 
@@ -548,16 +601,9 @@ public class TestCreateDatastream {
 		Assert.assertEquals(datastream.getField().getTime().getFormat(), ds.getField().getTime().getFormat());
 		Assert.assertEquals(datastream.getField().getTime().getIdentifier(), ds.getField().getTime().getIdentifier());
 		Assert.assertEquals(datastream.getField().getTime().getZone(), ds.getField().getTime().getZone());
-
 		Assert.assertEquals(datastream.getDatasource().getType(), ds.getDatasource().getType());
-
-		Assert.assertEquals(datastream.getField().getSignal().getDelimiter(), ds.getField().getSignal().getDelimiter());
-		Assert.assertEquals(datastream.getField().getSignal().getIsSignalPrefix(),
-				ds.getField().getSignal().getIsSignalPrefix());
-		Assert.assertEquals(datastream.getField().getSignal().getTagIdentifier(),
-				ds.getField().getSignal().getTagIdentifier());
-		Assert.assertEquals(datastream.getField().getSignal().getValueIdentifier(),
-				ds.getField().getSignal().getValueIdentifier());
+		Assert.assertEquals(datastream.getInputList().size(), inputList.size());
+		
 
 	}
 

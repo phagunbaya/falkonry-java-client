@@ -25,8 +25,8 @@ import java.util.*;
 public class TestCreateAssessment {
 
 	Falkonry falkonry = null;
-	String host = "https://localhost:8080";
-	String token = "8g462njx92e1yc0fxzrbdxqtx90hsr1s";
+	String host = "https://dev.falkonry.ai";
+	String token = "267ummc4hjyywop631wfogkwhb6t95wr";
 	List<Datastream> datastreams = new ArrayList<Datastream>();
 	List<Assessment> assessments = new ArrayList<Assessment>();
 
@@ -40,7 +40,7 @@ public class TestCreateAssessment {
 	}
 
 	/**
-	 *
+	 * Should create assessment
 	 * @throws Exception
 	 */
 	@Test
@@ -80,15 +80,15 @@ public class TestCreateAssessment {
 		assessmentRequest.setAssessmentRate("PT1S");
 		Assessment assessment = falkonry.createAssessment(assessmentRequest);
 		assessments.add(assessment);
-
-		Assert.assertEquals(assessment.getName(), assessmentRequest.getName());
-		Assert.assertEquals(assessment.getRate(), assessmentRequest.getAssessmentRate());
+		Assessment assessmentResp = falkonry.getAssessment(assessment.getId());
+		Assert.assertEquals(assessmentResp.getName(), assessmentRequest.getName());
+		Assert.assertEquals(assessmentResp.getRate(), assessmentRequest.getAssessmentRate());
 		falkonry.deleteAssessment(assessment.getId());
 
 	}
 
 	/**
-	 *
+	 * Should delete assessment
 	 * @throws Exception
 	 */
 	@Test
@@ -132,16 +132,16 @@ public class TestCreateAssessment {
 		Assert.assertEquals(assessment.getName(), assessmentRequest.getName());
 		Assert.assertEquals(assessment.getRate(), assessmentRequest.getAssessmentRate());
 		falkonry.deleteAssessment(assessment.getId());
-
-		// Assessment deletedAssessment =
-		// falkonry.getAssessment(assessment.getId());
-		// Assert.assertEquals(assessment.getName(),
-		// assessmentRequest.getName());
-
+		try {
+			Assessment assessmentResp = falkonry.getAssessment(assessment.getId());
+			Assert.assertEquals(true, false);
+		} catch(Exception e) {
+			Assert.assertEquals(true, true);
+		}
 	}
 
 	/**
-	 *
+	 * Should get assessment list
 	 * @throws Exception
 	 */
 	@Test
@@ -193,7 +193,7 @@ public class TestCreateAssessment {
 	}
 
 	/**
-	 *
+	 * Should get assessment by ID
 	 * @throws Exception
 	 */
 	@Test
@@ -249,7 +249,7 @@ public class TestCreateAssessment {
 	// @Test
 
 	/**
-	 *
+	 * Should update assessment
 	 * @throws Exception
 	 */
 	public void updateAssessment() throws Exception {
@@ -309,7 +309,7 @@ public class TestCreateAssessment {
 	}
 
 	/**
-	 *
+	 * Should create Narrow datastream with CSV data
 	 * @throws Exception
 	 */
 	@Test
@@ -366,7 +366,7 @@ public class TestCreateAssessment {
 	}
 
 	/**
-	 *
+	 * Should create wide datstream with CSV data
 	 * @throws Exception
 	 */
 	@Test

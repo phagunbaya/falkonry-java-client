@@ -31,8 +31,8 @@ import java.util.*;
 public class TestAddDataStream {
 
 	Falkonry falkonry = null;
-	String host = "https://localhost:8080";
-	String token = "8g462njx92e1yc0fxzrbdxqtx90hsr1s";
+	String host = "https://dev.falkonry.ai";
+	String token = "267ummc4hjyywop631wfogkwhb6t95wr";
 	List<Datastream> datastreams = new ArrayList<Datastream>();
 
 	/**
@@ -45,7 +45,7 @@ public class TestAddDataStream {
 	}
 
 	/**
-	 *
+	 * Should add narrow data to datastream in stream JSON format
 	 * @throws Exception
 	 */
 	@Test
@@ -83,6 +83,8 @@ public class TestAddDataStream {
 		File file = new File("res/data.json");
 		ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(FileUtils.readFileToByteArray(file));
 		InputStatus inputStatus = falkonry.addInputStream(datastream.getId(), byteArrayInputStream, options);
+		Assert.assertEquals(inputStatus.getAction(), "ADD_DATA_DATASTREAM");
+		Assert.assertEquals(inputStatus.getStatus(), "PENDING");
 		Datastream datastream1 = falkonry.getDatastream(datastream.getId());
 		Assert.assertEquals(datastream1.getId(), datastream.getId());
 		Assert.assertEquals(datastream1.getName(), datastream.getName());
@@ -95,7 +97,7 @@ public class TestAddDataStream {
 	}
 
 	/**
-	 *
+	 * Should add wide data to datastream in stream JSON format
 	 * @throws Exception
 	 */
 	@Test
@@ -112,7 +114,7 @@ public class TestAddDataStream {
 		dataSource.setType("STANDALONE");
 
 		List<Input> inputList = new ArrayList<Input>();
-		;
+
 		Input input1 = new Input();
 		input1.setName("signal1");
 		EventType eventType1 = new EventType();
@@ -179,16 +181,19 @@ public class TestAddDataStream {
 
 		File file = new File("res/data_wide.json");
 		ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(FileUtils.readFileToByteArray(file));
+		
 		InputStatus inputStatus = falkonry.addInputStream(datastream.getId(), byteArrayInputStream, options);
+		Assert.assertEquals(inputStatus.getAction(), "ADD_DATA_DATASTREAM");
+		Assert.assertEquals(inputStatus.getStatus(), "PENDING");
+		
 		Datastream datastream1 = falkonry.getDatastream(datastream.getId());
 		Assert.assertEquals(datastream1.getId(), datastream.getId());
 		Assert.assertEquals(datastream1.getName(), datastream.getName());
 		Assert.assertEquals(datastream1.getInputList().size(), datastream.getInputList().size());
-		Field field1 = datastream1.getField();
 	}
 
 	/**
-	 *
+	 * Should add narrow data to datastream in stream CSV format
 	 * @throws Exception
 	 */
 	@Test
@@ -225,11 +230,17 @@ public class TestAddDataStream {
 
 		File file = new File("res/data.csv");
 		ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(FileUtils.readFileToByteArray(file));
+		
 		InputStatus inputStatus = falkonry.addInputStream(datastream.getId(), byteArrayInputStream, options);
+		Assert.assertEquals(inputStatus.getAction(), "ADD_DATA_DATASTREAM");
+		Assert.assertEquals(inputStatus.getStatus(), "PENDING");
+		
 		Datastream datastream1 = falkonry.getDatastream(datastream.getId());
 		Assert.assertEquals(datastream1.getId(), datastream.getId());
 		Assert.assertEquals(datastream1.getName(), datastream.getName());
+		
 		Field field1 = datastream1.getField();
+		
 		Signal signal1 = field1.getSignal();
 		Assert.assertEquals(signal1.getDelimiter(), signal.getDelimiter());
 		Assert.assertEquals(signal1.getTagIdentifier(), signal.getTagIdentifier());
@@ -238,7 +249,7 @@ public class TestAddDataStream {
 	}
 
 	/**
-	 *
+	 * Should add wide data to datastream in stream CSV format
 	 * @throws Exception
 	 */
 	@Test
@@ -322,12 +333,15 @@ public class TestAddDataStream {
 		Map<String, String> options = new HashMap<String, String>();
 		File file = new File("res/data_wide.csv");
 		ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(FileUtils.readFileToByteArray(file));
+		
 		InputStatus inputStatus = falkonry.addInputStream(datastream.getId(), byteArrayInputStream, options);
+		Assert.assertEquals(inputStatus.getAction(), "ADD_DATA_DATASTREAM");
+		Assert.assertEquals(inputStatus.getStatus(), "PENDING");
+		
 		Datastream datastream1 = falkonry.getDatastream(datastream.getId());
 		Assert.assertEquals(datastream1.getId(), datastream.getId());
 		Assert.assertEquals(datastream1.getName(), datastream.getName());
 		Assert.assertEquals(datastream1.getInputList().size(), datastream.getInputList().size());
-		Field field1 = datastream1.getField();
 	}
 
 	/**

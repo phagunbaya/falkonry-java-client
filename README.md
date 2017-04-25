@@ -21,18 +21,23 @@ Maven install
     * Retrieve Datastreams
     * Create Assessment
     * Retrieve Assessments
-    * Add data to Datastream (csv/json, stream)
-    * Add facts to Assessment (csv/json, stream)
-    * Add data in wide format
-    * Add historian data to Datastream
-    * Add streaming data to Datastream
-    * Get HistorianOutput from Assessment
-    * Get Streaming Output from Assessment
-    * Delete Datastream
-    * Delete Assessment
-    * Datastream On/Off
+    * Setup Datastream for narrow/historian style data from a single entity
+    * Setup Datastream for narrow/historian style data from multiple entities
+    * Setup Datastream for wide style data from a single entity
+    * Setup Datastream for wide style data from multiple entities
     * Get Datastream by Id
+    * Delete a Datastream
+    * Add json data from a stream to an Datastream
+    * Add csv data from a stream to an Datastream
     * Get Assessment by Id
+    * Delete Assessment
+    * Add facts data (json format) to a Assessment
+    * To add facts data (csv format) to a Assessment
+    * Add facts data (json format) from a stream to a Assessment
+    * Add facts data (csv format) from a stream to a Assessment
+    * Get Historian Output from Assessment
+    * Get Streaming Output
+    * Datastream On/Off
     * Add EntityMeta
 
 ## Quick Start
@@ -74,7 +79,6 @@ Usage:
     Field field = new Field();
     field.setSiganl(signal);
     field.setTime(time);
-    //field.setEntityIdentifier("unit");
 
     ds.setDatasource(dataSource);
     ds.setField(field);
@@ -83,6 +87,90 @@ Usage:
 
 ```
 
+#### Retrieve Datastreams
+
+```java
+    import com.falkonry.client.Falkonry;
+
+    Falkonry falkonry = new Falkonry("https://sandbox.falkonry.ai", "auth-token");
+
+    datastream = falkonry.getDatastreams();
+```
+
+#### Create Assessment
+    
+```java
+    import com.falkonry.client.Falkonry;
+    import com.falkonry.helper.models.*;
+
+    //instantiate Falkonry
+    Falkonry falkonry = new Falkonry("https://sandbox.falkonry.ai", "auth-token");
+
+    Datastream ds = new Datastream();
+    ds.setName("Test-DS-" + Math.random());
+    TimeObject time = new TimeObject();
+    time.setIdentifier("time");
+    time.setFormat("iso_8601");
+    time.setZone("GMT");
+
+    Field field = new Field();
+    field.setTime(time);
+    ds.setField(field);
+    Datasource dataSource = new Datasource();
+    dataSource.setType("PI");
+    dataSource.sethost("https://test.piserver.com/piwebapi");
+    dataSource.setElementTemplateName("SampleElementTempalte");
+    ds.setDatasource(dataSource);
+
+    // Input List
+    List<Input> inputList = new ArrayList<Input>();
+    Input currents = new Input();
+    ValueType valueType = new ValueType();
+    EventType eventType = new EventType();
+    currents.setName("current");
+    valueType.setType("Numeric");
+    eventType.setType("Samples");
+    currents.setValueType(valueType);
+    currents.setEventType(eventType);
+    inputList.add(currents);
+
+    Input vibration = new Input();
+    vibration.setName("vibration");
+    valueType.setType("Numeric");
+    eventType.setType("Samples");
+    vibration.setValueType(valueType);
+    vibration.setEventType(eventType);
+    inputList.add(vibration);
+
+    Input state = new Input();
+    state.setName("state");
+    valueType.setType("Categorical");
+    eventType.setType("Samples");
+    state.setValueType(valueType);
+    state.setEventType(eventType);
+    inputList.add(state);
+
+    ds.setInputList(inputList);
+
+    Datastream datastream = falkonry.createDatastream(ds);
+
+    AssessmentRequest assessmentRequest = new AssessmentRequest();
+    assessmentRequest.setName("Health");
+    assessmentRequest.setDatastream(datastream.getId());
+    assessmentRequest.setAssessmentRate("PT1S");
+    Assessment assessment = falkonry.createAssessment(assessmentRequest);
+    
+```
+
+#### Retrieve Assessments
+    
+```java
+    import com.falkonry.client.Falkonry;
+
+    Falkonry falkonry = new Falkonry("https://sandbox.falkonry.ai", "auth-token");
+
+    List<Assessment> datastreams = falkonry.getAssessments();
+```
 
 #### Setup Datastream for narrow/historian style data from a single entity
 
@@ -130,7 +218,6 @@ Usage:
     Field field = new Field();
     field.setSiganl(signal);
     field.setTime(time);
-    //field.setEntityIdentifier("unit");
 
     ds.setDatasource(dataSource);
     ds.setField(field);
@@ -148,6 +235,7 @@ Usage:
     falkonry.addInput(datastream.getId(), data, options);
 
 ```
+
 
 #### Setup Datastream for narrow/historian style data from multiple entities
 
@@ -200,7 +288,6 @@ Usage:
     Field field = new Field();
     field.setSiganl(signal);
     field.setTime(time);
-    //field.setEntityIdentifier("unit");
 
     ds.setDatasource(dataSource);
     ds.setField(field);
@@ -249,28 +336,49 @@ Usage:
 
     Datastream ds = new Datastream();
     ds.setName("Test-DS-" + Math.random());
-
     TimeObject time = new TimeObject();
     time.setIdentifier("time");
-    time.setFormat("millis");
+    time.setFormat("iso_8601");
     time.setZone("GMT");
 
-    Signal signal = new Signal();
-    signal.setTagIdentifier("tag");
-    signal.setValueIdentifier("value");
-    signal.setDelimiter("_");
-    signal.setIsSignalPrefix(false);
-
-    Datasource dataSource = new Datasource();
-    dataSource.setType("STANDALONE");
-
     Field field = new Field();
-    field.setSiganl(signal);
     field.setTime(time);
-    //field.setEntityIdentifier("unit");
-
-    ds.setDatasource(dataSource);
     ds.setField(field);
+    Datasource dataSource = new Datasource();
+    dataSource.setType("PI");
+    dataSource.sethost("https://test.piserver.com/piwebapi");
+    dataSource.setElementTemplateName("SampleElementTempalte");
+    ds.setDatasource(dataSource);
+
+    // Input List
+    List<Input> inputList = new ArrayList<Input>();
+    Input currents = new Input();
+    ValueType valueType = new ValueType();
+    EventType eventType = new EventType();
+    currents.setName("current");
+    valueType.setType("Numeric");
+    eventType.setType("Samples");
+    currents.setValueType(valueType);
+    currents.setEventType(eventType);
+    inputList.add(currents);
+
+    Input vibration = new Input();
+    vibration.setName("vibration");
+    valueType.setType("Numeric");
+    eventType.setType("Samples");
+    vibration.setValueType(valueType);
+    vibration.setEventType(eventType);
+    inputList.add(vibration);
+
+    Input state = new Input();
+    state.setName("state");
+    valueType.setType("Categorical");
+    eventType.setType("Samples");
+    state.setValueType(valueType);
+    state.setEventType(eventType);
+    inputList.add(state);
+
+    ds.setInputList(inputList);
 
     Datastream datastream = falkonry.createDatastream(ds);
     
@@ -351,7 +459,7 @@ Usage:
     falkonry.addInput(datastream.getId(), data, options);
 ```
 
-#### Get a Datastream
+#### Get Datastream by Id
 
 ```java
     import com.falkonry.client.Falkonry;
@@ -401,82 +509,7 @@ Usage:
     InputStatus inputStatus = falkonry.addInputStream(datastream.getId(),byteArrayInputStream,options);
 ```
 
-#### Create Assessment from Datastream
-    
-```java
-    import com.falkonry.client.Falkonry;
-    import com.falkonry.helper.models.*;
-
-    //instantiate Falkonry
-    Falkonry falkonry = new Falkonry("https://sandbox.falkonry.ai", "auth-token");
-
-    Datastream ds = new Datastream();
-    ds.setName("Test-DS-" + Math.random());
-    TimeObject time = new TimeObject();
-    time.setIdentifier("time");
-    time.setFormat("iso_8601");
-    time.setZone("GMT");
-
-    Field field = new Field();
-    field.setTime(time);
-    ds.setField(field);
-    Datasource dataSource = new Datasource();
-    dataSource.setType("PI");
-    dataSource.sethost("https://test.piserver.com/piwebapi");
-    dataSource.setElementTemplateName("SampleElementTempalte");
-    ds.setDatasource(dataSource);
-
-    // Input List
-    List<Input> inputList = new ArrayList<Input>();
-    Input currents = new Input();
-    ValueType valueType = new ValueType();
-    EventType eventType = new EventType();
-    currents.setName("current");
-    valueType.setType("Numeric");
-    eventType.setType("Samples");
-    currents.setValueType(valueType);
-    currents.setEventType(eventType);
-    inputList.add(currents);
-
-    Input vibration = new Input();
-    vibration.setName("vibration");
-    valueType.setType("Numeric");
-    eventType.setType("Samples");
-    vibration.setValueType(valueType);
-    vibration.setEventType(eventType);
-    inputList.add(vibration);
-
-    Input state = new Input();
-    state.setName("state");
-    valueType.setType("Categorical");
-    eventType.setType("Samples");
-    state.setValueType(valueType);
-    state.setEventType(eventType);
-    inputList.add(state);
-
-    ds.setInputList(inputList);
-
-    Datastream datastream = falkonry.createDatastream(ds);
-
-    AssessmentRequest assessmentRequest = new AssessmentRequest();
-    assessmentRequest.setName("Health");
-    assessmentRequest.setDatastream(datastream.getId());
-    assessmentRequest.setAssessmentRate("PT1S");
-    Assessment assessment = falkonry.createAssessment(assessmentRequest);
-    
-```
-
-#### To get all Assessments
-    
-```java
-    import com.falkonry.client.Falkonry;
-
-    Falkonry falkonry = new Falkonry("https://sandbox.falkonry.ai", "auth-token");
-
-    List<Assessment> datastreams = falkonry.getAssessments();
-```
-
-#### To get individual assessment
+#### Get Assessment by Id
     
 ```java
     import com.falkonry.client.Falkonry;
@@ -487,7 +520,7 @@ Usage:
 ```
 
 
-#### To Delete an assessment
+#### Delete Assessment
     
 ```java
     import com.falkonry.client.Falkonry;
@@ -544,7 +577,7 @@ Usage:
 ```
 
 
-#### Get Historical Output
+#### Get Historian Output from Assessment
 
 ```java
 
@@ -565,7 +598,7 @@ Usage:
     Falkonry falkonry   = new Falkonry("https://sandbox.falkonry.ai", "auth-token");
     String assessment = "wpyred1glh6c5r";
     BufferedReader outputBuffer;
-    outputBuffer = falkonry.getOutput(assessment,null,null);
+    outputBuffer = falkonry.getOutput(assessment);
 ```
 
 #### Datastream On/Off

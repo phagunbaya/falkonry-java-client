@@ -56,6 +56,9 @@ public class FalkonryService {
 		if (datastream.getField() != null) {
 			ds.setField(datastream.getField());
 		}
+		if(datastream.getInputList() != null) {
+			ds.setInputList(datastream.getInputList());
+		}
 		String datastream_json = httpService.post("/datastream", mapper.writeValueAsString(ds));
 		return mapper.readValue(datastream_json, Datastream.class);
 	}
@@ -120,19 +123,15 @@ public class FalkonryService {
 	 * @throws Exception
 	 */
 	public Assessment createAssessment(AssessmentRequest assessmentRequest) throws Exception {
-		try {
-			ObjectMapper mapper = new ObjectMapper();
-			AssessmentRequest as = new AssessmentRequest();
+		ObjectMapper mapper = new ObjectMapper();
+		AssessmentRequest as = new AssessmentRequest();
 
-			as.setName(assessmentRequest.getName());
-			as.setAssessmentRate(assessmentRequest.getAssessmentRate());
-			as.setDatastream(assessmentRequest.getDatastream());
+		as.setName(assessmentRequest.getName());
+		as.setAssessmentRate(assessmentRequest.getAssessmentRate());
+		as.setDatastream(assessmentRequest.getDatastream());
 
-			String assessment_json = httpService.post("/assessment", mapper.writeValueAsString(as));
-			return mapper.readValue(assessment_json, Assessment.class);
-		} catch (Exception e) {
-			return new Assessment();
-		}
+		String assessment_json = httpService.post("/assessment", mapper.writeValueAsString(as));
+		return mapper.readValue(assessment_json, Assessment.class);
 	}
 
 	/**
@@ -276,8 +275,8 @@ public class FalkonryService {
 	 * @return
 	 * @throws Exception
 	 */
-	public BufferedReader getOutput(String id, Long start, Long end) throws Exception {
-		String url = "/assessment/" + id + "/output?";
+	public BufferedReader getOutput(String id) throws Exception {
+		String url = "/assessment/" + id + "/output";
 		return this.httpService.downstream(url);
 	}
 

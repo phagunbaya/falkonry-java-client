@@ -8,6 +8,7 @@ import com.falkonry.helper.models.TimeObject;
 import com.falkonry.helper.models.Field;
 import com.falkonry.helper.models.Datasource;
 import com.falkonry.helper.models.HttpResponseFormat;
+import com.falkonry.helper.models.InputStatus;
 import com.falkonry.helper.models.Signal;
 import com.falkonry.helper.models.TrackerReponse;
 import org.junit.*;
@@ -32,8 +33,8 @@ public class TestAddHistorianData {
 
 	Falkonry falkonry = null;
 
-	String host = "https://localhost:8080";
-	String token = "8g462njx92e1yc0fxzrbdxqtx90hsr1s";
+	String host = "https://dev.falkonry.ai";
+	String token = "267ummc4hjyywop631wfogkwhb6t95wr";
 	List<Datastream> datastreams = new ArrayList<Datastream>();
 	List<Assessment> assessments = new ArrayList<Assessment>();
 
@@ -48,7 +49,7 @@ public class TestAddHistorianData {
 	}
 
 	/**
-	 *
+	 * Should create narrow format datastream and add data in CSV format
 	 * @throws Exception
 	 */
 	@Test
@@ -68,7 +69,6 @@ public class TestAddHistorianData {
 		Field field = new Field();
 		field.setSiganl(signal);
 		field.setTime(time);
-		// field.setEntityIdentifier("unit");
 		ds.setField(field);
 		Datasource dataSource = new Datasource();
 		dataSource.setType("STANDALONE");
@@ -76,8 +76,6 @@ public class TestAddHistorianData {
 
 		Datastream datastream = falkonry.createDatastream(ds);
 		datastreams.add(datastream);
-		// String data1 = "{\"time\" : \"2016-03-01 01:01:01\", \"tag\" :
-		// \"signal1_entity1\", \"value\" : 3.4}";
 		String data = "time, tag, value \n"
 				+ "2016-05-05T12:00:00Z, Unit1_current, 12.4 \n 2016-03-01 01:01:01, Unit1_vibration, 20.4";
 
@@ -87,13 +85,14 @@ public class TestAddHistorianData {
 		options.put("fileFormat", "csv");
 		options.put("streaming", "false");
 		options.put("hasMoreData", "false");
-		falkonry.addInput(datastream.getId(), data, options);
-
-		datastream = falkonry.getDatastream(datastream.getId());
+		
+		InputStatus inputStatus = falkonry.addInput(datastream.getId(), data, options);
+		Assert.assertEquals(inputStatus.getAction(), "ADD_DATA_DATASTREAM");
+		Assert.assertEquals(inputStatus.getStatus(), "PENDING");
 	}
 
 	/**
-	 *
+	 * Should create narrow format datastream and add stream data in CSV format
 	 * @throws Exception
 	 */
 	@Test
@@ -114,7 +113,6 @@ public class TestAddHistorianData {
 		Field field = new Field();
 		field.setSiganl(signal);
 		field.setTime(time);
-		// field.setEntityIdentifier("unit");
 		ds.setField(field);
 		Datasource dataSource = new Datasource();
 		dataSource.setType("STANDALONE");
@@ -122,8 +120,6 @@ public class TestAddHistorianData {
 
 		Datastream datastream = falkonry.createDatastream(ds);
 		datastreams.add(datastream);
-		// String data1 = "{\"time\" : \"2016-03-01 01:01:01\", \"tag\" :
-		// \"signal1_entity1\", \"value\" : 3.4}";
 		String data = "time, tag, value \n"
 				+ "2016-05-05T12:00:00Z, Unit1_current, 12.4 \n 2016-03-01 01:01:01, Unit1_vibration, 20.4";
 
@@ -133,15 +129,15 @@ public class TestAddHistorianData {
 		options.put("fileFormat", "csv");
 		options.put("streaming", "true");
 		options.put("hasMoreData", "false");
-		falkonry.addInput(datastream.getId(), data, options);
-
-		datastream = falkonry.getDatastream(datastream.getId());
+		InputStatus inputStatus = falkonry.addInput(datastream.getId(), data, options);
+		Assert.assertEquals(inputStatus.getAction(), "ADD_DATA_DATASTREAM");
+		Assert.assertEquals(inputStatus.getStatus(), "PENDING");
 	}
 
 	// Set assessment if before calling GetHistoricalOutput
 
 	/**
-	 *
+	 * Should get historian output data
 	 * @throws Exception
 	 */
 	@Test
@@ -187,9 +183,9 @@ public class TestAddHistorianData {
 		// Fetch Historical output data for given assessment, startTime ,
 		// endtime
 		Map<String, String> options = new HashMap<String, String>();
-		options.put("startTime", "2011-02-02T02:53:00Z"); // in the format
+		options.put("startTime", "2011-05-02T02:53:00Z"); // in the format
 															// YYYY-MM-DDTHH:mm:ss.SSSZ
-		options.put("endTime", "2011-03-01T02:53:00Z"); // in the format
+		options.put("endTime", "2011-06-01T02:53:00Z"); // in the format
 														// YYYY-MM-DDTHH:mm:ss.SSSZ
 		options.put("responseFormat", "application/json"); // also avaibale
 															// options 1.
@@ -197,7 +193,7 @@ public class TestAddHistorianData {
 															// application/json
 
 		// assessment.setId("wpyred1glh6c5r");
-		Assessment asmt = falkonry.getAssessment("hq1b0xg2f2a4hh");
+		Assessment asmt = falkonry.getAssessment("x1y4ob0ex5mmy1");
 		HttpResponseFormat httpResponse = falkonry.getHistoricalOutput(asmt, options);
 
 		// If data is not readily available then, a tracker id will be sent with
@@ -210,7 +206,7 @@ public class TestAddHistorianData {
 			ObjectMapper mapper = new ObjectMapper();
 			String trackerResponse_json = httpResponse.getResponse();
 
-			TrackerReponse trackerResponse = mapper.readValue(trackerResponse_json, TrackerReponse.class);
+			InputStatus trackerResponse = mapper.readValue(trackerResponse_json, InputStatus.class);
 			// get id from the tracker
 			String id = trackerResponse.getId();
 			// string __id = "phzpfmvwsgiy7ojc";
@@ -221,7 +217,7 @@ public class TestAddHistorianData {
 			options1.put("trackerId", id);
 			options1.put("responseFormat", "application/json");
 
-			httpResponse = falkonry.getHistoricalOutput(assessment, options);
+			httpResponse = falkonry.getHistoricalOutput(asmt, options);
 
 			// if status is 202 call the same request again
 			// if status is 200, output data will be present in
@@ -231,8 +227,6 @@ public class TestAddHistorianData {
 			// Some Error has occurred. Please httpResponse.response for detail
 			// message
 		}
-
-		datastream = falkonry.getDatastream(datastream.getId());
 	}
 
 	/**

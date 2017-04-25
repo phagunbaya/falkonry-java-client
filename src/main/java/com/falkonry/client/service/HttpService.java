@@ -39,7 +39,7 @@ public class HttpService {
 	public HttpService(String host, String token) throws Exception {
 
 		// for localhost testing only
-		javax.net.ssl.HttpsURLConnection.setDefaultHostnameVerifier(new javax.net.ssl.HostnameVerifier() {
+		/*javax.net.ssl.HttpsURLConnection.setDefaultHostnameVerifier(new javax.net.ssl.HostnameVerifier() {
 
 			public boolean verify(String hostname, javax.net.ssl.SSLSession sslSession) {
 				if (hostname.equals("localhost")) {
@@ -47,7 +47,7 @@ public class HttpService {
 				}
 				return false;
 			}
-		});
+		});*/
 
 		this.host = (host == null) ? "https://sandbox.falkonry.ai" : host;
 		try {
