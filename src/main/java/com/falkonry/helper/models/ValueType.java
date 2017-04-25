@@ -7,15 +7,27 @@ package com.falkonry.helper.models;
 
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
+/**
+ *
+ */
 @JsonIgnoreProperties(ignoreUnknown=true)
 public class ValueType {
   private String type = "Numerical";
 
-  public String getType() {
+    /**
+     *
+     * @return
+     */
+    public String getType() {
     return type;
   }
 
-  public ValueType setType(String type) {
+    /**
+     *
+     * @param type
+     * @return
+     */
+    public ValueType setType(String type) {
     this.type = type;
     return this;
   }

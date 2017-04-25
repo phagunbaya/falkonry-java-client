@@ -15,124 +15,140 @@ import java.util.*;
  * MIT Licensed
  */
 
+/**
+ *
+ */
+
 public class TestAddFactsStream {
-    Falkonry falkonry = null;
-    String host = "http://localhost:8080";
-    String token = "";
-    List<Eventbuffer> eventbuffers = new ArrayList<Eventbuffer>();
-    List<Pipeline> pipelines = new ArrayList<Pipeline>();
 
-    @Before
-    public void setUp() throws Exception {
-        falkonry = new Falkonry(host, token);
-    }
+	Falkonry falkonry = null;
+	String host = "https://localhost:8080";
+	String token = "267ummc4hjyywop631wfogkwhb6t95wr";
+	List<Datastream> datastreams = new ArrayList<Datastream>();
+	List<Assessment> assessments = new ArrayList<Assessment>();
 
-    //@Test
-    public void createPipelineWithCsvFactsStream() throws Exception {
-        Eventbuffer eb = new Eventbuffer();
-        eb.setName("Test-EB-"+Math.random());
-        eb.setTimeIdentifier("time");
-        eb.setTimeFormat("iso_8601");
-        eb.setValueColumn("value");
-        eb.setSignalsDelimiter("_");
-        eb.setSignalsLocation("prefix");
-        eb.setSignalsTagField("tag");
+	/**
+	 *
+	 * @throws Exception
+	 */
+	@Before
+	public void setUp() throws Exception {
+		falkonry = new Falkonry(host, token);
+	}
 
-        List<Signal> signals = new ArrayList<Signal>();
-        signals.add(new Signal().setName("signal1").setValueType(new ValueType().setType("Numeric"))
-                .setEventType(new EventType().setType("Samples")));
+	/**
+	 * Should create datastream and add fact stream data in CSV format
+	 * @throws Exception
+	 */
+	@Test
+	public void createDatastreamWithCsvFactsStream() throws Exception {
 
-        List<String> inputList = new ArrayList<String>();
-        inputList.add("signal1");
+		Datastream ds = new Datastream();
+		ds.setName("Test-DS-" + Math.random());
+		TimeObject time = new TimeObject();
+		time.setIdentifier("time");
+		time.setFormat("iso_8601");
+		time.setZone("GMT");
+		Signal signal = new Signal();
+		signal.setTagIdentifier("tag");
+		signal.setValueIdentifier("value");
+		signal.setDelimiter("_");
+		signal.setIsSignalPrefix(false);
 
-        List<Assessment> assessments = new ArrayList<Assessment>();
-        Assessment assessment = new Assessment();
-        assessment.setName("Health");
-        assessment.setInputList(inputList);
-        assessments.add(assessment);
+		Field field = new Field();
+		field.setSiganl(signal);
+		field.setTime(time);
+		ds.setField(field);
+		Datasource dataSource = new Datasource();
+		dataSource.setType("STANDALONE");
+		ds.setDatasource(dataSource);
 
-        Map<String, String> options = new HashMap<String, String>();
-        Eventbuffer eventbuffer = falkonry.createEventbuffer(eb);
-        eventbuffers.add(eventbuffer);
-        String data = "time, tag, value\n2016-03-01 01:01:01, signal1_entity1, 3.4";
-        falkonry.addInput(eventbuffer.getId(), data, options);
+		Datastream datastream = falkonry.createDatastream(ds);
+		datastreams.add(datastream);
 
-        Interval interval = new Interval();
-        interval.setDuration("PT1S");
+		List<Assessment> assessments = new ArrayList<Assessment>();
+		AssessmentRequest assessmentRequest = new AssessmentRequest();
+		assessmentRequest.setName("Health");
+		assessmentRequest.setDatastream(datastream.getId());
+		assessmentRequest.setAssessmentRate("PT1S");
+		Assessment assessment = falkonry.createAssessment(assessmentRequest);
+		assessments.add(assessment);
 
-        Pipeline pipeline = new Pipeline();
-        String name = "Test-PL-" + Math.random();
-        pipeline.setName(name)
-                .setEventbuffer(eventbuffer.getId())
-                .setInputList(signals)
-                .setAssessmentList(assessments);
-        Pipeline pl = falkonry.createPipeline(pipeline);
+		Map<String, String> options = new HashMap<String, String>();
 
-        File file = new File("res/factsData.csv");
-        ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(FileUtils.readFileToByteArray(file));
-        String response = falkonry.addFactsStream(pl.getId(),byteArrayInputStream, null);
-        Assert.assertEquals(response,"{\"message\":\"Data submitted successfully\"}");
-        falkonry.deletePipeline(pl.getId());
-    }
+		String data = "time, tag, value\n2016-03-01 01:01:01, entity1_signal1, 3.4";
+		falkonry.addInput(datastream.getId(), data, options);
 
-    //@Test
-    public void createPipelineWithJsonFacts() throws Exception {
-        Eventbuffer eb = new Eventbuffer();
-        eb.setName("Test-EB-"+Math.random());
-        eb.setTimeIdentifier("time");
-        eb.setTimeFormat("iso_8601");
-        eb.setValueColumn("value");
-        eb.setSignalsDelimiter("_");
-        eb.setSignalsLocation("prefix");
-        eb.setSignalsTagField("tag");
+		File file = new File("res/factsData.csv");
+		ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(FileUtils.readFileToByteArray(file));
+		
+		InputStatus response = falkonry.addFactsStream(assessment.getId(), byteArrayInputStream, null);
+		Assert.assertEquals(response.getAction(), "ADD_FACT_DATA");
+		Assert.assertEquals(response.getStatus(), "PENDING");
+	}
 
-        List<Signal> signals = new ArrayList<Signal>();
-        signals.add(new Signal().setName("signal1").setValueType(new ValueType().setType("Numeric"))
-                .setEventType(new EventType().setType("Samples")));
+	/**
+	 * Should create datastream and add fact data in JSON format
+	 * @throws Exception
+	 */
+	@Test
+	public void createDatastreamWithJsonFacts() throws Exception {
 
-        List<String> inputList = new ArrayList<String>();
-        inputList.add("signal1");
+		Datastream ds = new Datastream();
+		ds.setName("Test-DS-" + Math.random());
+		TimeObject time = new TimeObject();
+		time.setIdentifier("time");
+		time.setFormat("iso_8601");
+		time.setZone("GMT");
+		Signal signal = new Signal();
+		signal.setTagIdentifier("tag");
+		signal.setValueIdentifier("value");
+		signal.setDelimiter("_");
+		signal.setIsSignalPrefix(false);
 
-        List<Assessment> assessments = new ArrayList<Assessment>();
-        Assessment assessment = new Assessment();
-        assessment.setName("Health");
-        assessment.setInputList(inputList);
-        assessments.add(assessment);
+		Field field = new Field();
+		field.setSiganl(signal);
+		field.setTime(time);
+		ds.setField(field);
+		Datasource dataSource = new Datasource();
+		dataSource.setType("STANDALONE");
+		ds.setDatasource(dataSource);
 
-        Map<String, String> options = new HashMap<String, String>();
-        Eventbuffer eventbuffer = falkonry.createEventbuffer(eb);
-        eventbuffers.add(eventbuffer);
+		Datastream datastream = falkonry.createDatastream(ds);
+		datastreams.add(datastream);
 
-        String data = "{\"time\" : \"2016-03-01 01:01:01\", \"tag\" : \"signal1_entity1\", \"value\" : 3.4}";
-        falkonry.addInput(eventbuffer.getId(), data, options);
+		List<Assessment> assessments = new ArrayList<Assessment>();
+		AssessmentRequest assessmentRequest = new AssessmentRequest();
+		assessmentRequest.setName("Health");
+		assessmentRequest.setDatastream(datastream.getId());
+		assessmentRequest.setAssessmentRate("PT1S");
+		Assessment assessment = falkonry.createAssessment(assessmentRequest);
+		assessments.add(assessment);
+		Assert.assertEquals(assessment.getName(), assessmentRequest.getName());
 
-        Interval interval = new Interval();
-        interval.setDuration("PT1S");
+		Map<String, String> options = new HashMap<String, String>();
 
-        Pipeline pipeline = new Pipeline();
-        String name = "Test-PL-" + Math.random();
-        pipeline.setName(name)
-                .setEventbuffer(eventbuffer.getId())
-                .setInputList(signals)
-                .setAssessmentList(assessments);
-        Pipeline pl = falkonry.createPipeline(pipeline);
+		String data = "{\"time\" : \"2016-03-01 01:01:01\", \"tag\" : \"signal1_entity1\", \"value\" : 3.4}";
+		falkonry.addInput(datastream.getId(), data, options);
 
-        File file = new File("res/factsData.json");
-        ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(FileUtils.readFileToByteArray(file));
-        String response = falkonry.addFactsStream(pl.getId(),byteArrayInputStream, null);
-        String response_id = response.split("(:)|(,)")[1];
-        Assert.assertNotEquals(response_id,null);
-        Assert.assertEquals(pl.getName(),pipeline.getName());
-        falkonry.deletePipeline(pl.getId());
-    }
+		File file = new File("res/factsData.json");
+		ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(FileUtils.readFileToByteArray(file));
+		
+		InputStatus response = falkonry.addFactsStream(assessment.getId(), byteArrayInputStream, null);
+		Assert.assertEquals(response.getAction(), "ADD_FACT_DATA");
+		Assert.assertEquals(response.getStatus(), "PENDING");
+	}
 
-    @After
-    public void cleanUp() throws Exception {
-        Iterator<Eventbuffer> itr = eventbuffers.iterator();
-        while(itr.hasNext()) {
-            Eventbuffer eb = itr.next();
-            falkonry.deleteEventbuffer(eb.getId());
-        }
-    }
+	/**
+	 *
+	 * @throws Exception
+	 */
+	@After
+	public void cleanUp() throws Exception {
+		Iterator<Datastream> itr = datastreams.iterator();
+		while (itr.hasNext()) {
+			Datastream ds = itr.next();
+			falkonry.deleteDatastream(ds.getId());
+		}
+	}
 }
-

@@ -17,12 +17,28 @@ Maven install
 
 ## Features
 
-    * Create Eventbuffer
-    * Retrieve Eventbuffers
-    * Create Pipeline
-    * Retrieve Pipelines
-    * Add data to Eventbuffer (csv/json, stream)
-    * Add facts to Pipeline (csv/json, stream)
+    * Create Datastream
+    * Retrieve Datastreams
+    * Create Assessment
+    * Retrieve Assessments
+    * Setup Datastream for narrow/historian style data from a single entity
+    * Setup Datastream for narrow/historian style data from multiple entities
+    * Setup Datastream for wide style data from a single entity
+    * Setup Datastream for wide style data from multiple entities
+    * Get Datastream by Id
+    * Delete a Datastream
+    * Add json data from a stream to an Datastream
+    * Add csv data from a stream to an Datastream
+    * Get Assessment by Id
+    * Delete Assessment
+    * Add facts data (json format) to a Assessment
+    * To add facts data (csv format) to a Assessment
+    * Add facts data (json format) from a stream to a Assessment
+    * Add facts data (csv format) from a stream to a Assessment
+    * Get Historian Output from Assessment
+    * Get Streaming Output
+    * Datastream On/Off
+    * Add EntityMeta
 
 ## Quick Start
 
@@ -31,7 +47,132 @@ Maven install
 
 ## Examples
 
-#### Setup Eventbuffer for narrow/historian style data from a single entity
+### Create datastream
+Usage:
+```java
+    import com.falkonry.client.Falkonry;
+    import com.falkonry.helper.models.Datasource;
+    import com.falkonry.helper.models.Datastream;
+    import com.falkonry.helper.models.Field;
+    import com.falkonry.helper.models.TimeObject;
+    import com.falkonry.helper.models.Signal;
+
+    //instantiate Falkonry
+    Falkonry falkonry = new Falkonry("https://sandbox.falkonry.ai", "auth-token");
+    Datastream ds = new Datastream();
+    ds.setName("Test-DS-" + Math.random());
+
+    TimeObject time = new TimeObject();
+    time.setIdentifier("time");
+    time.setFormat("iso_8601");
+    time.setZone("GMT");
+
+    Signal signal = new Signal();
+    signal.setTagIdentifier("tag");
+    signal.setValueIdentifier("value");
+    signal.setDelimiter("_");
+    signal.setIsSignalPrefix(false);
+
+    Datasource dataSource = new Datasource();
+    dataSource.setType("STANDALONE");
+
+    Field field = new Field();
+    field.setSiganl(signal);
+    field.setTime(time);
+
+    ds.setDatasource(dataSource);
+    ds.setField(field);
+
+    Datastream datastream = falkonry.createDatastream(ds);
+
+```
+
+#### Retrieve Datastreams
+
+```java
+    import com.falkonry.client.Falkonry;
+
+    Falkonry falkonry = new Falkonry("https://sandbox.falkonry.ai", "auth-token");
+
+    datastream = falkonry.getDatastreams();
+```
+
+#### Create Assessment
+    
+```java
+    import com.falkonry.client.Falkonry;
+    import com.falkonry.helper.models.*;
+
+    //instantiate Falkonry
+    Falkonry falkonry = new Falkonry("https://sandbox.falkonry.ai", "auth-token");
+
+    Datastream ds = new Datastream();
+    ds.setName("Test-DS-" + Math.random());
+    TimeObject time = new TimeObject();
+    time.setIdentifier("time");
+    time.setFormat("iso_8601");
+    time.setZone("GMT");
+
+    Field field = new Field();
+    field.setTime(time);
+    ds.setField(field);
+    Datasource dataSource = new Datasource();
+    dataSource.setType("PI");
+    dataSource.sethost("https://test.piserver.com/piwebapi");
+    dataSource.setElementTemplateName("SampleElementTempalte");
+    ds.setDatasource(dataSource);
+
+    // Input List
+    List<Input> inputList = new ArrayList<Input>();
+    Input currents = new Input();
+    ValueType valueType = new ValueType();
+    EventType eventType = new EventType();
+    currents.setName("current");
+    valueType.setType("Numeric");
+    eventType.setType("Samples");
+    currents.setValueType(valueType);
+    currents.setEventType(eventType);
+    inputList.add(currents);
+
+    Input vibration = new Input();
+    vibration.setName("vibration");
+    valueType.setType("Numeric");
+    eventType.setType("Samples");
+    vibration.setValueType(valueType);
+    vibration.setEventType(eventType);
+    inputList.add(vibration);
+
+    Input state = new Input();
+    state.setName("state");
+    valueType.setType("Categorical");
+    eventType.setType("Samples");
+    state.setValueType(valueType);
+    state.setEventType(eventType);
+    inputList.add(state);
+
+    ds.setInputList(inputList);
+
+    Datastream datastream = falkonry.createDatastream(ds);
+
+    AssessmentRequest assessmentRequest = new AssessmentRequest();
+    assessmentRequest.setName("Health");
+    assessmentRequest.setDatastream(datastream.getId());
+    assessmentRequest.setAssessmentRate("PT1S");
+    Assessment assessment = falkonry.createAssessment(assessmentRequest);
+    
+```
+
+#### Retrieve Assessments
+    
+```java
+    import com.falkonry.client.Falkonry;
+
+    Falkonry falkonry = new Falkonry("https://sandbox.falkonry.ai", "auth-token");
+
+    List<Assessment> datastreams = falkonry.getAssessments();
+```
+
+#### Setup Datastream for narrow/historian style data from a single entity
 
 Data:
 ```
@@ -49,33 +190,54 @@ Data:
 Usage:
 ```java
     import com.falkonry.client.Falkonry;
-    import com.falkonry.helper.models.Eventbuffer;
+    import com.falkonry.helper.models.Datasource;
+    import com.falkonry.helper.models.Datastream;
+    import com.falkonry.helper.models.Field;
+    import com.falkonry.helper.models.TimeObject;
+    import com.falkonry.helper.models.Signal;
 
     //instantiate Falkonry
     Falkonry falkonry = new Falkonry("https://sandbox.falkonry.ai", "auth-token");
-    Timezone timezone = new Timezone();
-    timezone.setZone("GMT");
-    timezone.setOffset(0);
+    Datastream ds = new Datastream();
+    ds.setName("Test-DS-" + Math.random());
 
-    Eventbuffer eb = new Eventbuffer()
-        .setName("Eventbuffer_name")  //name of the eventbuffer
-        .setTimeIdentifier("time")    //property that identifies time in the data
-        .setTimeFormat("iso_8601")    //format of the time in the data
-        .setTimezone(timezone)        //output data will be generated using timezone
-        .setValueColumn("value")      //property that identifies value of the signal in the data
-        .setSignalsTagField("tag");   //property that identifies signal tag in the data
+    TimeObject time = new TimeObject();
+    time.setIdentifier("time");
+    time.setFormat("iso_8601");
+    time.setZone("GMT");
 
-    //create eventbuffer
-    Eventbuffer eventbuffer = falkonry.createEventbuffer(eb);
+    Signal signal = new Signal();
+    signal.setTagIdentifier("tag");
+    signal.setValueIdentifier("value");
+    signal.setDelimiter("_");
+    signal.setIsSignalPrefix(false);
 
-    //Add data to eventbuffer
+    Datasource dataSource = new Datasource();
+    dataSource.setType("STANDALONE");
+
+    Field field = new Field();
+    field.setSiganl(signal);
+    field.setTime(time);
+
+    ds.setDatasource(dataSource);
+    ds.setField(field);
+
+    Datastream datastream = falkonry.createDatastream(ds);
+
+    //Add data to datastream
     String data = "{\"time\" : \"2016-03-01 01:01:01\", \"tag\" : \"signal1\", \"value\" : 3.4}" + "\n"
         + "{\"time\" : \"2016-03-01 01:01:02\", \"tag\" : \"signal2\", \"value\" : 9.3}";
-    InputStatus inputStatus = falkonry.addInput(eventbuffer.getId(), data, options);
+
+    Map<String, String> options = new HashMap<String, String>();
+    options.put("timeIdentifier", "time");
+    options.put("timeFormat", "iso_8601");
+    options.put("fileFormat", "csv");
+    falkonry.addInput(datastream.getId(), data, options);
 
 ```
 
-#### Setup Eventbuffer for narrow/historian style data from multiple entities
+
+#### Setup Datastream for narrow/historian style data from multiple entities
 
 Data:
 ```
@@ -96,32 +258,57 @@ Data:
 Usage:
 ```java
     import com.falkonry.client.Falkonry;
-    import com.falkonry.helper.models.Eventbuffer;
+    import com.falkonry.helper.models.Datasource;
+    import com.falkonry.helper.models.Datastream;
+    import com.falkonry.helper.models.Field;
+    import com.falkonry.helper.models.TimeObject;
+    import com.falkonry.helper.models.Signal;
 
     //instantiate Falkonry
     Falkonry falkonry = new Falkonry("https://sandbox.falkonry.ai", "auth-token");
-    Eventbuffer eb = new Eventbuffer()
-        .setName("Eventbuffer_name")  //name of the eventbuffer
-        .setTimeIdentifier("time")    //property that identifies time in the data
-        .setTimeFormat("iso_8601")    //format of the time in the data
-        .setValueColumn("value")      //property that identifies value of the signal in the data
-        .setSignalsDelimiter("_")     //delimiter used to concat system id and signal name to create signal tag
-        .setSignalsLocation("prefix") //part of the tag that identifies signal name
-        .setSignalsTagField("tag");   //property that identifies signal tag in the data
 
-    //create eventbuffer
-    Eventbuffer eventbuffer = falkonry.createEventbuffer(eb);
 
-    //Add data to eventbuffer
+    Datastream ds = new Datastream();
+    ds.setName("Test-DS-" + Math.random());
+
+    TimeObject time = new TimeObject();
+    time.setIdentifier("time");
+    time.setFormat("iso_8601");
+    time.setZone("GMT");
+
+    Signal signal = new Signal();
+    signal.setTagIdentifier("tag");
+    signal.setValueIdentifier("value");
+    signal.setDelimiter("_");
+    signal.setIsSignalPrefix(false);
+
+    Datasource dataSource = new Datasource();
+    dataSource.setType("STANDALONE");
+
+    Field field = new Field();
+    field.setSiganl(signal);
+    field.setTime(time);
+
+    ds.setDatasource(dataSource);
+    ds.setField(field);
+
+    Datastream datastream = falkonry.createDatastream(ds);
+    
+
+    //Add data to datastream
     String data = "{\"time\" : \"2016-03-01 01:01:01\", \"tag\" : \"signal1_entity1\", \"value\" : 3.4}" + "\n"
         + "{\"time\" : \"2016-03-01 01:01:01\", \"tag\" : \"signal2_entity1\", \"value\" : 1.4}" + "\n"
         + "{\"time\" : \"2016-03-01 01:01:02\", \"tag\" : \"signal1_entity1\", \"value\" : 9.3}" + "\n"
         + "{\"time\" : \"2016-03-01 01:01:02\", \"tag\" : \"signal2_entity2\", \"value\" : 4.3}";
-    InputStatus inputStatus = falkonry.addInput(eventbuffer.getId(), data, options);
+    Map<String, String> options = new HashMap<String, String>();
+    options.put("timeIdentifier", "time");
+    options.put("timeFormat", "iso_8601");
+    options.put("fileFormat", "csv");
+    falkonry.addInput(datastream.getId(), data, options);
 
 ```
 
-#### Setup Eventbuffer for wide style data from a single entity
+#### Setup Datastream for wide style data from a single entity
 
 Data:
 ```
@@ -138,25 +325,76 @@ Data:
 Usage:
 ```java
     import com.falkonry.client.Falkonry;
-    import com.falkonry.helper.models.Eventbuffer;
+    import com.falkonry.helper.models.Datasource;
+    import com.falkonry.helper.models.Datastream;
+    import com.falkonry.helper.models.Field;
+    import com.falkonry.helper.models.TimeObject;
+    import com.falkonry.helper.models.Signal;
 
     //instantiate Falkonry
     Falkonry falkonry = new Falkonry("https://sandbox.falkonry.ai", "auth-token");
-    Eventbuffer eb = new Eventbuffer()
-        .setName("Eventbuffer_name")  //name of the eventbuffer
-        .setTimeIdentifier("time")    //property that identifies time in the data
-        .setTimeFormat("millis");     //format of the time in the data
 
-    //create eventbuffer
-    Eventbuffer eventbuffer = falkonry.createEventbuffer(eb);
+    Datastream ds = new Datastream();
+    ds.setName("Test-DS-" + Math.random());
+    TimeObject time = new TimeObject();
+    time.setIdentifier("time");
+    time.setFormat("iso_8601");
+    time.setZone("GMT");
 
-    //Add data to eventbuffer
+    Field field = new Field();
+    field.setTime(time);
+    ds.setField(field);
+    Datasource dataSource = new Datasource();
+    dataSource.setType("PI");
+    dataSource.sethost("https://test.piserver.com/piwebapi");
+    dataSource.setElementTemplateName("SampleElementTempalte");
+    ds.setDatasource(dataSource);
+
+    // Input List
+    List<Input> inputList = new ArrayList<Input>();
+    Input currents = new Input();
+    ValueType valueType = new ValueType();
+    EventType eventType = new EventType();
+    currents.setName("current");
+    valueType.setType("Numeric");
+    eventType.setType("Samples");
+    currents.setValueType(valueType);
+    currents.setEventType(eventType);
+    inputList.add(currents);
+
+    Input vibration = new Input();
+    vibration.setName("vibration");
+    valueType.setType("Numeric");
+    eventType.setType("Samples");
+    vibration.setValueType(valueType);
+    vibration.setEventType(eventType);
+    inputList.add(vibration);
+
+    Input state = new Input();
+    state.setName("state");
+    valueType.setType("Categorical");
+    eventType.setType("Samples");
+    state.setValueType(valueType);
+    state.setEventType(eventType);
+    inputList.add(state);
+
+    ds.setInputList(inputList);
+
+    Datastream datastream = falkonry.createDatastream(ds);
+    
+
+    //Add data to datastream
     String data = "{\"time\":1467729675422,\"signal1\":41.11,\"signal2\":82.34,\"signal3\":74.63,\"signal4\":4.8}" + "\n"
         + "{\"time\":1467729668919,\"signal1\":78.11,\"signal2\":2.33,\"signal3\":4.6,\"signal4\":9.8}";
-    InputStatus inputStatus = falkonry.addInput(eventbuffer.getId(), data, options);
+    Map<String, String> options = new HashMap<String, String>();
+    options.put("timeIdentifier", "time");
+    options.put("timeFormat", "millis");
+    options.put("fileFormat", "csv");
+    falkonry.addInput(datastream.getId(), data, options);
+
 ```
 
-#### Setup Eventbuffer for wide style data from multiple entities
+#### Setup Datastream for wide style data from multiple entities
 
 Data:
 ```
@@ -173,37 +411,75 @@ Data:
 Usage:
 ```java
     import com.falkonry.client.Falkonry;
-    import com.falkonry.helper.models.Eventbuffer;
+    import com.falkonry.helper.models.Datasource;
+    import com.falkonry.helper.models.Datastream;
+    import com.falkonry.helper.models.Field;
+    import com.falkonry.helper.models.TimeObject;
+    import com.falkonry.helper.models.Signal;
 
     //instantiate Falkonry
     Falkonry falkonry = new Falkonry("https://sandbox.falkonry.ai", "auth-token");
-    Eventbuffer eb = new Eventbuffer()
-        .setName("Eventbuffer_name")  //name of the eventbuffer
-        .setTimeIdentifier("time")    //property that identifies time in the data
-        .setTimeFormat("millis")      //format of the time in the data
-        .setEntityIdentifier("entities"); //property that identifies system id in the data.
 
-    //create eventbuffer
-    Eventbuffer eventbuffer = falkonry.createEventbuffer(eb);
+    Datastream ds = new Datastream();
+    ds.setName("Test-DS-" + Math.random());
 
-    //Add data to eventbuffer
+    TimeObject time = new TimeObject();
+    time.setIdentifier("time");
+    time.setFormat("millis");
+    time.setZone("GMT");
+
+    Signal signal = new Signal();
+    signal.setTagIdentifier("tag");
+    signal.setValueIdentifier("value");
+    signal.setDelimiter("_");
+    signal.setIsSignalPrefix(false);
+
+    Datasource dataSource = new Datasource();
+    dataSource.setType("STANDALONE");
+
+    Field field = new Field();
+    field.setSiganl(signal);
+    field.setTime(time);
+    field.setEntityIdentifier("entities");
+
+    ds.setDatasource(dataSource);
+    ds.setField(field);
+
+    Datastream datastream = falkonry.createDatastream(ds);
+
+
+    //Add data to datastream
     String data = "time, entities, signal1, signal2, signal3, signal4" + "\n"
         + "1467729675422, entity1, 41.11, 62.34, 77.63, 4.8" + "\n"
         + "1467729675445, entity1, 43.91, 82.64, 73.63, 3.8";
-    InputStatus inputStatus = falkonry.addInput(eventbuffer.getId(), data, options);
+    Map<String, String> options = new HashMap<String, String>();
+    options.put("timeIdentifier", "time");
+    options.put("timeFormat", "millis");
+    options.put("fileFormat", "csv");
+    falkonry.addInput(datastream.getId(), data, options);
 ```
 
-#### Get an Eventbuffer
+#### Get Datastream by Id
 
 ```java
     import com.falkonry.client.Falkonry;
 
     Falkonry falkonry = new Falkonry("https://sandbox.falkonry.ai", "auth-token");
 
-    eventbuffer = falkonry.getUpdatedEventbuffer("eventbuffer_id"); //eventbuffer's id
+    datastream = falkonry.getDatastream("datastream_id"); //datastream's id
 ```
 
-#### Add json data from a stream to an Eventbuffer
+#### Delete a Datastream
+
+```java
+    import com.falkonry.client.Falkonry;
+
+    Falkonry falkonry = new Falkonry("https://sandbox.falkonry.ai", "auth-token");
+
+    datastream = falkonry.deleteDatastream("datastream_id"); //datastream's id
+```
+
+#### Add json data from a stream to an Datastream
     
 ```java
     import com.falkonry.client.Falkonry
@@ -215,10 +491,10 @@ Usage:
     File file = new File("tmp/data.json");      
     ByteArrayInputStream istream = new ByteArrayInputStream(FileUtils.readFileToByteArray(file));
 
-    InputStatus inputStatus = falkonry.addInputStream(eventbuffer.getId(),byteArrayInputStream,options);
+    InputStatus inputStatus = falkonry.addInputStream(datastream.getId(),byteArrayInputStream,options);
 ```
 
-#### Add csv data from a stream to an Eventbuffer
+#### Add csv data from a stream to an Datastream
     
 ```java
     import com.falkonry.client.Falkonry
@@ -230,89 +506,31 @@ Usage:
     File file = new File("tmp/data.csv");     
     ByteArrayInputStream istream = new ByteArrayInputStream(FileUtils.readFileToByteArray(file));
 
-    InputStatus inputStatus = falkonry.addInputStream(eventbuffer.getId(),byteArrayInputStream,options);
+    InputStatus inputStatus = falkonry.addInputStream(datastream.getId(),byteArrayInputStream,options);
 ```
 
-#### Setup Pipeline from Eventbuffer
-    
-```java
-    import com.falkonry.client.Falkonry;
-    import com.falkonry.helper.models.*;
-
-    //instantiate Falkonry
-    Falkonry falkonry = new Falkonry("https://sandbox.falkonry.ai", "auth-token");
-
-    //prepare signals to be used from eventbuffer
-    List<Signal> signals = new ArrayList<Signal>();
-    signals.add(
-        new Signal()
-            .setName("current")                    //signal present in eventbuffer
-            .setValueType(
-                new ValueType().setType("Numeric") //type of the signal. Numeric or Categorical
-            )
-            .setEventType(
-                new EventType().setType("Samples") //nature of the signal. Samples or Occurrences
-            )
-    );
-    signals.add(
-        new Signal()
-            .setName("vibration")
-            .setValueType(
-                new ValueType().setType("Numeric")
-            )
-            .setEventType(
-                new EventType().setType("Samples")
-            )
-    );
-    signals.add(
-        new Signal()
-            .setName("state")
-            .setValueType(
-                new ValueType().setType("Categorical")
-            )
-            .setEventType(
-                new EventType().setType("Samples")
-            )
-    );
-
-    //prepare assessments
-    List<String> inputList = new ArrayList<String>(); //signals to be added in the assessment
-    inputList.add("current");
-    inputList.add("vibration");
-    inputList.add("state");
-
-    List<Assessment> assessmentList = new ArrayList<Assessment>();
-    Assessment assessment = new Assessment()
-                    .setName("Health")               //name of the assessment
-                    .addSignals(assessment_signals); //signals to added in this assessment
-    assessmentList.add(assessment);
-
-    //prepare interval
-    Interval interval = new Interval();
-        interval.setDuration("PT1S");               //lower bound to be set
-                            
-    //create pipeline
-    Pipeline pipeline = new Pipeline()
-                    .setName("Motor Health")             //name of the pipeline
-                    .setEventbuffer(eventbuffer.getId()) //eventbuffer's id
-                    .setInputSignals(signals)            //list of signals
-                    .setAssessmentList(assessments)      //list of assessments
-                    .setInterval(interval);              //interval configuration
-
-    Pipeline createdPipeline = falkonry.createPipeline(pipeline);
-```
-
-#### To get all Pipelines
+#### Get Assessment by Id
     
 ```java
     import com.falkonry.client.Falkonry;
 
     Falkonry falkonry = new Falkonry("https://sandbox.falkonry.ai", "auth-token");
 
-    List<Pipeline> pipelines = falkonry.getPipelines();
+    Assessment assesssment = falkonry.getAssessment('assessment_id');
 ```
 
-#### Add facts data (json format) to a Pipeline
+
+#### Delete Assessment
+    
+```java
+    import com.falkonry.client.Falkonry;
+
+    Falkonry falkonry = new Falkonry("https://sandbox.falkonry.ai", "auth-token");
+
+    Assessment assesssment = falkonry.deleteAssessment('assessment_id');
+```
+
+#### Add facts data (json format) to a Assessment
 
 ```java
     import com.falkonry.client.Falkonry;
@@ -320,10 +538,10 @@ Usage:
     Falkonry falkonry = new Falkonry("https://sandbox.falkonry.ai", "auth-token");
 
     String data = "{\"time\" : \"2011-03-26T12:00:00Z\", \"entities\" : \"entity1\", \"end\" : \"2012-06-01T00:00:00Z\", \"Health\" : \"Normal\"}";
-    String response = falkonry.addfacts(pipeline.getId(),data, options);
+    String response = falkonry.addfacts(assessment.getId(),data, options);
 ```
 
-#### To add facts data (csv format) to a Pipeline
+#### To add facts data (csv format) to a Assessment
 
 ```java
     import com.falkonry.client.Falkonry;
@@ -331,10 +549,10 @@ Usage:
     Falkonry falkonry = new Falkonry("https://sandbox.falkonry.ai", "auth-token");
 
     String data = "time,end,car,Health\n2011-03-31T00:00:00Z,2011-04-01T00:00:00Z,IL9753,Normal\n2011-03-31T00:00:00Z,2011-04-01T00:00:00Z,HI3821,Normal";
-    String response = falkonry.addFacts(pipeline.getId(),data, options);
+    String response = falkonry.addFacts(assessment.getId(),data, options);
 ```
 
-#### Add facts data (json format) from a stream to a Pipeline
+#### Add facts data (json format) from a stream to a Assessment
     
 ```java
     import com.falkonry.client.Falkonry;
@@ -343,10 +561,10 @@ Usage:
     Falkonry falkonry   = new Falkonry("https://sandbox.falkonry.ai", "auth-token");
     File file = new File("res/factsData.json");      
     ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(FileUtils.readFileToByteArray(file));
-    String response = falkonry.addFactsStream(pipeline.getId(),byteArrayInputStream, options);
+    String response = falkonry.addFactsStream(assessment.getId(),byteArrayInputStream, options);
 ```
 
-#### Add facts data (csv format) from a stream to a Pipeline
+#### Add facts data (csv format) from a stream to a Assessment
     
 ```java
     import com.falkonry.client.Falkonry;
@@ -355,7 +573,59 @@ Usage:
     Falkonry falkonry   = new Falkonry("https://sandbox.falkonry.ai", "auth-token");
     File file = new File("res/factsData.csv");      
     ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(FileUtils.readFileToByteArray(file));
-    String response = falkonry.addFactsStream(pipeline.getId(),byteArrayInputStream, options);
+    String response = falkonry.addFactsStream(assessment.getId(),byteArrayInputStream, options);
+```
+
+
+#### Get Historian Output from Assessment
+
+```java
+
+    Map<String, String> options = new HashMap<String, String>();
+    options.put("startTime", "2011-07-17T01:00:00.000Z"); // in the format YYYY-MM-DDTHH:mm:ss.SSSZ
+    options.put("endTime", "2011-08-18T01:00:00.000Z");  // in the format YYYY-MM-DDTHH:mm:ss.SSSZ
+    options.put("responseFormat", "application/json");  // also avaibale options 1. text/csv 2. application/json
+
+    assessment.setId("wpyred1glh6c5r");
+    HttpResponseFormat httpResponse = falkonry.getHistoricalOutput(assessment_id, options);
+```
+
+#### Get Streaming Output
+
+```java
+	import com.falkonry.client.Falkonry;
+
+    Falkonry falkonry   = new Falkonry("https://sandbox.falkonry.ai", "auth-token");
+    String assessment = "wpyred1glh6c5r";
+    BufferedReader outputBuffer;
+    outputBuffer = falkonry.getOutput(assessment);
+```
+
+#### Datastream On/Off
+
+```java
+	import com.falkonry.client.Falkonry;
+
+    Falkonry falkonry   = new Falkonry("https://sandbox.falkonry.ai", "auth-token");
+	String datastreamId = "hk7cgt56r3yln0";
+    List<Assessment> liveAssessments = falkonry.onDatastream(datastreamId);
+    List<Assessment> assessments = falkonry.offDatastream(datastreamId);
+```
+
+#### Add EntityMeta
+
+```java
+	import com.falkonry.client.Falkonry;
+    
+    Falkonry falkonry   = new Falkonry("https://sandbox.falkonry.ai", "auth-token");
+	String datastreamId = "hk7cgt56r3yln0";
+    datastream = falkonry.getDatastream(datastreamId);
+    EntityMetaRequest entityMetaRequest = new EntityMetaRequest();
+    entityMetaRequest.setSourceId("entity1"); // Entity name which you have to change
+    entityMetaRequest.setLabel("UNIT1"); // New Entity name
+    entityMetaRequest.setPath(""); // For future use
+    entityMetaRequests.add(entityMetaRequest);
+    List<EntityMeta> entityMetas = falkonry.postEntityMeta(entityMetaRequests, datastream.getId());
 ```
 
 ## Docs

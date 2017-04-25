@@ -6,29 +6,33 @@ package com.falkonry.helper.models;
  * MIT Licensed
  */
 
+
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
 /**
  *
  */
 @JsonIgnoreProperties(ignoreUnknown=true)
-
-public class Stats {
-    private int data;
+public class TrackerReponse {
+    
+  private String id;
 
     /**
      *
      * @return
      */
-    public int getData() {
-        return data;
+    public String getId() {
+        return id;
     }
 
     /**
      *
-     * @param data
+     * @param id
      */
-    public void setData(int data) {
-        this.data = data;
+    public void setId(String id) {
+        this.id = id;
     }
+ 
+
+    
 }

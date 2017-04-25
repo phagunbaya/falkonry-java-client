@@ -9,26 +9,47 @@ package com.falkonry.helper.models;
 
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
+/**
+ *
+ */
 @JsonIgnoreProperties(ignoreUnknown=true)
 
 public class Interval {
   private String field;
   private String duration;
 
-  public String getField() {
+    /**
+     *
+     * @return
+     */
+    public String getField() {
     return this.field;
   }
 
-  public Interval setField(String field) {
+    /**
+     *
+     * @param field
+     * @return
+     */
+    public Interval setField(String field) {
     this.field = field;
     return this;
   }
 
-  public String getDuration() {
+    /**
+     *
+     * @return
+     */
+    public String getDuration() {
     return this.duration;
   }
 
-  public Interval setDuration(String duration) {
+    /**
+     *
+     * @param duration
+     * @return
+     */
+    public Interval setDuration(String duration) {
     this.duration = duration;
     return this;
   }

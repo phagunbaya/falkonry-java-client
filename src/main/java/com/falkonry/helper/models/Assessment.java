@@ -4,6 +4,7 @@ import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
 import java.util.ArrayList;
 import java.util.List;
+import org.codehaus.jackson.annotate.JsonProperty;
 
 /*!
  * falkonry-java-client
@@ -11,81 +12,190 @@ import java.util.List;
  * MIT Licensed
  */
 
+/**
+ *
+ */
 
-
-@JsonIgnoreProperties(ignoreUnknown=true)
-
+@JsonIgnoreProperties(ignoreUnknown = true)
 
 public class Assessment {
-  private String key;
-  private String name;
-  private String measurement;
-  private String episodeMeasurement;
-  private String verificationMeasurement;
-  private List<String> inputList = new ArrayList<String>();
-  private List<String> aprioriConditionList = new ArrayList<String>();
 
-  public Assessment() {
+    private String id;
+    private String sourceId;
+    private String name;
+    private String tenant;
+    private String measurement;
+    private String datastream;
+    private String live;
+    private String factsMesaurement;
+    private String production;
+    private String activeModel;
+    private String rate;
 
-  }
+    /**
+     *
+     * @return
+     */
+    public String getRate() {
+        return rate;
+    }
 
-  public String getKey() {
-    return this.key;
-  }
+    /**
+     *
+     * @param rate
+     */
+    public void setRate(String rate) {
+        this.rate = rate;
+    }
 
-  public Assessment setKey(String key) {
-    this.key = key;
-    return this;
-  }
+    /**
+     *
+     * @return
+     */
+    public String getMeasurement() {
+        return measurement;
+    }
 
-  public String getName() {
-    return this.name;
-  }
+    /**
+     *
+     * @param measurement
+     */
+    public void setMeasurement(String measurement) {
+        this.measurement = measurement;
+    }
 
-  public Assessment setName(String name) {
-    this.name = name;
-    return this;
-  }
+//    public Assessment() {
+//
+//    }
 
-  public List<String> getInputList() {
-    return this.inputList;
-  }
+    /**
+     *
+     * @return
+     */
+    public String getId() {
+        return this.id;
+    }
 
-  public Assessment setInputList(List<String> inputList) {
-    this.inputList = inputList;
-    return this;
-  }
+    /**
+     *
+     * @param id
+     * @return
+     */
+    public Assessment setId(String id) {
+        this.id = id;
+        return this;
+    }
 
-  public List<String> getAprioriConditionList() {
-    return this.aprioriConditionList;
-  }
+    /**
+     *
+     * @return
+     */
+    public String getTenant() {
+        return tenant;
+    }
 
-  public Assessment setAprioriConditionList(List<String> aprioriConditionList) {
-    this.aprioriConditionList = aprioriConditionList;
-    return this;
-  }
+    /**
+     *
+     * @return
+     */
+    public String getDatastream() {
+        return datastream;
+    }
 
-  public String getMeasurement() {
-    return measurement;
-  }
+    /**
+     *
+     * @return
+     */
+    public String getLive() {
+        return live;
+    }
 
-  public void setMeasurement(String measurement) {
-    this.measurement = measurement;
-  }
+    /**
+     *
+     * @param live
+     */
+    public void setLive(String live) {
+        this.live = live;
+    }
 
-  public String getVerificationMeasurement() {
-    return verificationMeasurement;
-  }
+    /**
+     *
+     * @return
+     */
+    public String getFactsMesaurement() {
+        return factsMesaurement;
+    }
 
-  public void setVerificationMeasurement(String verificationMeasurement) {
-    this.verificationMeasurement = verificationMeasurement;
-  }
+    /**
+     *
+     * @return
+     */
+    public String getProduction() {
+        return production;
+    }
 
-  public String getEpisodeMeasurement() {
-    return episodeMeasurement;
-  }
+    /**
+     *
+     * @return
+     */
+    public String getActiveModel() {
+        return activeModel;
+    }
 
-  public void setEpisodeMeasurement(String episodeMeasurement) {
-    this.episodeMeasurement = episodeMeasurement;
-  }
+    /**
+     *
+     * @return
+     */
+    public String getSourceId() {
+        return sourceId;
+    }
+
+    /**
+     *
+     * @param sourceId
+     * @return
+     */
+    public Assessment setSourceId(String sourceId) {
+        this.sourceId = sourceId;
+        return this;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public String getName() {
+        return this.name;
+    }
+
+    /**
+     *
+     * @param name
+     * @return
+     */
+    public Assessment setName(String name) {
+        this.name = name;
+        return this;
+    }
+
+    /**
+     *
+     * @return
+     */
+    @JsonProperty("tenant")
+    public String getAccount() {
+        return tenant;
+    }
+
+    /**
+     *
+     * @param account
+     * @return
+     */
+    @JsonProperty("tenant")
+    public Assessment setAccount(String account) {
+        this.tenant = account;
+        return this;
+    }
+
 }
