@@ -21,7 +21,7 @@ public class Falkonry {
 	private FalkonryService falkonryService;
 
 	/**
-	 * Constructor
+	 * Falkonry client class to access APIs
 	 * @param host
 	 * @param token
 	 * @throws Exception
@@ -43,7 +43,7 @@ public class Falkonry {
 	/**
 	 * getDatastreams
 	 * @throws Exception
-	 * @return List<Datastream>
+	 * @return List
 	 */
 	public List<Datastream> getDatastreams() throws Exception {
 		return falkonryService.getDatastreams();
@@ -51,7 +51,7 @@ public class Falkonry {
 
 	/**
 	 * getDatastream
-	 * @param id
+	 * @param id DataStream id
 	 * @throws Exception
 	 * @return Datastream
 	 */
@@ -71,9 +71,8 @@ public class Falkonry {
 
 	/**
 	 * deleteDatastream
-	 * @param id
+	 * @param id DataStream id
 	 * @throws Exception
-	 * @return void
 	 */
 	public void deleteDatastream(String id) throws Exception {
 		falkonryService.deleteDatastream(id);
@@ -91,7 +90,7 @@ public class Falkonry {
 
 	/**
 	 * getAssessment
-	 * @param id
+	 * @param id Assessment id
 	 * @throws Exception
 	 * @return Assessment
 	 */
@@ -112,7 +111,7 @@ public class Falkonry {
 	/**
 	 * getAssessments
 	 * @throws Exception
-	 * @return List<Assessment>
+	 * @return List
 	 */
 	public List<Assessment> getAssessments() throws Exception {
 		return falkonryService.getAssessments();
@@ -120,9 +119,8 @@ public class Falkonry {
 
 	/**
 	 * deleteAssessment
-	 * @param id
+	 * @param id Assessment id
 	 * @throws Exception
-	 * @return void
 	 */
 	public void deleteAssessment(String id) throws Exception {
 		this.falkonryService.deleteAssessment(id);
@@ -130,7 +128,7 @@ public class Falkonry {
 
 	/**
 	 * addInput
-	 * @param id
+	 * @param id DataStream id
 	 * @param data
 	 * @param options
 	 * @throws Exception
@@ -142,7 +140,7 @@ public class Falkonry {
 
 	/**
 	 * addFacts
-	 * @param id
+	 * @param id Assessment id
 	 * @param data
 	 * @param options
 	 * @throws Exception
@@ -154,7 +152,7 @@ public class Falkonry {
 
 	/**
 	 * addInputStream
-	 * @param id
+	 * @param id DataStream id
 	 * @param stream
 	 * @param options
 	 * @throws Exception
@@ -167,7 +165,7 @@ public class Falkonry {
 
 	/**
 	 * addFactsStream
-	 * @param id
+	 * @param id Assessment id
 	 * @param stream
 	 * @param options
 	 * @throws Exception
@@ -180,7 +178,7 @@ public class Falkonry {
 
 	/**
 	 * getOutput
-	 * @param id
+	 * @param id Assessment id
 	 * @throws Exception
 	 * @return BufferedReader
 	 */
@@ -201,9 +199,9 @@ public class Falkonry {
 
 	/**
 	 * onDatastream
-	 * @param id
+	 * @param id DataStream id
 	 * @throws Exception
-	 * @return List<Assessment>
+	 * @return List
 	 */
 	public List<Assessment> onDatastream(String id) throws Exception {
 		return this.falkonryService.onDatastream(id);
@@ -211,9 +209,9 @@ public class Falkonry {
 
 	/**
 	 * offDatastream
-	 * @param id
+	 * @param id DataStream id
 	 * @throws Exception
-	 * @return List<Assessment>
+	 * @return List
 	 */
 	public List<Assessment> offDatastream(String id) throws Exception {
 		return this.falkonryService.offDatastream(id);
@@ -223,7 +221,7 @@ public class Falkonry {
 	 * getEntityMeta
 	 * @param datastreamId
 	 * @throws Exception
-	 * @return List<EntityMeta>
+	 * @return List
 	 */
 	public List<EntityMeta> getEntityMeta(String datastreamId) throws Exception {
 		return this.falkonryService.getEntityMeta(datastreamId);
@@ -234,7 +232,7 @@ public class Falkonry {
 	 * @param entityMetaRequest
 	 * @param datastreamId
 	 * @throws Exception
-	 * @return List<EntityMeta>
+	 * @return List
 	 */
 	public List<EntityMeta> postEntityMeta(List<EntityMetaRequest> entityMetaRequest, String datastreamId)
 			throws Exception {

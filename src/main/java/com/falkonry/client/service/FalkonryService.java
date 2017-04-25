@@ -75,8 +75,7 @@ public class FalkonryService {
 
 	/**
 	 *
-	 * @param id
-	 *            is datastream id
+	 * @param id DataStream id
 	 * @return
 	 * @throws IOException
 	 * @throws JsonMappingException
@@ -106,8 +105,7 @@ public class FalkonryService {
 
 	/**
 	 *
-	 * @param id
-	 *            is datastream id
+	 * @param id DataStream id
 	 * @throws Exception
 	 */
 	public void deleteDatastream(String id) throws Exception {
@@ -146,8 +144,7 @@ public class FalkonryService {
 
 	/**
 	 *
-	 * @param id
-	 *            is assessment.id
+	 * @param id Assessment id
 	 * @return
 	 * @throws Exception
 	 */
@@ -173,8 +170,7 @@ public class FalkonryService {
 
 	/**
 	 *
-	 * @param id
-	 *            is assessment.id
+	 * @param id Assessment id
 	 * @throws Exception
 	 */
 	public void deleteAssessment(String id) throws Exception {
@@ -183,8 +179,7 @@ public class FalkonryService {
 
 	/**
 	 *
-	 * @param id
-	 *            is datastream.id
+	 * @param id DataStream id
 	 * @param data
 	 * @param options
 	 * @return
@@ -206,8 +201,7 @@ public class FalkonryService {
 
 	/**
 	 *
-	 * @param id
-	 *            is assessment.id
+	 * @param id Assessment id
 	 * @param data
 	 * @param options
 	 * @return
@@ -222,8 +216,7 @@ public class FalkonryService {
 
 	/**
 	 *
-	 * @param id
-	 *            is datastream.id
+	 * @param id DataStream id
 	 * @param stream
 	 * @param options
 	 * @return
@@ -248,8 +241,7 @@ public class FalkonryService {
 
 	/**
 	 *
-	 * @param id
-	 *            is assessment.id
+	 * @param id Assessment id
 	 * @param stream
 	 * @param options
 	 * @return
@@ -266,10 +258,7 @@ public class FalkonryService {
 
 	/**
 	 *
-	 * @param id
-	 *            is assessment.id
-	 * @param start
-	 * @param end
+	 * @param id Assessment id
 	 * @return
 	 * @throws Exception
 	 */
@@ -280,8 +269,7 @@ public class FalkonryService {
 
 	/**
 	 *
-	 * @param id
-	 *            is datastream.id
+	 * @param id DataStream id
 	 * @return
 	 * @throws Exception
 	 */
@@ -295,8 +283,7 @@ public class FalkonryService {
 
 	/**
 	 *
-	 * @param id
-	 *            is datastream.id
+	 * @param id DataStream id
 	 * @return
 	 * @throws Exception
 	 */
@@ -378,7 +365,7 @@ public class FalkonryService {
 	 * @param entityMetaRequest
 	 * @param id
 	 * @throws Exception
-	 * @return List<EntityMeta>
+	 * @return List
 	 */
 	public List<EntityMeta> postEntityMeta(List<EntityMetaRequest> entityMetaRequest, String id) throws Exception {
 		ObjectMapper mapper = new ObjectMapper();
@@ -391,7 +378,7 @@ public class FalkonryService {
 	/**
 	 * @param id
 	 * @throws Exception
-	 * @return List<EntityMeta>
+	 * @return List
 	 */
 	public List<EntityMeta> getEntityMeta(String id) throws Exception {
 		ObjectMapper mapper = new ObjectMapper();
