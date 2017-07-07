@@ -30,6 +30,7 @@ Maven install
     * Retrieve Assessments
     * Retrieve Assessment by Id
     * Delete Assessment by id
+    * Get Condition List Of Assessment
     * Add historical input data (json format) to Datastream (Used for model revision) 
 	* Add historical input data (csv format) to Datastream (Used for model revision) 
 	* Add historical input data (json format) from a stream to Datastream (Used for model revision) 
@@ -424,6 +425,22 @@ Usage:
 
     Assessment assesssment = falkonry.deleteAssessment('assessment_id');
 ```
+
+#### Get Condition List Of Assessment
+    
+```java
+    import com.falkonry.client.Falkonry;
+
+    Falkonry falkonry = new Falkonry("https://sandbox.falkonry.ai", "auth-token");
+
+    Assessment assesssment = falkonry.getAssessment('assessment_id');
+    // aprioriConditionList
+	List<String> aprioriConditionList = assessment1.getAprioriConditionList();
+	Assert.assertEquals(aprioriConditionList.size(), 0);
+    
+```
+
+
 #### Add historical input data (json format) to Datastream (Used for model revision) 
 
 Data:

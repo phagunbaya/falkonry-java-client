@@ -238,6 +238,10 @@ public class TestCreateAssessment {
 		Assert.assertEquals(assessment1.getName(), assessment.getName());
 		Assert.assertEquals(assessment1.getRate(), assessment.getRate());
 		Assert.assertEquals(assessment1.getDatastream(), assessment.getDatastream());
+		
+		// aprioriConditionList
+		List<String> aprioriConditionList = assessment1.getAprioriConditionList();
+		Assert.assertEquals(aprioriConditionList.size(), 0);
 
 		falkonry.deleteAssessment(assessment.getId());
 	}

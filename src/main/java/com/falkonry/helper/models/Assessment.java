@@ -26,8 +26,10 @@ public class Assessment {
     private String production;
     private String activeModel;
     private String rate;
+    private List<String> aprioriConditionList;
+   
 
-    /**
+	/**
      *
      * @return
      */
@@ -192,5 +194,13 @@ public class Assessment {
         this.tenant = account;
         return this;
     }
+    
+    public List<String> getAprioriConditionList() {
+		return aprioriConditionList;
+	}
+
+	public void setAprioriConditionList(List<String> aprioriConditionList) {
+		this.aprioriConditionList = aprioriConditionList;
+	}
 
 }
