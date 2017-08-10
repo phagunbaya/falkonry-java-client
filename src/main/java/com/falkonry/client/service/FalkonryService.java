@@ -386,4 +386,75 @@ public class FalkonryService {
 		return mapper.readValue(entityMeta_json, new TypeReference<List<EntityMeta>>() {
 		});
 	}
+	
+	/**
+	 * @param id
+	 * @throws Exception
+	 * @return List
+	 */
+	public HttpResponseFormat getFactsData(Assessment assessment, Map<String, String> options) throws Exception {
+		String url = "/assessment/" + assessment.getId() + "/facts?";
+		Boolean firstReqParam = true;
+
+		if (options.containsKey("modelIndex")) {
+
+			if (firstReqParam) {
+				firstReqParam = false;
+				url += "model=" + URLEncoder.encode(options.get("modelIndex"), "UTF-8");
+			} else {
+				url += "&model=" + URLEncoder.encode(options.get("modelIndex"), "UTF-8");
+			}
+		}
+
+		if (options.containsKey("startTime")) {
+
+			if (firstReqParam) {
+				firstReqParam = false;
+				url += "startTime=" + URLEncoder.encode(options.get("startTime"), "UTF-8");
+			} else {
+				url += "&startTime=" + URLEncoder.encode(options.get("startTime"), "UTF-8");
+			}
+		}
+
+		if (options.containsKey("endTime")) {
+
+			if (firstReqParam) {
+				url += "endTime=" + URLEncoder.encode(options.get("endTime"), "UTF-8");
+			} else {
+				url += "&endTime=" + URLEncoder.encode(options.get("endTime"), "UTF-8");
+			}
+		}
+
+		String format;
+		String responseFromat = "application/json";
+		if (options.containsKey("responseFromat")) {
+
+			format = options.get("responseFromat");
+			if (format.equals("text/csv")) {
+				responseFromat = format;
+			}
+		}
+		HttpResponseFormat factsData = httpService.getOutput(url, responseFromat);
+		return factsData;
+	}
+	
+	/**
+	 * @param id
+	 * @throws Exception
+	 * @return List
+	 */
+	public HttpResponseFormat getInputData(Datastream datastream, Map<String, String> options) throws Exception {
+		String url = "/datastream/" + datastream.getId() + "/data";
+		String format;
+		String responseFromat = "application/json";
+		if (options.containsKey("responseFromat")) {
+
+			format = options.get("responseFromat");
+			if (format.equals("text/csv")) {
+				responseFromat = format;
+			}
+		}
+		HttpResponseFormat factsData = httpService.getOutput(url, responseFromat);
+		return factsData;
+	}
 }

@@ -20,7 +20,7 @@ import org.junit.*;
 import java.util.*;
 
 @Ignore
-public class TestAddData {
+public class TestAddAndGetData {
 
 	Falkonry falkonry = null;
 
@@ -103,6 +103,8 @@ public class TestAddData {
 		InputStatus ins = falkonry.addInput(datastream.getId(), data, options);
 		Assert.assertEquals(ins.getAction(), "ADD_DATA_DATASTREAM");
 		Assert.assertEquals(ins.getStatus(), "PENDING");
+		
+		// Get Input data
 	}
 
 	/**
