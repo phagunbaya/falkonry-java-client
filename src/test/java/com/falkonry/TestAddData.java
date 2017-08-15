@@ -99,7 +99,7 @@ public class TestAddData {
 		options.put("fileFormat", "csv");
 		options.put("streaming", "false");
 		options.put("hasMoreData", "false");
-		
+
 		InputStatus ins = falkonry.addInput(datastream.getId(), data, options);
 		Assert.assertEquals(ins.getAction(), "ADD_DATA_DATASTREAM");
 		Assert.assertEquals(ins.getStatus(), "PENDING");
@@ -142,7 +142,7 @@ public class TestAddData {
 		options.put("fileFormat", "csv");
 		options.put("streaming", "false");
 		options.put("hasMoreData", "false");
-		
+
 		InputStatus ins = falkonry.addInput(datastream.getId(), data, options);
 		Assert.assertEquals(ins.getAction(), "ADD_DATA_DATASTREAM");
 		Assert.assertEquals(ins.getStatus(), "PENDING");
