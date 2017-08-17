@@ -241,7 +241,7 @@ public class Falkonry {
 	
 	/**
 	 * getFactsData
-	 * @param assessment
+	 * @param assessmentId
 	 * @param options
 	 * @throws Exception
 	 * @return HttpResponseFormat
@@ -252,7 +252,7 @@ public class Falkonry {
 	
 	/**
 	 * getDatastreamInputData
-	 * @param datastream
+	 * @param datastreamId
 	 * @param options
 	 * @throws Exception
 	 * @return HttpResponseFormat

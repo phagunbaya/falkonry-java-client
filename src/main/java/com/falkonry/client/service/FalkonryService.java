@@ -388,7 +388,7 @@ public class FalkonryService {
 	}
 	
 	/**
-	 * @param id
+	 * @param assessment
 	 * @throws Exception
 	 * @return List
 	 */
