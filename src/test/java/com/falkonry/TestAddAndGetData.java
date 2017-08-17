@@ -10,6 +10,7 @@ import com.falkonry.client.Falkonry;
 import com.falkonry.helper.models.Datastream;
 import com.falkonry.helper.models.TimeObject;
 import com.falkonry.helper.models.Field;
+import com.falkonry.helper.models.HttpResponseFormat;
 import com.falkonry.helper.models.Input;
 import com.falkonry.helper.models.InputStatus;
 import com.falkonry.helper.models.ValueType;
@@ -19,13 +20,13 @@ import com.falkonry.helper.models.Signal;
 import org.junit.*;
 import java.util.*;
 
-@Ignore
+//@Ignore
 public class TestAddAndGetData {
 
 	Falkonry falkonry = null;
 
 	String host = "https://localhost:8080";
-	String token = "267ummc4hjyywop631wfogkwhb6t95wr";
+	String token = "lmm3orvm1yaa4j1y5b78i8f870fhon6z";
 	List<Datastream> datastreams = new ArrayList<Datastream>();
 
 	/**
@@ -104,7 +105,11 @@ public class TestAddAndGetData {
 		Assert.assertEquals(ins.getAction(), "ADD_DATA_DATASTREAM");
 		Assert.assertEquals(ins.getStatus(), "PENDING");
 		
-		// Get Input data
+		// Get Datastream Data
+		options = new HashMap<String, String>();
+	    options.put("responseFormat", "text/csv");  // also available options 1. text/csv 2. application/json
+		HttpResponseFormat dataResponse = falkonry.getInputData("qh6rg4ce5g3p5j", options);
+		Assert.assertEquals(dataResponse.getResponse().length()>0,true);
 	}
 
 	/**
@@ -148,6 +153,12 @@ public class TestAddAndGetData {
 		InputStatus ins = falkonry.addInput(datastream.getId(), data, options);
 		Assert.assertEquals(ins.getAction(), "ADD_DATA_DATASTREAM");
 		Assert.assertEquals(ins.getStatus(), "PENDING");
+		
+		// Get Datastream Data
+		options = new HashMap<String, String>();
+	    options.put("responseFormat", "application/json");  // also available options 1. text/csv 2. application/json
+		HttpResponseFormat dataResponse = falkonry.getInputData("qh6rg4ce5g3p5j", options);
+		Assert.assertEquals(dataResponse.getResponse().length()>0,true);
 	}
 
 	@After

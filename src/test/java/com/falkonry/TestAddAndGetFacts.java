@@ -83,6 +83,13 @@ public class TestAddAndGetFacts {
 		InputStatus response = falkonry.addFacts(assessment.getId(), data, null);
 		Assert.assertEquals(response.getAction(), "ADD_FACT_DATA");
 		Assert.assertEquals(response.getStatus(), "PENDING");
+		
+		options = new HashMap<String, String>();
+		options.put("startTime", "2011-01-17T01:00:00.000Z"); // in the format YYYY-MM-DDTHH:mm:ss.SSSZ
+	    options.put("endTime", "2011-08-18T01:00:00.000Z");  // in the format YYYY-MM-DDTHH:mm:ss.SSSZ
+	    options.put("responseFormat", "application/json");  // also avaibale options 1. text/csv 2. application/json
+		HttpResponseFormat factsResponse = falkonry.getFactsData(assessment.getId(), options);
+		Assert.assertEquals(factsResponse.getResponse().length()>0,true);
 	}
 
 	@Test
@@ -184,6 +191,13 @@ public class TestAddAndGetFacts {
 		InputStatus response = falkonry.addFacts(assessment.getId(), data, null);
 		Assert.assertEquals(response.getAction(), "ADD_FACT_DATA");
 		Assert.assertEquals(response.getStatus(), "PENDING");
+		
+		options = new HashMap<String, String>();
+		options.put("startTime", "2011-01-17T01:00:00.000Z"); // in the format YYYY-MM-DDTHH:mm:ss.SSSZ
+	    options.put("endTime", "2011-08-18T01:00:00.000Z");  // in the format YYYY-MM-DDTHH:mm:ss.SSSZ
+	    options.put("responseFormat", "application/json");  // also avaibale options 1. text/csv 2. application/json
+		HttpResponseFormat factsResponse = falkonry.getFactsData(assessment.getId(), options);
+		Assert.assertEquals(factsResponse.getResponse().length()>0,true);
 	}
 
 	/**
@@ -241,6 +255,13 @@ public class TestAddAndGetFacts {
 		InputStatus response = falkonry.addFacts(assessment.getId(), data, null);
 		Assert.assertEquals(response.getAction(), "ADD_FACT_DATA");
 		Assert.assertEquals(response.getStatus(), "PENDING");
+		
+		options = new HashMap<String, String>();
+		options.put("startTime", "2011-01-17T01:00:00.000Z"); // in the format YYYY-MM-DDTHH:mm:ss.SSSZ
+	    options.put("endTime", "2011-08-18T01:00:00.000Z");  // in the format YYYY-MM-DDTHH:mm:ss.SSSZ
+	    options.put("responseFormat", "application/json");  // also avaibale options 1. text/csv 2. application/json
+		HttpResponseFormat factsResponse = falkonry.getFactsData(assessment.getId(), options);
+		Assert.assertEquals(factsResponse.getResponse().length()>0,true);
 	}
 
 	@Test

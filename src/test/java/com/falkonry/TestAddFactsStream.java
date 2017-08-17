@@ -189,7 +189,7 @@ public class TestAddFactsStream {
 		Assessment asmtResponse = falkonry.getAssessment(asmtId);
 				
 		// Get Facts
-		HttpResponseFormat factsResponse = falkonry.getFactsData(asmtResponse, options);
+		HttpResponseFormat factsResponse = falkonry.getFactsData(assessment.getId(), options);
 		Assert.assertEquals(factsResponse.getResponse().length()>0,true);
 		
 	}

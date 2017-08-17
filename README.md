@@ -45,6 +45,8 @@ Maven install
 	* Add facts data (csv format) from a stream to  Assessment
     * Get Historian Output from Assessment
 	* Get Streaming Output
+	* Get Facts Data
+    * Get Input Data of Datastream
 	* Datastream On (Start live monitoring of datastream)
 	* Datastream Off (Stop live monitoring of datastream)
 
@@ -869,6 +871,33 @@ Usage:
     String assessment = "wpyred1glh6c5r";
     BufferedReader outputBuffer;
     outputBuffer = falkonry.getOutput(assessment);
+```
+
+#### Get Facts Data
+    
+```java
+	import com.falkonry.client.Falkonry;
+
+	Falkonry falkonry   = new Falkonry("https://sandbox.falkonry.ai", "auth-token");
+	String assessment = "wpyred1glh6c5r";
+	Map<String, String> options = new HashMap<String, String>();
+    options.put("startTime", "2011-07-17T01:00:00.000Z"); // in the format YYYY-MM-DDTHH:mm:ss.SSSZ
+    options.put("endTime", "2011-08-18T01:00:00.000Z");  // in the format YYYY-MM-DDTHH:mm:ss.SSSZ
+    options.put("responseFormat", "application/json");  // also avaibale options 1. text/csv 2. application/json
+	// Get Facts
+	HttpResponseFormat factsResponse = falkonry.getFactsData(assessment, options);
+```
+
+#### Get Input Data of Datastream
+```java
+	import com.falkonry.client.Falkonry;
+
+	Falkonry falkonry   = new Falkonry("https://sandbox.falkonry.ai", "auth-token");
+	String datastream = "wpyred1glh6c5r";
+	Map<String, String> options = new HashMap<String, String>();
+    options.put("responseFormat", "application/json");  // also avaibale options 1. text/csv 2. application/json
+	// Get Facts
+	HttpResponseFormat factsResponse = falkonry.getInputData(datastream, options);
 ```
 
 #### Datastream On (Start live monitoring of datastream)

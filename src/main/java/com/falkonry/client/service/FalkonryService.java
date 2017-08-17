@@ -392,8 +392,8 @@ public class FalkonryService {
 	 * @throws Exception
 	 * @return List
 	 */
-	public HttpResponseFormat getFactsData(Assessment assessment, Map<String, String> options) throws Exception {
-		String url = "/assessment/" + assessment.getId() + "/facts?";
+	public HttpResponseFormat getFactsData(String assessment, Map<String, String> options) throws Exception {
+		String url = "/assessment/" + assessment + "/facts?";
 		Boolean firstReqParam = true;
 
 		if (options.containsKey("modelIndex")) {
@@ -443,8 +443,8 @@ public class FalkonryService {
 	 * @throws Exception
 	 * @return List
 	 */
-	public HttpResponseFormat getInputData(Datastream datastream, Map<String, String> options) throws Exception {
-		String url = "/datastream/" + datastream.getId() + "/data";
+	public HttpResponseFormat getInputData(String datastream, Map<String, String> options) throws Exception {
+		String url = "/datastream/" + datastream + "/data";
 		String format;
 		String responseFromat = "application/json";
 		if (options.containsKey("responseFromat")) {
