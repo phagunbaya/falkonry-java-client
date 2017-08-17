@@ -20,7 +20,7 @@ import com.falkonry.helper.models.Signal;
 import org.junit.*;
 import java.util.*;
 
-//@Ignore
+@Ignore
 public class TestAddAndGetData {
 
 	Falkonry falkonry = null;

@@ -11,7 +11,7 @@ import com.falkonry.helper.models.*;
 import org.junit.*;
 import java.util.*;
 
-//@Ignore
+@Ignore
 public class TestGetDatastreamData {
 
 	Falkonry falkonry = null;
