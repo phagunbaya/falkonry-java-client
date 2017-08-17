@@ -238,5 +238,27 @@ public class Falkonry {
 			throws Exception {
 		return this.falkonryService.postEntityMeta(entityMetaRequest, datastreamId);
 	}
+	
+	/**
+	 * getFactsData
+	 * @param assessment
+	 * @param options
+	 * @throws Exception
+	 * @return HttpResponseFormat
+	 */
+	public HttpResponseFormat getFactsData(String assessmentId, Map<String, String> options) throws Exception {
+		return this.falkonryService.getFactsData(assessmentId, options);
+	}
+	
+	/**
+	 * getDatastreamInputData
+	 * @param datastream
+	 * @param options
+	 * @throws Exception
+	 * @return HttpResponseFormat
+	 */
+	public HttpResponseFormat getInputData(String datastreamId, Map<String, String> options) throws Exception {
+		return this.falkonryService.getInputData(datastreamId, options);
+	}
 
 }

@@ -11,8 +11,8 @@ import com.falkonry.helper.models.*;
 import org.junit.*;
 import java.util.*;
 
-@Ignore
-public class TestAddFacts {
+//@Ignore
+public class TestGetDatastreamData {
 
 	Falkonry falkonry = null;
 	String host = "https://localhost:8080";
@@ -249,7 +249,7 @@ public class TestAddFacts {
 	 * Should add wide format datastream and add facts to assessment with JSON format
 	 * @throws Exception
 	 */
-	public void createPipelineWithWideJsonFacts() throws Exception {
+	public void createAssessmentWithWideJsonFacts() throws Exception {
 
 		Datastream ds = new Datastream();
 		ds.setName("Test-DS-" + Math.random());
