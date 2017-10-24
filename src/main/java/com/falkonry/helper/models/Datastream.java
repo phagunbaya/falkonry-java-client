@@ -28,6 +28,7 @@ public class Datastream {
   private Field field;
   private Datasource dataSource;
   private List<Input> inputList;
+  private String timePrecision;
 
     /**
      *
@@ -249,5 +250,22 @@ public class Datastream {
     this.inputList = inputList;
     return this;
   }
+
+    /**
+    *
+    * @return
+    */
+	public String getTimePrecision() {
+		return timePrecision;
+	}
+
+	/**
+    *
+    * @param timePrecision
+    * @return
+    */
+	public void setTimePrecision(String timePrecision) {
+		this.timePrecision = timePrecision;
+	}
 
 }

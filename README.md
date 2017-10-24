@@ -21,6 +21,7 @@ Maven install
 	* Create Datastream for narrow/historian style data from a multiple entities
 	* Create Datastream for wide style data from a single entity
 	* Create Datastream for wide style data from a multiple entities
+	* Create Datastream with microseconds precision
     * Retrieve Datastreams
     * Retrieve Datastream by id
     * Delete Datastream by id
@@ -71,7 +72,7 @@ Usage:
     Falkonry falkonry = new Falkonry("https://sandbox.falkonry.ai", "auth-token");
     Datastream ds = new Datastream();
 	ds.setName("Test-DS-" + Math.random());
-
+	
 	TimeObject time = new TimeObject();
 	time.setIdentifier("time");
 	time.setFormat("iso_8601");
@@ -276,6 +277,49 @@ Usage:
     options.put("timeFormat", "millis");
     options.put("fileFormat", "csv");
     falkonry.addInput(datastream.getId(), data, options);
+```
+
+#### Create Datastream with microseconds precision
+
+Usage:
+```java
+    import com.falkonry.client.Falkonry;
+    import com.falkonry.helper.models.Datasource;
+    import com.falkonry.helper.models.Datastream;
+    import com.falkonry.helper.models.Field;
+    import com.falkonry.helper.models.TimeObject;
+    import com.falkonry.helper.models.Signal;
+
+    //instantiate Falkonry
+    Falkonry falkonry = new Falkonry("https://sandbox.falkonry.ai", "auth-token");
+    Datastream ds = new Datastream();
+	ds.setName("Test-DS-" + Math.random());
+	ds.setTimePrecision("micro"); 
+	// "timePrecision" is use to store your data in different date time format. You can store your data in milliseconds("millis") or microseconds("micro"). Default will be "millis"
+
+	TimeObject time = new TimeObject();
+	time.setIdentifier("time");
+	time.setFormat("iso_8601");
+	time.setZone("GMT");
+
+	Signal signal = new Signal();
+	signal.setTagIdentifier("tag");
+	signal.setValueIdentifier("value");
+	signal.setIsSignalPrefix(false);
+
+	Datasource dataSource = new Datasource();
+	dataSource.setType("STANDALONE");
+
+	Field field = new Field();
+	field.setSiganl(signal);
+	field.setTime(time);
+	// field.setEntityIdentifier("unit");
+
+	ds.setDatasource(dataSource);
+	ds.setField(field);
+
+	Datastream datastream = falkonry.createDatastream(ds);
+
 ```
 
 #### Retrieve Datastreams

@@ -57,6 +57,9 @@ public class FalkonryService {
 		if(datastream.getInputList() != null) {
 			ds.setInputList(datastream.getInputList());
 		}
+		if(datastream.getTimePrecision() != null) {
+			ds.setTimePrecision(datastream.getTimePrecision());
+		}
 		String datastream_json = httpService.post("/datastream", mapper.writeValueAsString(ds));
 		return mapper.readValue(datastream_json, Datastream.class);
 	}

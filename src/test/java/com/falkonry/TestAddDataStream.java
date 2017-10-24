@@ -22,11 +22,10 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.util.*;
 
-@Ignore
 public class TestAddDataStream {
 
 	Falkonry falkonry = null;
-	String host = "https://localhost:8080";
+	String host = "https://dev.falkonry.ai";
 	String token = "267ummc4hjyywop631wfogkwhb6t95wr";
 	List<Datastream> datastreams = new ArrayList<Datastream>();
 
@@ -338,6 +337,61 @@ public class TestAddDataStream {
 		Assert.assertEquals(datastream1.getName(), datastream.getName());
 		Assert.assertEquals(datastream1.getInputList().size(), datastream.getInputList().size());
 	}
+	
+	/**
+	 * Should add datastream with microseconds precision
+	 * @throws Exception
+	 */
+	@Test
+	public void addDataWithMicrosecondsPrecision() throws Exception {
+
+		Datastream ds = new Datastream();
+		ds.setName("Test-DS1-" + Math.random());
+		ds.setTimePrecision("micro");
+
+		TimeObject time = new TimeObject();
+		time.setIdentifier("time");
+		time.setFormat("iso_8601");
+		time.setZone("GMT");
+
+		Signal signal = new Signal();
+		signal.setTagIdentifier("tag");
+		signal.setValueIdentifier("value");
+		signal.setDelimiter("_");
+		signal.setIsSignalPrefix(false);
+
+		Datasource dataSource = new Datasource();
+		dataSource.setType("STANDALONE");
+
+		Field field = new Field();
+		field.setSiganl(signal);
+		field.setTime(time);
+
+		ds.setDatasource(dataSource);
+		ds.setField(field);
+
+		Datastream datastream = falkonry.createDatastream(ds);
+		datastreams.add(datastream);
+
+		Map<String, String> options = new HashMap<String, String>();
+
+		File file = new File("res/data.json");
+		ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(FileUtils.readFileToByteArray(file));
+		InputStatus inputStatus = falkonry.addInputStream(datastream.getId(), byteArrayInputStream, options);
+		Assert.assertEquals(inputStatus.getAction(), "ADD_DATA_DATASTREAM");
+		Assert.assertEquals(inputStatus.getStatus(), "PENDING");
+		Datastream datastream1 = falkonry.getDatastream(datastream.getId());
+		Assert.assertEquals(datastream1.getId(), datastream.getId());
+		Assert.assertEquals(datastream1.getName(), datastream.getName());
+		Assert.assertEquals(datastream1.getTimePrecision(), datastream.getTimePrecision());
+		Field field1 = datastream1.getField();
+		Signal signal1 = field1.getSignal();
+		Assert.assertEquals(signal1.getDelimiter(), signal.getDelimiter());
+		Assert.assertEquals(signal1.getTagIdentifier(), signal.getTagIdentifier());
+		Assert.assertEquals(signal1.getValueIdentifier(), signal.getValueIdentifier());
+		Assert.assertEquals(signal1.getIsSignalPrefix(), signal.getIsSignalPrefix());
+	}
+
 
 	/**
 	 *
