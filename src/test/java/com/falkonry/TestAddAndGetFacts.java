@@ -73,7 +73,7 @@ public class TestAddAndGetFacts {
 		assessments.add(assessment);
 
 		Map<String, String> options = new HashMap<String, String>();
-		String data = "{\"time\" : \"2016-03-01 01:01:01\", \"tag\" : \"signal1_entity1\", \"value\" : 3.4}";
+		String data = "{\"time\" : \"2016-03-01T01:01:01Z\", \"tag\" : \"signal1_entity1\", \"value\" : 3.4}";
 		options.put("timeIdentifier", "time");
 		options.put("timeFormat", "iso_8601");
 		options.put("fileFormat", "csv");
@@ -105,7 +105,7 @@ public class TestAddAndGetFacts {
 
 		TimeObject time = new TimeObject();
 		time.setIdentifier("time");
-		time.setFormat("millis");
+		time.setFormat("iso_8601");
 		time.setZone("GMT");
 
 		Datasource dataSource = new Datasource();
@@ -176,7 +176,7 @@ public class TestAddAndGetFacts {
 		datastreams.add(datastream);
 
 		Map<String, String> options = new HashMap<String, String>();
-		String data = "time, tag, entity, signal1, signal2, signal3\n2016-03-01 01:01:01, signal1_entity1, entity1, 3.4, 4.8, 8.3";
+		String data = "time, tag, entity, signal1, signal2, signal3\n2016-03-01T01:01:01Z, signal1_entity1, entity1, 3.4, 4.8, 8.3";
 		falkonry.addInput(datastream.getId(), data, options);
 
 		AssessmentRequest assessmentRequest = new AssessmentRequest();
@@ -245,7 +245,7 @@ public class TestAddAndGetFacts {
 
 		Map<String, String> options = new HashMap<String, String>();
 
-		String data = "{\"time\" : \"2016-03-01 01:01:01\", \"tag\" : \"signal1_entity1\", \"value\" : 3.4}";
+		String data = "{\"time\" : \"2016-03-01T01:01:01Z\", \"tag\" : \"signal1_entity1\", \"value\" : 3.4}";
 		falkonry.addInput(datastream.getId(), data, options);
 
 		Interval interval = new Interval();

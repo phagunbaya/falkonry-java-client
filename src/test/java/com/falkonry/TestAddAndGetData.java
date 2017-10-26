@@ -20,13 +20,12 @@ import com.falkonry.helper.models.Signal;
 import org.junit.*;
 import java.util.*;
 
-@Ignore
 public class TestAddAndGetData {
 
 	Falkonry falkonry = null;
 
-	String host = "https://localhost:8080";
-	String token = "lmm3orvm1yaa4j1y5b78i8f870fhon6z";
+	String host = "https://dev.falkonry.ai";
+	String token = "267ummc4hjyywop631wfogkwhb6t95wr";
 	List<Datastream> datastreams = new ArrayList<Datastream>();
 
 	/**
@@ -96,7 +95,7 @@ public class TestAddAndGetData {
 
 		Map<String, String> options = new HashMap<String, String>();
 		options.put("timeIdentifier", "time");
-		options.put("timeFormat", "iso_8601");
+		options.put("timeFormat", "YYYY-MM-DD HH:mm:ss");
 		options.put("fileFormat", "csv");
 		options.put("streaming", "false");
 		options.put("hasMoreData", "false");
@@ -145,7 +144,7 @@ public class TestAddAndGetData {
 
 		Map<String, String> options = new HashMap<String, String>();
 		options.put("timeIdentifier", "time");
-		options.put("timeFormat", "iso_8601");
+		options.put("timeFormat", "YYYY-MM-DD HH:mm:ss");
 		options.put("fileFormat", "csv");
 		options.put("streaming", "false");
 		options.put("hasMoreData", "false");

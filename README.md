@@ -1,4 +1,4 @@
-[![Falkonry Logo](https://sandbox.falkonry.ai/img/logo.png)](http://falkonry.com/)
+[![Falkonry Logo](https://app.falkonry.ai/img/logo.png)](http://falkonry.com/)
 
 Falkonry Java Client to access [Falkonry Condition Prediction](falkonry.com) APIs
 
@@ -69,7 +69,7 @@ Usage:
     import com.falkonry.helper.models.Signal;
 
     //instantiate Falkonry
-    Falkonry falkonry = new Falkonry("https://sandbox.falkonry.ai", "auth-token");
+    Falkonry falkonry = new Falkonry("http://localhost:8080", "auth-token");
     Datastream ds = new Datastream();
 	ds.setName("Test-DS-" + Math.random());
 	
@@ -109,7 +109,7 @@ Usage:
     import com.falkonry.helper.models.Signal;
 
     //instantiate Falkonry
-    Falkonry falkonry = new Falkonry("https://sandbox.falkonry.ai", "auth-token");
+    Falkonry falkonry = new Falkonry("http://localhost:8080", "auth-token");
     Datastream ds = new Datastream();
 	ds.setName("Test-DS-" + Math.random());
 
@@ -162,13 +162,13 @@ Usage:
     import com.falkonry.helper.models.Signal;
 
     //instantiate Falkonry
-    Falkonry falkonry = new Falkonry("https://sandbox.falkonry.ai", "auth-token");
+    Falkonry falkonry = new Falkonry("http://localhost:8080", "auth-token");
 
     Datastream ds = new Datastream();
     ds.setName("Test-DS-" + Math.random());
     TimeObject time = new TimeObject();
     time.setIdentifier("time");
-    time.setFormat("iso_8601");
+    time.setFormat("millis");
     time.setZone("GMT");
 
     Field field = new Field();
@@ -238,7 +238,7 @@ Usage:
     import com.falkonry.helper.models.Signal;
 
     //instantiate Falkonry
-    Falkonry falkonry = new Falkonry("https://sandbox.falkonry.ai", "auth-token");
+    Falkonry falkonry = new Falkonry("http://localhost:8080", "auth-token");
 
     Datastream ds = new Datastream();
     ds.setName("Test-DS-" + Math.random());
@@ -291,7 +291,7 @@ Usage:
     import com.falkonry.helper.models.Signal;
 
     //instantiate Falkonry
-    Falkonry falkonry = new Falkonry("https://sandbox.falkonry.ai", "auth-token");
+    Falkonry falkonry = new Falkonry("http://localhost:8080", "auth-token");
     Datastream ds = new Datastream();
 	ds.setName("Test-DS-" + Math.random());
 	ds.setTimePrecision("micro"); 
@@ -327,7 +327,7 @@ Usage:
 ```java
     import com.falkonry.client.Falkonry;
 
-    Falkonry falkonry = new Falkonry("https://sandbox.falkonry.ai", "auth-token");
+    Falkonry falkonry = new Falkonry("http://localhost:8080", "auth-token");
 
     datastream = falkonry.getDatastreams();
 ```
@@ -337,7 +337,7 @@ Usage:
 ```java
     import com.falkonry.client.Falkonry;
 
-    Falkonry falkonry = new Falkonry("https://sandbox.falkonry.ai", "auth-token");
+    Falkonry falkonry = new Falkonry("http://localhost:8080", "auth-token");
 
     datastream = falkonry.getDatastream("datastream_id"); //datastream's id
 ```
@@ -347,7 +347,7 @@ Usage:
 ```java
     import com.falkonry.client.Falkonry;
 
-    Falkonry falkonry = new Falkonry("https://sandbox.falkonry.ai", "auth-token");
+    Falkonry falkonry = new Falkonry("http://localhost:8080", "auth-token");
 
     datastream = falkonry.deleteDatastream("datastream_id"); //datastream's id
 ```
@@ -357,7 +357,7 @@ Usage:
 ```java
 	import com.falkonry.client.Falkonry;
     
-    Falkonry falkonry   = new Falkonry("https://sandbox.falkonry.ai", "auth-token");
+    Falkonry falkonry   = new Falkonry("http://localhost:8080", "auth-token");
 	String datastreamId = "hk7cgt56r3yln0";
     datastream = falkonry.getDatastream(datastreamId);
     EntityMetaRequest entityMetaRequest = new EntityMetaRequest();
@@ -373,7 +373,7 @@ Usage:
 ```java
 	import com.falkonry.client.Falkonry;
     
-    Falkonry falkonry   = new Falkonry("https://sandbox.falkonry.ai", "auth-token");
+    Falkonry falkonry   = new Falkonry("http://localhost:8080", "auth-token");
     List<EntityMeta> entityMetas = falkonry.getEntityMeta("datastream_id"); //datastream's id
 ```
 
@@ -384,7 +384,7 @@ Usage:
     import com.falkonry.helper.models.*;
 
     //instantiate Falkonry
-    Falkonry falkonry = new Falkonry("https://sandbox.falkonry.ai", "auth-token");
+    Falkonry falkonry = new Falkonry("http://localhost:8080", "auth-token");
 
     Datastream ds = new Datastream();
     ds.setName("Test-DS-" + Math.random());
@@ -447,7 +447,7 @@ Usage:
 ```java
     import com.falkonry.client.Falkonry;
 
-    Falkonry falkonry = new Falkonry("https://sandbox.falkonry.ai", "auth-token");
+    Falkonry falkonry = new Falkonry("http://localhost:8080", "auth-token");
 
     List<Assessment> datastreams = falkonry.getAssessments();
 ```
@@ -456,7 +456,7 @@ Usage:
 ```java
     import com.falkonry.client.Falkonry;
 
-    Falkonry falkonry = new Falkonry("https://sandbox.falkonry.ai", "auth-token");
+    Falkonry falkonry = new Falkonry("http://localhost:8080", "auth-token");
 
     Assessment assesssment = falkonry.getAssessment('assessment_id');
 ```
@@ -467,7 +467,7 @@ Usage:
 ```java
     import com.falkonry.client.Falkonry;
 
-    Falkonry falkonry = new Falkonry("https://sandbox.falkonry.ai", "auth-token");
+    Falkonry falkonry = new Falkonry("http://localhost:8080", "auth-token");
 
     Assessment assesssment = falkonry.deleteAssessment('assessment_id');
 ```
@@ -477,7 +477,7 @@ Usage:
 ```java
     import com.falkonry.client.Falkonry;
 
-    Falkonry falkonry = new Falkonry("https://sandbox.falkonry.ai", "auth-token");
+    Falkonry falkonry = new Falkonry("http://localhost:8080", "auth-token");
 
     Assessment assesssment = falkonry.getAssessment('assessment_id');
     // aprioriConditionList
@@ -505,7 +505,7 @@ Usage:
     import com.falkonry.helper.models.Signal;
 
     //instantiate Falkonry
-    Falkonry falkonry = new Falkonry("https://sandbox.falkonry.ai", "auth-token");
+    Falkonry falkonry = new Falkonry("http://localhost:8080", "auth-token");
     //Add data to datastream
     String data = "{\"time\" : \"2016-03-01 01:01:01\", \"tag\" : \"signal1\", \"value\" : 3.4}" + "\n"
         + "{\"time\" : \"2016-03-01 01:01:02\", \"tag\" : \"signal2\", \"value\" : 9.3}";
@@ -542,7 +542,7 @@ Usage:
     import com.falkonry.helper.models.Signal;
 
     //instantiate Falkonry
-    Falkonry falkonry = new Falkonry("https://sandbox.falkonry.ai", "auth-token");
+    Falkonry falkonry = new Falkonry("http://localhost:8080", "auth-token");
 	 //Add data to datastream
 	    String data = "time, entities, signal1, signal2, signal3, signal4" + "\n"
 	        + "1467729675422, entity1, 41.11, 62.34, 77.63, 4.8" + "\n"
@@ -581,7 +581,7 @@ Usage:
     import com.falkonry.helper.models.Signal;
 
     //instantiate Falkonry
-    Falkonry falkonry = new Falkonry("https://sandbox.falkonry.ai", "auth-token");
+    Falkonry falkonry = new Falkonry("http://localhost:8080", "auth-token");
 
     Datastream ds = new Datastream();
     ds.setName("Test-DS-" + Math.random());
@@ -632,7 +632,7 @@ Usage:
     import com.falkonry.client.Falkonry
     import org.apache.commons.io.FileUtils;
 
-    Falkonry falkonry   = new Falkonry("https://sandbox.falkonry.ai", "auth-token");
+    Falkonry falkonry   = new Falkonry("http://localhost:8080", "auth-token");
     Map<String, String> options = new HashMap<String, String>();
     options.put("timeIdentifier", "time");
     options.put("timeFormat", "millis");
@@ -652,7 +652,7 @@ Usage:
     import com.falkonry.client.Falkonry
     import org.apache.commons.io.FileUtils;
 
-    Falkonry falkonry   = new Falkonry("https://sandbox.falkonry.ai", "auth-token");
+    Falkonry falkonry   = new Falkonry("http://localhost:8080", "auth-token");
     Map<String, String> options = new HashMap<String, String>();
     Map<String, String> options = new HashMap<String, String>();
     options.put("timeIdentifier", "time");
@@ -684,7 +684,7 @@ Usage:
     import com.falkonry.helper.models.Signal;
 
     //instantiate Falkonry
-    Falkonry falkonry = new Falkonry("https://sandbox.falkonry.ai", "auth-token");
+    Falkonry falkonry = new Falkonry("http://localhost:8080", "auth-token");
     //Add data to datastream
     String data = "{\"time\" : \"2016-03-01 01:01:01\", \"tag\" : \"signal1\", \"value\" : 3.4}" + "\n"
         + "{\"time\" : \"2016-03-01 01:01:02\", \"tag\" : \"signal2\", \"value\" : 9.3}";
@@ -721,7 +721,7 @@ Usage:
     import com.falkonry.helper.models.Signal;
 
     //instantiate Falkonry
-    Falkonry falkonry = new Falkonry("https://sandbox.falkonry.ai", "auth-token");
+    Falkonry falkonry = new Falkonry("http://localhost:8080", "auth-token");
 	 //Add data to datastream
 	    String data = "time, entities, signal1, signal2, signal3, signal4" + "\n"
 	        + "1467729675422, entity1, 41.11, 62.34, 77.63, 4.8" + "\n"
@@ -760,7 +760,7 @@ Usage:
     import com.falkonry.helper.models.Signal;
 
     //instantiate Falkonry
-    Falkonry falkonry = new Falkonry("https://sandbox.falkonry.ai", "auth-token");
+    Falkonry falkonry = new Falkonry("http://localhost:8080", "auth-token");
 
     Datastream ds = new Datastream();
     ds.setName("Test-DS-" + Math.random());
@@ -811,7 +811,7 @@ Usage:
     import com.falkonry.client.Falkonry
     import org.apache.commons.io.FileUtils;
 
-    Falkonry falkonry   = new Falkonry("https://sandbox.falkonry.ai", "auth-token");
+    Falkonry falkonry   = new Falkonry("http://localhost:8080", "auth-token");
     Map<String, String> options = new HashMap<String, String>();
     options.put("timeIdentifier", "time");
     options.put("timeFormat", "millis");
@@ -831,7 +831,7 @@ Usage:
     import com.falkonry.client.Falkonry
     import org.apache.commons.io.FileUtils;
 
-    Falkonry falkonry   = new Falkonry("https://sandbox.falkonry.ai", "auth-token");
+    Falkonry falkonry   = new Falkonry("http://localhost:8080", "auth-token");
     Map<String, String> options = new HashMap<String, String>();
     Map<String, String> options = new HashMap<String, String>();
     options.put("timeIdentifier", "time");
@@ -851,7 +851,7 @@ Usage:
 ```java
     import com.falkonry.client.Falkonry;
 
-    Falkonry falkonry = new Falkonry("https://sandbox.falkonry.ai", "auth-token");
+    Falkonry falkonry = new Falkonry("http://localhost:8080", "auth-token");
 
     String data = "{\"time\" : \"2011-03-26T12:00:00Z\", \"entities\" : \"entity1\", \"end\" : \"2012-06-01T00:00:00Z\", \"Health\" : \"Normal\"}";
     String response = falkonry.addfacts(assessment.getId(),data, options);
@@ -862,7 +862,7 @@ Usage:
 ```java
     import com.falkonry.client.Falkonry;
 
-    Falkonry falkonry = new Falkonry("https://sandbox.falkonry.ai", "auth-token");
+    Falkonry falkonry = new Falkonry("http://localhost:8080", "auth-token");
 
     String data = "time,end,car,Health\n2011-03-31T00:00:00Z,2011-04-01T00:00:00Z,IL9753,Normal\n2011-03-31T00:00:00Z,2011-04-01T00:00:00Z,HI3821,Normal";
     String response = falkonry.addFacts(assessment.getId(),data, options);
@@ -874,7 +874,7 @@ Usage:
     import com.falkonry.client.Falkonry;
     import org.apache.commons.io.FileUtils;
 
-    Falkonry falkonry   = new Falkonry("https://sandbox.falkonry.ai", "auth-token");
+    Falkonry falkonry   = new Falkonry("http://localhost:8080", "auth-token");
     File file = new File("res/factsData.json");      
     ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(FileUtils.readFileToByteArray(file));
     String response = falkonry.addFactsStream(assessment.getId(),byteArrayInputStream, options);
@@ -886,7 +886,7 @@ Usage:
     import com.falkonry.client.Falkonry;
     import org.apache.commons.io.FileUtils;
 
-    Falkonry falkonry   = new Falkonry("https://sandbox.falkonry.ai", "auth-token");
+    Falkonry falkonry   = new Falkonry("http://localhost:8080", "auth-token");
     File file = new File("res/factsData.csv");      
     ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(FileUtils.readFileToByteArray(file));
     String response = falkonry.addFactsStream(assessment.getId(),byteArrayInputStream, options);
@@ -911,7 +911,7 @@ Usage:
 ```java
 	import com.falkonry.client.Falkonry;
 
-    Falkonry falkonry   = new Falkonry("https://sandbox.falkonry.ai", "auth-token");
+    Falkonry falkonry   = new Falkonry("http://localhost:8080", "auth-token");
     String assessment = "wpyred1glh6c5r";
     BufferedReader outputBuffer;
     outputBuffer = falkonry.getOutput(assessment);
@@ -922,7 +922,7 @@ Usage:
 ```java
 	import com.falkonry.client.Falkonry;
 
-	Falkonry falkonry   = new Falkonry("https://sandbox.falkonry.ai", "auth-token");
+	Falkonry falkonry   = new Falkonry("http://localhost:8080", "auth-token");
 	String assessment = "wpyred1glh6c5r";
 	Map<String, String> options = new HashMap<String, String>();
     options.put("startTime", "2011-07-17T01:00:00.000Z"); // in the format YYYY-MM-DDTHH:mm:ss.SSSZ
@@ -936,7 +936,7 @@ Usage:
 ```java
 	import com.falkonry.client.Falkonry;
 
-	Falkonry falkonry   = new Falkonry("https://sandbox.falkonry.ai", "auth-token");
+	Falkonry falkonry   = new Falkonry("http://localhost:8080", "auth-token");
 	String datastream = "wpyred1glh6c5r";
 	Map<String, String> options = new HashMap<String, String>();
     options.put("responseFormat", "application/json");  // also avaibale options 1. text/csv 2. application/json
@@ -949,7 +949,7 @@ Usage:
 ```java
 	import com.falkonry.client.Falkonry;
 
-    Falkonry falkonry   = new Falkonry("https://sandbox.falkonry.ai", "auth-token");
+    Falkonry falkonry   = new Falkonry("http://localhost:8080", "auth-token");
 	String datastreamId = "hk7cgt56r3yln0";
     List<Assessment> liveAssessments = falkonry.onDatastream(datastreamId);
     
@@ -959,7 +959,7 @@ Usage:
 ```java
 	import com.falkonry.client.Falkonry;
 
-    Falkonry falkonry   = new Falkonry("https://sandbox.falkonry.ai", "auth-token");
+    Falkonry falkonry   = new Falkonry("http://localhost:8080", "auth-token");
 	String datastreamId = "hk7cgt56r3yln0";
     List<Assessment> assessments = falkonry.offDatastream(datastreamId);
     
@@ -968,7 +968,7 @@ Usage:
 
 ## Docs
 
-    [Falkonry APIs](https://sandbox.falkonry.ai/api)
+    [Falkonry APIs](https://app.falkonry.ai/api)
      
 ## Tests
 
