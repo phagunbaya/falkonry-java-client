@@ -19,7 +19,7 @@ public class TestAddFactsStream {
 
 	Falkonry falkonry = null;
 	String host = "https://localhost:8080";
-	String token = "lmm3orvm1yaa4j1y5b78i8f870fhon6z";
+	String token = "auth-token";
 	List<Datastream> datastreams = new ArrayList<Datastream>();
 	List<Assessment> assessments = new ArrayList<Assessment>();
 

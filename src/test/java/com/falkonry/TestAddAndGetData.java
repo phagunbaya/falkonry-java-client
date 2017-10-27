@@ -24,8 +24,8 @@ public class TestAddAndGetData {
 
 	Falkonry falkonry = null;
 
-	String host = "https://dev.falkonry.ai";
-	String token = "267ummc4hjyywop631wfogkwhb6t95wr";
+	String host = "https://localhost:8080";
+	String token = "auth-token";
 	List<Datastream> datastreams = new ArrayList<Datastream>();
 
 	/**

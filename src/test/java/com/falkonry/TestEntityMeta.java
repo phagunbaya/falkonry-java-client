@@ -22,7 +22,7 @@ public class TestEntityMeta {
 
 	Falkonry falkonry = null;
 	String host = "https://localhost:8080";
-	String token = "267ummc4hjyywop631wfogkwhb6t95wr";
+	String token = "auth-token";
 	List<Datastream> datastreams = new ArrayList<Datastream>();
 	List<EntityMetaRequest> entityMetaRequests = new ArrayList<EntityMetaRequest>();
 
