@@ -381,11 +381,11 @@ public class TestAddDataStream {
 		InputStatus inputStatus = falkonry.addInputStream(datastream.getId(), byteArrayInputStream, options);
 		Assert.assertEquals(inputStatus.getAction(), "ADD_DATA_DATASTREAM");
 		Assert.assertEquals(inputStatus.getStatus(), "PENDING");
-		Datastream datastream1 = falkonry.getDatastream(datastream.getId());
-		Assert.assertEquals(datastream1.getId(), datastream.getId());
-		Assert.assertEquals(datastream1.getName(), datastream.getName());
-		Assert.assertEquals(datastream1.getTimePrecision(), datastream.getTimePrecision());
-		Field field1 = datastream1.getField();
+		Datastream createdDatastream = falkonry.getDatastream(datastream.getId());
+		Assert.assertEquals(createdDatastream.getId(), datastream.getId());
+		Assert.assertEquals(createdDatastream.getName(), datastream.getName());
+		Assert.assertEquals(createdDatastream.getTimePrecision(), datastream.getTimePrecision());
+		Field field1 = createdDatastream.getField();
 		Signal signal1 = field1.getSignal();
 		Assert.assertEquals(signal1.getDelimiter(), signal.getDelimiter());
 		Assert.assertEquals(signal1.getTagIdentifier(), signal.getTagIdentifier());
