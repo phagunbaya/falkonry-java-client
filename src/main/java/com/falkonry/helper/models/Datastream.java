@@ -264,7 +264,7 @@ public class Datastream {
     * @param timePrecision
     * @return
     */
-	public void setTimePrecision(String timePrecision) {
+	public Datastream setTimePrecision(String timePrecision) {
 		this.timePrecision = timePrecision;
         return this;
 	}
