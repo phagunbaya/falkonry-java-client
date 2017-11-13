@@ -847,13 +847,21 @@ Usage:
 ```
 
 #### Add facts data (json format) to Assessment
-
+File Sample
+{"time" : "2011-03-26T12:00:00.000Z", "thing" : "thing1", "end" : "2012-06-01T00:00:00.000Z", "Health" : "Normal"}
+{"time" : "2014-02-10T23:00:00.000Z", "thing" : "thing1", "end" : "2014-03-20T12:00:00.000Z", "Health" : "Spalling"}
 ```java
     import com.falkonry.client.Falkonry;
 
     Falkonry falkonry = new Falkonry("http://localhost:8080", "auth-token");
-
-    String data = "{\"time\" : \"2011-03-26T12:00:00Z\", \"entities\" : \"entity1\", \"end\" : \"2012-06-01T00:00:00Z\", \"Health\" : \"Normal\"}";
+	Map<String, String> options = new HashMap<String, String>();
+    options.put("startTimeIdentifier", "time");
+    options.put("endTimeIdentifier", "end");
+    options.put("timeFormat", "iso_8601");
+    options.put("timeZone", "GMT");
+    options.put("entityIdentifier", "thing");
+    options.put("valueIdentifier", "Health"); 
+    String data = "{\"time\" : \"2011-03-26T12:00:00.000Z\", \"entities\" : \"entity1\", \"end\" : \"2012-06-01T00:00:00.000Z\", \"Health\" : \"Normal\"}";
     String response = falkonry.addfacts(assessment.getId(),data, options);
 ```
 
@@ -863,31 +871,59 @@ Usage:
     import com.falkonry.client.Falkonry;
 
     Falkonry falkonry = new Falkonry("http://localhost:8080", "auth-token");
-
-    String data = "time,end,car,Health\n2011-03-31T00:00:00Z,2011-04-01T00:00:00Z,IL9753,Normal\n2011-03-31T00:00:00Z,2011-04-01T00:00:00Z,HI3821,Normal";
+	Map<String, String> options = new HashMap<String, String>();
+    options.put("startTimeIdentifier", "time");
+    options.put("endTimeIdentifier", "end");
+    options.put("timeFormat", "iso_8601");
+    options.put("timeZone", "GMT");
+    options.put("entityIdentifier", "car");
+    options.put("valueIdentifier", "Health");
+    String data = "time,end,car,Health\n2011-03-31T00:00:00.000Z,2011-04-01T00:00:00.000Z,IL9753,Normal\n2011-03-31T00:00:00.000Z,2011-04-01T00:00:00.000Z,HI3821,Normal";
     String response = falkonry.addFacts(assessment.getId(),data, options);
 ```
 
 #### Add facts data (json format) from a stream to Assessment
-    
+File Sample
+    {"time" : "2011-03-26T12:00:00.000Z", "thing" : "thing1", "end" : "2012-06-01T00:00:00.000Z", "Health" : "Normal"}
+	{"time" : "2014-02-10T23:00:00.000Z", "thing" : "thing1", "end" : "2014-03-20T12:00:00.000Z", "Health" : "Spalling"}
 ```java
     import com.falkonry.client.Falkonry;
     import org.apache.commons.io.FileUtils;
 
     Falkonry falkonry   = new Falkonry("http://localhost:8080", "auth-token");
-    File file = new File("res/factsData.json");      
+    File file = new File("res/factsData.json"); 
+    Map<String, String> options = new HashMap<String, String>();
+    options.put("startTimeIdentifier", "time");
+    options.put("endTimeIdentifier", "end");
+    options.put("timeFormat", "iso_8601");
+    options.put("timeZone", "GMT");
+    options.put("entityIdentifier", "thing");
+    options.put("valueIdentifier", "Health");       
     ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(FileUtils.readFileToByteArray(file));
     String response = falkonry.addFactsStream(assessment.getId(),byteArrayInputStream, options);
 ```
 
 #### Add facts data (csv format) from a stream to  Assessment
+
+File Sample:
+
+time,entity,end,Health
+2011-03-26T12:00:00.000Z,entity1,2012-06-01T00:00:00.000Z,Normal
+2014-02-10T23:00:00.000Z,entity1,2014-03-20T12:00:00.000Z,Spalling
     
 ```java
     import com.falkonry.client.Falkonry;
     import org.apache.commons.io.FileUtils;
 
     Falkonry falkonry   = new Falkonry("http://localhost:8080", "auth-token");
-    File file = new File("res/factsData.csv");      
+    File file = new File("res/factsData.csv"); 
+    Map<String, String> options = new HashMap<String, String>();
+    options.put("startTimeIdentifier", "time");
+    options.put("endTimeIdentifier", "end");
+    options.put("timeFormat", "iso_8601");
+    options.put("timeZone", "GMT");
+    options.put("entityIdentifier", "entity");
+    options.put("valueIdentifier", "Health");     
     ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(FileUtils.readFileToByteArray(file));
     String response = falkonry.addFactsStream(assessment.getId(),byteArrayInputStream, options);
 ```
