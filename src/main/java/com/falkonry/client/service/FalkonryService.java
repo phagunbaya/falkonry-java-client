@@ -212,61 +212,7 @@ public class FalkonryService {
 	 */
 	public InputStatus addFacts(String id, String data, Map<String, String> options) throws Exception {
 		ObjectMapper mapper = new ObjectMapper();
-		String url = "/assessment/" + id + "/facts?";
-                Boolean firstReqParam = true;
-                
-                  
-                  
-                if (options.containsKey("startTimeIdentifier")) {
-                    if (firstReqParam)
-                        firstReqParam = false;
-                    else
-                        url += "&";
-                    url += "startTimeIdentifier=" + URLEncoder.encode(options.get("startTimeIdentifier"), "UTF-8");
-		}
-                if (options.containsKey("endTimeIdentifier")) {
-                    if (firstReqParam)
-                        firstReqParam = false;
-                    else
-                        url += "&";
-                    url += "endTimeIdentifier=" + URLEncoder.encode(options.get("endTimeIdentifier"), "UTF-8");
-		}
-                if (options.containsKey("timeFormat")) {
-                    if (firstReqParam)
-                        firstReqParam = false;
-                    else
-                        url += "&";
-                    url += "timeFormat=" + URLEncoder.encode(options.get("timeFormat"), "UTF-8");
-		}
-                if (options.containsKey("timeZone")) {
-                    if (firstReqParam)
-                        firstReqParam = false;
-                    else
-                        url += "&";
-                    url += "timeZone=" + URLEncoder.encode(options.get("timeZone"), "UTF-8");
-		}
-                if (options.containsKey("entityIdentifier")) {
-                    if (firstReqParam)
-                        firstReqParam = false;
-                    else
-                        url += "&";
-                    url += "entityIdentifier=" + URLEncoder.encode(options.get("entityIdentifier"), "UTF-8");
-		}
-                if (options.containsKey("valueIdentifier")) {
-                    if (firstReqParam)
-                        firstReqParam = false;
-                    else
-                        url += "&";
-                    url += "valueIdentifier=" + URLEncoder.encode(options.get("valueIdentifier"), "UTF-8");
-		}
-                if (options.containsKey("additionalTag")) {
-                    if (firstReqParam)
-                        firstReqParam = false;
-                    else
-                        url += "&";
-                    url += "additionalTag=" + URLEncoder.encode(options.get("additionalTag"), "UTF-8");
-		}
-		
+		String url = getAddFactsUrl(id,options);       
 		String status = this.httpService.postData(url, data);
 		return mapper.readValue(status, InputStatus.class);
 	}
@@ -304,72 +250,83 @@ public class FalkonryService {
 	 * @return
 	 * @throws Exception
 	 */
-	public InputStatus addFactsStream(String id, ByteArrayInputStream stream, Map<String, String> options)
-			throws Exception {
+	public InputStatus addFactsStream(String id, ByteArrayInputStream stream, Map<String, String> options)throws Exception {
+			
 		ObjectMapper mapper = new ObjectMapper();
-		String url = "/assessment/" + id + "/facts?";
-		
-		Boolean firstReqParam = true;
-        
-        
-        
-        if (options.containsKey("startTimeIdentifier")) {
-            if (firstReqParam)
-                firstReqParam = false;
-            else
-                url += "&";
-            url += "startTimeIdentifier=" + URLEncoder.encode(options.get("startTimeIdentifier"), "UTF-8");
-}
-        if (options.containsKey("endTimeIdentifier")) {
-            if (firstReqParam)
-                firstReqParam = false;
-            else
-                url += "&";
-            url += "endTimeIdentifier=" + URLEncoder.encode(options.get("endTimeIdentifier"), "UTF-8");
-}
-        if (options.containsKey("timeFormat")) {
-            if (firstReqParam)
-                firstReqParam = false;
-            else
-                url += "&";
-            url += "timeFormat=" + URLEncoder.encode(options.get("timeFormat"), "UTF-8");
-}
-        if (options.containsKey("timeZone")) {
-            if (firstReqParam)
-                firstReqParam = false;
-            else
-                url += "&";
-            url += "timeZone=" + URLEncoder.encode(options.get("timeZone"), "UTF-8");
-}
-        if (options.containsKey("entityIdentifier")) {
-            if (firstReqParam)
-                firstReqParam = false;
-            else
-                url += "&";
-            url += "entityIdentifier=" + URLEncoder.encode(options.get("entityIdentifier"), "UTF-8");
-}
-        if (options.containsKey("valueIdentifier")) {
-            if (firstReqParam)
-                firstReqParam = false;
-            else
-                url += "&";
-            url += "valueIdentifier=" + URLEncoder.encode(options.get("valueIdentifier"), "UTF-8");
-}
-        if (options.containsKey("additionalTag")) {
-            if (firstReqParam)
-                firstReqParam = false;
-            else
-                url += "&";
-            url += "additionalTag=" + URLEncoder.encode(options.get("additionalTag"), "UTF-8");
-}
-
-        
-        
+		String url=  getAddFactsUrl(id, options);
 		byte[] data_bytes = IOUtils.toByteArray(stream);
 		String status = this.httpService.upstream(url, data_bytes);
 		return mapper.readValue(status, InputStatus.class);
 	}
+	
+	private String getAddFactsUrl(String assessmentId, Map<String, String> options)throws Exception {
+			
+		String url = "/assessment/" + assessmentId + "/facts?";
+			
+			Boolean firstReqParam = true;
+	        
+	        
+	        
+	        if (options.containsKey("startTimeIdentifier")) {
+	            if (firstReqParam)
+	                firstReqParam = false;
+	            else
+	                url += "&";
+	            url += "startTimeIdentifier=" + URLEncoder.encode(options.get("startTimeIdentifier"), "UTF-8");
+	}
+	        if (options.containsKey("endTimeIdentifier")) {
+	            if (firstReqParam)
+	                firstReqParam = false;
+	            else
+	                url += "&";
+	            url += "endTimeIdentifier=" + URLEncoder.encode(options.get("endTimeIdentifier"), "UTF-8");
+	}
+	        if (options.containsKey("timeFormat")) {
+	            if (firstReqParam)
+	                firstReqParam = false;
+	            else
+	                url += "&";
+	            url += "timeFormat=" + URLEncoder.encode(options.get("timeFormat"), "UTF-8");
+	}
+	        if (options.containsKey("timeZone")) {
+	            if (firstReqParam)
+	                firstReqParam = false;
+	            else
+	                url += "&";
+	            url += "timeZone=" + URLEncoder.encode(options.get("timeZone"), "UTF-8");
+	}
+	        if (options.containsKey("entityIdentifier")) {
+	            if (firstReqParam)
+	                firstReqParam = false;
+	            else
+	                url += "&";
+	            url += "entityIdentifier=" + URLEncoder.encode(options.get("entityIdentifier"), "UTF-8");
+	}
+	        if (options.containsKey("valueIdentifier")) {
+	            if (firstReqParam)
+	                firstReqParam = false;
+	            else
+	                url += "&";
+	            url += "valueIdentifier=" + URLEncoder.encode(options.get("valueIdentifier"), "UTF-8");
+	}
+	        if (options.containsKey("additionalTag")) {
+	            if (firstReqParam)
+	                firstReqParam = false;
+	            else
+	                url += "&";
+	            url += "additionalTag=" + URLEncoder.encode(options.get("additionalTag"), "UTF-8");
+	}
+	        if (options.containsKey("tagIdentifier")) {
+	            if (firstReqParam)
+	                firstReqParam = false;
+	            else
+	                url += "&";
+	            url += "tagIdentifier=" + URLEncoder.encode(options.get("tagIdentifier"), "UTF-8");
+	}
 
+	        
+		return url;
+	}
 	/**
 	 *
 	 * @param id Assessment id

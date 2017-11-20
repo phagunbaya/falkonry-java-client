@@ -10,12 +10,14 @@ import com.falkonry.helper.models.*;
 import org.junit.*;
 import java.util.*;
 
-@Ignore
+//@Ignore
 public class TestAddAndGetFacts {
 
     Falkonry falkonry = null;
-    String host = "https://localhost:8080";
-    String token = "auth-token";
+//    String host = "https://localhost:8080";
+//    String token = "auth-token";
+    String host = "https://staging.falkonry.ai";
+    String token = "xradmi47o69z9lgj0lbvg7b2iw6sj6lw";
     List<Datastream> datastreams = new ArrayList<Datastream>();
     List<Assessment> assessments = new ArrayList<Assessment>();
 
@@ -87,6 +89,152 @@ public class TestAddAndGetFacts {
         queryParams.put("timeZone", time.getZone());
         queryParams.put("entityIdentifier", "entity");
         queryParams.put("valueIdentifier", "Health");
+
+        data = "time,end,entity,Health\n2011-03-31T00:00:00.000Z,2011-04-01T00:00:00.000Z,entity1,Normal\n2011-03-31T00:00:00.000Z,2011-04-01T00:00:00.000Z,entity1,Normal";
+		InputStatus response = falkonry.addFacts(assessment.getId(), data, queryParams);
+        Assert.assertEquals(response.getAction(), "ADD_FACT_DATA");
+        Assert.assertEquals(response.getStatus(), "PENDING");
+        Thread.sleep(5000);
+        options = new HashMap<String, String>();
+        options.put("startTime", "2011-01-17T01:00:00.000Z"); // in the format YYYY-MM-DDTHH:mm:ss.SSSZ
+        options.put("endTime", "2011-08-18T01:00:00.000Z");  // in the format YYYY-MM-DDTHH:mm:ss.SSSZ
+        options.put("responseFormat", "application/json");  // also available options 1. text/csv 2. application/json
+        HttpResponseFormat factsResponse = falkonry.getFactsData(assessment.getId(), options);
+        Assert.assertEquals(factsResponse.getResponse().length() > 0, true);
+    }
+    
+    @Test
+    /**
+     * Should add narrow format datastream and add facts with Tags to assessment with CSV
+     * format
+     *
+     * @throws Exception
+     */
+    public void createDatastreamWithTagsCsvFacts() throws Exception {
+
+        Datastream ds = new Datastream();
+        ds.setName("Test-DS-" + Math.random());
+
+        TimeObject time = new TimeObject();
+        time.setIdentifier("time");
+        time.setFormat("iso_8601");
+        time.setZone("GMT");
+
+        Signal signal = new Signal();
+        signal.setTagIdentifier("tag");
+        signal.setValueIdentifier("value");
+        signal.setDelimiter("_");
+        signal.setIsSignalPrefix(false);
+
+        Datasource dataSource = new Datasource();
+        dataSource.setType("STANDALONE");
+
+        Field field = new Field();
+        field.setSiganl(signal);
+        field.setTime(time);
+
+        ds.setDatasource(dataSource);
+        ds.setField(field);
+
+        Datastream datastream = falkonry.createDatastream(ds);
+        datastreams.add(datastream);
+
+        List<Assessment> assessments = new ArrayList<Assessment>();
+        AssessmentRequest assessmentRequest = new AssessmentRequest();
+        assessmentRequest.setName("Health");
+        assessmentRequest.setDatastream(datastream.getId());
+        assessmentRequest.setAssessmentRate("PT1S");
+        Assessment assessment = falkonry.createAssessment(assessmentRequest);
+        assessments.add(assessment);
+
+        Map<String, String> options = new HashMap<String, String>();
+        String data = "{\"time\" : \"2016-03-01T01:01:01Z\", \"tag\" : \"signal1_entity1\", \"value\" : 3.4}";
+        options.put("timeIdentifier", "time");
+        options.put("timeFormat", "iso_8601");
+        options.put("fileFormat", "csv");
+        falkonry.addInput(datastream.getId(), data, options);
+
+        Map<String, String> queryParams = new HashMap<String, String>();
+        queryParams.put("startTimeIdentifier", "time");
+        queryParams.put("endTimeIdentifier", "end");
+        queryParams.put("timeFormat", time.getFormat());
+        queryParams.put("timeZone", time.getZone());
+        queryParams.put("entityIdentifier", "entity");
+        queryParams.put("valueIdentifier", "Health");
+        queryParams.put("tagIdentifier", "Tags");
+
+        data = "time,end,entity,Health,Tags\n2011-03-31T00:00:00.000Z,2011-04-01T00:00:00.000Z,entity1,Normal,testTag1\n2011-03-31T00:00:00.000Z,2011-04-01T00:00:00.000Z,entity1,Normal,testTag2";
+		InputStatus response = falkonry.addFacts(assessment.getId(), data, queryParams);
+        Assert.assertEquals(response.getAction(), "ADD_FACT_DATA");
+        Assert.assertEquals(response.getStatus(), "PENDING");
+        Thread.sleep(5000);
+        options = new HashMap<String, String>();
+        options.put("startTime", "2011-01-17T01:00:00.000Z"); // in the format YYYY-MM-DDTHH:mm:ss.SSSZ
+        options.put("endTime", "2011-08-18T01:00:00.000Z");  // in the format YYYY-MM-DDTHH:mm:ss.SSSZ
+        options.put("responseFormat", "application/json");  // also available options 1. text/csv 2. application/json
+        HttpResponseFormat factsResponse = falkonry.getFactsData(assessment.getId(), options);
+        Assert.assertEquals(factsResponse.getResponse().length() > 0, true);
+    }
+    
+    @Test
+    /**
+     * Should add narrow format datastream and add facts with additional Tags to assessment with CSV
+     * format
+     *
+     * @throws Exception
+     */
+    public void createDatastreamWithAdditionalTagsCsvFacts() throws Exception {
+
+        Datastream ds = new Datastream();
+        ds.setName("Test-DS-" + Math.random());
+
+        TimeObject time = new TimeObject();
+        time.setIdentifier("time");
+        time.setFormat("iso_8601");
+        time.setZone("GMT");
+
+        Signal signal = new Signal();
+        signal.setTagIdentifier("tag");
+        signal.setValueIdentifier("value");
+        signal.setDelimiter("_");
+        signal.setIsSignalPrefix(false);
+
+        Datasource dataSource = new Datasource();
+        dataSource.setType("STANDALONE");
+
+        Field field = new Field();
+        field.setSiganl(signal);
+        field.setTime(time);
+
+        ds.setDatasource(dataSource);
+        ds.setField(field);
+
+        Datastream datastream = falkonry.createDatastream(ds);
+        datastreams.add(datastream);
+
+        List<Assessment> assessments = new ArrayList<Assessment>();
+        AssessmentRequest assessmentRequest = new AssessmentRequest();
+        assessmentRequest.setName("Health");
+        assessmentRequest.setDatastream(datastream.getId());
+        assessmentRequest.setAssessmentRate("PT1S");
+        Assessment assessment = falkonry.createAssessment(assessmentRequest);
+        assessments.add(assessment);
+
+        Map<String, String> options = new HashMap<String, String>();
+        String data = "{\"time\" : \"2016-03-01T01:01:01Z\", \"tag\" : \"signal1_entity1\", \"value\" : 3.4}";
+        options.put("timeIdentifier", "time");
+        options.put("timeFormat", "iso_8601");
+        options.put("fileFormat", "csv");
+        falkonry.addInput(datastream.getId(), data, options);
+
+        Map<String, String> queryParams = new HashMap<String, String>();
+        queryParams.put("startTimeIdentifier", "time");
+        queryParams.put("endTimeIdentifier", "end");
+        queryParams.put("timeFormat", time.getFormat());
+        queryParams.put("timeZone", time.getZone());
+        queryParams.put("entityIdentifier", "entity");
+        queryParams.put("valueIdentifier", "Health");
+        queryParams.put("additionalTag", "testTag");
 
         data = "time,end,entity,Health\n2011-03-31T00:00:00.000Z,2011-04-01T00:00:00.000Z,entity1,Normal\n2011-03-31T00:00:00.000Z,2011-04-01T00:00:00.000Z,entity1,Normal";
 		InputStatus response = falkonry.addFacts(assessment.getId(), data, queryParams);

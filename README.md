@@ -882,6 +882,43 @@ File Sample
     String response = falkonry.addFacts(assessment.getId(),data, options);
 ```
 
+#### Add facts data (csv format) with tags to Assessment
+
+```java
+    import com.falkonry.client.Falkonry;
+
+    Falkonry falkonry = new Falkonry("http://localhost:8080", "auth-token");
+	Map<String, String> options = new HashMap<String, String>();
+    options.put("startTimeIdentifier", "time");
+    options.put("endTimeIdentifier", "end");
+    options.put("timeFormat", "iso_8601");
+    options.put("timeZone", "GMT");
+    options.put("entityIdentifier", "car");
+    options.put("valueIdentifier", "Health");
+    options.put("tagIdentifier", "Tags");
+    String data = "time,end,car,Health,Tags\n2011-03-31T00:00:00.000Z,2011-04-01T00:00:00.000Z,IL9753,Normal,testTag1\n2011-03-31T00:00:00.000Z,2011-04-01T00:00:00.000Z,HI3821,Normal,testTag2";
+    String response = falkonry.addFacts(assessment.getId(),data, options);
+```
+
+#### Add facts data (csv format) with additional Tags to Assessment
+
+```java
+    import com.falkonry.client.Falkonry;
+
+    Falkonry falkonry = new Falkonry("http://localhost:8080", "auth-token");
+	Map<String, String> options = new HashMap<String, String>();
+    options.put("startTimeIdentifier", "time");
+    options.put("endTimeIdentifier", "end");
+    options.put("timeFormat", "iso_8601");
+    options.put("timeZone", "GMT");
+    options.put("entityIdentifier", "car");
+    options.put("valueIdentifier", "Health");
+    options.put("additionalTag", "testTag");
+    String data = "time,end,car,Health\n2011-03-31T00:00:00.000Z,2011-04-01T00:00:00.000Z,IL9753,Normal\n2011-03-31T00:00:00.000Z,2011-04-01T00:00:00.000Z,HI3821,Normal";
+    String response = falkonry.addFacts(assessment.getId(),data, options);
+```
+
+
 #### Add facts data (json format) from a stream to Assessment
 File Sample
     {"time" : "2011-03-26T12:00:00.000Z", "thing" : "thing1", "end" : "2012-06-01T00:00:00.000Z", "Health" : "Normal"}

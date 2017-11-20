@@ -13,12 +13,14 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.util.*;
 
-@Ignore
+//@Ignore
 public class TestAddFactsStream {
 
     Falkonry falkonry = null;
-    String host = "https://localhost:8080";
-    String token = "auth-token";
+//    String host = "https://localhost:8080";
+//    String token = "auth-token";
+    String host = "https://staging.falkonry.ai";
+    String token = "xradmi47o69z9lgj0lbvg7b2iw6sj6lw";
     List<Datastream> datastreams = new ArrayList<Datastream>();
     List<Assessment> assessments = new ArrayList<Assessment>();
 
@@ -90,6 +92,130 @@ public class TestAddFactsStream {
         Assert.assertEquals(response.getAction(), "ADD_FACT_DATA");
         Assert.assertEquals(response.getStatus(), "PENDING");
     }
+    
+    /**
+     * Should create datastream and add fact stream data with tags in CSV format
+     *
+     * @throws Exception
+     */
+    @Test
+    public void createDatastreamWithCsvFactsWithTagsStream() throws Exception {
+
+        Datastream ds = new Datastream();
+        ds.setName("Test-DS-" + Math.random());
+        TimeObject time = new TimeObject();
+        time.setIdentifier("time");
+        time.setFormat("iso_8601");
+        time.setZone("GMT");
+        Signal signal = new Signal();
+        signal.setTagIdentifier("tag");
+        signal.setValueIdentifier("value");
+        signal.setDelimiter("_");
+        signal.setIsSignalPrefix(false);
+
+        Field field = new Field();
+        field.setSiganl(signal);
+        field.setTime(time);
+        ds.setField(field);
+        Datasource dataSource = new Datasource();
+        dataSource.setType("STANDALONE");
+        ds.setDatasource(dataSource);
+
+        Datastream datastream = falkonry.createDatastream(ds);
+        datastreams.add(datastream);
+
+        List<Assessment> assessments = new ArrayList<Assessment>();
+        AssessmentRequest assessmentRequest = new AssessmentRequest();
+        assessmentRequest.setName("Health");
+        assessmentRequest.setDatastream(datastream.getId());
+        assessmentRequest.setAssessmentRate("PT1S");
+        Assessment assessment = falkonry.createAssessment(assessmentRequest);
+        assessments.add(assessment);
+
+        Map<String, String> options = new HashMap<String, String>();
+
+        String data = "time, tag, value\n2016-03-01 01:01:01, entity1_signal1, 3.4";
+        falkonry.addInput(datastream.getId(), data, options);
+
+		File file = new File("res/factsDataWithTags.csv");
+        ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(FileUtils.readFileToByteArray(file));
+
+        Map<String, String> queryParams = new HashMap<String, String>();
+        queryParams.put("startTimeIdentifier", "time");
+        queryParams.put("endTimeIdentifier", "end");
+        queryParams.put("timeFormat", time.getFormat());
+        queryParams.put("timeZone", time.getZone());
+        queryParams.put("entityIdentifier", "entity");
+        queryParams.put("valueIdentifier", "Health");
+        queryParams.put("tagIdentifier", "Tags");
+
+        InputStatus response = falkonry.addFactsStream(assessment.getId(), byteArrayInputStream, queryParams);
+        Assert.assertEquals(response.getAction(), "ADD_FACT_DATA");
+        Assert.assertEquals(response.getStatus(), "PENDING");
+    }
+    
+    /**
+     * Should create datastream and add fact stream data with additional Tag in CSV format
+     *
+     * @throws Exception
+     */
+    @Test
+    public void createDatastreamWithCsvFactsWithAdditionalTagStream() throws Exception {
+
+        Datastream ds = new Datastream();
+        ds.setName("Test-DS-" + Math.random());
+        TimeObject time = new TimeObject();
+        time.setIdentifier("time");
+        time.setFormat("iso_8601");
+        time.setZone("GMT");
+        Signal signal = new Signal();
+        signal.setTagIdentifier("tag");
+        signal.setValueIdentifier("value");
+        signal.setDelimiter("_");
+        signal.setIsSignalPrefix(false);
+
+        Field field = new Field();
+        field.setSiganl(signal);
+        field.setTime(time);
+        ds.setField(field);
+        Datasource dataSource = new Datasource();
+        dataSource.setType("STANDALONE");
+        ds.setDatasource(dataSource);
+
+        Datastream datastream = falkonry.createDatastream(ds);
+        datastreams.add(datastream);
+
+        List<Assessment> assessments = new ArrayList<Assessment>();
+        AssessmentRequest assessmentRequest = new AssessmentRequest();
+        assessmentRequest.setName("Health");
+        assessmentRequest.setDatastream(datastream.getId());
+        assessmentRequest.setAssessmentRate("PT1S");
+        Assessment assessment = falkonry.createAssessment(assessmentRequest);
+        assessments.add(assessment);
+
+        Map<String, String> options = new HashMap<String, String>();
+
+        String data = "time, tag, value\n2016-03-01 01:01:01, entity1_signal1, 3.4";
+        falkonry.addInput(datastream.getId(), data, options);
+
+        File file = new File("res/factsData.csv");
+        ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(FileUtils.readFileToByteArray(file));
+
+        Map<String, String> queryParams = new HashMap<String, String>();
+        queryParams.put("startTimeIdentifier", "time");
+        queryParams.put("endTimeIdentifier", "end");
+        queryParams.put("timeFormat", time.getFormat());
+        queryParams.put("timeZone", time.getZone());
+        queryParams.put("entityIdentifier", "entity");
+        queryParams.put("valueIdentifier", "Health");
+        queryParams.put("additionalTag", "testTag");
+
+        InputStatus response = falkonry.addFactsStream(assessment.getId(), byteArrayInputStream, queryParams);
+        Assert.assertEquals(response.getAction(), "ADD_FACT_DATA");
+        Assert.assertEquals(response.getStatus(), "PENDING");
+    }
+
+    
 
     /**
      * Should create datastream and add fact data in JSON format
