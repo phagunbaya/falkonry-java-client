@@ -17,10 +17,8 @@ import java.util.*;
 public class TestAddFactsStream {
 
     Falkonry falkonry = null;
-//    String host = "https://localhost:8080";
-//    String token = "auth-token";
-    String host = "https://staging.falkonry.ai";
-    String token = "xradmi47o69z9lgj0lbvg7b2iw6sj6lw";
+    String host = "https://localhost:8080";
+    String token = "auth-token";
     List<Datastream> datastreams = new ArrayList<Datastream>();
     List<Assessment> assessments = new ArrayList<Assessment>();
 
