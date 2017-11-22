@@ -13,7 +13,7 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.util.*;
 
-//@Ignore
+@Ignore
 public class TestAddFactsStream {
 
     Falkonry falkonry = null;
