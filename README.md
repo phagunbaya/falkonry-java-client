@@ -929,9 +929,12 @@ time,end,car,Health
 
 
 #### Add facts data (json format) from a stream to Assessment
-File Sample
-    {"time" : "2011-03-26T12:00:00.000Z", "thing" : "thing1", "end" : "2012-06-01T00:00:00.000Z", "Health" : "Normal"}
-	{"time" : "2014-02-10T23:00:00.000Z", "thing" : "thing1", "end" : "2014-03-20T12:00:00.000Z", "Health" : "Spalling"}
+Data Sample
+```
+{"time" : "2011-03-26T12:00:00.000Z", "thing" : "thing1", "end" : "2012-06-01T00:00:00.000Z", "Health" : "Normal"}
+{"time" : "2014-02-10T23:00:00.000Z", "thing" : "thing1", "end" : "2014-03-20T12:00:00.000Z", "Health" : "Spalling"}
+```
+
 ```java
     import com.falkonry.client.Falkonry;
     import org.apache.commons.io.FileUtils;
@@ -950,12 +953,12 @@ File Sample
 ```
 
 #### Add facts data (csv format) from a stream to  Assessment
-
-File Sample:
-
+Data Sample
+```
 time,entity,end,Health
 2011-03-26T12:00:00.000Z,entity1,2012-06-01T00:00:00.000Z,Normal
 2014-02-10T23:00:00.000Z,entity1,2014-03-20T12:00:00.000Z,Spalling
+```
     
 ```java
     import com.falkonry.client.Falkonry;
