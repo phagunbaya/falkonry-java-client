@@ -11,7 +11,7 @@ Maven install
 <dependency>
   <groupId>com.falkonry</groupId>
   <artifactId>client</artifactId>
-  <version>1.0.3</version>
+  <version>1.0.4</version>
 </dependency>
 ```
 
@@ -847,9 +847,12 @@ Usage:
 ```
 
 #### Add facts data (json format) to Assessment
-File Sample
+Data Sample
+```
 {"time" : "2011-03-26T12:00:00.000Z", "thing" : "thing1", "end" : "2012-06-01T00:00:00.000Z", "Health" : "Normal"}
 {"time" : "2014-02-10T23:00:00.000Z", "thing" : "thing1", "end" : "2014-03-20T12:00:00.000Z", "Health" : "Spalling"}
+```
+
 ```java
     import com.falkonry.client.Falkonry;
 
@@ -866,6 +869,12 @@ File Sample
 ```
 
 #### Add facts data (csv format) to Assessment
+Data Sample
+```
+time,end,car,Health
+2011-03-31T00:00:00.000Z,2011-04-01T00:00:00.000Z,IL9753,Normal
+2011-03-31T00:00:00.000Z,2011-04-01T00:00:00.000Z,HI3821,Normal
+```
 
 ```java
     import com.falkonry.client.Falkonry;
