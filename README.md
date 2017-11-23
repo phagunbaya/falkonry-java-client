@@ -40,6 +40,12 @@ Maven install
 	* Add live input data (csv format) to Datastream (Used for live monitoring) 
 	* Add live input data (json format) from a stream to Datastream (Used for live monitoring) 
 	* Add live input data (csv format) from a stream to Datastream (Used for live monitoring) 
+    * Add facts data (json format) to Assessment of single entity datastream
+    * Add facts data (json format) with addition tag to Assessment of multi entity datastream
+    * Add facts data (csv format) to Assessment of single entity datastream
+    * Add facts data (csv format) with tags Assessment of single entity datastream
+    * Add facts data (json format) from a stream to Assessment of multi entity datastream
+    * Add facts data (csv format) from a stream to  Assessment of multi entity datastream
     * Add facts data (json format) to Assessment
 	* Add facts data (csv format) to Assessment
 	* Add facts data (json format) from a stream to Assessment
@@ -846,77 +852,78 @@ Usage:
     InputStatus inputStatus = falkonry.addInputStream('datastream-Id',byteArrayInputStream,options);
 ```
 
-#### Add facts data (json format) to Assessment
-File Sample
-{"time" : "2011-03-26T12:00:00.000Z", "thing" : "thing1", "end" : "2012-06-01T00:00:00.000Z", "Health" : "Normal"}
-{"time" : "2014-02-10T23:00:00.000Z", "thing" : "thing1", "end" : "2014-03-20T12:00:00.000Z", "Health" : "Spalling"}
-```java
-    import com.falkonry.client.Falkonry;
-
-    Falkonry falkonry = new Falkonry("http://localhost:8080", "auth-token");
-	Map<String, String> options = new HashMap<String, String>();
-    options.put("startTimeIdentifier", "time");
-    options.put("endTimeIdentifier", "end");
-    options.put("timeFormat", "iso_8601");
-    options.put("timeZone", "GMT");
-    options.put("entityIdentifier", "thing");
-    options.put("valueIdentifier", "Health"); 
-    String data = "{\"time\" : \"2011-03-26T12:00:00.000Z\", \"entities\" : \"entity1\", \"end\" : \"2012-06-01T00:00:00.000Z\", \"Health\" : \"Normal\"}";
-    String response = falkonry.addfacts(assessment.getId(),data, options);
-```
-
-#### Add facts data (csv format) to Assessment
+#### Add facts data (json format) to Assessment of single entity datastream
 
 ```java
-    import com.falkonry.client.Falkonry;
+  import com.falkonry.client.Falkonry;
 
-    Falkonry falkonry = new Falkonry("http://localhost:8080", "auth-token");
-	Map<String, String> options = new HashMap<String, String>();
-    options.put("startTimeIdentifier", "time");
-    options.put("endTimeIdentifier", "end");
-    options.put("timeFormat", "iso_8601");
-    options.put("timeZone", "GMT");
-    options.put("entityIdentifier", "car");
-    options.put("valueIdentifier", "Health");
-    String data = "time,end,car,Health\n2011-03-31T00:00:00.000Z,2011-04-01T00:00:00.000Z,IL9753,Normal\n2011-03-31T00:00:00.000Z,2011-04-01T00:00:00.000Z,HI3821,Normal";
-    String response = falkonry.addFacts(assessment.getId(),data, options);
+  Falkonry falkonry = new Falkonry("https://sandbox.falkonry.ai", "auth-token");
+  Map<String, String> options = new HashMap<String, String>();
+  options.put("startTimeIdentifier", "time");
+  options.put("endTimeIdentifier", "end");
+  options.put("timeFormat", "iso_8601");
+  options.put("timeZone", "GMT");
+  options.put("valueIdentifier", "Health"); 
+  String data = "{\"time\" : \"2011-03-26T12:00:00.000Z\", \"end\" : \"2012-06-01T00:00:00.000Z\", \"Health\" : \"Normal\"}";
+  String response = falkonry.addfacts(assessment.getId(),data, options);
 ```
 
-#### Add facts data (csv format) with tags to Assessment
+#### Add facts data (json format) with addition tag to Assessment of multi entity datastream
 
 ```java
-    import com.falkonry.client.Falkonry;
+  import com.falkonry.client.Falkonry;
 
-    Falkonry falkonry = new Falkonry("http://localhost:8080", "auth-token");
-	Map<String, String> options = new HashMap<String, String>();
-    options.put("startTimeIdentifier", "time");
-    options.put("endTimeIdentifier", "end");
-    options.put("timeFormat", "iso_8601");
-    options.put("timeZone", "GMT");
-    options.put("entityIdentifier", "car");
-    options.put("valueIdentifier", "Health");
-    options.put("tagIdentifier", "Tags");
-    String data = "time,end,car,Health,Tags\n2011-03-31T00:00:00.000Z,2011-04-01T00:00:00.000Z,IL9753,Normal,testTag1\n2011-03-31T00:00:00.000Z,2011-04-01T00:00:00.000Z,HI3821,Normal,testTag2";
-    String response = falkonry.addFacts(assessment.getId(),data, options);
+  Falkonry falkonry = new Falkonry("https://sandbox.falkonry.ai", "auth-token");
+  Map<String, String> options = new HashMap<String, String>();
+  options.put("startTimeIdentifier", "time");
+  options.put("endTimeIdentifier", "end");
+  options.put("timeFormat", "iso_8601");
+  options.put("timeZone", "GMT");
+  options.put("valueIdentifier", "Health"); 
+  options.put("entityIdentifier", "entities");
+  options.put("additionalTag", "testTag");
+
+  String data = "{\"time\" : \"2011-03-26T12:00:00.000Z\", \"entities\" : \"entity1\", \"end\" : \"2012-06-01T00:00:00.000Z\", \"Health\" : \"Normal\"}";
+  String response = falkonry.addfacts(assessment.getId(),data, options);
 ```
 
-#### Add facts data (csv format) with additional Tags to Assessment
+#### Add facts data (csv format) to Assessment of single entity datastream
 
 ```java
-    import com.falkonry.client.Falkonry;
+  import com.falkonry.client.Falkonry;
 
-    Falkonry falkonry = new Falkonry("http://localhost:8080", "auth-token");
-	Map<String, String> options = new HashMap<String, String>();
-    options.put("startTimeIdentifier", "time");
-    options.put("endTimeIdentifier", "end");
-    options.put("timeFormat", "iso_8601");
-    options.put("timeZone", "GMT");
-    options.put("entityIdentifier", "car");
-    options.put("valueIdentifier", "Health");
-    options.put("additionalTag", "testTag");
-    String data = "time,end,car,Health\n2011-03-31T00:00:00.000Z,2011-04-01T00:00:00.000Z,IL9753,Normal\n2011-03-31T00:00:00.000Z,2011-04-01T00:00:00.000Z,HI3821,Normal";
-    String response = falkonry.addFacts(assessment.getId(),data, options);
+  Falkonry falkonry = new Falkonry("http://localhost:8080", "auth-token");
+  Map<String, String> options = new HashMap<String, String>();
+  options.put("startTimeIdentifier", "time");
+  options.put("endTimeIdentifier", "end");
+  options.put("timeFormat", "iso_8601");
+  options.put("timeZone", "GMT");
+  options.put("valueIdentifier", "Health");
+  String data = "time,end,Health\n2011-03-31T00:00:00.000Z,2011-04-01T00:00:00.000Z,Normal\n2011-03-31T00:00:00.000Z,2011-04-01T00:00:00.000Z,Normal";
+  String response = falkonry.addFacts(assessment.getId(),data, options);
 ```
+
+#### Add facts data (csv format) with tags Assessment of multi entity datastream
+
+```java
+  import com.falkonry.client.Falkonry;
+
+  Falkonry falkonry = new Falkonry("http://localhost:8080", "auth-token");
+  Map<String, String> options = new HashMap<String, String>();
+  options.put("startTimeIdentifier", "time");
+  options.put("endTimeIdentifier", "end");
+  options.put("timeFormat", "iso_8601");
+  options.put("timeZone", "GMT");
+  options.put("entityIdentifier", "car");
+  options.put("valueIdentifier", "Health");
+  options.put("tagIdentifier", "Tag");
+
+  String data = "time,end,car,Health,Tag\n2011-03-31T00:00:00.000Z,2011-04-01T00:00:00.000Z,IL9753,Normal,testTag1\n2011-03-31T00:00:00.000Z,2011-04-01T00:00:00.000Z,HI3821,Normal,testTag2";
+  String response = falkonry.addFacts(assessment.getId(),data, options);
+```
+
+
+
 
 
 #### Add facts data (json format) from a stream to Assessment
@@ -940,30 +947,55 @@ File Sample
     String response = falkonry.addFactsStream(assessment.getId(),byteArrayInputStream, options);
 ```
 
-#### Add facts data (csv format) from a stream to  Assessment
+#### Add facts data (json format) from a stream to Assessment of multi entity datastream
 
 File Sample:
 
-time,entity,end,Health
-2011-03-26T12:00:00.000Z,entity1,2012-06-01T00:00:00.000Z,Normal
-2014-02-10T23:00:00.000Z,entity1,2014-03-20T12:00:00.000Z,Spalling
+time,car,end,Health
+2011-03-26T12:00:00.000Z,car1,2012-06-01T00:00:00.000Z,Normal
+2014-02-10T23:00:00.000Z,car2,2014-03-20T12:00:00.000Z,Spalling
     
 ```java
     import com.falkonry.client.Falkonry;
     import org.apache.commons.io.FileUtils;
 
     Falkonry falkonry   = new Falkonry("http://localhost:8080", "auth-token");
-    File file = new File("res/factsData.csv"); 
+    File file = new File("res/factsData.json"); 
     Map<String, String> options = new HashMap<String, String>();
     options.put("startTimeIdentifier", "time");
     options.put("endTimeIdentifier", "end");
     options.put("timeFormat", "iso_8601");
     options.put("timeZone", "GMT");
-    options.put("entityIdentifier", "entity");
-    options.put("valueIdentifier", "Health");     
+    options.put("entityIdentifier", "car");
+    options.put("valueIdentifier", "Health");       
     ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(FileUtils.readFileToByteArray(file));
-    String response = falkonry.addFactsStream(assessment.getId(),byteArrayInputStream, options);
+    String response = falkonry.addFactsStream(assessment.getId(),byteArrayInputStream, options)
 ```
+
+#### Add facts data (csv format) from a stream to  Assessment of multi entity datastream
+
+Sample CSVFile
+time,car,end,Health
+2011-03-26T12:00:00Z,HI3821,2012-06-01T00:00:00Z,Normal
+2014-02-10T23:00:00Z,HI3821,2014-03-20T12:00:00Z,Spalling
+
+```java
+  import com.falkonry.client.Falkonry;
+  import org.apache.commons.io.FileUtils;
+
+  Falkonry falkonry   = new Falkonry("http://localhost:8080", "auth-token");
+  File file = new File("res/factsData.csv"); 
+  Map<String, String> options = new HashMap<String, String>();
+  options.put("startTimeIdentifier", "time");
+  options.put("endTimeIdentifier", "end");
+  options.put("timeFormat", "iso_8601");
+  options.put("timeZone", "GMT");
+  options.put("entityIdentifier", "car");
+  options.put("valueIdentifier", "Health");     
+  ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(FileUtils.readFileToByteArray(file));
+  String response = falkonry.addFactsStream(assessment.getId(),byteArrayInputStream, options);
+```
+
 
 
 #### Get Historian Output from Assessment
