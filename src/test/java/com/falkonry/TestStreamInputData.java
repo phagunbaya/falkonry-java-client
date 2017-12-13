@@ -45,7 +45,7 @@ public class TestStreamInputData {
 				Date d = new Date();
 				Random r = new Random();
 				int n = r.nextInt(100);
-				String data = "{\"time\":" + d.getTime() + ",\"tag\":\"entity1_signal1\",\"value\":" + n + "}";
+				String data = "{\"time\":" + d.getTime() + ",\"entity\":\"entity1\",\"signal\":\"signal1\",\"value\":" + n + "}";
 				ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(data.getBytes());
 				InputStatus inputStatus = falkonry.addInputStream(datastreamId, byteArrayInputStream, options);
 				Thread.sleep(1000);

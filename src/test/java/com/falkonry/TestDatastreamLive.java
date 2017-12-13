@@ -48,16 +48,16 @@ public class TestDatastreamLive {
 		time.setZone("GMT");
 
 		Signal signal = new Signal();
-		signal.setTagIdentifier("tag");
+		
 		signal.setValueIdentifier("value");
-		signal.setDelimiter("_");
-		signal.setIsSignalPrefix(false);
+		
+		
 
 		Datasource dataSource = new Datasource();
 		dataSource.setType("STANDALONE");
 
 		Field field = new Field();
-		field.setSiganl(signal);
+		field.setSignal(signal);
 		field.setTime(time);
 		// field.setEntityIdentifier("unit");
 

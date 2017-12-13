@@ -23,13 +23,14 @@ import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.type.TypeReference;
 import org.json.JSONObject;
 
-@Ignore
+//@Ignore
 public class TestAddHistorianData {
 
 	Falkonry falkonry = null;
 
 	String host = "https://localhost:8080";
-	String token = "auth-token";
+//	String token = "auth-token";
+	String token = "npp766l2hghmhrc7ygrbldjnkb9rn7mg";
 	List<Datastream> datastreams = new ArrayList<Datastream>();
 	List<Assessment> assessments = new ArrayList<Assessment>();
 
@@ -56,13 +57,13 @@ public class TestAddHistorianData {
 		time.setFormat("iso_8601");
 		time.setZone("GMT");
 		Signal signal = new Signal();
-		signal.setTagIdentifier("tag");
-		signal.setValueIdentifier("value");
-		signal.setDelimiter("_");
-		signal.setIsSignalPrefix(false);
 
+		signal.setValueIdentifier("value");
+		signal.setSignalIdentifier("signal");
 		Field field = new Field();
-		field.setSiganl(signal);
+		field.setEntityIdentifier("entity");
+		
+		field.setSignal(signal);
 		field.setTime(time);
 		ds.setField(field);
 		Datasource dataSource = new Datasource();
@@ -71,12 +72,21 @@ public class TestAddHistorianData {
 
 		Datastream datastream = falkonry.createDatastream(ds);
 		datastreams.add(datastream);
-		String data = "time, tag, value \n"
-				+ "2016-05-05T12:00:00Z, Unit1_current, 12.4 \n 2016-03-01 01:01:01, Unit1_vibration, 20.4";
+		String data = "time,entity,signal,value \n"
+				+ "2016-05-05T12:00:00Z,Unit1,current,12.4\n2016-03-01 01:01:01,Unit1.vibration,20.4";
 
 		Map<String, String> options = new HashMap<String, String>();
+		
+		options.put("fileFormat", "csv");
+		options.put("streaming", "false");
+		options.put("hasMoreData", "false");
+		
 		options.put("timeIdentifier", "time");
-		options.put("timeFormat", "iso_8601");
+        options.put("timeFormat", "YYYY-MM-DD HH:mm:ss");
+        options.put("timeZone", time.getZone());
+		options.put("signalIdentifier", "signal");
+		options.put("entityIdentifier", "entity");
+		options.put("valueIdentifier", "value");
 		options.put("fileFormat", "csv");
 		options.put("streaming", "false");
 		options.put("hasMoreData", "false");
@@ -100,13 +110,13 @@ public class TestAddHistorianData {
 		time.setFormat("iso_8601");
 		time.setZone("GMT");
 		Signal signal = new Signal();
-		signal.setTagIdentifier("tag");
-		signal.setValueIdentifier("value");
-		signal.setDelimiter("_");
-		signal.setIsSignalPrefix(false);
 
+		signal.setValueIdentifier("value");
+		signal.setSignalIdentifier("signal");
 		Field field = new Field();
-		field.setSiganl(signal);
+		field.setEntityIdentifier("entity");
+		
+		field.setSignal(signal);
 		field.setTime(time);
 		ds.setField(field);
 		Datasource dataSource = new Datasource();
@@ -115,15 +125,23 @@ public class TestAddHistorianData {
 
 		Datastream datastream = falkonry.createDatastream(ds);
 		datastreams.add(datastream);
-		String data = "time, tag, value \n"
-				+ "2016-05-05T12:00:00Z, Unit1_current, 12.4 \n 2016-03-01 01:01:01, Unit1_vibration, 20.4";
+		String data = "time,entity,signal,value\n"
+				+ "2016-05-05T12:00:00Z,Unit1,current,12.4\n2016-03-01 01:01:01,Unit1.vibration,20.4";
 
 		Map<String, String> options = new HashMap<String, String>();
+		
+		
+		
 		options.put("timeIdentifier", "time");
-		options.put("timeFormat", "iso_8601");
+        options.put("timeFormat", "YYYY-MM-DD HH:mm:ss");
+        options.put("timeZone", time.getZone());
+		options.put("signalIdentifier", "signal");
+		options.put("entityIdentifier", "entity");
+		options.put("valueIdentifier", "value");
 		options.put("fileFormat", "csv");
 		options.put("streaming", "true");
 		options.put("hasMoreData", "false");
+		
 		InputStatus inputStatus = falkonry.addInput(datastream.getId(), data, options);
 		Assert.assertEquals(inputStatus.getAction(), "ADD_DATA_DATASTREAM");
 		Assert.assertEquals(inputStatus.getStatus(), "PENDING");
@@ -145,17 +163,17 @@ public class TestAddHistorianData {
 		time.setFormat("iso_8601");
 		time.setZone("GMT");
 		Signal signal = new Signal();
-		signal.setTagIdentifier("tag");
-		signal.setValueIdentifier("value");
-		signal.setDelimiter("_");
-		signal.setIsSignalPrefix(true);
 
+		signal.setValueIdentifier("value");
+		signal.setSignalIdentifier("signal");
 		Field field = new Field();
-		field.setSiganl(signal);
+//		field.setEntityIdentifier("entity");
+		
+		field.setSignal(signal);
 		field.setTime(time);
-		// field.setEntityIdentifier("unit");
 		ds.setField(field);
 		Datasource dataSource = new Datasource();
+		
 		dataSource.setType("PI");
 		dataSource.sethost("https://test.piserver.com/piwebapi");
 		dataSource.setElementTemplateName("SampleElementTempalte");
@@ -188,7 +206,7 @@ public class TestAddHistorianData {
 															// application/json
 
 		// assessment.setId("wpyred1glh6c5r");
-		Assessment asmt = falkonry.getAssessment("x1y4ob0ex5mmy1");
+		Assessment asmt = falkonry.getAssessment(assessment.getId());
 		HttpResponseFormat httpResponse = falkonry.getHistoricalOutput(asmt, options);
 
 		// If data is not readily available then, a tracker id will be sent with
