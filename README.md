@@ -32,10 +32,10 @@ Maven install
     * Retrieve Assessment by Id
     * Delete Assessment by id
     * Get Condition List Of Assessment
-    * Add historical input data (json format) to Datastream (Used for model revision) 
-	* Add historical input data (csv format) to Datastream (Used for model revision) 
-	* Add historical input data (json format) from a stream to Datastream (Used for model revision) 
-	* Add historical input data (csv format) from a stream to Datastream (Used for model revision) 
+    * Add narrow input data (json format) to multi thing Datastream
+    * Add narrow input data (csv format) single thing to Datastream
+    * Add wide input data (json format) to single thing Datastream
+    * Add wide input data (csv format) to multi thing Datastream
 	* Add live input data (json format) to Datastream (Used for live monitoring) 
 	* Add live input data (csv format) to Datastream (Used for live monitoring) 
 	* Add live input data (json format) from a stream to Datastream (Used for live monitoring) 
@@ -70,30 +70,24 @@ Usage:
 
     //instantiate Falkonry
     Falkonry falkonry = new Falkonry("http://localhost:8080", "auth-token");
+    
     Datastream ds = new Datastream();
 	ds.setName("Test-DS-" + Math.random());
-	
 	TimeObject time = new TimeObject();
 	time.setIdentifier("time");
 	time.setFormat("iso_8601");
 	time.setZone("GMT");
-
 	Signal signal = new Signal();
-	signal.setTagIdentifier("tag");
-	signal.setValueIdentifier("value");
-	signal.setIsSignalPrefix(false);
 
+	signal.setValueIdentifier("value");
+	signal.setSignalIdentifier("signal");
+	Field field = new Field();
+	field.setSignal(signal);
+	field.setTime(time);
+	ds.setField(field);
 	Datasource dataSource = new Datasource();
 	dataSource.setType("STANDALONE");
-
-	Field field = new Field();
-	field.setSiganl(signal);
-	field.setTime(time);
-	// field.setEntityIdentifier("unit");
-
 	ds.setDatasource(dataSource);
-	ds.setField(field);
-
 	Datastream datastream = falkonry.createDatastream(ds);
 
 ```
@@ -110,30 +104,25 @@ Usage:
 
     //instantiate Falkonry
     Falkonry falkonry = new Falkonry("http://localhost:8080", "auth-token");
+    
     Datastream ds = new Datastream();
 	ds.setName("Test-DS-" + Math.random());
-
 	TimeObject time = new TimeObject();
 	time.setIdentifier("time");
 	time.setFormat("iso_8601");
 	time.setZone("GMT");
-
 	Signal signal = new Signal();
-	signal.setTagIdentifier("tag");
-	signal.setValueIdentifier("value");
-	signal.setDelimiter("_");
-	signal.setIsSignalPrefix(false);
 
+	signal.setValueIdentifier("value");
+	signal.setSignalIdentifier("signal");
+	Field field = new Field();
+	field.setSignal(signal);
+	field.setEntityIdentifiers("entity");
+	field.setTime(time);
+	ds.setField(field);
 	Datasource dataSource = new Datasource();
 	dataSource.setType("STANDALONE");
-
-	Field field = new Field();
-	field.setSiganl(signal);
-	field.setTime(time);
-	// field.setEntityIdentifier("unit");
-
 	ds.setDatasource(dataSource);
-	ds.setField(field);
 
 	Datastream datastream = falkonry.createDatastream(ds);
 
@@ -147,9 +136,9 @@ Data:
 
     or
 
-    time, signal1, signal2, signal3, signal4
-    1467729675422, 41.11, 62.34, 77.63, 4.8
-    1467729675445, 43.91, 82.64, 73.63, 3.8
+    time,signal1,signal2,signal3,signal4
+    1467729675422,41.11,62.34,77.63,4.8
+    1467729675445,43.91,82.64,73.63,3.8
 ```
 
 Usage:
@@ -223,9 +212,9 @@ Data:
 
     or
 
-    time, entities, signal1, signal2, signal3, signal4
-    1467729675422, entity1, 41.11, 62.34, 77.63, 4.8
-    1467729675445, entity1, 43.91, 82.64, 73.63, 3.8
+    time,entities,signal1,signal2,signal3,signal4
+    1467729675422,entity1,41.11,62.34,77.63,4.8
+    1467729675445,entity1,43.91,82.64,73.63,3.8
 ```
 
 Usage:
@@ -249,16 +238,16 @@ Usage:
     time.setZone("GMT");
 
     Signal signal = new Signal();
-    signal.setTagIdentifier("tag");
+    
     signal.setValueIdentifier("value");
-    signal.setDelimiter("_");
-    signal.setIsSignalPrefix(false);
+    
+    
 
     Datasource dataSource = new Datasource();
     dataSource.setType("STANDALONE");
 
     Field field = new Field();
-    field.setSiganl(signal);
+    field.setSignal(signal);
     field.setTime(time);
     field.setEntityIdentifier("entities");
 
@@ -269,9 +258,9 @@ Usage:
 
 
     //Add data to datastream
-    String data = "time, entities, signal1, signal2, signal3, signal4" + "\n"
-        + "1467729675422, entity1, 41.11, 62.34, 77.63, 4.8" + "\n"
-        + "1467729675445, entity1, 43.91, 82.64, 73.63, 3.8";
+    String data = "time,entities,signal1,signal2,signal3,signal4" + "\n"
+        + "1467729675422,entity1,41.11,62.34,77.63,4.8" + "\n"
+        + "1467729675445,entity1,43.91,82.64,73.63,3.8";
     Map<String, String> options = new HashMap<String, String>();
     options.put("timeIdentifier", "time");
     options.put("timeFormat", "millis");
@@ -303,15 +292,15 @@ Usage:
 	time.setZone("GMT");
 
 	Signal signal = new Signal();
-	signal.setTagIdentifier("tag");
+	
 	signal.setValueIdentifier("value");
-	signal.setIsSignalPrefix(false);
+	
 
 	Datasource dataSource = new Datasource();
 	dataSource.setType("STANDALONE");
 
 	Field field = new Field();
-	field.setSiganl(signal);
+	field.setSignal(signal);
 	field.setTime(time);
 	// field.setEntityIdentifier("unit");
 
@@ -487,12 +476,12 @@ Usage:
 ```
 
 
-#### Add historical input data (json format) to Datastream (Used for model revision) 
+#### Add narrow input data (json format) to multi thing Datastream
 
 Data:
 ```
-    {"time" :"2016-03-01 01:01:01", "tag" : "signal1", "value" : 3.4}
-    {"time" :"2016-03-01 01:01:02", "tag" : "signal2", "value" : 9.3}
+    {"time" :"2016-03-01 01:01:01", "signal" : "current", "value" : 12.4, "car" : "car1"}
+    {"time" :"2016-03-01 01:01:01", "signal" : "vibration", "value" : 3.4, "car" : "car1"}
 ```
 
 Usage:
@@ -507,29 +496,31 @@ Usage:
     //instantiate Falkonry
     Falkonry falkonry = new Falkonry("http://localhost:8080", "auth-token");
     //Add data to datastream
-    String data = "{\"time\" : \"2016-03-01 01:01:01\", \"tag\" : \"signal1\", \"value\" : 3.4}" + "\n"
-        + "{\"time\" : \"2016-03-01 01:01:02\", \"tag\" : \"signal2\", \"value\" : 9.3}";
+    String data = "{\"time\" :\"2016-03-01T01:01:01.000Z\",\"unit\":\"Unit1\", \"signal\" : \"current\", \"value\" : 12.5}" +
+					"{\"time\" :\"2016-03-01T01:01:01.000Z\",\"unit\":\"Unit2\", \"signal\" : \"vibration\", \"value\" : 3.4}";
 
-    Map<String, String> options = new HashMap<String, String>();
-    options.put("timeIdentifier", "time");
-    options.put("timeFormat", "iso_8601");
-    options.put("fileFormat", "csv");
-    options.put("streaming", "false");
-	options.put("hasMoreData", "false");
+		Map<String, String> options = new HashMap<String, String>();
+		options.put("timeIdentifier", "time");
+		options.put("timeFormat", "iso_8601");
+		options.put("timeZone", time.getZone());
+		options.put("signalIdentifier", "signal");
+		options.put("entityIdentifier", "unit");
+		options.put("valueIdentifier", "value");
+		options.put("fileFormat", "json");
+		options.put("streaming", "false");
+		options.put("hasMoreData", "false");
     falkonry.addInput('datastream-Id', data, options);
 
 ```
 
 
-#### Add historical input data (csv format) to Datastream (Used for model revision) 
+#### Add narrow input data (csv format) single thing to Datastream
 
 Data:
 ```
-	time, tag, value
-    2016-03-01 01:01:01, signal1_entity1, 3.4
-    2016-03-01 01:01:01, signal2_entity1, 1.4
-    2016-03-01 01:01:02, signal1_entity2, 9.3
-    2016-03-01 01:01:02, signal2_entity2, 4.3
+	 time,signal,value
+    2016-03-01 01:01:01,L1DynVert,3.4
+    2016-03-01 01:01:01,L1VertAvg,1.4
 ```
 
 Usage:
@@ -543,32 +534,27 @@ Usage:
 
     //instantiate Falkonry
     Falkonry falkonry = new Falkonry("http://localhost:8080", "auth-token");
-	 //Add data to datastream
-	    String data = "time, entities, signal1, signal2, signal3, signal4" + "\n"
-	        + "1467729675422, entity1, 41.11, 62.34, 77.63, 4.8" + "\n"
-	        + "1467729675445, entity1, 43.91, 82.64, 73.63, 3.8";
-	    Map<String, String> options = new HashMap<String, String>();
-	    options.put("timeIdentifier", "time");
-	    options.put("timeFormat", "millis");
-	    options.put("fileFormat", "csv");
-	    options.put("streaming", "false");
-		options.put("hasMoreData", "false");
-	    falkonry.addInput('datastream-Id', data, options);
+	//Add data to datastream
+    String data = "time,signal,value\n" + 
+					"2012-01-03T18:16:00.000Z,L1DynVert,9.95\n" + 
+					"2012-01-03T18:16:00.000Z,L1VertAvg,12.95\n" + 
+					"2012-01-03T18:16:00.000Z,L1VertPk,19.95";
+
+	Map<String, String> options = new HashMap<String, String>();
+	options.put("fileFormat", "csv");
+	options.put("streaming", "false");
+	options.put("hasMoreData", "false");
+    falkonry.addInput('datastream-Id', data, options);
 
 ```
 
-
+#### Add wide input data (json format) to single thing Datastream
 
 Data:
 ```
-    {"time":1467729675422, "entities": "entity1", "signal1":41.11, "signal2":82.34, "signal3":74.63, "signal4":4.8}
-    {"time":1467729668919, "entities": "entity2", "signal1":78.11, "signal2":2.33, "signal3":4.6, "signal4":9.8}
-
-    or
-
-    time, entities, signal1, signal2, signal3, signal4
-    1467729675422, entity1, 41.11, 62.34, 77.63, 4.8
-    1467729675445, entity1, 43.91, 82.64, 73.63, 3.8
+   
+	{"time" :"2016-03-01 01:01:01", "current" : 12.4, "vibration" : 3.4, "state" : "On"}
+    
 ```
 
 Usage:
@@ -592,16 +578,16 @@ Usage:
     time.setZone("GMT");
 
     Signal signal = new Signal();
-    signal.setTagIdentifier("tag");
+    
     signal.setValueIdentifier("value");
-    signal.setDelimiter("_");
-    signal.setIsSignalPrefix(false);
+    
+    
 
     Datasource dataSource = new Datasource();
     dataSource.setType("STANDALONE");
 
     Field field = new Field();
-    field.setSiganl(signal);
+    field.setSignal(signal);
     field.setTime(time);
     field.setEntityIdentifier("entities");
 
@@ -612,18 +598,54 @@ Usage:
 
 
     //Add data to datastream
-    String data = "time, entities, signal1, signal2, signal3, signal4" + "\n"
-        + "1467729675422, entity1, 41.11, 62.34, 77.63, 4.8" + "\n"
-        + "1467729675445, entity1, 43.91, 82.64, 73.63, 3.8";
-    Map<String, String> options = new HashMap<String, String>();
-    options.put("timeIdentifier", "time");
-    options.put("timeFormat", "millis");
-    options.put("fileFormat", "csv");
-    options.put("streaming", "false");
+    String data = "{\"time\" :\"2016-03-01 01:01:01\", \"current\" : 12.4, \"vibration\" : 3.4, \"state\" : \"On\"}";
+
+	Map<String, String> options = new HashMap<String, String>();
+	options.put("fileFormat", "json");
+	options.put("streaming", "false");
 	options.put("hasMoreData", "false");
     falkonry.addInput(datastream.getId(), data, options);
 ```
+#### Add wide input data (csv format) to multi thing Datastream
 
+
+Data:
+```
+	 time,signal,value
+    2016-03-01 01:01:01,L1DynVert,3.4
+    2016-03-01 01:01:01,L1VertAvg,1.4
+```
+
+Usage:
+```java
+    import com.falkonry.client.Falkonry;
+    import com.falkonry.helper.models.Datasource;
+    import com.falkonry.helper.models.Datastream;
+    import com.falkonry.helper.models.Field;
+    import com.falkonry.helper.models.TimeObject;
+    import com.falkonry.helper.models.Signal;
+
+    //instantiate Falkonry
+    Falkonry falkonry = new Falkonry("http://localhost:8080", "auth-token");
+	//Add data to datastream
+    
+	String data = "time,unit,L1DynVert,L1VertAvg,L1VertPk\n" + 
+    "2012-01-03T18:16:00.000Z,unit1,4.6,9.95,89.95\n" + 
+    "2012-01-03T18:16:00.000Z,unit1,5.2,12.95,5.85\n" + 
+    "2012-01-03T18:16:00.000Z,unit2,74.3,19.95,9.0";
+
+	Map<String, String> options = new HashMap<String, String>();
+	options.put("timeIdentifier", "time");
+	options.put("timeFormat", "iso_8601");
+	options.put("timeZone", time.getZone());
+	options.put("fileFormat", "csv");
+	options.put("streaming", "false");
+	options.put("hasMoreData", "false");
+	options.put("entityIdentifier", "unit");
+
+    falkonry.addInput('datastream-Id', data, options);
+
+```
 
 
 #### Add historical input data (json format) from a stream to Datastream (Used for model revision)
@@ -653,7 +675,6 @@ Usage:
     import org.apache.commons.io.FileUtils;
 
     Falkonry falkonry   = new Falkonry("http://localhost:8080", "auth-token");
-    Map<String, String> options = new HashMap<String, String>();
     Map<String, String> options = new HashMap<String, String>();
     options.put("timeIdentifier", "time");
     options.put("timeFormat", "millis");
@@ -686,8 +707,8 @@ Usage:
     //instantiate Falkonry
     Falkonry falkonry = new Falkonry("http://localhost:8080", "auth-token");
     //Add data to datastream
-    String data = "{\"time\" : \"2016-03-01 01:01:01\", \"tag\" : \"signal1\", \"value\" : 3.4}" + "\n"
-        + "{\"time\" : \"2016-03-01 01:01:02\", \"tag\" : \"signal2\", \"value\" : 9.3}";
+    String data = "{\"time\" : \"2016-03-01 01:01:01\", \"signal\" : \"signal1\", \"value\" : 3.4}" + "\n"
+        + "{\"time\" : \"2016-03-01 01:01:02\", \"signal\" : \"signal2\", \"value\" : 9.3}";
 
     Map<String, String> options = new HashMap<String, String>();
     options.put("timeIdentifier", "time");
@@ -695,6 +716,8 @@ Usage:
     options.put("fileFormat", "csv");
     options.put("streaming", "true");
 	options.put("hasMoreData", "false");
+	options.put("signalIdentifier", "signal");
+	options.put("valueIdentifier", "value");
     falkonry.addInput('datastream-Id', data, options);
 
 ```
@@ -704,11 +727,11 @@ Usage:
 
 Data:
 ```
-	time, tag, value
-    2016-03-01 01:01:01, signal1_entity1, 3.4
-    2016-03-01 01:01:01, signal2_entity1, 1.4
-    2016-03-01 01:01:02, signal1_entity2, 9.3
-    2016-03-01 01:01:02, signal2_entity2, 4.3
+	time,signal,entity,value
+    2016-03-01 01:01:01,signal1,entity1,3.4
+    2016-03-01 01:01:01,signal2,entity1,1.4
+    2016-03-01 01:01:02,signal1,entity2,9.3
+    2016-03-01 01:01:02,signal2,entity2,4.3
 ```
 
 Usage:
@@ -723,12 +746,13 @@ Usage:
     //instantiate Falkonry
     Falkonry falkonry = new Falkonry("http://localhost:8080", "auth-token");
 	 //Add data to datastream
-	    String data = "time, entities, signal1, signal2, signal3, signal4" + "\n"
-	        + "1467729675422, entity1, 41.11, 62.34, 77.63, 4.8" + "\n"
-	        + "1467729675445, entity1, 43.91, 82.64, 73.63, 3.8";
+	    String data = "time,entities,signal1,signal2,signal3,signal4" + "\n"
+	        + "1467729675422,entity1,41.11,62.34,77.63,4.8" + "\n"
+	        + "1467729675445,entity1,43.91,82.64,73.63,3.8";
 	    Map<String, String> options = new HashMap<String, String>();
 	    options.put("timeIdentifier", "time");
 	    options.put("timeFormat", "millis");
+	    options.put("timeZone", "GMT");
 	    options.put("fileFormat", "csv");
 	    options.put("streaming", "true");
 		options.put("hasMoreData", "false");
@@ -745,9 +769,9 @@ Data:
 
     or
 
-    time, entities, signal1, signal2, signal3, signal4
-    1467729675422, entity1, 41.11, 62.34, 77.63, 4.8
-    1467729675445, entity1, 43.91, 82.64, 73.63, 3.8
+    time,entities,signal1,signal2,signal3,signal4
+    1467729675422,entity1,41.11,62.34,77.63,4.8
+    1467729675445,entity1,43.91,82.64,73.63,3.8
 ```
 
 Usage:
@@ -771,16 +795,16 @@ Usage:
     time.setZone("GMT");
 
     Signal signal = new Signal();
-    signal.setTagIdentifier("tag");
+    
     signal.setValueIdentifier("value");
-    signal.setDelimiter("_");
-    signal.setIsSignalPrefix(false);
+    
+    
 
     Datasource dataSource = new Datasource();
     dataSource.setType("STANDALONE");
 
     Field field = new Field();
-    field.setSiganl(signal);
+    field.setSignal(signal);
     field.setTime(time);
     field.setEntityIdentifier("entities");
 
@@ -791,12 +815,13 @@ Usage:
 
 
     //Add data to datastream
-    String data = "time, entities, signal1, signal2, signal3, signal4" + "\n"
-        + "1467729675422, entity1, 41.11, 62.34, 77.63, 4.8" + "\n"
-        + "1467729675445, entity1, 43.91, 82.64, 73.63, 3.8";
+    String data = "time,entities,signal1,signal2,signal3,signal4" + "\n"
+        + "1467729675422,entity1,41.11,62.34,77.63,4.8" + "\n"
+        + "1467729675445,entity1,43.91,82.64,73.63,3.8";
     Map<String, String> options = new HashMap<String, String>();
     options.put("timeIdentifier", "time");
     options.put("timeFormat", "millis");
+    options.put("timeZone", "GMT");
     options.put("fileFormat", "csv");
     options.put("streaming", "false");
 	options.put("hasMoreData", "false");
@@ -813,8 +838,6 @@ Usage:
 
     Falkonry falkonry   = new Falkonry("http://localhost:8080", "auth-token");
     Map<String, String> options = new HashMap<String, String>();
-    options.put("timeIdentifier", "time");
-    options.put("timeFormat", "millis");
     options.put("fileFormat", "csv");
     options.put("streaming", "true");
 	options.put("hasMoreData", "false");
@@ -833,9 +856,6 @@ Usage:
 
     Falkonry falkonry   = new Falkonry("http://localhost:8080", "auth-token");
     Map<String, String> options = new HashMap<String, String>();
-    Map<String, String> options = new HashMap<String, String>();
-    options.put("timeIdentifier", "time");
-    options.put("timeFormat", "millis");
     options.put("fileFormat", "csv");
     options.put("streaming", "true");
 	options.put("hasMoreData", "false");

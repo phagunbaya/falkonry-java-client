@@ -17,12 +17,13 @@ import com.falkonry.helper.models.TimeObject;
 import org.junit.*;
 import java.util.*;
 
-@Ignore
+//@Ignore
 public class TestEntityMeta {
 
 	Falkonry falkonry = null;
 	String host = "https://localhost:8080";
-	String token = "auth-token";
+//	String token = "auth-token";
+	String token = "npp766l2hghmhrc7ygrbldjnkb9rn7mg";
 	List<Datastream> datastreams = new ArrayList<Datastream>();
 	List<EntityMetaRequest> entityMetaRequests = new ArrayList<EntityMetaRequest>();
 
@@ -49,13 +50,13 @@ public class TestEntityMeta {
 		time.setFormat("iso_8601");
 		time.setZone("GMT");
 		Signal signal = new Signal();
-		signal.setTagIdentifier("tag");
-		signal.setValueIdentifier("value");
-		signal.setDelimiter("_");
-		signal.setIsSignalPrefix(false);
 
+		signal.setValueIdentifier("value");
+		signal.setSignalIdentifier("signal");
 		Field field = new Field();
-		field.setSiganl(signal);
+//		field.setEntityIdentifier("entity");
+		
+		field.setSignal(signal);
 		field.setTime(time);
 		ds.setField(field);
 		Datasource dataSource = new Datasource();
@@ -64,13 +65,16 @@ public class TestEntityMeta {
 
 		Datastream datastream = falkonry.createDatastream(ds);
 		datastreams.add(datastream);
-		String data = "time, tag, value\n";
+		String data = "time,entity,signal,value\n";
 		for (int i = 0; i < 10; i++) {
-			data += "2016-03-01 01:01:0" + i + ", entity1_signal1, 3.4\n";
+			data += "2016-03-01 01:01:0" + i + ",entity1,signal1,3.4\n";
 		}
 		Map<String, String> options = new HashMap<String, String>();
 		options.put("timeIdentifier", "time");
 		options.put("timeFormat", "iso_8601");
+		options.put("signalIdentifier", "signal");
+		options.put("entityIdentifier", "entity");
+		options.put("valueIdentifier", "value");
 		options.put("fileFormat", "csv");
 		options.put("streaming", "false");
 		options.put("hasMoreData", "false");
@@ -83,10 +87,10 @@ public class TestEntityMeta {
 		entityMetaRequest.setPath("entity1/UNIT1");
 		entityMetaRequests.add(entityMetaRequest);
 		List<EntityMeta> entityMetas = falkonry.postEntityMeta(entityMetaRequests, datastream.getId());
-		Assert.assertEquals(true, entityMetas.size() == 1);
+		Assert.assertEquals(true,entityMetas.size() == 1);
 
 		List<EntityMeta> entityMetas1 = falkonry.getEntityMeta(datastream.getId());
-		Assert.assertEquals(true, entityMetas1.size() == 1);
+		Assert.assertEquals(true,entityMetas1.size() == 1);
 	}
 
 	/**

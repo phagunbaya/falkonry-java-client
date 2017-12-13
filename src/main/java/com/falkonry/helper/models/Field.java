@@ -68,7 +68,7 @@ public class Field {
      * @param signal
      * @return
      */
-    public Field setSiganl(Signal signal) {
+    public Field setSignal(Signal signal) {
     this.signal = signal;
     return this;
   }

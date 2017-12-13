@@ -38,29 +38,25 @@ public class TestGetDatastreamData {
      */
     public void createDatastreamWithCsvFacts() throws Exception {
 
-        Datastream ds = new Datastream();
-        ds.setName("Test-DS-" + Math.random());
+    	Datastream ds = new Datastream();
+		ds.setName("Test-DS-" + Math.random());
+		TimeObject time = new TimeObject();
+		time.setIdentifier("time");
+		time.setFormat("iso_8601");
+		time.setZone("GMT");
+		Signal signal = new Signal();
 
-        TimeObject time = new TimeObject();
-        time.setIdentifier("time");
-        time.setFormat("iso_8601");
-        time.setZone("GMT");
-
-        Signal signal = new Signal();
-        signal.setTagIdentifier("tag");
-        signal.setValueIdentifier("value");
-        signal.setDelimiter("_");
-        signal.setIsSignalPrefix(false);
-
-        Datasource dataSource = new Datasource();
-        dataSource.setType("STANDALONE");
-
-        Field field = new Field();
-        field.setSiganl(signal);
-        field.setTime(time);
-
-        ds.setDatasource(dataSource);
-        ds.setField(field);
+		signal.setValueIdentifier("value");
+		signal.setSignalIdentifier("signal");
+		Field field = new Field();
+//		field.setEntityIdentifier("entity");
+		
+		field.setSignal(signal);
+		field.setTime(time);
+		ds.setField(field);
+		Datasource dataSource = new Datasource();
+		dataSource.setType("STANDALONE");
+		ds.setDatasource(dataSource);
 
         Datastream datastream = falkonry.createDatastream(ds);
         datastreams.add(datastream);
@@ -74,10 +70,18 @@ public class TestGetDatastreamData {
         assessments.add(assessment);
 
         Map<String, String> options = new HashMap<String, String>();
-        String data = "{\"time\" : \"2016-03-01 01:01:01\", \"tag\" : \"signal1_entity1\", \"value\" : 3.4}";
+        //String data = "{\"time\" : \"2016-03-01 01:01:01\", \"tag\" : \"signal1_entity1\", \"value\" : 3.4}";
+        String data = "{\"time\" :\"2016-03-01T01:01:01.000Z\",\"entity\":\"entity1\", \"signal\" : \"current\", \"value\" : 12.5}" +
+				"{\"time\" :\"2016-03-01T01:01:01.000Z\",\"entity\":\"entity2\", \"signal\" : \"vibration\", \"value\" : 3.4}";
         options.put("timeIdentifier", "time");
         options.put("timeFormat", "iso_8601");
-        options.put("fileFormat", "csv");
+        options.put("timeZone", time.getZone());
+		options.put("signalIdentifier", "signal");
+		options.put("entityIdentifier", "entity");
+		options.put("valueIdentifier", "value");
+		options.put("fileFormat", "csv");
+		options.put("streaming", "false");
+		options.put("hasMoreData", "false");
         falkonry.addInput(datastream.getId(), data, options);
 
         Map<String, String> queryParams = new HashMap<String, String>();
@@ -180,7 +184,7 @@ public class TestGetDatastreamData {
         datastreams.add(datastream);
 
         Map<String, String> options = new HashMap<String, String>();
-        String data = "time, tag, entity, signal1, signal2, signal3\n2016-03-01 01:01:01, signal1_entity1, entity1, 3.4, 4.8, 8.3";
+        String data = "time,entity,signal1,signal2,signal3\n2016-03-01 01:01:01,entity1,3.4,4.8,8.3";
         falkonry.addInput(datastream.getId(), data, options);
 
         AssessmentRequest assessmentRequest = new AssessmentRequest();
@@ -223,16 +227,16 @@ public class TestGetDatastreamData {
         time.setZone("GMT");
 
         Signal signal = new Signal();
-        signal.setTagIdentifier("tag");
+        
         signal.setValueIdentifier("value");
-        signal.setDelimiter("_");
-        signal.setIsSignalPrefix(false);
+        
+        
 
         Datasource dataSource = new Datasource();
         dataSource.setType("STANDALONE");
 
         Field field = new Field();
-        field.setSiganl(signal);
+        field.setSignal(signal);
         field.setTime(time);
 
         ds.setDatasource(dataSource);

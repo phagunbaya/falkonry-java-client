@@ -14,42 +14,10 @@ import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Signal {
 
-    private String tagIdentifier;
-    private String delimiter;
+    
     private String valueIdentifier;
-    private Boolean isSignalPrefix;
-
-    /**
-     *
-     * @return
-     */
-    public String getTagIdentifier() {
-        return tagIdentifier;
-    }
-
-    /**
-     *
-     * @param tagIdentifier
-     */
-    public void setTagIdentifier(String tagIdentifier) {
-        this.tagIdentifier = tagIdentifier;
-    }
-
-    /**
-     *
-     * @param delimiter
-     */
-    public void setDelimiter(String delimiter) {
-        this.delimiter = delimiter;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public String getDelimiter() {
-        return delimiter;
-    }
+    private String signalIdentifier;
+    
 
     /**
      *
@@ -66,21 +34,23 @@ public class Signal {
     public void setValueIdentifier(String valueIdentifier) {
         this.valueIdentifier = valueIdentifier;
     }
-
+    
     /**
-     *
-     * @return
-     */
-    public Boolean getIsSignalPrefix() {
-        return isSignalPrefix;
-    }
+    *
+    * @return
+    */
+   public String getSignalIdentifier() {
+       return signalIdentifier;
+   }
 
-    /**
-     *
-     * @param isSignalPrefix
-     */
-    public void setIsSignalPrefix(Boolean isSignalPrefix) {
-        this.isSignalPrefix = isSignalPrefix;
-    }
+   /**
+    *
+    * @param valueIdentifier
+    */
+   public void setSignalIdentifier(String signalIdentifier) {
+       this.signalIdentifier = signalIdentifier;
+   }
+
+    
 
 }
