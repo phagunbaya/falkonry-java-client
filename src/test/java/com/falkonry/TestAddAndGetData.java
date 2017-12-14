@@ -30,17 +30,13 @@ import com.falkonry.helper.models.Signal;
 import com.falkonry.helper.models.TimeObject;
 import com.falkonry.helper.models.ValueType;
 
-//@Ignore
+@Ignore
 public class TestAddAndGetData {
 
 	Falkonry falkonry = null;
 
-//	String host = "https://localhost:8080";
-//	String token = "auth-token";
-	
-	
-	String host = "https://dev.falkonry.ai";
-	String token = "n4qlyqyl7eejz9i2sc1bpi5bz6ry3wvx";
+	String host = "https://localhost:8080";
+	String token = "auth-token";
 	
 	List<Datastream> datastreams = new ArrayList<Datastream>();
 
@@ -124,8 +120,8 @@ public class TestAddAndGetData {
 
 		signal.setValueIdentifier("value");
 		signal.setSignalIdentifier("signal");
-
 		Field field = new Field();
+		
 		field.setSignal(signal);
 		field.setTime(time);
 		ds.setField(field);
@@ -141,11 +137,6 @@ public class TestAddAndGetData {
 						"2012-01-03T18:16:00.000Z,L1VertPk,19.95";
 
 		Map<String, String> options = new HashMap<String, String>();
-//		options.put("timeIdentifier", "time");
-//		options.put("timeFormat", "iso_8601");
-//		options.put("timeZone", time.getZone());
-//		options.put("signalIdentifier", "signal");
-//		options.put("valueIdentifier", "value");
 		options.put("fileFormat", "csv");
 		options.put("streaming", "false");
 		options.put("hasMoreData", "false");
@@ -220,8 +211,6 @@ public class TestAddAndGetData {
 		String data = "{\"time\" :\"2016-03-01 01:01:01\", \"current\" : 12.4, \"vibration\" : 3.4, \"state\" : \"On\"}";
 
 		Map<String, String> options = new HashMap<String, String>();
-//		options.put("timeIdentifier", "time");
-//		options.put("timeFormat", "YYYY-MM-DD HH:mm:ss");
 		options.put("fileFormat", "json");
 		options.put("streaming", "false");
 		options.put("hasMoreData", "false");
@@ -273,15 +262,9 @@ public class TestAddAndGetData {
         "2012-01-03T18:16:00.000Z,unit2,74.3,19.95,9.0";
 
 		Map<String, String> options = new HashMap<String, String>();
-		options.put("timeIdentifier", "time");
-		options.put("timeFormat", "iso_8601");
-		options.put("timeZone", time.getZone());
 		options.put("fileFormat", "csv");
 		options.put("streaming", "false");
 		options.put("hasMoreData", "false");
-		options.put("signalIdentifier", "time");
-		options.put("entityIdentifier", "time");
-		options.put("valueIdentifier", "unit");
 
 		InputStatus ins = falkonry.addInput(datastream.getId(), data, options);
 		Assert.assertEquals(ins.getAction(), "ADD_DATA_DATASTREAM");

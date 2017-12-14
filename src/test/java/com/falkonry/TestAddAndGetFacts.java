@@ -10,16 +10,13 @@ import com.falkonry.helper.models.*;
 import org.junit.*;
 import java.util.*;
 
-//@Ignore
+@Ignore
 public class TestAddAndGetFacts {
 
     Falkonry falkonry = null;
-//    String host = "https://localhost:8080";
-//    String token = "auth-token";
-//    String host = "https://dev.falkonry.ai";
-//	String token = "n4qlyqyl7eejz9i2sc1bpi5bz6ry3wvx";
     String host = "https://localhost:8080";
-	String token = "npp766l2hghmhrc7ygrbldjnkb9rn7mg";
+    String token = "auth-token";
+
     List<Datastream> datastreams = new ArrayList<Datastream>();
     List<Assessment> assessments = new ArrayList<Assessment>();
 
@@ -161,7 +158,7 @@ public class TestAddAndGetFacts {
 		options.put("fileFormat", "json");
 		options.put("streaming", "false");
 		options.put("hasMoreData", "false");
-//        falkonry.addInput(datastream.getId(), data, options);
+        falkonry.addInput(datastream.getId(), data, options);
 
         Map<String, String> queryParams = new HashMap<String, String>();
         queryParams.put("startTimeIdentifier", "time");
@@ -348,11 +345,7 @@ public class TestAddAndGetFacts {
 
         Map<String, String> options = new HashMap<String, String>();
         String data = "time,entity,signal1,signal2,signal3\n2016-03-01T01:01:01Z,entity1,3.4,4.8,8.3";
-//        options.put("timeIdentifier", "time");
-//        options.put("timeFormat", "iso_8601");
-//        options.put("timeZone", time.getZone());
         options.put("fileFormat", "csv");
-//		options.put("entityIdentifier", "entity");
 		options.put("streaming", "false");
 		options.put("hasMoreData", "false");
         falkonry.addInput(datastream.getId(), data, options);
@@ -377,7 +370,7 @@ public class TestAddAndGetFacts {
         InputStatus response = falkonry.addFacts(assessment.getId(), data, queryParams);
         Assert.assertEquals(response.getAction(), "ADD_FACT_DATA");
         Assert.assertEquals(response.getStatus(), "PENDING");
-        Thread.sleep(5000);
+        Thread.sleep(15000);
         options = new HashMap<String, String>();
         options.put("startTime", "2011-01-17T01:00:00.000Z"); // in the format YYYY-MM-DDTHH:mm:ss.SSSZ
         options.put("endTime", "2011-08-18T01:00:00.000Z");  // in the format YYYY-MM-DDTHH:mm:ss.SSSZ

@@ -22,13 +22,13 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.util.*;
 
-//@Ignore
+@Ignore
 public class TestAddDataStream {
 
 	Falkonry falkonry = null;
 	String host = "https://localhost:8080";
-//	String token = "auth-token";
-	String token = "npp766l2hghmhrc7ygrbldjnkb9rn7mg";
+	String token = "auth-token";
+
 	List<Datastream> datastreams = new ArrayList<Datastream>();
 
 	/**

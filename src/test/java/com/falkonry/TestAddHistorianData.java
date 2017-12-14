@@ -23,14 +23,14 @@ import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.type.TypeReference;
 import org.json.JSONObject;
 
-//@Ignore
+@Ignore
 public class TestAddHistorianData {
 
 	Falkonry falkonry = null;
 
 	String host = "https://localhost:8080";
-//	String token = "auth-token";
-	String token = "npp766l2hghmhrc7ygrbldjnkb9rn7mg";
+	String token = "auth-token";
+
 	List<Datastream> datastreams = new ArrayList<Datastream>();
 	List<Assessment> assessments = new ArrayList<Assessment>();
 
