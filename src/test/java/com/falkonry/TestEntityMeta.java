@@ -23,6 +23,7 @@ public class TestEntityMeta {
 	Falkonry falkonry = null;
 	String host = "https://localhost:8080";
 	String token = "auth-token";
+	
 
 	List<Datastream> datastreams = new ArrayList<Datastream>();
 	List<EntityMetaRequest> entityMetaRequests = new ArrayList<EntityMetaRequest>();
@@ -55,7 +56,7 @@ public class TestEntityMeta {
 		signal.setValueIdentifier("value");
 		signal.setSignalIdentifier("signal");
 		Field field = new Field();
-		// field.setEntityIdentifier("entity");
+		 field.setEntityIdentifier("entity");
 
 		field.setSignal(signal);
 		field.setTime(time);
@@ -71,11 +72,7 @@ public class TestEntityMeta {
 			data += "2016-03-01 01:01:0" + i + ",entity1,signal1,3.4\n";
 		}
 		Map<String, String> options = new HashMap<String, String>();
-		options.put("timeIdentifier", "time");
-		options.put("timeFormat", "iso_8601");
-		options.put("signalIdentifier", "signal");
-		options.put("entityIdentifier", "entity");
-		options.put("valueIdentifier", "value");
+		
 		options.put("fileFormat", "csv");
 		options.put("streaming", "false");
 		options.put("hasMoreData", "false");

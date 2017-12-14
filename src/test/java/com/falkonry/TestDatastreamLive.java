@@ -16,12 +16,14 @@ import com.falkonry.helper.models.Signal;
 import org.junit.*;
 import java.util.*;
 
-@Ignore
+//@Ignore
 public class TestDatastreamLive {
 
 	Falkonry falkonry = null;
 	String host = "https://localhost:8080";
-	String token = "auth-token";
+  	String token = "auth-token";
+	
+	
 	List<Datastream> datastreams = new ArrayList<Datastream>();
 
 	/**
@@ -42,26 +44,22 @@ public class TestDatastreamLive {
 	public void testOnDatastreamException() throws Exception {
 		Datastream ds = new Datastream();
 		ds.setName("Test-DS-" + Math.random());
-
 		TimeObject time = new TimeObject();
 		time.setIdentifier("time");
 		time.setFormat("iso_8601");
 		time.setZone("GMT");
-
 		Signal signal = new Signal();
 
 		signal.setValueIdentifier("value");
-
-		Datasource dataSource = new Datasource();
-		dataSource.setType("STANDALONE");
-
+		signal.setSignalIdentifier("signal");
 		Field field = new Field();
+
 		field.setSignal(signal);
 		field.setTime(time);
-		// field.setEntityIdentifier("unit");
-
-		ds.setDatasource(dataSource);
 		ds.setField(field);
+		Datasource dataSource = new Datasource();
+		dataSource.setType("STANDALONE");
+		ds.setDatasource(dataSource);
 
 		Datastream datastream = falkonry.createDatastream(ds);
 		datastreams.add(datastream);
@@ -82,7 +80,7 @@ public class TestDatastreamLive {
 	@Test
 	public void testOnDatastream() throws Exception {
 		// Id of datastream which has assessment with active model available
-		String datastreamId = "rphrzm34udl4z4";
+		String datastreamId = "cptv9ldj4n9clt";
 
 		List<Assessment> assessments = falkonry.onDatastream(datastreamId);
 		Assert.assertEquals(true, assessments.size() != 0);
@@ -96,7 +94,7 @@ public class TestDatastreamLive {
 	@Test
 	public void testOffDatastream() throws Exception {
 		// Id of datastream which has assessment with active model available
-		String datastreamId = "rphrzm34udl4z5";
+		String datastreamId = "cptv9ldj4n9clt";
 
 		List<Assessment> assessments1 = falkonry.onDatastream(datastreamId);
 		Assert.assertEquals(true, assessments1.size() != 0);

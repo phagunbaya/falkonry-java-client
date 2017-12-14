@@ -20,6 +20,7 @@ public class TestStreamOutput {
 	Falkonry falkonry = null;
 	String host = "https://localhost:8080";
 	String token = "auth-token";
+	
 
 	/**
 	 *
@@ -40,7 +41,7 @@ public class TestStreamOutput {
 	 */
 	public void getOutput() throws Exception {
 		try {
-			String assessment = "suix1o014tyj97";
+			String assessment = "wyy4nv6bbnqvc9";
 			BufferedReader outputBuffer;
 			outputBuffer = falkonry.getOutput(assessment);
 			String inputLine;

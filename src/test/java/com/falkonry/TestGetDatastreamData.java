@@ -16,6 +16,9 @@ public class TestGetDatastreamData {
 	Falkonry falkonry = null;
 	String host = "https://localhost:8080";
 	String token = "auth-token";
+	
+	
+	
 	List<Datastream> datastreams = new ArrayList<Datastream>();
 	List<Assessment> assessments = new ArrayList<Assessment>();
 
@@ -49,7 +52,7 @@ public class TestGetDatastreamData {
 		signal.setValueIdentifier("value");
 		signal.setSignalIdentifier("signal");
 		Field field = new Field();
-		// field.setEntityIdentifier("entity");
+		field.setEntityIdentifier("entity");
 
 		field.setSignal(signal);
 		field.setTime(time);
@@ -186,6 +189,9 @@ public class TestGetDatastreamData {
 
 		Map<String, String> options = new HashMap<String, String>();
 		String data = "time,entity,signal1,signal2,signal3\n2016-03-01 01:01:01,entity1,3.4,4.8,8.3";
+		options.put("fileFormat", "csv");
+		options.put("streaming", "false");
+		options.put("hasMoreData", "false");
 		falkonry.addInput(datastream.getId(), data, options);
 
 		AssessmentRequest assessmentRequest = new AssessmentRequest();
@@ -221,26 +227,24 @@ public class TestGetDatastreamData {
 
 		Datastream ds = new Datastream();
 		ds.setName("Test-DS-" + Math.random());
-
 		TimeObject time = new TimeObject();
 		time.setIdentifier("time");
 		time.setFormat("iso_8601");
 		time.setZone("GMT");
-
 		Signal signal = new Signal();
 
 		signal.setValueIdentifier("value");
-
-		Datasource dataSource = new Datasource();
-		dataSource.setType("STANDALONE");
-
+		signal.setSignalIdentifier("signal");
 		Field field = new Field();
+		field.setEntityIdentifier("entity");
+
 		field.setSignal(signal);
 		field.setTime(time);
-
-		ds.setDatasource(dataSource);
 		ds.setField(field);
-
+		Datasource dataSource = new Datasource();
+		dataSource.setType("STANDALONE");
+		ds.setDatasource(dataSource);
+		
 		Datastream datastream = falkonry.createDatastream(ds);
 		datastreams.add(datastream);
 
@@ -256,6 +260,9 @@ public class TestGetDatastreamData {
 		Map<String, String> options = new HashMap<String, String>();
 
 		String data = "{\"time\" : \"2016-03-01 01:01:01\", \"tag\" : \"signal1_entity1\", \"value\" : 3.4}";
+		options.put("fileFormat", "json");
+		options.put("streaming", "false");
+		options.put("hasMoreData", "false");
 		falkonry.addInput(datastream.getId(), data, options);
 
 		Interval interval = new Interval();
@@ -318,6 +325,9 @@ public class TestGetDatastreamData {
 		Map<String, String> options = new HashMap<String, String>();
 
 		String data = "{\"time\":1467729675422,\"entity\":\"entity1\",\"signal1\":41.11,\"signal2\":82.34,\"signal3\":74.63,\"signal4\":4.8,\"signal5\":72.01}";
+		options.put("fileFormat", "json");
+		options.put("streaming", "false");
+		options.put("hasMoreData", "false");
 		falkonry.addInput(datastream.getId(), data, options);
 
 		Interval interval = new Interval();

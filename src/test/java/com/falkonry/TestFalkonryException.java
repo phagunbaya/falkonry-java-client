@@ -18,6 +18,9 @@ public class TestFalkonryException {
 	Falkonry falkonry = null;
 	String host = "https://localhost:8080";
 	String token = "auth-token";
+	
+
+
 
 	/**
 	 *

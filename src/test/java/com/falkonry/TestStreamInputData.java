@@ -19,7 +19,8 @@ public class TestStreamInputData {
 	Falkonry falkonry = null;
 	String host = "https://localhost:8080";
 	String token = "auth-token";
-	String datastreamId = "nb37s0ll4itfo7";
+	
+	String datastreamId = "cptv9ldj4n9clt";
 	List<Datastream> datastreams = new ArrayList<Datastream>();
 
 	/**
