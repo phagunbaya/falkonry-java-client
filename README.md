@@ -32,10 +32,10 @@ Maven install
     * Retrieve Assessment by Id
     * Delete Assessment by id
     * Get Condition List Of Assessment
-    * Add narrow input data (json format) to multi thing Datastream
-    * Add narrow input data (csv format) single thing to Datastream
-    * Add wide input data (json format) to single thing Datastream
-    * Add wide input data (csv format) to multi thing Datastream
+    * Add narrow input data (json format) to multi entity Datastream
+    * Add narrow input data (csv format) single entity to Datastream
+    * Add wide input data (json format) to single entity Datastream
+    * Add wide input data (csv format) to multi entity Datastream
 	* Add live input data (json format) to Datastream (Used for live monitoring) 
 	* Add live input data (csv format) to Datastream (Used for live monitoring) 
 	* Add live input data (json format) from a stream to Datastream (Used for live monitoring) 
@@ -478,7 +478,7 @@ Usage:
 ```
 
 
-#### Add narrow input data (json format) to multi thing Datastream
+#### Add narrow input data (json format) to multientityntitytastream
 
 Data:
 ```
@@ -516,7 +516,7 @@ Usage:
 ```
 
 
-#### Add narrow input data (csv format) single thing to Datastream
+#### Add narrow input data (csv format) to single thing to Datastream
 
 Data:
 ```
@@ -550,7 +550,7 @@ Usage:
 
 ```
 
-#### Add wide input data (json format) to single thing Datastream
+#### Add wide input data (json format) to single entity Datastream
 
 Data:
 ```
@@ -608,14 +608,15 @@ Usage:
 	options.put("hasMoreData", "false");
     falkonry.addInput(datastream.getId(), data, options);
 ```
-#### Add wide input data (csv format) to multi thing Datastream
+#### Add wide input data (csv format) to multi entity Datastream
 
 
 Data:
 ```
-	 time,signal,value
-    2016-03-01 01:01:01,L1DynVert,3.4
-    2016-03-01 01:01:01,L1VertAvg,1.4
+	time,unit,L1DynVert,L1VertAvg,L1VertPk 
+    2012-01-03T18:16:00.000Z,unit1,4.6,9.95,89.95 
+    2012-01-03T18:16:00.000Z,unit1,5.2,12.95,5.85 
+    2012-01-03T18:16:00.000Z,unit2,74.3,19.95,9.0
 ```
 
 Usage:
@@ -639,7 +640,7 @@ Usage:
 	Map<String, String> options = new HashMap<String, String>();
 	options.put("timeIdentifier", "time");
 	options.put("timeFormat", "iso_8601");
-	options.put("timeZone", time.getZone());
+	options.put("timeZ"GMT"Zone());
 	options.put("fileFormat", "csv");
 	options.put("streaming", "false");
 	options.put("hasMoreData", "false");
@@ -762,7 +763,7 @@ Usage:
 
 ```
 
-
+#### Add live input data (json format) to Datastream (Used for live monitoring)  
 
 Data:
 ```
@@ -872,8 +873,8 @@ Usage:
 #### Add facts data (json format) to Assessment of single entity datastream
 Data Sample
 ```
-{"time" : "2011-03-26T12:00:00.000Z", "thing" : "thing1", "end" : "2012-06-01T00:00:00.000Z", "Health" : "Normal"}
-{"time" : "2014-02-10T23:00:00.000Z", "thing" : "thing1", "end" : "2014-03-20T12:00:00.000Z", "Health" : "Spalling"}
+{"time" : "2011-03-26T12:00:00.000entitythienentity"thientity "end" : "2012-06-01T00:00:00.000Z", "Health" : "Normal"}
+{"time" : "2014-02-10T23:00:00.0entity "thientity "thientity "end" : "2014-03-20T12:00:00.000Z", "Health" : "Spalling"}
 
 ```java
   import com.falkonry.client.Falkonry;
