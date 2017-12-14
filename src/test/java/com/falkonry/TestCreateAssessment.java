@@ -38,6 +38,7 @@ public class TestCreateAssessment {
 
 	/**
 	 * Should create assessment
+	 * 
 	 * @throws Exception
 	 */
 	@Test
@@ -53,8 +54,8 @@ public class TestCreateAssessment {
 		signal.setValueIdentifier("value");
 		signal.setSignalIdentifier("signal");
 		Field field = new Field();
-//		field.setEntityIdentifier("entity");
-		
+		// field.setEntityIdentifier("entity");
+
 		field.setSignal(signal);
 		field.setTime(time);
 		ds.setField(field);
@@ -80,6 +81,7 @@ public class TestCreateAssessment {
 
 	/**
 	 * Should delete assessment
+	 * 
 	 * @throws Exception
 	 */
 	@Test
@@ -95,8 +97,8 @@ public class TestCreateAssessment {
 		signal.setValueIdentifier("value");
 		signal.setSignalIdentifier("signal");
 		Field field = new Field();
-//		field.setEntityIdentifier("entity");
-		
+		// field.setEntityIdentifier("entity");
+
 		field.setSignal(signal);
 		field.setTime(time);
 		ds.setField(field);
@@ -121,13 +123,14 @@ public class TestCreateAssessment {
 		try {
 			Assessment assessmentResp = falkonry.getAssessment(assessment.getId());
 			Assert.assertEquals(true, false);
-		} catch(Exception e) {
+		} catch (Exception e) {
 			Assert.assertEquals(true, true);
 		}
 	}
 
 	/**
 	 * Should get assessment list
+	 * 
 	 * @throws Exception
 	 */
 	@Test
@@ -144,8 +147,8 @@ public class TestCreateAssessment {
 		signal.setValueIdentifier("value");
 		signal.setSignalIdentifier("signal");
 		Field field = new Field();
-//		field.setEntityIdentifier("entity");
-		
+		// field.setEntityIdentifier("entity");
+
 		field.setSignal(signal);
 		field.setTime(time);
 		ds.setField(field);
@@ -175,6 +178,7 @@ public class TestCreateAssessment {
 
 	/**
 	 * Should get assessment by ID
+	 * 
 	 * @throws Exception
 	 */
 	@Test
@@ -191,8 +195,8 @@ public class TestCreateAssessment {
 		signal.setValueIdentifier("value");
 		signal.setSignalIdentifier("signal");
 		Field field = new Field();
-//		field.setEntityIdentifier("entity");
-		
+		// field.setEntityIdentifier("entity");
+
 		field.setSignal(signal);
 		field.setTime(time);
 		ds.setField(field);
@@ -218,7 +222,7 @@ public class TestCreateAssessment {
 		Assert.assertEquals(assessment1.getName(), assessment.getName());
 		Assert.assertEquals(assessment1.getRate(), assessment.getRate());
 		Assert.assertEquals(assessment1.getDatastream(), assessment.getDatastream());
-		
+
 		// aprioriConditionList
 		List<String> aprioriConditionList = assessment1.getAprioriConditionList();
 		Assert.assertEquals(aprioriConditionList.size(), 0);
@@ -230,6 +234,7 @@ public class TestCreateAssessment {
 
 	/**
 	 * Should update assessment
+	 * 
 	 * @throws Exception
 	 */
 	public void updateAssessment() throws Exception {
@@ -245,8 +250,8 @@ public class TestCreateAssessment {
 		signal.setValueIdentifier("value");
 		signal.setSignalIdentifier("signal");
 		Field field = new Field();
-//		field.setEntityIdentifier("entity");
-		
+		// field.setEntityIdentifier("entity");
+
 		field.setSignal(signal);
 		field.setTime(time);
 		ds.setField(field);
@@ -284,6 +289,7 @@ public class TestCreateAssessment {
 
 	/**
 	 * Should create Narrow datastream with CSV data
+	 * 
 	 * @throws Exception
 	 */
 	@Test
@@ -301,7 +307,7 @@ public class TestCreateAssessment {
 		signal.setSignalIdentifier("signal");
 		Field field = new Field();
 		field.setEntityIdentifier("entity");
-		
+
 		field.setSignal(signal);
 		field.setTime(time);
 		ds.setField(field);
@@ -312,11 +318,11 @@ public class TestCreateAssessment {
 		datastreams.add(datastream);
 
 		String data = "time,signal,entity,value\n2016-03-01 01:01:01,signal1,entity1,3.4";
-		
+
 		Map<String, String> options = new HashMap<String, String>();
 		options.put("timeIdentifier", "time");
-        options.put("timeFormat", "YYYY-MM-DD HH:mm:ss");
-        options.put("timeZone", time.getZone());
+		options.put("timeFormat", "YYYY-MM-DD HH:mm:ss");
+		options.put("timeZone", time.getZone());
 		options.put("signalIdentifier", "signal");
 		options.put("entityIdentifier", "entity");
 		options.put("valueIdentifier", "value");
@@ -341,6 +347,7 @@ public class TestCreateAssessment {
 
 	/**
 	 * Should create wide datastream with CSV data
+	 * 
 	 * @throws Exception
 	 */
 	@Test
@@ -357,8 +364,8 @@ public class TestCreateAssessment {
 		signal.setValueIdentifier("value");
 		signal.setSignalIdentifier("signal");
 		Field field = new Field();
-//		field.setEntityIdentifier("entity");
-		
+		// field.setEntityIdentifier("entity");
+
 		field.setSignal(signal);
 		field.setTime(time);
 		ds.setField(field);

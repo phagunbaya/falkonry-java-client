@@ -23,7 +23,7 @@ public class TestCreateDatastream {
 
 	Falkonry falkonry = null;
 	String host = "https://localhost:8080";
-//	String token = "auth-token";
+	// String token = "auth-token";
 	String token = "npp766l2hghmhrc7ygrbldjnkb9rn7mg";
 	List<Datastream> datastreams = new ArrayList<Datastream>();
 
@@ -38,6 +38,7 @@ public class TestCreateDatastream {
 
 	/**
 	 * Should create datastream
+	 * 
 	 * @throws Exception
 	 */
 	@Test
@@ -53,8 +54,8 @@ public class TestCreateDatastream {
 		signal.setValueIdentifier("value");
 		signal.setSignalIdentifier("signal");
 		Field field = new Field();
-//		field.setEntityIdentifier("entity");
-		
+		// field.setEntityIdentifier("entity");
+
 		field.setSignal(signal);
 		field.setTime(time);
 		ds.setField(field);
@@ -78,6 +79,7 @@ public class TestCreateDatastream {
 
 	/**
 	 * Should get datastream list
+	 * 
 	 * @throws Exception
 	 */
 	@Test
@@ -93,8 +95,8 @@ public class TestCreateDatastream {
 		signal.setValueIdentifier("value");
 		signal.setSignalIdentifier("signal");
 		Field field = new Field();
-//		field.setEntityIdentifier("entity");
-		
+		// field.setEntityIdentifier("entity");
+
 		field.setSignal(signal);
 		field.setTime(time);
 		ds.setField(field);
@@ -123,6 +125,7 @@ public class TestCreateDatastream {
 
 	/**
 	 * Should get datstream by ID
+	 * 
 	 * @throws Exception
 	 */
 	@Test
@@ -138,8 +141,8 @@ public class TestCreateDatastream {
 		signal.setValueIdentifier("value");
 		signal.setSignalIdentifier("signal");
 		Field field = new Field();
-//		field.setEntityIdentifier("entity");
-		
+		// field.setEntityIdentifier("entity");
+
 		field.setSignal(signal);
 		field.setTime(time);
 		ds.setField(field);
@@ -158,7 +161,6 @@ public class TestCreateDatastream {
 
 		Assert.assertEquals(datastream.getDatasource().getType(), ds.getDatasource().getType());
 
-		
 		Assert.assertEquals(datastream.getField().getSignal().getValueIdentifier(),
 				ds.getField().getSignal().getValueIdentifier());
 
@@ -173,7 +175,6 @@ public class TestCreateDatastream {
 
 		Assert.assertEquals(datastream.getDatasource().getType(), datastream1.getDatasource().getType());
 
-		
 		Assert.assertEquals(datastream.getField().getSignal().getValueIdentifier(),
 				datastream1.getField().getSignal().getValueIdentifier());
 
@@ -183,6 +184,7 @@ public class TestCreateDatastream {
 
 	/**
 	 * Should update datastream
+	 * 
 	 * @throws Exception
 	 */
 	public void updateDatastream() throws Exception {
@@ -197,8 +199,8 @@ public class TestCreateDatastream {
 		signal.setValueIdentifier("value");
 		signal.setSignalIdentifier("signal");
 		Field field = new Field();
-//		field.setEntityIdentifier("entity");
-		
+		// field.setEntityIdentifier("entity");
+
 		field.setSignal(signal);
 		field.setTime(time);
 		ds.setField(field);
@@ -218,7 +220,6 @@ public class TestCreateDatastream {
 
 		Assert.assertEquals(datastream.getDatasource().getType(), ds.getDatasource().getType());
 
-		
 		Assert.assertEquals(datastream.getField().getSignal().getValueIdentifier(),
 				ds.getField().getSignal().getValueIdentifier());
 
@@ -234,7 +235,6 @@ public class TestCreateDatastream {
 
 		Assert.assertEquals(datastream.getDatasource().getType(), datastream1.getDatasource().getType());
 
-		
 		Assert.assertEquals(datastream.getField().getSignal().getValueIdentifier(),
 				datastream1.getField().getSignal().getValueIdentifier());
 
@@ -242,6 +242,7 @@ public class TestCreateDatastream {
 
 	/**
 	 * Should create wide format datastream
+	 * 
 	 * @throws Exception
 	 */
 	@Test
@@ -259,7 +260,7 @@ public class TestCreateDatastream {
 		signal.setSignalIdentifier("signal");
 		Field field = new Field();
 		field.setEntityIdentifier("unit");
-		
+
 		field.setSignal(signal);
 		field.setTime(time);
 		ds.setField(field);
@@ -282,6 +283,7 @@ public class TestCreateDatastream {
 
 	/**
 	 * Should create narrow format datastream and add JSON format data
+	 * 
 	 * @throws Exception
 	 */
 	@Test
@@ -298,8 +300,8 @@ public class TestCreateDatastream {
 		signal.setValueIdentifier("value");
 		signal.setSignalIdentifier("signal");
 		Field field = new Field();
-//		field.setEntityIdentifier("entity");
-		
+		// field.setEntityIdentifier("entity");
+
 		field.setSignal(signal);
 		field.setTime(time);
 		ds.setField(field);
@@ -313,8 +315,8 @@ public class TestCreateDatastream {
 		String data = "{\"time\" : \"2016-03-01 01:01:01\", \"signal\" : \"signal1\", \"entity\" : \"entity1\", \"value\" : 3.4}";
 		Map<String, String> options = new HashMap<String, String>();
 		options.put("timeIdentifier", "time");
-        options.put("timeFormat", "YYYY-MM-DD HH:mm:ss");
-        options.put("timeZone", time.getZone());
+		options.put("timeFormat", "YYYY-MM-DD HH:mm:ss");
+		options.put("timeZone", time.getZone());
 		options.put("signalIdentifier", "signal");
 		options.put("entityIdentifier", "entity");
 		options.put("valueIdentifier", "value");
@@ -332,7 +334,6 @@ public class TestCreateDatastream {
 
 		Assert.assertEquals(datastream.getDatasource().getType(), ds.getDatasource().getType());
 
-		
 		Assert.assertEquals(datastream.getField().getSignal().getValueIdentifier(),
 				ds.getField().getSignal().getValueIdentifier());
 
@@ -340,6 +341,7 @@ public class TestCreateDatastream {
 
 	/**
 	 * Should create wide format datastream and add JSON format data
+	 * 
 	 * @throws Exception
 	 */
 	@Test
@@ -356,8 +358,8 @@ public class TestCreateDatastream {
 		signal.setValueIdentifier("value");
 		signal.setSignalIdentifier("signal");
 		Field field = new Field();
-//		field.setEntityIdentifier("entity");
-		
+		// field.setEntityIdentifier("entity");
+
 		field.setSignal(signal);
 		field.setTime(time);
 		ds.setField(field);
@@ -384,7 +386,6 @@ public class TestCreateDatastream {
 
 		Assert.assertEquals(datastream.getDatasource().getType(), ds.getDatasource().getType());
 
-		
 		Assert.assertEquals(datastream.getField().getSignal().getValueIdentifier(),
 				ds.getField().getSignal().getValueIdentifier());
 
@@ -392,6 +393,7 @@ public class TestCreateDatastream {
 
 	/**
 	 * Should create narrow format datastream and add CSV format data
+	 * 
 	 * @throws Exception
 	 */
 	@Test
@@ -408,8 +410,8 @@ public class TestCreateDatastream {
 		signal.setValueIdentifier("value");
 		signal.setSignalIdentifier("signal");
 		Field field = new Field();
-//		field.setEntityIdentifier("entity");
-		
+		// field.setEntityIdentifier("entity");
+
 		field.setSignal(signal);
 		field.setTime(time);
 		ds.setField(field);
@@ -423,8 +425,8 @@ public class TestCreateDatastream {
 		String data = "time,signal,entity,value\n2016-03-01 01:01:01,signal1,entity1,3.4";
 		Map<String, String> options = new HashMap<String, String>();
 		options.put("timeIdentifier", "time");
-        options.put("timeFormat", "YYYY-MM-DD HH:mm:ss");
-        options.put("timeZone", time.getZone());
+		options.put("timeFormat", "YYYY-MM-DD HH:mm:ss");
+		options.put("timeZone", time.getZone());
 		options.put("signalIdentifier", "signal");
 		options.put("entityIdentifier", "entity");
 		options.put("valueIdentifier", "value");
@@ -442,7 +444,6 @@ public class TestCreateDatastream {
 
 		Assert.assertEquals(datastream.getDatasource().getType(), ds.getDatasource().getType());
 
-		
 		Assert.assertEquals(datastream.getField().getSignal().getValueIdentifier(),
 				ds.getField().getSignal().getValueIdentifier());
 
@@ -450,6 +451,7 @@ public class TestCreateDatastream {
 
 	/**
 	 * Should create wide format datastream and add CSV format data
+	 * 
 	 * @throws Exception
 	 */
 	@Test
@@ -549,7 +551,6 @@ public class TestCreateDatastream {
 		Assert.assertEquals(datastream.getField().getTime().getZone(), ds.getField().getTime().getZone());
 		Assert.assertEquals(datastream.getDatasource().getType(), ds.getDatasource().getType());
 		Assert.assertEquals(datastream.getInputList().size(), inputList.size());
-		
 
 	}
 

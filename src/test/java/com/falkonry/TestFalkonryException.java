@@ -30,6 +30,7 @@ public class TestFalkonryException {
 
 	/**
 	 * Should test falkonry exception when fetching incorrect datastream
+	 * 
 	 * @throws Exception
 	 */
 	@Test
@@ -44,6 +45,7 @@ public class TestFalkonryException {
 
 	/**
 	 * Should test falkonry exception when fetching incorrect assessment
+	 * 
 	 * @throws Exception
 	 */
 	@Test

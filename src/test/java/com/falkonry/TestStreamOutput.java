@@ -35,6 +35,7 @@ public class TestStreamOutput {
 
 	/**
 	 * Should get output data
+	 * 
 	 * @throws Exception
 	 */
 	public void getOutput() throws Exception {
@@ -57,7 +58,7 @@ public class TestStreamOutput {
 
 		} catch (Exception e) {
 			System.out.println(e.toString() + "\nError in getting output");
-			Assert.assertEquals(0,1);
+			Assert.assertEquals(0, 1);
 		}
 	}
 }

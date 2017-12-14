@@ -38,6 +38,7 @@ public class TestEntityMeta {
 
 	/**
 	 * Should create entity meta
+	 * 
 	 * @throws Exception
 	 */
 	@Test
@@ -54,8 +55,8 @@ public class TestEntityMeta {
 		signal.setValueIdentifier("value");
 		signal.setSignalIdentifier("signal");
 		Field field = new Field();
-//		field.setEntityIdentifier("entity");
-		
+		// field.setEntityIdentifier("entity");
+
 		field.setSignal(signal);
 		field.setTime(time);
 		ds.setField(field);
@@ -87,10 +88,10 @@ public class TestEntityMeta {
 		entityMetaRequest.setPath("entity1/UNIT1");
 		entityMetaRequests.add(entityMetaRequest);
 		List<EntityMeta> entityMetas = falkonry.postEntityMeta(entityMetaRequests, datastream.getId());
-		Assert.assertEquals(true,entityMetas.size() == 1);
+		Assert.assertEquals(true, entityMetas.size() == 1);
 
 		List<EntityMeta> entityMetas1 = falkonry.getEntityMeta(datastream.getId());
-		Assert.assertEquals(true,entityMetas1.size() == 1);
+		Assert.assertEquals(true, entityMetas1.size() == 1);
 	}
 
 	/**

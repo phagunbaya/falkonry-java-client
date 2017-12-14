@@ -46,6 +46,7 @@ public class TestAddHistorianData {
 
 	/**
 	 * Should create narrow format datastream and add data in CSV format
+	 * 
 	 * @throws Exception
 	 */
 	@Test
@@ -62,7 +63,7 @@ public class TestAddHistorianData {
 		signal.setSignalIdentifier("signal");
 		Field field = new Field();
 		field.setEntityIdentifier("entity");
-		
+
 		field.setSignal(signal);
 		field.setTime(time);
 		ds.setField(field);
@@ -76,21 +77,21 @@ public class TestAddHistorianData {
 				+ "2016-05-05T12:00:00Z,Unit1,current,12.4\n2016-03-01 01:01:01,Unit1.vibration,20.4";
 
 		Map<String, String> options = new HashMap<String, String>();
-		
+
 		options.put("fileFormat", "csv");
 		options.put("streaming", "false");
 		options.put("hasMoreData", "false");
-		
+
 		options.put("timeIdentifier", "time");
-        options.put("timeFormat", "YYYY-MM-DD HH:mm:ss");
-        options.put("timeZone", time.getZone());
+		options.put("timeFormat", "YYYY-MM-DD HH:mm:ss");
+		options.put("timeZone", time.getZone());
 		options.put("signalIdentifier", "signal");
 		options.put("entityIdentifier", "entity");
 		options.put("valueIdentifier", "value");
 		options.put("fileFormat", "csv");
 		options.put("streaming", "false");
 		options.put("hasMoreData", "false");
-		
+
 		InputStatus inputStatus = falkonry.addInput(datastream.getId(), data, options);
 		Assert.assertEquals(inputStatus.getAction(), "ADD_DATA_DATASTREAM");
 		Assert.assertEquals(inputStatus.getStatus(), "PENDING");
@@ -98,6 +99,7 @@ public class TestAddHistorianData {
 
 	/**
 	 * Should create narrow format datastream and add stream data in CSV format
+	 * 
 	 * @throws Exception
 	 */
 	@Test
@@ -115,7 +117,7 @@ public class TestAddHistorianData {
 		signal.setSignalIdentifier("signal");
 		Field field = new Field();
 		field.setEntityIdentifier("entity");
-		
+
 		field.setSignal(signal);
 		field.setTime(time);
 		ds.setField(field);
@@ -129,19 +131,17 @@ public class TestAddHistorianData {
 				+ "2016-05-05T12:00:00Z,Unit1,current,12.4\n2016-03-01 01:01:01,Unit1.vibration,20.4";
 
 		Map<String, String> options = new HashMap<String, String>();
-		
-		
-		
+
 		options.put("timeIdentifier", "time");
-        options.put("timeFormat", "YYYY-MM-DD HH:mm:ss");
-        options.put("timeZone", time.getZone());
+		options.put("timeFormat", "YYYY-MM-DD HH:mm:ss");
+		options.put("timeZone", time.getZone());
 		options.put("signalIdentifier", "signal");
 		options.put("entityIdentifier", "entity");
 		options.put("valueIdentifier", "value");
 		options.put("fileFormat", "csv");
 		options.put("streaming", "true");
 		options.put("hasMoreData", "false");
-		
+
 		InputStatus inputStatus = falkonry.addInput(datastream.getId(), data, options);
 		Assert.assertEquals(inputStatus.getAction(), "ADD_DATA_DATASTREAM");
 		Assert.assertEquals(inputStatus.getStatus(), "PENDING");
@@ -151,6 +151,7 @@ public class TestAddHistorianData {
 
 	/**
 	 * Should get historian output data
+	 * 
 	 * @throws Exception
 	 */
 	@Test
@@ -167,13 +168,13 @@ public class TestAddHistorianData {
 		signal.setValueIdentifier("value");
 		signal.setSignalIdentifier("signal");
 		Field field = new Field();
-//		field.setEntityIdentifier("entity");
-		
+		// field.setEntityIdentifier("entity");
+
 		field.setSignal(signal);
 		field.setTime(time);
 		ds.setField(field);
 		Datasource dataSource = new Datasource();
-		
+
 		dataSource.setType("PI");
 		dataSource.sethost("https://test.piserver.com/piwebapi");
 		dataSource.setElementTemplateName("SampleElementTempalte");

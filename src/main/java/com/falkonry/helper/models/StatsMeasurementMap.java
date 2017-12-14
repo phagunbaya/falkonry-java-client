@@ -16,8 +16,8 @@ import org.codehaus.jackson.annotate.JsonProperty;
 public class StatsMeasurementMap {
   private String Data;
   private String Signal;
-  private String Thing;
-  private String ThingSignalMap;
+  private String entity;
+  private String entitySignalMap;
   private String DataRate;
   private String DataRateAverage;
   private String ConditionLatency;
@@ -62,36 +62,36 @@ public class StatsMeasurementMap {
      *
      * @return
      */
-    @JsonProperty("Thing")
-  public String getThing() {
-    return this.Thing;
+    @JsonProperty("entity")
+  public String getentity() {
+    return this.entity;
   }
 
     /**
      *
-     * @param thing
+     * @param entity
      */
-    @JsonProperty("Thing")
-  public void setThing(String thing) {
-    this.Thing = thing;
+    @JsonProperty("entity")
+  public void setentity(String entity) {
+    this.entity = entity;
   }
 
     /**
      *
      * @return
      */
-    @JsonProperty("ThingSignalMap")
-  public String getThingSignalMap() {
-    return this.ThingSignalMap;
+    @JsonProperty("entitySignalMap")
+  public String getentitySignalMap() {
+    return this.entitySignalMap;
   }
 
     /**
      *
-     * @param thingSignalMap
+     * @param entitySignalMap
      */
-    @JsonProperty("ThingSignalMap")
-  public void setThingSignalMap(String thingSignalMap) {
-    this.ThingSignalMap = thingSignalMap;
+    @JsonProperty("entitySignalMap")
+  public void setentitySignalMap(String entitySignalMap) {
+    this.entitySignalMap = entitySignalMap;
   }
 
     /**

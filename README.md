@@ -516,7 +516,7 @@ Usage:
 ```
 
 
-#### Add narrow input data (csv format) to single thing to Datastream
+#### Add narrow input data (csv format) to single entity to Datastream
 
 Data:
 ```

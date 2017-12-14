@@ -37,7 +37,7 @@ public class TestAddAndGetData {
 
 	String host = "https://localhost:8080";
 	String token = "auth-token";
-	
+
 	List<Datastream> datastreams = new ArrayList<Datastream>();
 
 	/**
@@ -48,9 +48,10 @@ public class TestAddAndGetData {
 	public void setUp() throws Exception {
 		falkonry = new Falkonry(host, token);
 	}
-	
+
 	/**
-	 * Add narrow input data (json format) to multi thing Datastream
+	 * Add narrow input data (json format) to multi entity Datastream
+	 * 
 	 * @throws Exception
 	 */
 	@Test
@@ -68,7 +69,7 @@ public class TestAddAndGetData {
 		signal.setSignalIdentifier("signal");
 		Field field = new Field();
 		field.setEntityIdentifier("unit");
-		
+
 		field.setSignal(signal);
 		field.setTime(time);
 		ds.setField(field);
@@ -78,8 +79,8 @@ public class TestAddAndGetData {
 
 		Datastream datastream = falkonry.createDatastream(ds);
 		datastreams.add(datastream);
-		String data = "{\"time\" :\"2016-03-01T01:01:01.000Z\",\"unit\":\"Unit1\", \"signal\" : \"current\", \"value\" : 12.5}" +
-					"{\"time\" :\"2016-03-01T01:01:01.000Z\",\"unit\":\"Unit2\", \"signal\" : \"vibration\", \"value\" : 3.4}";
+		String data = "{\"time\" :\"2016-03-01T01:01:01.000Z\",\"unit\":\"Unit1\", \"signal\" : \"current\", \"value\" : 12.5}"
+				+ "{\"time\" :\"2016-03-01T01:01:01.000Z\",\"unit\":\"Unit2\", \"signal\" : \"vibration\", \"value\" : 3.4}";
 
 		Map<String, String> options = new HashMap<String, String>();
 		options.put("timeIdentifier", "time");
@@ -95,16 +96,20 @@ public class TestAddAndGetData {
 		InputStatus ins = falkonry.addInput(datastream.getId(), data, options);
 		Assert.assertEquals(ins.getAction(), "ADD_DATA_DATASTREAM");
 		Assert.assertEquals(ins.getStatus(), "PENDING");
-		
+
 		// Get Datastream Data
 		options = new HashMap<String, String>();
-	    options.put("responseFormat", "application/json");  // also available options 1. text/csv 2. application/json
+		options.put("responseFormat", "application/json"); // also available
+															// options 1.
+															// text/csv 2.
+															// application/json
 		HttpResponseFormat dataResponse = falkonry.getInputData(datastream.getId(), options);
-		//Assert.assertEquals(dataResponse.getResponse().length()>0,true);
+		// Assert.assertEquals(dataResponse.getResponse().length()>0,true);
 	}
-	
+
 	/**
-	 * Add narrow input data (csv format) single thing to Datastream
+	 * Add narrow input data (csv format) single entity to Datastream
+	 * 
 	 * @throws Exception
 	 */
 	@Test
@@ -121,7 +126,7 @@ public class TestAddAndGetData {
 		signal.setValueIdentifier("value");
 		signal.setSignalIdentifier("signal");
 		Field field = new Field();
-		
+
 		field.setSignal(signal);
 		field.setTime(time);
 		ds.setField(field);
@@ -131,10 +136,8 @@ public class TestAddAndGetData {
 
 		Datastream datastream = falkonry.createDatastream(ds);
 		datastreams.add(datastream);
-		String data = "time,signal,value\n" + 
-						"2012-01-03T18:16:00.000Z,L1DynVert,9.95\n" + 
-						"2012-01-03T18:16:00.000Z,L1VertAvg,12.95\n" + 
-						"2012-01-03T18:16:00.000Z,L1VertPk,19.95";
+		String data = "time,signal,value\n" + "2012-01-03T18:16:00.000Z,L1DynVert,9.95\n"
+				+ "2012-01-03T18:16:00.000Z,L1VertAvg,12.95\n" + "2012-01-03T18:16:00.000Z,L1VertPk,19.95";
 
 		Map<String, String> options = new HashMap<String, String>();
 		options.put("fileFormat", "csv");
@@ -144,18 +147,20 @@ public class TestAddAndGetData {
 		InputStatus ins = falkonry.addInput(datastream.getId(), data, options);
 		Assert.assertEquals(ins.getAction(), "ADD_DATA_DATASTREAM");
 		Assert.assertEquals(ins.getStatus(), "PENDING");
-		
+
 		// Get Datastream Data
 		options = new HashMap<String, String>();
-	    options.put("responseFormat", "application/json");  // also available options 1. text/csv 2. application/json
+		options.put("responseFormat", "application/json"); // also available
+															// options 1.
+															// text/csv 2.
+															// application/json
 		HttpResponseFormat dataResponse = falkonry.getInputData(datastream.getId(), options);
-		Assert.assertEquals(dataResponse.getResponse().length()>0,true);
+		Assert.assertEquals(dataResponse.getResponse().length() > 0, true);
 	}
-	
-	
 
 	/**
-	 * Add wide input data (json format) to single thing Datastream
+	 * Add wide input data (json format) to single entity Datastream
+	 * 
 	 * @throws Exception
 	 */
 	@Test
@@ -218,17 +223,19 @@ public class TestAddAndGetData {
 		InputStatus ins = falkonry.addInput(datastream.getId(), data, options);
 		Assert.assertEquals(ins.getAction(), "ADD_DATA_DATASTREAM");
 		Assert.assertEquals(ins.getStatus(), "PENDING");
-		
+
 		// Get Datastream Data
 		options = new HashMap<String, String>();
-	    options.put("responseFormat", "text/csv");  // also available options 1. text/csv 2. application/json
+		options.put("responseFormat", "text/csv"); // also available options 1.
+													// text/csv 2.
+													// application/json
 		HttpResponseFormat dataResponse = falkonry.getInputData(datastream.getId(), options);
-		Assert.assertEquals(dataResponse.getResponse().length()>0,true);
+		Assert.assertEquals(dataResponse.getResponse().length() > 0, true);
 	}
 
-	
 	/**
-	 * Add wide input data (json format) to single thing Datastream
+	 * Add wide input data (json format) to single entity Datastream
+	 * 
 	 * @throws Exception
 	 */
 	@Test
@@ -241,10 +248,9 @@ public class TestAddAndGetData {
 		time.setFormat("iso_8601");
 		time.setZone("GMT");
 		Signal signal = new Signal();
-		
+
 		signal.setValueIdentifier("value");
 		signal.setSignalIdentifier("signal");
-		
 
 		Field field = new Field();
 		field.setSignal(signal);
@@ -256,10 +262,8 @@ public class TestAddAndGetData {
 
 		Datastream datastream = falkonry.createDatastream(ds);
 		datastreams.add(datastream);
-		String data = "time,unit,L1DynVert,L1VertAvg,L1VertPk\n" + 
-        "2012-01-03T18:16:00.000Z,unit1,4.6,9.95,89.95\n" + 
-        "2012-01-03T18:16:00.000Z,unit1,5.2,12.95,5.85\n" + 
-        "2012-01-03T18:16:00.000Z,unit2,74.3,19.95,9.0";
+		String data = "time,unit,L1DynVert,L1VertAvg,L1VertPk\n" + "2012-01-03T18:16:00.000Z,unit1,4.6,9.95,89.95\n"
+				+ "2012-01-03T18:16:00.000Z,unit1,5.2,12.95,5.85\n" + "2012-01-03T18:16:00.000Z,unit2,74.3,19.95,9.0";
 
 		Map<String, String> options = new HashMap<String, String>();
 		options.put("fileFormat", "csv");
@@ -269,12 +273,15 @@ public class TestAddAndGetData {
 		InputStatus ins = falkonry.addInput(datastream.getId(), data, options);
 		Assert.assertEquals(ins.getAction(), "ADD_DATA_DATASTREAM");
 		Assert.assertEquals(ins.getStatus(), "PENDING");
-		
+
 		// Get Datastream Data
 		options = new HashMap<String, String>();
-	    options.put("responseFormat", "application/json");  // also available options 1. text/csv 2. application/json
+		options.put("responseFormat", "application/json"); // also available
+															// options 1.
+															// text/csv 2.
+															// application/json
 		HttpResponseFormat dataResponse = falkonry.getInputData(datastream.getId(), options);
-		Assert.assertEquals(dataResponse.getResponse().length()>0,true);
+		Assert.assertEquals(dataResponse.getResponse().length() > 0, true);
 	}
 
 	@After

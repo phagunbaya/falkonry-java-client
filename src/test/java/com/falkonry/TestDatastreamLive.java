@@ -34,7 +34,8 @@ public class TestDatastreamLive {
 	}
 
 	/**
-	 * Should get exception when turning on the datastream 
+	 * Should get exception when turning on the datastream
+	 * 
 	 * @throws Exception
 	 */
 	@Test
@@ -48,10 +49,8 @@ public class TestDatastreamLive {
 		time.setZone("GMT");
 
 		Signal signal = new Signal();
-		
+
 		signal.setValueIdentifier("value");
-		
-		
 
 		Datasource dataSource = new Datasource();
 		dataSource.setType("STANDALONE");
@@ -77,6 +76,7 @@ public class TestDatastreamLive {
 
 	/**
 	 * Should turn on the datastream
+	 * 
 	 * @throws Exception
 	 */
 	@Test
@@ -90,6 +90,7 @@ public class TestDatastreamLive {
 
 	/**
 	 * Should turn off the datastream
+	 * 
 	 * @throws Exception
 	 */
 	@Test

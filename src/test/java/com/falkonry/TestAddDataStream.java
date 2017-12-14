@@ -60,7 +60,7 @@ public class TestAddDataStream {
 		signal.setSignalIdentifier("signal");
 		Field field = new Field();
 		field.setEntityIdentifier("entity");
-		
+
 		field.setSignal(signal);
 		field.setTime(time);
 		ds.setField(field);
@@ -71,12 +71,12 @@ public class TestAddDataStream {
 		datastreams.add(datastream);
 
 		Map<String, String> options = new HashMap<String, String>();
-		
+
 		File file = new File("res/data.json");
-		
+
 		options.put("timeIdentifier", "time");
-        options.put("timeFormat", "YYYY-MM-DD HH:mm:ss");
-        options.put("timeZone", time.getZone());
+		options.put("timeFormat", "YYYY-MM-DD HH:mm:ss");
+		options.put("timeZone", time.getZone());
 		options.put("signalIdentifier", "signal");
 		options.put("entityIdentifier", "entity");
 		options.put("valueIdentifier", "value");
@@ -93,7 +93,7 @@ public class TestAddDataStream {
 		Field field1 = datastream1.getField();
 		Signal signal1 = field1.getSignal();
 
-		Assert.assertEquals(signal1.getValueIdentifier(),signal.getValueIdentifier());
+		Assert.assertEquals(signal1.getValueIdentifier(), signal.getValueIdentifier());
 
 	}
 
@@ -171,7 +171,7 @@ public class TestAddDataStream {
 
 		Field field = new Field();
 		field.setTime(time);
-		field.setEntityIdentifier("thing");
+		field.setEntityIdentifier("entity");
 
 		ds.setDatasource(dataSource);
 		ds.setField(field);
@@ -216,14 +216,14 @@ public class TestAddDataStream {
 		signal.setSignalIdentifier("signal");
 		Field field = new Field();
 		field.setEntityIdentifier("entity");
-		
+
 		field.setSignal(signal);
 		field.setTime(time);
 		ds.setField(field);
 		Datasource dataSource = new Datasource();
 		dataSource.setType("STANDALONE");
 		ds.setDatasource(dataSource);
-		
+
 		Datastream datastream = falkonry.createDatastream(ds);
 		datastreams.add(datastream);
 
@@ -246,7 +246,7 @@ public class TestAddDataStream {
 
 		Signal signal1 = field1.getSignal();
 
-		Assert.assertEquals(signal1.getValueIdentifier(),signal.getValueIdentifier());
+		Assert.assertEquals(signal1.getValueIdentifier(), signal.getValueIdentifier());
 
 	}
 
@@ -325,7 +325,7 @@ public class TestAddDataStream {
 
 		Field field = new Field();
 		field.setTime(time);
-		field.setEntityIdentifier("thing");
+		field.setEntityIdentifier("entity");
 
 		ds.setDatasource(dataSource);
 		ds.setField(field);
@@ -400,7 +400,7 @@ public class TestAddDataStream {
 		Field field1 = createdDatastream.getField();
 		Signal signal1 = field1.getSignal();
 
-		Assert.assertEquals(signal1.getValueIdentifier(),signal.getValueIdentifier());
+		Assert.assertEquals(signal1.getValueIdentifier(), signal.getValueIdentifier());
 
 	}
 
