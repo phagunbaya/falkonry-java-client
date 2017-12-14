@@ -63,7 +63,7 @@ public class StatsMeasurementMap {
      * @return
      */
     @JsonProperty("entity")
-  public String getentity() {
+  public String getEntity() {
     return this.entity;
   }
 
@@ -72,7 +72,7 @@ public class StatsMeasurementMap {
      * @param entity
      */
     @JsonProperty("entity")
-  public void setentity(String entity) {
+  public void setEntity(String entity) {
     this.entity = entity;
   }
 
@@ -81,7 +81,7 @@ public class StatsMeasurementMap {
      * @return
      */
     @JsonProperty("entitySignalMap")
-  public String getentitySignalMap() {
+  public String getEntitySignalMap() {
     return this.entitySignalMap;
   }
 
@@ -90,7 +90,7 @@ public class StatsMeasurementMap {
      * @param entitySignalMap
      */
     @JsonProperty("entitySignalMap")
-  public void setentitySignalMap(String entitySignalMap) {
+  public void setEntitySignalMap(String entitySignalMap) {
     this.entitySignalMap = entitySignalMap;
   }
 
