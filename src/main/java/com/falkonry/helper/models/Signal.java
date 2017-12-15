@@ -45,7 +45,7 @@ public class Signal {
 
    /**
     *
-    * @param valueIdentifier
+    * @param signalIdentifier
     */
    public void setSignalIdentifier(String signalIdentifier) {
        this.signalIdentifier = signalIdentifier;
