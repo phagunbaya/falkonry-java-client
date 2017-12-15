@@ -23,6 +23,8 @@ public class TestEntityMeta {
 	Falkonry falkonry = null;
 	String host = "https://localhost:8080";
 	String token = "auth-token";
+	
+
 	List<Datastream> datastreams = new ArrayList<Datastream>();
 	List<EntityMetaRequest> entityMetaRequests = new ArrayList<EntityMetaRequest>();
 
@@ -37,6 +39,7 @@ public class TestEntityMeta {
 
 	/**
 	 * Should create entity meta
+	 * 
 	 * @throws Exception
 	 */
 	@Test
@@ -49,13 +52,13 @@ public class TestEntityMeta {
 		time.setFormat("iso_8601");
 		time.setZone("GMT");
 		Signal signal = new Signal();
-		signal.setTagIdentifier("tag");
-		signal.setValueIdentifier("value");
-		signal.setDelimiter("_");
-		signal.setIsSignalPrefix(false);
 
+		signal.setValueIdentifier("value");
+		signal.setSignalIdentifier("signal");
 		Field field = new Field();
-		field.setSiganl(signal);
+		 field.setEntityIdentifier("entity");
+
+		field.setSignal(signal);
 		field.setTime(time);
 		ds.setField(field);
 		Datasource dataSource = new Datasource();
@@ -64,13 +67,12 @@ public class TestEntityMeta {
 
 		Datastream datastream = falkonry.createDatastream(ds);
 		datastreams.add(datastream);
-		String data = "time, tag, value\n";
+		String data = "time,entity,signal,value\n";
 		for (int i = 0; i < 10; i++) {
-			data += "2016-03-01 01:01:0" + i + ", entity1_signal1, 3.4\n";
+			data += "2016-03-01 01:01:0" + i + ",entity1,signal1,3.4\n";
 		}
 		Map<String, String> options = new HashMap<String, String>();
-		options.put("timeIdentifier", "time");
-		options.put("timeFormat", "iso_8601");
+		
 		options.put("fileFormat", "csv");
 		options.put("streaming", "false");
 		options.put("hasMoreData", "false");

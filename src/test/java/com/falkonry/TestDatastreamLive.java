@@ -21,7 +21,9 @@ public class TestDatastreamLive {
 
 	Falkonry falkonry = null;
 	String host = "https://localhost:8080";
-	String token = "auth-token";
+  	String token = "auth-token";
+	
+	
 	List<Datastream> datastreams = new ArrayList<Datastream>();
 
 	/**
@@ -34,35 +36,30 @@ public class TestDatastreamLive {
 	}
 
 	/**
-	 * Should get exception when turning on the datastream 
+	 * Should get exception when turning on the datastream
+	 * 
 	 * @throws Exception
 	 */
 	@Test
 	public void testOnDatastreamException() throws Exception {
 		Datastream ds = new Datastream();
 		ds.setName("Test-DS-" + Math.random());
-
 		TimeObject time = new TimeObject();
 		time.setIdentifier("time");
 		time.setFormat("iso_8601");
 		time.setZone("GMT");
-
 		Signal signal = new Signal();
-		signal.setTagIdentifier("tag");
-		signal.setValueIdentifier("value");
-		signal.setDelimiter("_");
-		signal.setIsSignalPrefix(false);
 
+		signal.setValueIdentifier("value");
+		signal.setSignalIdentifier("signal");
+		Field field = new Field();
+
+		field.setSignal(signal);
+		field.setTime(time);
+		ds.setField(field);
 		Datasource dataSource = new Datasource();
 		dataSource.setType("STANDALONE");
-
-		Field field = new Field();
-		field.setSiganl(signal);
-		field.setTime(time);
-		// field.setEntityIdentifier("unit");
-
 		ds.setDatasource(dataSource);
-		ds.setField(field);
 
 		Datastream datastream = falkonry.createDatastream(ds);
 		datastreams.add(datastream);
@@ -77,12 +74,13 @@ public class TestDatastreamLive {
 
 	/**
 	 * Should turn on the datastream
+	 * 
 	 * @throws Exception
 	 */
 	@Test
 	public void testOnDatastream() throws Exception {
 		// Id of datastream which has assessment with active model available
-		String datastreamId = "rphrzm34udl4z4";
+		String datastreamId = "cptv9ldj4n9clt";
 
 		List<Assessment> assessments = falkonry.onDatastream(datastreamId);
 		Assert.assertEquals(true, assessments.size() != 0);
@@ -90,12 +88,13 @@ public class TestDatastreamLive {
 
 	/**
 	 * Should turn off the datastream
+	 * 
 	 * @throws Exception
 	 */
 	@Test
 	public void testOffDatastream() throws Exception {
 		// Id of datastream which has assessment with active model available
-		String datastreamId = "rphrzm34udl4z5";
+		String datastreamId = "cptv9ldj4n9clt";
 
 		List<Assessment> assessments1 = falkonry.onDatastream(datastreamId);
 		Assert.assertEquals(true, assessments1.size() != 0);

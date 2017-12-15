@@ -19,7 +19,8 @@ public class TestStreamInputData {
 	Falkonry falkonry = null;
 	String host = "https://localhost:8080";
 	String token = "auth-token";
-	String datastreamId = "nb37s0ll4itfo7";
+	
+	String datastreamId = "cptv9ldj4n9clt";
 	List<Datastream> datastreams = new ArrayList<Datastream>();
 
 	/**
@@ -33,6 +34,7 @@ public class TestStreamInputData {
 
 	/**
 	 * Should add CSV format data stream
+	 * 
 	 * @throws Exception
 	 */
 	@Test
@@ -45,7 +47,8 @@ public class TestStreamInputData {
 				Date d = new Date();
 				Random r = new Random();
 				int n = r.nextInt(100);
-				String data = "{\"time\":" + d.getTime() + ",\"tag\":\"entity1_signal1\",\"value\":" + n + "}";
+				String data = "{\"time\":" + d.getTime() + ",\"entity\":\"entity1\",\"signal\":\"signal1\",\"value\":"
+						+ n + "}";
 				ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(data.getBytes());
 				InputStatus inputStatus = falkonry.addInputStream(datastreamId, byteArrayInputStream, options);
 				Thread.sleep(1000);

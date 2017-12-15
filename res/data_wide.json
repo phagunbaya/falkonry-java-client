@@ -1,4 +1,4 @@
-{"time":1467729675422,"thing":"Thing1","signal1":41.11,"signal2":82.34,"signal3":74.63,"signal4":4.8,"signal5":72.01}
-{"time":1467729674422,"thing":"Thing1","signal1":11.13,"signal2":6.86,"signal3":50.22,"signal4":18.58,"signal5":22.53}
-{"time":1467729673422,"thing":"Thing1","signal1":13.84,"signal2":81.36,"signal3":67.12,"signal4":47.47,"signal5":59.26}
-{"time":1467729672422,"thing":"Thing1","signal1":80.94,"signal2":68.95,"signal3":61.28,"signal4":2.16,"signal5":90.75}
+{"time":1467729675422,"entity":"entity1","signal1":41.11,"signal2":82.34,"signal3":74.63,"signal4":4.8,"signal5":72.01}
+{"time":1467729674422,"entity":"entity1","signal1":11.13,"signal2":6.86,"signal3":50.22,"signal4":18.58,"signal5":22.53}
+{"time":1467729673422,"entity":"entity1","signal1":13.84,"signal2":81.36,"signal3":67.12,"signal4":47.47,"signal5":59.26}
+{"time":1467729672422,"entity":"entity1","signal1":80.94,"signal2":68.95,"signal3":61.28,"signal4":2.16,"signal5":90.75}

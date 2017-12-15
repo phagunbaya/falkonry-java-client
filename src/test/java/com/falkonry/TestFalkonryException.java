@@ -18,6 +18,9 @@ public class TestFalkonryException {
 	Falkonry falkonry = null;
 	String host = "https://localhost:8080";
 	String token = "auth-token";
+	
+
+
 
 	/**
 	 *
@@ -30,6 +33,7 @@ public class TestFalkonryException {
 
 	/**
 	 * Should test falkonry exception when fetching incorrect datastream
+	 * 
 	 * @throws Exception
 	 */
 	@Test
@@ -44,6 +48,7 @@ public class TestFalkonryException {
 
 	/**
 	 * Should test falkonry exception when fetching incorrect assessment
+	 * 
 	 * @throws Exception
 	 */
 	@Test

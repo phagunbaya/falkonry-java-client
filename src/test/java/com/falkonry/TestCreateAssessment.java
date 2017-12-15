@@ -23,6 +23,7 @@ public class TestCreateAssessment {
 	Falkonry falkonry = null;
 	String host = "https://localhost:8080";
 	String token = "auth-token";
+
 	List<Datastream> datastreams = new ArrayList<Datastream>();
 	List<Assessment> assessments = new ArrayList<Assessment>();
 
@@ -37,35 +38,30 @@ public class TestCreateAssessment {
 
 	/**
 	 * Should create assessment
+	 * 
 	 * @throws Exception
 	 */
 	@Test
 	public void createAssessment() throws Exception {
 		Datastream ds = new Datastream();
 		ds.setName("Test-DS-" + Math.random());
-
 		TimeObject time = new TimeObject();
 		time.setIdentifier("time");
 		time.setFormat("iso_8601");
 		time.setZone("GMT");
-
 		Signal signal = new Signal();
-		signal.setTagIdentifier("tag");
-		signal.setValueIdentifier("value");
-		signal.setDelimiter("_");
-		signal.setIsSignalPrefix(false);
 
+		signal.setValueIdentifier("value");
+		signal.setSignalIdentifier("signal");
+		Field field = new Field();
+		// field.setEntityIdentifier("entity");
+
+		field.setSignal(signal);
+		field.setTime(time);
+		ds.setField(field);
 		Datasource dataSource = new Datasource();
 		dataSource.setType("STANDALONE");
-
-		Field field = new Field();
-		field.setSiganl(signal);
-		field.setTime(time);
-		// field.setEntityIdentifier("unit");
-
 		ds.setDatasource(dataSource);
-		ds.setField(field);
-
 		Datastream datastream = falkonry.createDatastream(ds);
 		datastreams.add(datastream);
 
@@ -85,34 +81,30 @@ public class TestCreateAssessment {
 
 	/**
 	 * Should delete assessment
+	 * 
 	 * @throws Exception
 	 */
 	@Test
 	public void deleteAssessment() throws Exception {
 		Datastream ds = new Datastream();
 		ds.setName("Test-DS-" + Math.random());
-
 		TimeObject time = new TimeObject();
 		time.setIdentifier("time");
 		time.setFormat("iso_8601");
 		time.setZone("GMT");
-
 		Signal signal = new Signal();
-		signal.setTagIdentifier("tag");
-		signal.setValueIdentifier("value");
-		signal.setDelimiter("_");
-		signal.setIsSignalPrefix(false);
 
+		signal.setValueIdentifier("value");
+		signal.setSignalIdentifier("signal");
+		Field field = new Field();
+		// field.setEntityIdentifier("entity");
+
+		field.setSignal(signal);
+		field.setTime(time);
+		ds.setField(field);
 		Datasource dataSource = new Datasource();
 		dataSource.setType("STANDALONE");
-
-		Field field = new Field();
-		field.setSiganl(signal);
-		field.setTime(time);
-		// field.setEntityIdentifier("unit");
-
 		ds.setDatasource(dataSource);
-		ds.setField(field);
 
 		Datastream datastream = falkonry.createDatastream(ds);
 		datastreams.add(datastream);
@@ -131,13 +123,14 @@ public class TestCreateAssessment {
 		try {
 			Assessment assessmentResp = falkonry.getAssessment(assessment.getId());
 			Assert.assertEquals(true, false);
-		} catch(Exception e) {
+		} catch (Exception e) {
 			Assert.assertEquals(true, true);
 		}
 	}
 
 	/**
 	 * Should get assessment list
+	 * 
 	 * @throws Exception
 	 */
 	@Test
@@ -145,28 +138,23 @@ public class TestCreateAssessment {
 
 		Datastream ds = new Datastream();
 		ds.setName("Test-DS-" + Math.random());
-
 		TimeObject time = new TimeObject();
 		time.setIdentifier("time");
 		time.setFormat("iso_8601");
 		time.setZone("GMT");
-
 		Signal signal = new Signal();
-		signal.setTagIdentifier("tag");
-		signal.setValueIdentifier("value");
-		signal.setDelimiter("_");
-		signal.setIsSignalPrefix(false);
 
+		signal.setValueIdentifier("value");
+		signal.setSignalIdentifier("signal");
+		Field field = new Field();
+		// field.setEntityIdentifier("entity");
+
+		field.setSignal(signal);
+		field.setTime(time);
+		ds.setField(field);
 		Datasource dataSource = new Datasource();
 		dataSource.setType("STANDALONE");
-
-		Field field = new Field();
-		field.setSiganl(signal);
-		field.setTime(time);
-		// field.setEntityIdentifier("unit");
-
 		ds.setDatasource(dataSource);
-		ds.setField(field);
 
 		Datastream datastream = falkonry.createDatastream(ds);
 		datastreams.add(datastream);
@@ -190,6 +178,7 @@ public class TestCreateAssessment {
 
 	/**
 	 * Should get assessment by ID
+	 * 
 	 * @throws Exception
 	 */
 	@Test
@@ -197,28 +186,23 @@ public class TestCreateAssessment {
 
 		Datastream ds = new Datastream();
 		ds.setName("Test-DS-" + Math.random());
-
 		TimeObject time = new TimeObject();
 		time.setIdentifier("time");
 		time.setFormat("iso_8601");
 		time.setZone("GMT");
-
 		Signal signal = new Signal();
-		signal.setTagIdentifier("tag");
-		signal.setValueIdentifier("value");
-		signal.setDelimiter("_");
-		signal.setIsSignalPrefix(false);
 
+		signal.setValueIdentifier("value");
+		signal.setSignalIdentifier("signal");
+		Field field = new Field();
+		// field.setEntityIdentifier("entity");
+
+		field.setSignal(signal);
+		field.setTime(time);
+		ds.setField(field);
 		Datasource dataSource = new Datasource();
 		dataSource.setType("STANDALONE");
-
-		Field field = new Field();
-		field.setSiganl(signal);
-		field.setTime(time);
-		// field.setEntityIdentifier("unit");
-
 		ds.setDatasource(dataSource);
-		ds.setField(field);
 
 		Datastream datastream = falkonry.createDatastream(ds);
 		datastreams.add(datastream);
@@ -238,7 +222,7 @@ public class TestCreateAssessment {
 		Assert.assertEquals(assessment1.getName(), assessment.getName());
 		Assert.assertEquals(assessment1.getRate(), assessment.getRate());
 		Assert.assertEquals(assessment1.getDatastream(), assessment.getDatastream());
-		
+
 		// aprioriConditionList
 		List<String> aprioriConditionList = assessment1.getAprioriConditionList();
 		Assert.assertEquals(aprioriConditionList.size(), 0);
@@ -250,35 +234,30 @@ public class TestCreateAssessment {
 
 	/**
 	 * Should update assessment
+	 * 
 	 * @throws Exception
 	 */
 	public void updateAssessment() throws Exception {
 
 		Datastream ds = new Datastream();
 		ds.setName("Test-DS-" + Math.random());
-
 		TimeObject time = new TimeObject();
 		time.setIdentifier("time");
 		time.setFormat("iso_8601");
 		time.setZone("GMT");
-
 		Signal signal = new Signal();
-		signal.setTagIdentifier("tag");
-		signal.setValueIdentifier("value");
-		signal.setDelimiter("_");
-		signal.setIsSignalPrefix(false);
 
+		signal.setValueIdentifier("value");
+		signal.setSignalIdentifier("signal");
+		Field field = new Field();
+		// field.setEntityIdentifier("entity");
+
+		field.setSignal(signal);
+		field.setTime(time);
+		ds.setField(field);
 		Datasource dataSource = new Datasource();
 		dataSource.setType("STANDALONE");
-
-		Field field = new Field();
-		field.setSiganl(signal);
-		field.setTime(time);
-		// field.setEntityIdentifier("unit");
-
 		ds.setDatasource(dataSource);
-		ds.setField(field);
-
 		Datastream datastream = falkonry.createDatastream(ds);
 		datastreams.add(datastream);
 
@@ -310,6 +289,7 @@ public class TestCreateAssessment {
 
 	/**
 	 * Should create Narrow datastream with CSV data
+	 * 
 	 * @throws Exception
 	 */
 	@Test
@@ -317,33 +297,38 @@ public class TestCreateAssessment {
 
 		Datastream ds = new Datastream();
 		ds.setName("Test-DS-" + Math.random());
-
 		TimeObject time = new TimeObject();
 		time.setIdentifier("time");
-		time.setFormat("millis");
+		time.setFormat("iso_8601");
 		time.setZone("GMT");
-
 		Signal signal = new Signal();
-		signal.setTagIdentifier("tag");
-		signal.setValueIdentifier("value");
-		signal.setDelimiter("_");
-		signal.setIsSignalPrefix(false);
 
+		signal.setValueIdentifier("value");
+		signal.setSignalIdentifier("signal");
+		Field field = new Field();
+		field.setEntityIdentifier("entity");
+
+		field.setSignal(signal);
+		field.setTime(time);
+		ds.setField(field);
 		Datasource dataSource = new Datasource();
 		dataSource.setType("STANDALONE");
-
-		Field field = new Field();
-		field.setSiganl(signal);
-		field.setTime(time);
-
 		ds.setDatasource(dataSource);
-		ds.setField(field);
-
 		Datastream datastream = falkonry.createDatastream(ds);
 		datastreams.add(datastream);
 
-		String data = "time, tag, value\n2016-03-01 01:01:01, signal1_entity1, 3.4";
+		String data = "time,signal,entity,value\n2016-03-01 01:01:01,signal1,entity1,3.4";
+
 		Map<String, String> options = new HashMap<String, String>();
+		options.put("timeIdentifier", "time");
+		options.put("timeFormat", "YYYY-MM-DD HH:mm:ss");
+		options.put("timeZone", time.getZone());
+		options.put("signalIdentifier", "signal");
+		options.put("entityIdentifier", "entity");
+		options.put("valueIdentifier", "value");
+		options.put("fileFormat", "csv");
+		options.put("streaming", "false");
+		options.put("hasMoreData", "false");
 		falkonry.addInput(datastream.getId(), data, options);
 
 		Assert.assertEquals(ds.getName(), datastream.getName());
@@ -355,18 +340,14 @@ public class TestCreateAssessment {
 
 		Assert.assertEquals(datastream.getDatasource().getType(), ds.getDatasource().getType());
 
-		Assert.assertEquals(datastream.getField().getSignal().getDelimiter(), ds.getField().getSignal().getDelimiter());
-		Assert.assertEquals(datastream.getField().getSignal().getIsSignalPrefix(),
-				ds.getField().getSignal().getIsSignalPrefix());
-		Assert.assertEquals(datastream.getField().getSignal().getTagIdentifier(),
-				ds.getField().getSignal().getTagIdentifier());
 		Assert.assertEquals(datastream.getField().getSignal().getValueIdentifier(),
 				ds.getField().getSignal().getValueIdentifier());
 
 	}
 
 	/**
-	 * Should create wide datstream with CSV data
+	 * Should create wide datastream with CSV data
+	 * 
 	 * @throws Exception
 	 */
 	@Test
@@ -374,28 +355,23 @@ public class TestCreateAssessment {
 
 		Datastream ds = new Datastream();
 		ds.setName("Test-DS-" + Math.random());
-
 		TimeObject time = new TimeObject();
 		time.setIdentifier("time");
 		time.setFormat("millis");
 		time.setZone("GMT");
-
 		Signal signal = new Signal();
-		signal.setTagIdentifier("tag");
-		signal.setValueIdentifier("value");
-		signal.setDelimiter("_");
-		signal.setIsSignalPrefix(false);
 
+		signal.setValueIdentifier("value");
+		signal.setSignalIdentifier("signal");
+		Field field = new Field();
+		// field.setEntityIdentifier("entity");
+
+		field.setSignal(signal);
+		field.setTime(time);
+		ds.setField(field);
 		Datasource dataSource = new Datasource();
 		dataSource.setType("STANDALONE");
-
-		Field field = new Field();
-		field.setSiganl(signal);
-		field.setTime(time);
-		// field.setEntityIdentifier("unit");
-
 		ds.setDatasource(dataSource);
-		ds.setField(field);
 
 		Datastream datastream = falkonry.createDatastream(ds);
 		datastreams.add(datastream);
@@ -403,6 +379,9 @@ public class TestCreateAssessment {
 		String data = "time,entity,signal1,signal2,signal3,signal4,signal5\n"
 				+ "1467729675422,entity1,41.11,82.34,74.63,4.8,72.01";
 		Map<String, String> options = new HashMap<String, String>();
+		options.put("fileFormat", "csv");
+		options.put("streaming", "false");
+		options.put("hasMoreData", "false");
 		falkonry.addInput(datastream.getId(), data, options);
 
 		Assert.assertEquals(ds.getName(), datastream.getName());
@@ -413,12 +392,6 @@ public class TestCreateAssessment {
 		Assert.assertEquals(datastream.getField().getTime().getZone(), ds.getField().getTime().getZone());
 
 		Assert.assertEquals(datastream.getDatasource().getType(), ds.getDatasource().getType());
-
-		Assert.assertEquals(datastream.getField().getSignal().getDelimiter(), ds.getField().getSignal().getDelimiter());
-		Assert.assertEquals(datastream.getField().getSignal().getIsSignalPrefix(),
-				ds.getField().getSignal().getIsSignalPrefix());
-		Assert.assertEquals(datastream.getField().getSignal().getTagIdentifier(),
-				ds.getField().getSignal().getTagIdentifier());
 		Assert.assertEquals(datastream.getField().getSignal().getValueIdentifier(),
 				ds.getField().getSignal().getValueIdentifier());
 
