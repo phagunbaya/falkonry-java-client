@@ -195,7 +195,7 @@ public class FalkonryService {
 	 */
 	public InputStatus addInputData(String id, String data, Map<String, String> options) throws Exception {
 		ObjectMapper mapper = new ObjectMapper();
-		String url = getInputIngestionUrl(id,options);
+		String url = getInputIngestionUrl(id, options);
 		String status = this.httpService.postData(url, data);
 		return mapper.readValue(status, InputStatus.class);
 	}
@@ -218,7 +218,7 @@ public class FalkonryService {
 
 	/**
 	 *
-	 * @param id 
+	 * @param id
 	 * @param stream
 	 * @param options
 	 * @return
@@ -227,7 +227,7 @@ public class FalkonryService {
 	public InputStatus addInputFromStream(String id, ByteArrayInputStream stream, Map<String, String> options)
 			throws Exception {
 		ObjectMapper mapper = new ObjectMapper();
-		String url = getInputIngestionUrl(id,options);
+		String url = getInputIngestionUrl(id, options);
 		byte[] data_bytes = IOUtils.toByteArray(stream);
 		String status = this.httpService.upstream(url, data_bytes);
 		return mapper.readValue(status, InputStatus.class);
@@ -320,6 +320,13 @@ public class FalkonryService {
 				url += "&";
 			url += "tagIdentifier=" + URLEncoder.encode(options.get("tagIdentifier"), "UTF-8");
 		}
+		if (options.containsKey("batchIdentifier")) {
+			if (firstReqParam)
+				firstReqParam = false;
+			else
+				url += "&";
+			url += "batchIdentifier=" + URLEncoder.encode(options.get("batchIdentifier"), "UTF-8");
+		}
 
 		return url;
 	}
@@ -332,50 +339,51 @@ public class FalkonryService {
 	 */
 	private String getInputIngestionUrl(String datstreamId, Map<String, String> options) throws Exception {
 
-		String url = "/datastream/" + datstreamId + "?" ;
+		String url = "/datastream/" + datstreamId + "?";
 
 		if (options.containsKey("streaming")) {
 			url += "streaming=" + URLEncoder.encode(options.get("streaming"), "UTF-8");
-		}
-		else{
+		} else {
 			url += "streaming=true";
 		}
-		
+
 		if (options.containsKey("hasMoreData")) {
 			url += "&hasMoreData=" + URLEncoder.encode(options.get("hasMoreData"), "UTF-8");
-		}
-		else{
+		} else {
 			url += "&hasMoreData=true";
 		}
-		
+
 		if (options.containsKey("timeFormat")) {
 			url += "&timeFormat=" + URLEncoder.encode(options.get("timeFormat"), "UTF-8");
 		}
-		
+
 		if (options.containsKey("timeZone")) {
 			url += "&timeZone=" + URLEncoder.encode(options.get("timeZone"), "UTF-8");
 		}
-		
+
 		if (options.containsKey("timeIdentifier")) {
 			url += "&timeIdentifier=" + URLEncoder.encode(options.get("timeIdentifier"), "UTF-8");
 		}
-		
+
 		if (options.containsKey("entityIdentifier")) {
 			url += "&entityIdentifier=" + URLEncoder.encode(options.get("entityIdentifier"), "UTF-8");
 		}
-		
+
 		if (options.containsKey("valueIdentifier")) {
 			url += "&valueIdentifier=" + URLEncoder.encode(options.get("valueIdentifier"), "UTF-8");
 		}
-		
+
 		if (options.containsKey("signalIdentifier")) {
 			url += "&signalIdentifier=" + URLEncoder.encode(options.get("signalIdentifier"), "UTF-8");
+		}
+
+		if (options.containsKey("batchIdentifier")) {
+			url += "&batchIdentifier=" + URLEncoder.encode(options.get("batchIdentifier"), "UTF-8");
 		}
 
 		return url;
 	}
 
-	
 	/**
 	 *
 	 * @param id

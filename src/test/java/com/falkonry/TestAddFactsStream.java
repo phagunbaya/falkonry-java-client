@@ -100,7 +100,80 @@ public class TestAddFactsStream {
 		Assert.assertEquals(response.getAction(), "ADD_FACT_DATA");
 		Assert.assertEquals(response.getStatus(), "PENDING");
 	}
+	
+	/**
+	 * Should create batch datastream and add fact stream data in CSV format
+	 *
+	 * @throws Exception
+	 */
+	@Test
+	public void createBatchDatastreamWithCsvFactsStream() throws Exception {
 
+		Datastream ds = new Datastream();
+		ds.setName("Test-DS-" + Math.random());
+		TimeObject time = new TimeObject();
+		time.setIdentifier("time");
+		time.setFormat("iso_8601");
+		time.setZone("GMT");
+		Signal signal = new Signal();
+
+		signal.setValueIdentifier("value");
+		signal.setSignalIdentifier("signal");
+		Field field = new Field();
+		field.setEntityIdentifier("entity");
+		field.setBatchIdentifier("batch");
+
+		field.setSignal(signal);
+		field.setTime(time);
+		ds.setField(field);
+		Datasource dataSource = new Datasource();
+		dataSource.setType("STANDALONE");
+		ds.setDatasource(dataSource);
+
+		Datastream datastream = falkonry.createDatastream(ds);
+		datastreams.add(datastream);
+
+		List<Assessment> assessments = new ArrayList<Assessment>();
+		AssessmentRequest assessmentRequest = new AssessmentRequest();
+		assessmentRequest.setName("Health");
+		assessmentRequest.setDatastream(datastream.getId());
+		assessmentRequest.setAssessmentRate("PT1S");
+		Assessment assessment = falkonry.createAssessment(assessmentRequest);
+		assessments.add(assessment);
+
+		Map<String, String> options = new HashMap<String, String>();
+
+		String data = "time,entity,signal,value,batch\n2016-03-01 01:01:01,entity1,signal1,3.4,batch1";
+		options.put("timeIdentifier", "time");
+		options.put("timeFormat", "YYYY-MM-DD HH:mm:ss");
+		options.put("timeZone", time.getZone());
+		options.put("signalIdentifier", "signal");
+		options.put("entityIdentifier", "entity");
+		options.put("valueIdentifier", "value");
+		options.put("fileFormat", "csv");
+		options.put("streaming", "false");
+		options.put("hasMoreData", "false");
+		options.put("batchIdentifier", "batch");
+		falkonry.addInput(datastream.getId(), data, options);
+
+		File file = new File("res/factsDataBatch.csv");
+		ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(FileUtils.readFileToByteArray(file));
+
+		Map<String, String> queryParams = new HashMap<String, String>();
+		queryParams.put("startTimeIdentifier", "time");
+		queryParams.put("endTimeIdentifier", "end");
+		queryParams.put("timeFormat", time.getFormat());
+		queryParams.put("timeZone", time.getZone());
+		queryParams.put("entityIdentifier", "entity");
+		queryParams.put("valueIdentifier", "Health");
+		queryParams.put("batchIdentifier", "batch");
+
+		InputStatus response = falkonry.addFactsStream(assessment.getId(), byteArrayInputStream, queryParams);
+		Assert.assertEquals(response.getAction(), "ADD_FACT_DATA");
+		Assert.assertEquals(response.getStatus(), "PENDING");
+	}
+
+	
 	/**
 	 * Should create datastream and add fact stream data with tags in CSV format
 	 *

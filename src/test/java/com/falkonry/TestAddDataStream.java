@@ -96,7 +96,67 @@ public class TestAddDataStream {
 		Assert.assertEquals(signal1.getValueIdentifier(), signal.getValueIdentifier());
 
 	}
+	
+	/**
+	 * Should add narrow data to batch datastream in stream JSON format
+	 * 
+	 * @throws Exception
+	 */
+	@Test
+	public void addDataJsonStreamBatchDatastream() throws Exception {
 
+		Datastream ds = new Datastream();
+		ds.setName("Test-DS-" + Math.random());
+		TimeObject time = new TimeObject();
+		time.setIdentifier("time");
+		time.setFormat("iso_8601");
+		time.setZone("GMT");
+		Signal signal = new Signal();
+
+		signal.setValueIdentifier("value");
+		signal.setSignalIdentifier("signal");
+		Field field = new Field();
+		field.setEntityIdentifier("entity");
+		field.setBatchIdentifier("entity");
+
+		field.setSignal(signal);
+		field.setTime(time);
+		ds.setField(field);
+		Datasource dataSource = new Datasource();
+		dataSource.setType("STANDALONE");
+		ds.setDatasource(dataSource);
+		Datastream datastream = falkonry.createDatastream(ds);
+		datastreams.add(datastream);
+
+		Map<String, String> options = new HashMap<String, String>();
+
+		File file = new File("res/dataBatch.json");
+
+		options.put("timeIdentifier", "time");
+		options.put("timeFormat", "YYYY-MM-DD HH:mm:ss");
+		options.put("timeZone", time.getZone());
+		options.put("signalIdentifier", "signal");
+		options.put("entityIdentifier", "entity");
+		options.put("valueIdentifier", "value");
+		options.put("batchIdentifier", "batch");
+		options.put("fileFormat", "csv");
+		options.put("streaming", "false");
+		options.put("hasMoreData", "false");
+		ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(FileUtils.readFileToByteArray(file));
+		InputStatus inputStatus = falkonry.addInputStream(datastream.getId(), byteArrayInputStream, options);
+		Assert.assertEquals(inputStatus.getAction(), "ADD_DATA_DATASTREAM");
+		Assert.assertEquals(inputStatus.getStatus(), "PENDING");
+		Datastream datastream1 = falkonry.getDatastream(datastream.getId());
+		Assert.assertEquals(datastream1.getId(), datastream.getId());
+		Assert.assertEquals(datastream1.getName(), datastream.getName());
+		Field field1 = datastream1.getField();
+		Signal signal1 = field1.getSignal();
+
+		Assert.assertEquals(signal1.getValueIdentifier(), signal.getValueIdentifier());
+
+	}
+
+	
 	/**
 	 * Should add wide data to datastream in stream JSON format
 	 * 
@@ -234,6 +294,13 @@ public class TestAddDataStream {
 		options.put("fileFormat", "csv");
 		options.put("streaming", "false");
 		options.put("hasMoreData", "false");
+		options.put("timeIdentifier", "time");
+		options.put("timeFormat", "YYYY-MM-DD HH:mm:ss");
+		options.put("timeZone", time.getZone());
+		options.put("signalIdentifier", "signal");
+		options.put("entityIdentifier", "entity");
+		options.put("valueIdentifier", "value");
+		
 		InputStatus inputStatus = falkonry.addInputStream(datastream.getId(), byteArrayInputStream, options);
 		Assert.assertEquals(inputStatus.getAction(), "ADD_DATA_DATASTREAM");
 		Assert.assertEquals(inputStatus.getStatus(), "PENDING");
@@ -358,27 +425,26 @@ public class TestAddDataStream {
 	public void addDataWithMicrosecondsPrecision() throws Exception {
 
 		Datastream ds = new Datastream();
-		ds.setName("Test-DS1-" + Math.random());
+		ds.setName("Test-DS-" + Math.random());
 		ds.setTimePrecision("micro");
-
 		TimeObject time = new TimeObject();
 		time.setIdentifier("time");
 		time.setFormat("iso_8601");
 		time.setZone("GMT");
-
 		Signal signal = new Signal();
 
 		signal.setValueIdentifier("value");
-
-		Datasource dataSource = new Datasource();
-		dataSource.setType("STANDALONE");
-
+		signal.setSignalIdentifier("signal");
 		Field field = new Field();
+		field.setEntityIdentifier("entity");
+
 		field.setSignal(signal);
 		field.setTime(time);
-
-		ds.setDatasource(dataSource);
 		ds.setField(field);
+		Datasource dataSource = new Datasource();
+		dataSource.setType("STANDALONE");
+		ds.setDatasource(dataSource);
+
 
 		Datastream datastream = falkonry.createDatastream(ds);
 		datastreams.add(datastream);
@@ -390,6 +456,12 @@ public class TestAddDataStream {
 		options.put("fileFormat", "json");
 		options.put("streaming", "false");
 		options.put("hasMoreData", "false");
+		options.put("timeIdentifier", "time");
+		options.put("timeFormat", "YYYY-MM-DD HH:mm:ss");
+		options.put("timeZone", time.getZone());
+		options.put("signalIdentifier", "signal");
+		options.put("entityIdentifier", "entity");
+		options.put("valueIdentifier", "value");
 		InputStatus inputStatus = falkonry.addInputStream(datastream.getId(), byteArrayInputStream, options);
 		Assert.assertEquals(inputStatus.getAction(), "ADD_DATA_DATASTREAM");
 		Assert.assertEquals(inputStatus.getStatus(), "PENDING");

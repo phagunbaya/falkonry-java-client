@@ -15,6 +15,7 @@ import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 @JsonIgnoreProperties(ignoreUnknown=true)
 public class Field {
   private String entityIdentifier;
+  private String batchIdentifier;
   private String entityName;
   private Signal signal;
   private TimeObject time;
@@ -36,6 +37,24 @@ public class Field {
     this.entityIdentifier = entityIdentifier;
     return this;
   }
+    
+    /**
+    *
+    * @return
+    */
+   public String getBatchIdentifier() {
+   return this.batchIdentifier;
+ }
+
+   /**
+    *
+    * @param batchIdentifier
+    * @return
+    */
+   public Field setBatchIdentifier(String batchIdentifier) {
+   this.batchIdentifier = batchIdentifier;
+   return this;
+ }
   
     /**
      *
