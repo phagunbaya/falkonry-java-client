@@ -29,7 +29,7 @@ public class Assessment {
     private List<String> aprioriConditionList;
    
 
-	/**
+	  /**
      *
      * @return
      */
@@ -40,9 +40,11 @@ public class Assessment {
     /**
      *
      * @param rate
+     * @return
      */
-    public void setRate(String rate) {
+    public Assessment setRate(String rate) {
         this.rate = rate;
+        return this;
     }
 
     /**
@@ -56,9 +58,11 @@ public class Assessment {
     /**
      *
      * @param measurement
+     * @return
      */
-    public void setMeasurement(String measurement) {
+    public Assessment setMeasurement(String measurement) {
         this.measurement = measurement;
+        return this;
     }
 
     /**
@@ -92,8 +96,9 @@ public class Assessment {
      * @param tenant
      * @return
      */
-    public void setTenant(String tenant) {
+    public Assessment setTenant(String tenant) {
         this.tenant = tenant;
+        return this;
     }
 
     /**
@@ -109,8 +114,9 @@ public class Assessment {
      * @param datastream
      * @return
      */
-    public void setDatastream(String datastream) {
+    public Assessment setDatastream(String datastream) {
         this.datastream = datastream;
+        return this;
     }
 
     /**
@@ -124,9 +130,11 @@ public class Assessment {
     /**
      *
      * @param live
+     * @return
      */
-    public void setLive(String live) {
+    public Assessment setLive(String live) {
         this.live = live;
+        return this;
     }
 
     /**
@@ -142,8 +150,9 @@ public class Assessment {
      * @param factsMesaurement
      * @return
      */
-    public void setFactsMesaurement(String factsMesaurement) {
+    public Assessment setFactsMesaurement(String factsMesaurement) {
         this.factsMesaurement = factsMesaurement;
+        return this;
     }
 
     /**
@@ -159,8 +168,9 @@ public class Assessment {
      * @param production
      * @return
      */
-    public void setProduction(String production) {
+    public Assessment setProduction(String production) {
         this.production = production;
+        return this;
     }
 
     /**
@@ -176,8 +186,9 @@ public class Assessment {
      * @param modelId
      * @return
      */
-    public void setActiveModel(String modelId) {
+    public Assessment setActiveModel(String modelId) {
         this.activeModel = modelId;
+        return this;
     }
 
     /**
@@ -249,8 +260,9 @@ public class Assessment {
      * @param aprioriConditionList
      * @return
      */
-    public void setAprioriConditionList(List<String> aprioriConditionList) {
+    public Assessment setAprioriConditionList(List<String> aprioriConditionList) {
         this.aprioriConditionList = aprioriConditionList;
+        return this;
     }
 
 }
