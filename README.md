@@ -326,8 +326,7 @@ Usage:
     Falkonry falkonry = new Falkonry("http://localhost:8080", "auth-token");
     Datastream ds = new Datastream();
 	ds.setName("Test-DS-" + Math.random());
-	ds.setTimePrecision("micro"); 
-	// "timePrecision" is use to store your data in different date time format. You can store your data in milliseconds("millis") or microseconds("micro"). Default will be "millis"
+	ds.setTimePrecision("micro"); // "timePrecision" is use to store your data in different date time format. You can store your data in milliseconds("millis") or microseconds("micro"). Default will be "millis"
 
 	TimeObject time = new TimeObject();
 	time.setIdentifier("time");
@@ -345,7 +344,6 @@ Usage:
 	Field field = new Field();
 	field.setSignal(signal);
 	field.setTime(time);
-	// field.setEntityIdentifier("unit");
 
 	ds.setDatasource(dataSource);
 	ds.setField(field);
@@ -539,7 +537,7 @@ Usage:
     //instantiate Falkonry
     Falkonry falkonry = new Falkonry("http://localhost:8080", "auth-token");
     //Add data to datastream
-    String data = "{\"time\" :\"2016-03-01T01:01:01.000Z\",\"unit\":\"Unit1\", \"signal\" : \"current\", \"value\" : 12.5}" +
+    String data = "{\"time\" :\"2016-03-01T01:01:01.000Z\",\"unit\":\"Unit1\", \"signal\" : \"current\", \"value\" : 12.5}\n" +
 					"{\"time\" :\"2016-03-01T01:01:01.000Z\",\"unit\":\"Unit2\", \"signal\" : \"vibration\", \"value\" : 3.4}";
 
 		Map<String, String> options = new HashMap<String, String>();
@@ -681,7 +679,7 @@ Usage:
 	Map<String, String> options = new HashMap<String, String>();
 	options.put("timeIdentifier", "time");
 	options.put("timeFormat", "iso_8601");
-	options.put("timeZ"GMT"Zone());
+	options.put("GMT");
 	options.put("fileFormat", "csv");
 	options.put("streaming", "false");
 	options.put("hasMoreData", "false");
@@ -696,8 +694,8 @@ Usage:
 
 Data:
 ```
-    {"time" :"2016-03-01 01:01:01", "signal" : "current", "value" : 12.4}
-    {"time" :"2016-03-01 01:01:01", "signal" : "vibration", "value" : 3.4}
+    {"time" :"2016-03-01 01:01:01", "batch": "batch-1", "signal" : "current", "value" : 12.4}
+    {"time" :"2016-03-01 01:01:01", "batch": "batch-1", "signal" : "vibration", "value" : 3.4}
 ```
 
 Usage:
@@ -712,8 +710,8 @@ Usage:
     //instantiate Falkonry
     Falkonry falkonry = new Falkonry("http://localhost:8080", "auth-token");
     //Add data to datastream
-    String data = "{\"time\" :\"2016-03-01T01:01:01.000Z\" \"signal\" : \"current\", \"value\" : 12.5}" +
-					"{\"time\" :\"2016-03-01T01:01:01.000Z\", \"signal\" : \"vibration\", \"value\" : 3.4}";
+    String data = "{\"time\" :\"2016-03-01T01:01:01.000Z\", \"batch\" : \"batch-1\", \"signal\" : \"current\", \"value\" : 12.5}\n" +
+					"{\"time\" :\"2016-03-01T01:01:01.000Z\", \"batch\" : \"batch-1\", \"signal\" : \"vibration\", \"value\" : 3.4}";
 
 		Map<String, String> options = new HashMap<String, String>();
 		options.put("timeIdentifier", "time");
@@ -751,7 +749,7 @@ Usage:
     //instantiate Falkonry
     Falkonry falkonry = new Falkonry("http://localhost:8080", "auth-token");
 	//Add data to datastream
-    String data = "time,signal,value,unit\n" + 
+    String data = "time,signal,value,unit,batch\n" + 
 					"2012-01-03T18:16:00.000Z,L1DynVert,9.95,unit1,batch1\n" + 
 					"2012-01-03T18:16:00.000Z,L1VertAvg,12.95,unit2,batch2\n" + 
 					"2012-01-03T18:16:00.000Z,L1VertPk,19.95,unit3,batch3";
@@ -855,7 +853,7 @@ Usage:
 	Map<String, String> options = new HashMap<String, String>();
 	options.put("timeIdentifier", "time");
 	options.put("timeFormat", "iso_8601");
-	options.put("timeZ"GMT"Zone());
+	options.put("GMT");
 	options.put("fileFormat", "csv");
 	options.put("streaming", "false");
 	options.put("hasMoreData", "false");
