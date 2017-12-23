@@ -261,4 +261,14 @@ public class Falkonry {
 		return this.falkonryService.getInputData(datastreamId, options);
 	}
 
+	/**
+	 * getStatus
+	 * @param id
+	 * @throws Exception
+	 * @return Tracker
+	 */
+	public Tracker getStatus(String id) throws Exception {
+		return this.falkonryService.getStatus(id);
+	}
+
 }

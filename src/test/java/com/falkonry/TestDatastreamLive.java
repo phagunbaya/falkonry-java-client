@@ -16,12 +16,11 @@ import com.falkonry.helper.models.Signal;
 import org.junit.*;
 import java.util.*;
 
-@Ignore
 public class TestDatastreamLive {
 
 	Falkonry falkonry = null;
-	String host = "https://localhost:8080";
-  	String token = "auth-token";
+	String host = System.getenv("FALKONRY_HOST_URL");
+	String token = System.getenv("FALKONRY_TOKEN");
 	
 	
 	List<Datastream> datastreams = new ArrayList<Datastream>();
@@ -77,6 +76,7 @@ public class TestDatastreamLive {
 	 * 
 	 * @throws Exception
 	 */
+	@Ignore
 	@Test
 	public void testOnDatastream() throws Exception {
 		// Id of datastream which has assessment with active model available
@@ -91,6 +91,7 @@ public class TestDatastreamLive {
 	 * 
 	 * @throws Exception
 	 */
+	@Ignore
 	@Test
 	public void testOffDatastream() throws Exception {
 		// Id of datastream which has assessment with active model available

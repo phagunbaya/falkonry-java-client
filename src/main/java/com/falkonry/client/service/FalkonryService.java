@@ -581,4 +581,15 @@ public class FalkonryService {
 		HttpResponseFormat factsData = httpService.getOutput(url, responseFromat);
 		return factsData;
 	}
+
+	/**
+	 * @param id
+	 * @throws Exception
+	 * @return Tracker
+	 */
+	public Tracker getStatus(String id) throws Exception {
+		ObjectMapper mapper = new ObjectMapper();
+		String entityMeta_json = httpService.get("/app/track/" + id);
+		return mapper.readValue(entityMeta_json, new TypeReference<Tracker>() {});
+	}
 }

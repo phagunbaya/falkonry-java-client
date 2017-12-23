@@ -18,8 +18,8 @@ import java.util.Observer;
 public class TestStreamOutput {
 
 	Falkonry falkonry = null;
-	String host = "https://localhost:8080";
-	String token = "auth-token";
+	String host = System.getenv("FALKONRY_HOST_URL");
+	String token = System.getenv("FALKONRY_TOKEN");
 	
 
 	/**

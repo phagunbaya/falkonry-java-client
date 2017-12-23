@@ -61,10 +61,6 @@ public class Assessment {
         this.measurement = measurement;
     }
 
-//    public Assessment() {
-//
-//    }
-
     /**
      *
      * @return
@@ -93,10 +89,28 @@ public class Assessment {
 
     /**
      *
+     * @param tenant
+     * @return
+     */
+    public void setTenant(String tenant) {
+        this.tenant = tenant;
+    }
+
+    /**
+     *
      * @return
      */
     public String getDatastream() {
         return datastream;
+    }
+
+    /**
+     *
+     * @param datastream
+     * @return
+     */
+    public void setDatastream(String datastream) {
+        this.datastream = datastream;
     }
 
     /**
@@ -125,6 +139,15 @@ public class Assessment {
 
     /**
      *
+     * @param factsMesaurement
+     * @return
+     */
+    public void setFactsMesaurement(String factsMesaurement) {
+        this.factsMesaurement = factsMesaurement;
+    }
+
+    /**
+     *
      * @return
      */
     public String getProduction() {
@@ -133,10 +156,28 @@ public class Assessment {
 
     /**
      *
+     * @param production
+     * @return
+     */
+    public void setProduction(String production) {
+        this.production = production;
+    }
+
+    /**
+     *
      * @return
      */
     public String getActiveModel() {
         return activeModel;
+    }
+
+    /**
+     *
+     * @param modelId
+     * @return
+     */
+    public void setActiveModel(String modelId) {
+        this.activeModel = modelId;
     }
 
     /**
@@ -194,13 +235,22 @@ public class Assessment {
         this.tenant = account;
         return this;
     }
-    
+
+    /**
+     *
+     * @return
+     */
     public List<String> getAprioriConditionList() {
 		return aprioriConditionList;
 	}
 
-	public void setAprioriConditionList(List<String> aprioriConditionList) {
-		this.aprioriConditionList = aprioriConditionList;
-	}
+    /**
+     *
+     * @param aprioriConditionList
+     * @return
+     */
+    public void setAprioriConditionList(List<String> aprioriConditionList) {
+        this.aprioriConditionList = aprioriConditionList;
+    }
 
 }

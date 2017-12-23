@@ -7,15 +7,7 @@ package com.falkonry;
  */
 
 import com.falkonry.client.Falkonry;
-import com.falkonry.helper.models.Datasource;
-import com.falkonry.helper.models.Datastream;
-import com.falkonry.helper.models.Field;
-import com.falkonry.helper.models.Input;
-import com.falkonry.helper.models.InputStatus;
-import com.falkonry.helper.models.Signal;
-import com.falkonry.helper.models.TimeObject;
-import com.falkonry.helper.models.ValueType;
-import com.falkonry.helper.models.EventType;
+import com.falkonry.helper.models.*;
 import org.apache.commons.io.FileUtils;
 import org.junit.*;
 import java.io.ByteArrayInputStream;
@@ -23,13 +15,26 @@ import java.io.File;
 import java.util.*;
 
 @Ignore
-public class TestAddDataStream {
+public class TestAddDataFromStream {
 
 	Falkonry falkonry = null;
-	String host = "https://localhost:8080";
-	String token = "auth-token";
+	String host = System.getenv("FALKONRY_HOST_URL");
+	String token = System.getenv("FALKONRY_TOKEN");
 
 	List<Datastream> datastreams = new ArrayList<Datastream>();
+
+	private void checkStatus(String trackerId) throws Exception {
+		for(int i=0; i < 12; i++) {
+			Tracker tracker = falkonry.getStatus(trackerId);
+			if (tracker.getStatus().equals("FAILED") || tracker.getStatus().equals("ERROR")) {
+				throw new Exception(tracker.getMessage());
+			}
+			else if(tracker.getStatus().equals("SUCCESS") || tracker.getStatus().equals("COMPLETED")){
+				break;
+			}
+			Thread.sleep(5000);
+		}
+	}
 
 	/**
 	 *
@@ -72,7 +77,7 @@ public class TestAddDataStream {
 
 		Map<String, String> options = new HashMap<String, String>();
 
-		File file = new File("res/data.json");
+		File file = new File(this.getClass().getClassLoader().getResource("data.json").getFile());
 
 		options.put("timeIdentifier", "time");
 		options.put("timeFormat", "YYYY-MM-DD HH:mm:ss");
@@ -87,13 +92,9 @@ public class TestAddDataStream {
 		InputStatus inputStatus = falkonry.addInputStream(datastream.getId(), byteArrayInputStream, options);
 		Assert.assertEquals(inputStatus.getAction(), "ADD_DATA_DATASTREAM");
 		Assert.assertEquals(inputStatus.getStatus(), "PENDING");
-		Datastream datastream1 = falkonry.getDatastream(datastream.getId());
-		Assert.assertEquals(datastream1.getId(), datastream.getId());
-		Assert.assertEquals(datastream1.getName(), datastream.getName());
-		Field field1 = datastream1.getField();
-		Signal signal1 = field1.getSignal();
 
-		Assert.assertEquals(signal1.getValueIdentifier(), signal.getValueIdentifier());
+		// checking ingestion status
+		checkStatus(inputStatus.getId());
 
 	}
 
@@ -181,7 +182,7 @@ public class TestAddDataStream {
 
 		Map<String, String> options = new HashMap<String, String>();
 
-		File file = new File("res/data_wide.json");
+		File file = new File(this.getClass().getClassLoader().getResource("data_wide.json").getFile());
 		ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(FileUtils.readFileToByteArray(file));
 		options.put("fileFormat", "json");
 		options.put("streaming", "false");
@@ -190,10 +191,8 @@ public class TestAddDataStream {
 		Assert.assertEquals(inputStatus.getAction(), "ADD_DATA_DATASTREAM");
 		Assert.assertEquals(inputStatus.getStatus(), "PENDING");
 
-		Datastream datastream1 = falkonry.getDatastream(datastream.getId());
-		Assert.assertEquals(datastream1.getId(), datastream.getId());
-		Assert.assertEquals(datastream1.getName(), datastream.getName());
-		Assert.assertEquals(datastream1.getInputList().size(), datastream.getInputList().size());
+		// checking ingestion status
+		checkStatus(inputStatus.getId());
 	}
 
 	/**
@@ -208,7 +207,7 @@ public class TestAddDataStream {
 		ds.setName("Test-DS-" + Math.random());
 		TimeObject time = new TimeObject();
 		time.setIdentifier("time");
-		time.setFormat("iso_8601");
+		time.setFormat("YYYY-MM-DD HH:mm:ss");
 		time.setZone("GMT");
 		Signal signal = new Signal();
 
@@ -229,7 +228,7 @@ public class TestAddDataStream {
 
 		Map<String, String> options = new HashMap<String, String>();
 
-		File file = new File("res/data.csv");
+		File file = new File(this.getClass().getClassLoader().getResource("data.csv").getFile());
 		ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(FileUtils.readFileToByteArray(file));
 		options.put("fileFormat", "csv");
 		options.put("streaming", "false");
@@ -238,15 +237,8 @@ public class TestAddDataStream {
 		Assert.assertEquals(inputStatus.getAction(), "ADD_DATA_DATASTREAM");
 		Assert.assertEquals(inputStatus.getStatus(), "PENDING");
 
-		Datastream datastream1 = falkonry.getDatastream(datastream.getId());
-		Assert.assertEquals(datastream1.getId(), datastream.getId());
-		Assert.assertEquals(datastream1.getName(), datastream.getName());
-
-		Field field1 = datastream1.getField();
-
-		Signal signal1 = field1.getSignal();
-
-		Assert.assertEquals(signal1.getValueIdentifier(), signal.getValueIdentifier());
+		// checking ingestion status
+		checkStatus(inputStatus.getId());
 
 	}
 
@@ -334,7 +326,7 @@ public class TestAddDataStream {
 		datastreams.add(datastream);
 
 		Map<String, String> options = new HashMap<String, String>();
-		File file = new File("res/data_wide.csv");
+		File file = new File(this.getClass().getClassLoader().getResource("data_wide.csv").getFile());
 		ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(FileUtils.readFileToByteArray(file));
 		options.put("fileFormat", "csv");
 		options.put("streaming", "false");
@@ -343,10 +335,8 @@ public class TestAddDataStream {
 		Assert.assertEquals(inputStatus.getAction(), "ADD_DATA_DATASTREAM");
 		Assert.assertEquals(inputStatus.getStatus(), "PENDING");
 
-		Datastream datastream1 = falkonry.getDatastream(datastream.getId());
-		Assert.assertEquals(datastream1.getId(), datastream.getId());
-		Assert.assertEquals(datastream1.getName(), datastream.getName());
-		Assert.assertEquals(datastream1.getInputList().size(), datastream.getInputList().size());
+		// checking ingestion status
+		checkStatus(inputStatus.getId());
 	}
 
 	/**
@@ -363,11 +353,11 @@ public class TestAddDataStream {
 
 		TimeObject time = new TimeObject();
 		time.setIdentifier("time");
-		time.setFormat("iso_8601");
+		time.setFormat("YYYY-MM-DD HH:mm:ss");
 		time.setZone("GMT");
 
 		Signal signal = new Signal();
-
+		signal.setSignalIdentifier("signal");
 		signal.setValueIdentifier("value");
 
 		Datasource dataSource = new Datasource();
@@ -376,6 +366,7 @@ public class TestAddDataStream {
 		Field field = new Field();
 		field.setSignal(signal);
 		field.setTime(time);
+		field.setEntityIdentifier("entity");
 
 		ds.setDatasource(dataSource);
 		ds.setField(field);
@@ -385,7 +376,7 @@ public class TestAddDataStream {
 
 		Map<String, String> options = new HashMap<String, String>();
 
-		File file = new File("res/data.json");
+		File file = new File(this.getClass().getClassLoader().getResource("data.json").getFile());
 		ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(FileUtils.readFileToByteArray(file));
 		options.put("fileFormat", "json");
 		options.put("streaming", "false");
@@ -393,14 +384,9 @@ public class TestAddDataStream {
 		InputStatus inputStatus = falkonry.addInputStream(datastream.getId(), byteArrayInputStream, options);
 		Assert.assertEquals(inputStatus.getAction(), "ADD_DATA_DATASTREAM");
 		Assert.assertEquals(inputStatus.getStatus(), "PENDING");
-		Datastream createdDatastream = falkonry.getDatastream(datastream.getId());
-		Assert.assertEquals(createdDatastream.getId(), datastream.getId());
-		Assert.assertEquals(createdDatastream.getName(), datastream.getName());
-		Assert.assertEquals(createdDatastream.getTimePrecision(), datastream.getTimePrecision());
-		Field field1 = createdDatastream.getField();
-		Signal signal1 = field1.getSignal();
 
-		Assert.assertEquals(signal1.getValueIdentifier(), signal.getValueIdentifier());
+		// checking ingestion status
+		checkStatus(inputStatus.getId());
 
 	}
 

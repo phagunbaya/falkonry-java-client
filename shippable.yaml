@@ -1,0 +1,21 @@
+language: java
+
+jdk:
+  - oraclejdk8
+env:
+  - secure: Jn43zyLwIVtuLcBitRMnzkNKhDGxk9UYre9txxCpfketteaf2sboU2B23J6NQLQnQ2HnqGzEg51CuDVZJ0WaTosh0x1Ft5fRKN2wQdI3fhu94nH+aN0Hs+yDJuww6R8hWpfLGdBuA5iMvo+9S6TA5q59QJt91CeKHVGWTEdTUYHSjPB5vS338IV9681zj1KB0/Mk0yh/N0EXbIz66C4MWoskJ2efI+6zYqCKJAzt7RIV2zoQXWGVM/iwA7JtNbtIYvFf3zURmsTkfWm3wCifIkGGO0rEvWnN8VgY3t3iMe9ww9dTuYa6GacCd27kk/txSthIst4CowACdV8pnb9ZEA==
+  - secure: UI4AJdogU9u+vYjAuZKRkrit6joh2bPRPT67AZVVOZmAOFdaMsAMeh2A1z573nehjW0hRBrnoL8XlSUdgcypvnxWh5kAQdzh5m154Dx5wzXQBKONzvvfL0KWFyPW4VJRzcSLDM2F8hDcpei7qLDjc4dZty6tzOKaIf+Mp47q7H29fL6p2VdY6kTFEHZyzA1MLAJ3AgkPXZQeX+kNUi1xVeU24ImhO6s2mKV/ed9U0yT+NAgcjrczBGtX+JLmcWc4op854Rkhgez8cK7JFTLR38uSrx+5hzM2EFI0PiatJ4vvsyd2Alv+YXZsuZoX7CZz+BtKor+33R5ajXuj2hLWDg==
+build:
+  ci:
+    - java -version
+    - mvn clean deploy
+integrations:
+  notifications:
+    - integrationName: slack-notify
+      type: slack
+      recipients:
+        - "#builds"
+      on_success: always
+      on_failure: always
+      on_start: always
+      on_pull_request: always

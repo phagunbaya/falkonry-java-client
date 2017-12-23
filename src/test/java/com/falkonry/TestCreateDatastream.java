@@ -22,9 +22,9 @@ import java.util.*;
 public class TestCreateDatastream {
 
 	Falkonry falkonry = null;
-	String host = "https://localhost:8080";
-	// String token = "auth-token";
-	String token = "npp766l2hghmhrc7ygrbldjnkb9rn7mg";
+	String host = System.getenv("FALKONRY_HOST_URL");
+	String token = System.getenv("FALKONRY_TOKEN");
+
 	List<Datastream> datastreams = new ArrayList<Datastream>();
 
 	/**
@@ -45,36 +45,35 @@ public class TestCreateDatastream {
 	public void createDatastream() throws Exception {
 		Datastream ds = new Datastream();
 		ds.setName("Test-DS-" + Math.random());
+
 		TimeObject time = new TimeObject();
 		time.setIdentifier("time");
 		time.setFormat("iso_8601");
 		time.setZone("GMT");
-		Signal signal = new Signal();
 
+		Signal signal = new Signal();
 		signal.setValueIdentifier("value");
 		signal.setSignalIdentifier("signal");
-		Field field = new Field();
-		// field.setEntityIdentifier("entity");
 
+		Field field = new Field();
 		field.setSignal(signal);
 		field.setTime(time);
 		ds.setField(field);
+
 		Datasource dataSource = new Datasource();
 		dataSource.setType("STANDALONE");
 		ds.setDatasource(dataSource);
+
 		Datastream datastream = falkonry.createDatastream(ds);
 		datastreams.add(datastream);
 
 		Assert.assertEquals(ds.getName(), datastream.getName());
 		Assert.assertNotEquals(null, datastream.getId());
-
 		Assert.assertEquals(datastream.getField().getTime().getFormat(), ds.getField().getTime().getFormat());
 		Assert.assertEquals(datastream.getField().getTime().getIdentifier(), ds.getField().getTime().getIdentifier());
 		Assert.assertEquals(datastream.getField().getTime().getZone(), ds.getField().getTime().getZone());
-
 		Assert.assertEquals(datastream.getDatasource().getType(), ds.getDatasource().getType());
-		Assert.assertEquals(datastream.getField().getSignal().getValueIdentifier(),
-				ds.getField().getSignal().getValueIdentifier());
+		Assert.assertEquals(datastream.getField().getSignal().getValueIdentifier(), ds.getField().getSignal().getValueIdentifier());
 	}
 
 	/**

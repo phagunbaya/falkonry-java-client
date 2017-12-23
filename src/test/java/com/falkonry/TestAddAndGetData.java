@@ -5,7 +5,9 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
 
+import com.falkonry.helper.models.*;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -19,26 +21,29 @@ import org.junit.Test;
  */
 
 import com.falkonry.client.Falkonry;
-import com.falkonry.helper.models.Datasource;
-import com.falkonry.helper.models.Datastream;
-import com.falkonry.helper.models.EventType;
-import com.falkonry.helper.models.Field;
-import com.falkonry.helper.models.HttpResponseFormat;
-import com.falkonry.helper.models.Input;
-import com.falkonry.helper.models.InputStatus;
-import com.falkonry.helper.models.Signal;
-import com.falkonry.helper.models.TimeObject;
-import com.falkonry.helper.models.ValueType;
 
-@Ignore
+
 public class TestAddAndGetData {
 
 	Falkonry falkonry = null;
 
-	String host = "https://localhost:8080";
-	String token = "auth-token";
+	String host = System.getenv("FALKONRY_HOST_URL");
+	String token = System.getenv("FALKONRY_TOKEN");
 
 	List<Datastream> datastreams = new ArrayList<Datastream>();
+
+	private void checkStatus(String trackerId) throws Exception {
+		for(int i=0; i < 12; i++) {
+			Tracker tracker = falkonry.getStatus(trackerId);
+			if (tracker.getStatus().equals("FAILED") || tracker.getStatus().equals("ERROR")) {
+				throw new Exception(tracker.getMessage());
+			}
+			else if(tracker.getStatus().equals("SUCCESS") || tracker.getStatus().equals("COMPLETED")){
+				break;
+			}
+			Thread.sleep(5000);
+		}
+	}
 
 	/**
 	 *
@@ -79,7 +84,7 @@ public class TestAddAndGetData {
 
 		Datastream datastream = falkonry.createDatastream(ds);
 		datastreams.add(datastream);
-		String data = "{\"time\" :\"2016-03-01T01:01:01.000Z\",\"unit\":\"Unit1\", \"signal\" : \"current\", \"value\" : 12.5}"
+		String data = "{\"time\" :\"2016-03-01T01:01:01.000Z\",\"unit\":\"Unit1\", \"signal\" : \"current\", \"value\" : 12.5}\n"
 				+ "{\"time\" :\"2016-03-01T01:01:01.000Z\",\"unit\":\"Unit2\", \"signal\" : \"vibration\", \"value\" : 3.4}";
 
 		Map<String, String> options = new HashMap<String, String>();
@@ -97,14 +102,14 @@ public class TestAddAndGetData {
 		Assert.assertEquals(ins.getAction(), "ADD_DATA_DATASTREAM");
 		Assert.assertEquals(ins.getStatus(), "PENDING");
 
+		// checking ingestion status
+		checkStatus(ins.getId());
+
 		// Get Datastream Data
 		options = new HashMap<String, String>();
-		options.put("responseFormat", "application/json"); // also available
-															// options 1.
-															// text/csv 2.
-															// application/json
+		options.put("responseFormat", "application/json"); // can be text/csv or application/json based on your data format
 		HttpResponseFormat dataResponse = falkonry.getInputData(datastream.getId(), options);
-		// Assert.assertEquals(dataResponse.getResponse().length()>0,true);
+		Assert.assertEquals(dataResponse.getResponse().length() > 0, true);
 	}
 
 	/**
@@ -148,14 +153,9 @@ public class TestAddAndGetData {
 		Assert.assertEquals(ins.getAction(), "ADD_DATA_DATASTREAM");
 		Assert.assertEquals(ins.getStatus(), "PENDING");
 
-		// Get Datastream Data
-		options = new HashMap<String, String>();
-		options.put("responseFormat", "application/json"); // also available
-															// options 1.
-															// text/csv 2.
-															// application/json
-		HttpResponseFormat dataResponse = falkonry.getInputData(datastream.getId(), options);
-		Assert.assertEquals(dataResponse.getResponse().length() > 0, true);
+		// checking ingestion status
+		checkStatus(ins.getId());
+
 	}
 
 	/**
@@ -224,13 +224,8 @@ public class TestAddAndGetData {
 		Assert.assertEquals(ins.getAction(), "ADD_DATA_DATASTREAM");
 		Assert.assertEquals(ins.getStatus(), "PENDING");
 
-		// Get Datastream Data
-		options = new HashMap<String, String>();
-		options.put("responseFormat", "text/csv"); // also available options 1.
-													// text/csv 2.
-													// application/json
-		HttpResponseFormat dataResponse = falkonry.getInputData(datastream.getId(), options);
-		Assert.assertEquals(dataResponse.getResponse().length() > 0, true);
+		// checking ingestion status
+		checkStatus(ins.getId());
 	}
 
 	/**
@@ -248,13 +243,10 @@ public class TestAddAndGetData {
 		time.setFormat("iso_8601");
 		time.setZone("GMT");
 		Signal signal = new Signal();
-
-		signal.setValueIdentifier("value");
-		signal.setSignalIdentifier("signal");
-
 		Field field = new Field();
 		field.setSignal(signal);
 		field.setTime(time);
+		field.setEntityIdentifier("unit");
 		ds.setField(field);
 		Datasource dataSource = new Datasource();
 		dataSource.setType("STANDALONE");
@@ -274,14 +266,8 @@ public class TestAddAndGetData {
 		Assert.assertEquals(ins.getAction(), "ADD_DATA_DATASTREAM");
 		Assert.assertEquals(ins.getStatus(), "PENDING");
 
-		// Get Datastream Data
-		options = new HashMap<String, String>();
-		options.put("responseFormat", "application/json"); // also available
-															// options 1.
-															// text/csv 2.
-															// application/json
-		HttpResponseFormat dataResponse = falkonry.getInputData(datastream.getId(), options);
-		Assert.assertEquals(dataResponse.getResponse().length() > 0, true);
+		// checking ingestion status
+		checkStatus(ins.getId());
 	}
 
 	@After
