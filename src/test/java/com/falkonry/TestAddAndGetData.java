@@ -307,7 +307,7 @@ public class TestAddAndGetData {
 
 		Datastream datastream = falkonry.createDatastream(ds);
 		datastreams.add(datastream);
-		String data = "{\"time\" :\"2016-03-01T01:01:01.000Z\",\"batch\":\"batch1\", \"signal\" : \"current\", \"value\" : 12.5}"
+		String data = "{\"time\" :\"2016-03-01T01:01:01.000Z\",\"batch\":\"batch1\", \"signal\" : \"current\", \"value\" : 12.5}\n"
 				+ "{\"time\" :\"2016-03-01T02:01:01.000Z\",\"batch\":\"batch2\", \"signal\" : \"vibration\", \"value\" : 3.4}";
 
 		Map<String, String> options = new HashMap<String, String>();
