@@ -14,7 +14,6 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.util.*;
 
-@Ignore
 public class TestAddDataFromStream {
 
 	Falkonry falkonry = null;

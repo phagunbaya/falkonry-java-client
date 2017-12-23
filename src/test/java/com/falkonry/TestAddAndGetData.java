@@ -22,7 +22,6 @@ import org.junit.Test;
 
 import com.falkonry.client.Falkonry;
 
-
 public class TestAddAndGetData {
 
 	Falkonry falkonry = null;
