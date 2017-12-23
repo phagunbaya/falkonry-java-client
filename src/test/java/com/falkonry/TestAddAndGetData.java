@@ -446,7 +446,6 @@ public class TestAddAndGetData {
 		options.put("hasMoreData", "false");
 
 		InputStatus ins = falkonry.addInput(datastream.getId(), data, options);
-		Thread.sleep(10000);
 		Assert.assertEquals(ins.getAction(), "ADD_DATA_DATASTREAM");
 		Assert.assertEquals(ins.getStatus(), "PENDING");
 
@@ -490,7 +489,6 @@ public class TestAddAndGetData {
 		options.put("hasMoreData", "false");
 
 		InputStatus ins = falkonry.addInput(datastream.getId(), data, options);
-		Thread.sleep(10000);
 		Assert.assertEquals(ins.getAction(), "ADD_DATA_DATASTREAM");
 		Assert.assertEquals(ins.getStatus(), "PENDING");
 

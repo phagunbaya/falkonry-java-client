@@ -679,7 +679,7 @@ Usage:
 	Map<String, String> options = new HashMap<String, String>();
 	options.put("timeIdentifier", "time");
 	options.put("timeFormat", "iso_8601");
-	options.put("GMT");
+	options.put("timeZone", "GMT");
 	options.put("fileFormat", "csv");
 	options.put("streaming", "false");
 	options.put("hasMoreData", "false");
@@ -853,7 +853,7 @@ Usage:
 	Map<String, String> options = new HashMap<String, String>();
 	options.put("timeIdentifier", "time");
 	options.put("timeFormat", "iso_8601");
-	options.put("GMT");
+	options.put("timeZone", "GMT");
 	options.put("fileFormat", "csv");
 	options.put("streaming", "false");
 	options.put("hasMoreData", "false");
