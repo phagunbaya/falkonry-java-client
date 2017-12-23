@@ -18,6 +18,7 @@ Maven install
 ## Features
 
     * Create Datastream for narrow/historian style data from a single entity
+    * Create Batch Datastream for narrow/historian style data from a single entity
 	* Create Datastream for narrow/historian style data from a multiple entities
 	* Create Datastream for wide style data from a single entity
 	* Create Datastream for wide style data from a multiple entities
@@ -32,15 +33,20 @@ Maven install
     * Retrieve Assessment by Id
     * Delete Assessment by id
     * Get Condition List Of Assessment
-    * Add narrow input data (json format) to multi entity Datastream
-    * Add narrow input data (csv format) single entity to Datastream
-    * Add wide input data (json format) to single entity Datastream
-    * Add wide input data (csv format) to multi entity Datastream
+    * Add historian narrow input data (json format) to multi entity Datastream (User for model revision)
+    * Add historian narrow input data (csv format) single entity to Datastream (User for model revision)
+    * Add historian wide input data (json format) to single entity Datastream (User for model revision)
+    * Add historian wide input data (csv format) to multi entity Datastream (User for model revision)
+    * Add historian narrow input data (json format) to single entity Batch Datastream (User for model revision)
+    * Add historian narrow input data (csv format) multi entity to Batch Datastream (User for model revision)
+    * Add historian wide input data (json format) to multi entity Batch Datastream (User for model revision)
+    * Add historian wide input data (csv format) to single entity Batch Datastream (User for model revision)
 	* Add live input data (json format) to Datastream (Used for live monitoring) 
 	* Add live input data (csv format) to Datastream (Used for live monitoring) 
 	* Add live input data (json format) from a stream to Datastream (Used for live monitoring) 
 	* Add live input data (csv format) from a stream to Datastream (Used for live monitoring) 
     * Add facts data (json format) to Assessment of single entity datastream
+    * Add facts data (json format) to Assessment of single entity Batch datastream
     * Add facts data (json format) with addition tag to Assessment of multi entity datastream
     * Add facts data (csv format) to Assessment of single entity datastream
     * Add facts data (csv format) with tags Assessment of single entity datastream
@@ -85,6 +91,41 @@ Usage:
 	signal.setSignalIdentifier("signal");
 	Field field = new Field();
 	field.setSignal(signal);
+	field.setTime(time);
+	ds.setField(field);
+	Datasource dataSource = new Datasource();
+	dataSource.setType("STANDALONE");
+	ds.setDatasource(dataSource);
+	Datastream datastream = falkonry.createDatastream(ds);
+
+```
+
+### Create Batch Datastream for narrow/historian style data from a single entity
+Usage:
+```java
+    import com.falkonry.client.Falkonry;
+    import com.falkonry.helper.models.Datasource;
+    import com.falkonry.helper.models.Datastream;
+    import com.falkonry.helper.models.Field;
+    import com.falkonry.helper.models.TimeObject;
+    import com.falkonry.helper.models.Signal;
+
+    //instantiate Falkonry
+    Falkonry falkonry = new Falkonry("http://localhost:8080", "auth-token");
+    
+    Datastream ds = new Datastream();
+	ds.setName("Test-DS-" + Math.random());
+	TimeObject time = new TimeObject();
+	time.setIdentifier("time");
+	time.setFormat("iso_8601");
+	time.setZone("GMT");
+	Signal signal = new Signal();
+
+	signal.setValueIdentifier("value");
+	signal.setSignalIdentifier("signal");
+	Field field = new Field();
+	field.setSignal(signal);
+	field.setBatchIdentifier("batch");
 	field.setTime(time);
 	ds.setField(field);
 	Datasource dataSource = new Datasource();
@@ -478,7 +519,7 @@ Usage:
 ```
 
 
-#### Add narrow input data (json format) to multientityntitytastream
+#### Add historian narrow input data (json format) to multi entity datastream (used for model revision)
 
 Data:
 ```
@@ -516,7 +557,7 @@ Usage:
 ```
 
 
-#### Add narrow input data (csv format) to single entity to Datastream
+#### Add historian narrow input data (csv format) to single entity to Datastream (used for model revision)
 
 Data:
 ```
@@ -550,7 +591,7 @@ Usage:
 
 ```
 
-#### Add wide input data (json format) to single entity Datastream
+#### Add historian wide input data (json format) to single entity Datastream (used for model revision)
 
 Data:
 ```
@@ -608,7 +649,7 @@ Usage:
 	options.put("hasMoreData", "false");
     falkonry.addInput(datastream.getId(), data, options);
 ```
-#### Add wide input data (csv format) to multi entity Datastream
+#### Add historian wide input data (csv format) to multi entity Datastream (used for model revision)
 
 
 Data:
@@ -651,7 +692,181 @@ Usage:
 ```
 
 
-#### Add historical input data (json format) from a stream to Datastream (Used for model revision)
+#### Add historian narrow input data (json format) to single entity Batch datastream (used for model revision)
+
+Data:
+```
+    {"time" :"2016-03-01 01:01:01", "signal" : "current", "value" : 12.4}
+    {"time" :"2016-03-01 01:01:01", "signal" : "vibration", "value" : 3.4}
+```
+
+Usage:
+```java
+    import com.falkonry.client.Falkonry;
+    import com.falkonry.helper.models.Datasource;
+    import com.falkonry.helper.models.Datastream;
+    import com.falkonry.helper.models.Field;
+    import com.falkonry.helper.models.TimeObject;
+    import com.falkonry.helper.models.Signal;
+
+    //instantiate Falkonry
+    Falkonry falkonry = new Falkonry("http://localhost:8080", "auth-token");
+    //Add data to datastream
+    String data = "{\"time\" :\"2016-03-01T01:01:01.000Z\" \"signal\" : \"current\", \"value\" : 12.5}" +
+					"{\"time\" :\"2016-03-01T01:01:01.000Z\", \"signal\" : \"vibration\", \"value\" : 3.4}";
+
+		Map<String, String> options = new HashMap<String, String>();
+		options.put("timeIdentifier", "time");
+		options.put("timeFormat", "iso_8601");
+		options.put("timeZone", time.getZone());
+		options.put("signalIdentifier", "signal");
+		options.put("valueIdentifier", "value");
+		options.put("batchIdentifier", "batch");
+		options.put("fileFormat", "json");
+		options.put("streaming", "false");
+		options.put("hasMoreData", "false");
+    falkonry.addInput('datastream-Id', data, options);
+
+```
+
+
+#### Add historian narrow input data (csv format) to multi entity to Batch Datastream (used for model revision)
+
+Data:
+```
+	 time,signal,value,unit,batch
+    2016-03-01 01:01:01,L1DynVert,3.4,unit1,batch1
+    2016-03-01 01:01:01,L1VertAvg,1.4,unit2,batch2
+```
+
+Usage:
+```java
+    import com.falkonry.client.Falkonry;
+    import com.falkonry.helper.models.Datasource;
+    import com.falkonry.helper.models.Datastream;
+    import com.falkonry.helper.models.Field;
+    import com.falkonry.helper.models.TimeObject;
+    import com.falkonry.helper.models.Signal;
+
+    //instantiate Falkonry
+    Falkonry falkonry = new Falkonry("http://localhost:8080", "auth-token");
+	//Add data to datastream
+    String data = "time,signal,value,unit\n" + 
+					"2012-01-03T18:16:00.000Z,L1DynVert,9.95,unit1,batch1\n" + 
+					"2012-01-03T18:16:00.000Z,L1VertAvg,12.95,unit2,batch2\n" + 
+					"2012-01-03T18:16:00.000Z,L1VertPk,19.95,unit3,batch3";
+
+	Map<String, String> options = new HashMap<String, String>();
+	options.put("fileFormat", "csv");
+	options.put("streaming", "false");
+	options.put("hasMoreData", "false");
+    falkonry.addInput('datastream-Id', data, options);
+
+```
+
+#### Add historian wide input data (json format) to multi entity Batch Datastream (used for model revision)
+
+Data:
+```
+   
+	{"time" :"2016-03-01 01:01:01", "current" : 12.4, "vibration" : 3.4, "state" : "On", "batch" : "batch1", "unit" : "unit1"}
+    
+```
+
+Usage:
+```java
+    import com.falkonry.client.Falkonry;
+    import com.falkonry.helper.models.Datasource;
+    import com.falkonry.helper.models.Datastream;
+    import com.falkonry.helper.models.Field;
+    import com.falkonry.helper.models.TimeObject;
+    import com.falkonry.helper.models.Signal;
+
+    //instantiate Falkonry
+    Falkonry falkonry = new Falkonry("http://localhost:8080", "auth-token");
+
+    Datastream ds = new Datastream();
+    ds.setName("Test-DS-" + Math.random());
+
+    TimeObject time = new TimeObject();
+    time.setIdentifier("time");
+    time.setFormat("millis");
+    time.setZone("GMT");
+
+    Signal signal = new Signal();
+    
+    signal.setValueIdentifier("value");
+    
+    
+
+    Datasource dataSource = new Datasource();
+    dataSource.setType("STANDALONE");
+
+    Field field = new Field();
+    field.setSignal(signal);
+    field.setTime(time);
+    field.setEntityIdentifier("unit");
+    field.setBatchIdentifier("batch");
+
+    ds.setDatasource(dataSource);
+    ds.setField(field);
+
+    Datastream datastream = falkonry.createDatastream(ds);
+
+
+    //Add data to datastream
+    String data = "{\"time\" :\"2016-03-01 01:01:01\", \"current\" : 12.4, \"vibration\" : 3.4, \"state\" : \"On\", \"batch\" : \"batch1\", \"unit\" : \"unit1\"}";
+
+	Map<String, String> options = new HashMap<String, String>();
+	options.put("fileFormat", "json");
+	options.put("streaming", "false");
+	options.put("hasMoreData", "false");
+    falkonry.addInput(datastream.getId(), data, options);
+```
+#### Add historian wide input data (csv format) to single entity Batch Datastream (used for model revision)
+
+
+Data:
+```
+	time,L1DynVert,L1VertAvg,L1VertPk,batch
+    2012-01-03T18:16:00.000Z,4.6,9.95,89.95,batch1
+    2012-01-03T18:16:00.000Z,5.2,12.95,5.85,batch2
+    2012-01-03T18:16:00.000Z,74.3,19.95,9.0,batch3
+```
+
+Usage:
+```java
+    import com.falkonry.client.Falkonry;
+    import com.falkonry.helper.models.Datasource;
+    import com.falkonry.helper.models.Datastream;
+    import com.falkonry.helper.models.Field;
+    import com.falkonry.helper.models.TimeObject;
+    import com.falkonry.helper.models.Signal;
+
+    //instantiate Falkonry
+    Falkonry falkonry = new Falkonry("http://localhost:8080", "auth-token");
+	//Add data to datastream
+    
+	String data = "time,L1DynVert,L1VertAvg,L1VertPk,batch\n" + 
+    "2012-01-03T18:16:00.000Z,4.6,9.95,89.95,batch1\n" + 
+    "2012-01-03T18:16:00.000Z,5.2,12.95,5.85,batch2\n" + 
+    "2012-01-03T18:16:00.000Z,74.3,19.95,9.0,batch3";
+
+	Map<String, String> options = new HashMap<String, String>();
+	options.put("timeIdentifier", "time");
+	options.put("timeFormat", "iso_8601");
+	options.put("timeZ"GMT"Zone());
+	options.put("fileFormat", "csv");
+	options.put("streaming", "false");
+	options.put("hasMoreData", "false");
+	options.put("entityIdentifier", "unit");
+	options.put("batchIdentifier", "batch");
+
+    falkonry.addInput('datastream-Id', data, options);
+
+```
+
+#### Add historian input data (json format) from a stream to Datastream (Used for model revision)
     
 ```java
     import com.falkonry.client.Falkonry
@@ -671,7 +886,7 @@ Usage:
     InputStatus inputStatus = falkonry.addInputStream('datastream-Id',byteArrayInputStream,options);
 ```
 
-#### Add historical input data (csv format) from a stream to Datastream (Used for model revision)
+#### Add historian input data (csv format) from a stream to Datastream (Used for model revision)
     
 ```java
     import com.falkonry.client.Falkonry
@@ -887,6 +1102,22 @@ Data Sample
   options.put("timeZone", "GMT");
   options.put("valueIdentifier", "Health"); 
   String data = "{\"time\" : \"2011-03-26T12:00:00.000Z\", \"end\" : \"2012-06-01T00:00:00.000Z\", \"Health\" : \"Normal\"}";
+  String response = falkonry.addfacts(assessment.getId(),data, options);
+```
+
+#### Add facts data (json format) to Assessment of single entity batch datastream
+Data Sample
+```
+{ "batch": "batch1" , "Health" : "Normal"}
+{ "batch": "batch2", "Health" : "Spalling"}
+
+```java
+  import com.falkonry.client.Falkonry;
+
+  Falkonry falkonry = new Falkonry("https://sandbox.falkonry.ai", "auth-token");
+  options.put("batchIdentifier", "batch");
+  options.put("valueIdentifier", "Health"); 
+  String data = "{ \"Health\" : \"Normal\", \"batch\" : \"batch1\"}";
   String response = falkonry.addfacts(assessment.getId(),data, options);
 ```
 

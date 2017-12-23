@@ -10,7 +10,7 @@ build:
   ci:
     - java -version
     - mvn -version
-    - mvn clean deploy
+    - mvn clean test javadoc:javadoc
     - mkdir -p shippable/testresults
     - cp target/surefire-reports/*.xml shippable/testresults/
 integrations:

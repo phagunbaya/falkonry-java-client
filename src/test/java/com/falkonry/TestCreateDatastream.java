@@ -75,7 +75,50 @@ public class TestCreateDatastream {
 		Assert.assertEquals(datastream.getDatasource().getType(), ds.getDatasource().getType());
 		Assert.assertEquals(datastream.getField().getSignal().getValueIdentifier(), ds.getField().getSignal().getValueIdentifier());
 	}
+	
+	
+	/**
+	 * Should create batch datastream
+	 * 
+	 * @throws Exception
+	 */
+	@Test
+	public void createBatchDatastream() throws Exception {
+		Datastream ds = new Datastream();
+		ds.setName("Test-DS-" + Math.random());
+		TimeObject time = new TimeObject();
+		time.setIdentifier("time");
+		time.setFormat("iso_8601");
+		time.setZone("GMT");
+		Signal signal = new Signal();
 
+		signal.setValueIdentifier("value");
+		signal.setSignalIdentifier("signal");
+		Field field = new Field();
+	    field.setBatchIdentifier("batch");
+
+		field.setSignal(signal);
+		field.setTime(time);
+		ds.setField(field);
+		Datasource dataSource = new Datasource();
+		dataSource.setType("STANDALONE");
+		ds.setDatasource(dataSource);
+		Datastream datastream = falkonry.createDatastream(ds);
+		datastreams.add(datastream);
+
+		Assert.assertEquals(ds.getName(), datastream.getName());
+		Assert.assertNotEquals(null, datastream.getId());
+
+		Assert.assertEquals(datastream.getField().getTime().getFormat(), ds.getField().getTime().getFormat());
+		Assert.assertEquals(datastream.getField().getTime().getIdentifier(), ds.getField().getTime().getIdentifier());
+		Assert.assertEquals(datastream.getField().getTime().getZone(), ds.getField().getTime().getZone());
+
+		Assert.assertEquals(datastream.getDatasource().getType(), ds.getDatasource().getType());
+		Assert.assertEquals(datastream.getField().getSignal().getValueIdentifier(),
+				ds.getField().getSignal().getValueIdentifier());
+	}
+
+	
 	/**
 	 * Should get datastream list
 	 * 
