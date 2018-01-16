@@ -33,14 +33,14 @@ Maven install
     * Retrieve Assessment by Id
     * Delete Assessment by id
     * Get Condition List Of Assessment
-    * Add historical narrow input data (json format) to multi entity Datastream (User for model revision)
-    * Add historical narrow input data (csv format) single entity to Datastream (User for model revision)
-    * Add historical wide input data (json format) to single entity Datastream (User for model revision)
-    * Add historical wide input data (csv format) to multi entity Datastream (User for model revision)
-    * Add historical narrow input data (json format) to single entity Batch Datastream (User for model revision)
-    * Add historical narrow input data (csv format) multi entity to Batch Datastream (User for model revision)
-    * Add historical wide input data (json format) to multi entity Batch Datastream (User for model revision)
-    * Add historical wide input data (csv format) to single entity Batch Datastream (User for model revision)
+    * Add historical narrow input data (json format) to multi entity Datastream (Used for model revision)
+    * Add historical narrow input data (csv format) single entity to Datastream (Used for model revision)
+    * Add historical wide input data (json format) to single entity Datastream (Used for model revision)
+    * Add historical wide input data (csv format) to multi entity Datastream (Used for model revision)
+    * Add historical narrow input data (json format) to single entity Batch Datastream (Used for model revision)
+    * Add historical narrow input data (csv format) multi entity to Batch Datastream (Used for model revision)
+    * Add historical wide input data (json format) to multi entity Batch Datastream (Used for model revision)
+    * Add historical wide input data (csv format) to single entity Batch Datastream (Used for model revision)
 	* Add live input data (json format) to Datastream (Used for live monitoring) 
 	* Add live input data (csv format) to Datastream (Used for live monitoring) 
 	* Add live input data (json format) from a stream to Datastream (Used for live monitoring) 
