@@ -33,14 +33,14 @@ Maven install
     * Retrieve Assessment by Id
     * Delete Assessment by id
     * Get Condition List Of Assessment
-    * Add historian narrow input data (json format) to multi entity Datastream (User for model revision)
-    * Add historian narrow input data (csv format) single entity to Datastream (User for model revision)
-    * Add historian wide input data (json format) to single entity Datastream (User for model revision)
-    * Add historian wide input data (csv format) to multi entity Datastream (User for model revision)
-    * Add historian narrow input data (json format) to single entity Batch Datastream (User for model revision)
-    * Add historian narrow input data (csv format) multi entity to Batch Datastream (User for model revision)
-    * Add historian wide input data (json format) to multi entity Batch Datastream (User for model revision)
-    * Add historian wide input data (csv format) to single entity Batch Datastream (User for model revision)
+    * Add historical narrow input data (json format) to multi entity Datastream (Used for model revision)
+    * Add historical narrow input data (csv format) single entity to Datastream (Used for model revision)
+    * Add historical wide input data (json format) to single entity Datastream (Used for model revision)
+    * Add historical wide input data (csv format) to multi entity Datastream (Used for model revision)
+    * Add historical narrow input data (json format) to single entity Batch Datastream (Used for model revision)
+    * Add historical narrow input data (csv format) multi entity to Batch Datastream (Used for model revision)
+    * Add historical wide input data (json format) to multi entity Batch Datastream (Used for model revision)
+    * Add historical wide input data (csv format) to single entity Batch Datastream (Used for model revision)
 	* Add live input data (json format) to Datastream (Used for live monitoring) 
 	* Add live input data (csv format) to Datastream (Used for live monitoring) 
 	* Add live input data (json format) from a stream to Datastream (Used for live monitoring) 
@@ -517,7 +517,7 @@ Usage:
 ```
 
 
-#### Add historian narrow input data (json format) to multi entity datastream (used for model revision)
+#### Add historical narrow input data (json format) to multi entity datastream (used for model revision)
 
 Data:
 ```
@@ -555,7 +555,7 @@ Usage:
 ```
 
 
-#### Add historian narrow input data (csv format) to single entity to Datastream (used for model revision)
+#### Add historical narrow input data (csv format) to single entity to Datastream (used for model revision)
 
 Data:
 ```
@@ -589,7 +589,7 @@ Usage:
 
 ```
 
-#### Add historian wide input data (json format) to single entity Datastream (used for model revision)
+#### Add historical wide input data (json format) to single entity Datastream (used for model revision)
 
 Data:
 ```
@@ -647,7 +647,7 @@ Usage:
 	options.put("hasMoreData", "false");
     falkonry.addInput(datastream.getId(), data, options);
 ```
-#### Add historian wide input data (csv format) to multi entity Datastream (used for model revision)
+#### Add historical wide input data (csv format) to multi entity Datastream (used for model revision)
 
 
 Data:
@@ -690,7 +690,7 @@ Usage:
 ```
 
 
-#### Add historian narrow input data (json format) to single entity Batch datastream (used for model revision)
+#### Add historical narrow input data (json format) to single entity Batch datastream (used for model revision)
 
 Data:
 ```
@@ -728,7 +728,7 @@ Usage:
 ```
 
 
-#### Add historian narrow input data (csv format) to multi entity to Batch Datastream (used for model revision)
+#### Add historical narrow input data (csv format) to multi entity to Batch Datastream (used for model revision)
 
 Data:
 ```
@@ -762,7 +762,7 @@ Usage:
 
 ```
 
-#### Add historian wide input data (json format) to multi entity Batch Datastream (used for model revision)
+#### Add historical wide input data (json format) to multi entity Batch Datastream (used for model revision)
 
 Data:
 ```
@@ -821,7 +821,7 @@ Usage:
 	options.put("hasMoreData", "false");
     falkonry.addInput(datastream.getId(), data, options);
 ```
-#### Add historian wide input data (csv format) to single entity Batch Datastream (used for model revision)
+#### Add historical wide input data (csv format) to single entity Batch Datastream (used for model revision)
 
 
 Data:
@@ -864,7 +864,7 @@ Usage:
 
 ```
 
-#### Add historian input data (json format) from a stream to Datastream (Used for model revision)
+#### Add historical input data (json format) from a stream to Datastream (Used for model revision)
     
 ```java
     import com.falkonry.client.Falkonry
@@ -884,7 +884,7 @@ Usage:
     InputStatus inputStatus = falkonry.addInputStream('datastream-Id',byteArrayInputStream,options);
 ```
 
-#### Add historian input data (csv format) from a stream to Datastream (Used for model revision)
+#### Add historical input data (csv format) from a stream to Datastream (Used for model revision)
     
 ```java
     import com.falkonry.client.Falkonry
