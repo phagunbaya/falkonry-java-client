@@ -141,6 +141,29 @@ public class TestAddAndGetFacts {
 		Datastream datastream = falkonry.createDatastream(ds);
 		datastreams.add(datastream);
 
+		String data = "{\"time\" :\"2016-03-01T01:01:01.000Z\",\"batch\":\"batch1\", \"entity\" : \"entity1\", \"signal\" : \"current\", \"value\" : 12.5}\n"
+				+ "{\"time\" :\"2016-03-01T01:01:02.000Z\",\"batch\":\"batch2\", \"entity\" : \"entity1\", \"signal\" : \"current\", \"value\" : 12.5}";
+
+		Map<String, String> options = new HashMap<String, String>();
+		options.put("timeIdentifier", "time");
+		options.put("timeFormat", "iso_8601");
+		options.put("timeZone", time.getZone());
+		options.put("entityIdentifier", "entity");
+		options.put("signalIdentifier", "signal");
+		options.put("batchIdentifier", "batch");
+		options.put("valueIdentifier", "value");
+		options.put("fileFormat", "json");
+		options.put("streaming", "false");
+		options.put("hasMoreData", "false");
+
+		InputStatus ins = falkonry.addInput(datastream.getId(), data, options);
+		Assert.assertEquals(ins.getAction(), "ADD_DATA_DATASTREAM");
+		Assert.assertEquals(ins.getStatus(), "PENDING");
+
+		// checking ingestion status
+		checkStatus(ins.getId());
+		Thread.sleep(10000); //10s of delay
+
 		// creating assessment
 		AssessmentRequest assessmentRequest = new AssessmentRequest();
 		assessmentRequest.setName("Health");
@@ -154,7 +177,7 @@ public class TestAddAndGetFacts {
 		queryParams.put("valueIdentifier", "Health");
 		queryParams.put("batchIdentifier", "batch");
 
-		String data = "entity,Health,batch\n" +
+		data = "entity,Health,batch\n" +
 				"entity1,Normal,batch1\n" +
 				"entity1,Normal,batch2";
 		InputStatus response = falkonry.addFacts(assessment.getId(), data, queryParams);
@@ -164,7 +187,7 @@ public class TestAddAndGetFacts {
 		// checking ingestion status
 		checkStatus(response.getId());
 
-		Map<String, String> options = new HashMap<String, String>();
+		options = new HashMap<String, String>();
 		options.put("responseFormat", "application/json"); // can be text/csv or application/json based on your requirement
 		HttpResponseFormat factsResponse = falkonry.getFactsData(assessment.getId(), options);
 		Assert.assertEquals(factsResponse.getResponse().length() > 0, true);
