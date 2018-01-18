@@ -20,6 +20,7 @@ public class TestAddHistorianData {
 
 	String host = System.getenv("FALKONRY_HOST_URL");
 	String token = System.getenv("FALKONRY_TOKEN");
+	
 
 	List<Datastream> datastreams = new ArrayList<Datastream>();
 
@@ -132,7 +133,7 @@ public class TestAddHistorianData {
 		datastreams.add(datastream);
 		String data = "time,entity,signal,value\n" +
 				"2016-05-05 12:00:00Z,Unit1,current,12.4\n" +
-				"2016-03-01 01:01:01,Unit1.vibration,20.4";
+				"2016-03-01 01:01:01,Unit1,vibration,20.4";
 
 		Map<String, String> options = new HashMap<String, String>();
 
