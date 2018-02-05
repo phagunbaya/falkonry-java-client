@@ -105,7 +105,6 @@ public class TestAddHistorianData {
 	 * 
 	 * @throws Exception
 	 */
-	@Ignore
 	@Test
 	public void AddDataNarrowFormatCsvForStreaming() throws Exception {
 

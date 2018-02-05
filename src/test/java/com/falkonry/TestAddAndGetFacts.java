@@ -583,7 +583,7 @@ public class TestAddAndGetFacts {
 	@Test
 	public void getFactsFromAssessment() throws Exception {
 
-		String assessment = "y7dcwmp72v68tr";
+		String assessment = "r2h27kn82dvrvy";
 		Map<String, String> queryParams = new HashMap<String, String>();
 		queryParams.put("model", "2");
 		queryParams.put("start", "2011-01-01T00:00:00.000Z");

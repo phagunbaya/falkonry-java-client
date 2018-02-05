@@ -231,7 +231,6 @@ public class TestCreateAssessment {
 	 * 
 	 * @throws Exception
 	 */
-	@Ignore
 	@Test
 	public void updateAssessment() throws Exception {
 
