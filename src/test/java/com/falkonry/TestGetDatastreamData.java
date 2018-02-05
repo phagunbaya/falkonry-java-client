@@ -10,12 +10,11 @@ import com.falkonry.helper.models.*;
 import org.junit.*;
 import java.util.*;
 
-@Ignore
 public class TestGetDatastreamData {
 
 	Falkonry falkonry = null;
-	String host = "https://localhost:8080";
-	String token = "auth-token";
+	String host = System.getenv("FALKONRY_HOST_URL");
+	String token = System.getenv("FALKONRY_TOKEN");
 	
 	
 	

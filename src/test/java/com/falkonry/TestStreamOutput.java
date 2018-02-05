@@ -32,16 +32,16 @@ public class TestStreamOutput {
 	}
 
 	// To run this test case, data should be continuously streamed
-	@Test
 
 	/**
 	 * Should get output data
 	 * 
 	 * @throws Exception
 	 */
+	@Test
 	public void getOutput() throws Exception {
 		try {
-			String assessment = "wyy4nv6bbnqvc9";
+			String assessment = "r2h27kn82dvrvy";
 			BufferedReader outputBuffer;
 			outputBuffer = falkonry.getOutput(assessment);
 			String inputLine;

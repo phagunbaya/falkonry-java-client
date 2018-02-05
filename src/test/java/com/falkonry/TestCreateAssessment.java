@@ -17,7 +17,6 @@ import com.falkonry.helper.models.Signal;
 import org.junit.*;
 import java.util.*;
 
-@Ignore
 public class TestCreateAssessment {
 
 	Falkonry falkonry = null;
