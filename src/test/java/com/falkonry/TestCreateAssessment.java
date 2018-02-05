@@ -272,8 +272,8 @@ public class TestCreateAssessment {
 
 		// updating name of the assessment
 		name = "Test-AS-" + Math.random();
-		assessment.setName(name);
-		Assessment assessmentUpd = falkonry.updateAssessment(assessment);
+		assessmentRequest.setName(name);
+		Assessment assessmentUpd = falkonry.updateAssessment(assessmentRequest);
 		Assert.assertEquals(assessmentUpd.getName(), assessment.getName());
 		Assert.assertEquals(assessmentUpd.getRate(), assessment.getRate());
 		Assert.assertEquals(assessmentUpd.getDatastream(), assessment.getDatastream());
