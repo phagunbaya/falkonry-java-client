@@ -15,6 +15,7 @@ public class TestAddAndGetFacts {
 	Falkonry falkonry = null;
 	String host = System.getenv("FALKONRY_HOST_URL");
 	String token = System.getenv("FALKONRY_TOKEN");
+	String assessmentId = System.getenv("FALKONRY_ASSESSMENT_SLIDING_ID");
 
 	List<Datastream> datastreams = new ArrayList<Datastream>();
 
@@ -582,14 +583,12 @@ public class TestAddAndGetFacts {
 	 */
 	@Test
 	public void getFactsFromAssessment() throws Exception {
-
-		String assessment = "r2h27kn82dvrvy";
 		Map<String, String> queryParams = new HashMap<String, String>();
 		queryParams.put("model", "2");
 		queryParams.put("start", "2011-01-01T00:00:00.000Z");
 		queryParams.put("end", "2014-12-31T00:00:00.000Z");
 
-		HttpResponseFormat response = falkonry.getFactsData(assessment, queryParams);
+		HttpResponseFormat response = falkonry.getFactsData(assessmentId, queryParams);
 		Assert.assertEquals(response.getResponse().length() > 0, true);
 
 	}

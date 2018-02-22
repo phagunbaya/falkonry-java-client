@@ -21,6 +21,7 @@ public class TestDatastreamLive {
 	Falkonry falkonry = null;
 	String host = System.getenv("FALKONRY_HOST_URL");
 	String token = System.getenv("FALKONRY_TOKEN");
+	String datastreamId = System.getenv("FALKONRY_DATASTREAM_SLIDING_ID");
 	
 	
 	List<Datastream> datastreams = new ArrayList<Datastream>();
@@ -79,9 +80,6 @@ public class TestDatastreamLive {
 	@Ignore
 	@Test
 	public void testOnDatastream() throws Exception {
-		// Id of datastream which has assessment with active model available
-		String datastreamId = "cptv9ldj4n9clt";
-
 		List<Assessment> assessments = falkonry.onDatastream(datastreamId);
 		Assert.assertEquals(true, assessments.size() != 0);
 	}
@@ -94,9 +92,6 @@ public class TestDatastreamLive {
 	@Ignore
 	@Test
 	public void testOffDatastream() throws Exception {
-		// Id of datastream which has assessment with active model available
-		String datastreamId = "cptv9ldj4n9clt";
-
 		List<Assessment> assessments1 = falkonry.onDatastream(datastreamId);
 		Assert.assertEquals(true, assessments1.size() != 0);
 

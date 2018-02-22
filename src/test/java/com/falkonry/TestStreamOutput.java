@@ -20,6 +20,7 @@ public class TestStreamOutput {
 	Falkonry falkonry = null;
 	String host = System.getenv("FALKONRY_HOST_URL");
 	String token = System.getenv("FALKONRY_TOKEN");
+	String assessment = System.getenv("FALKONRY_ASSESSMENT_SLIDING_ID");
 	
 
 	/**
@@ -41,7 +42,6 @@ public class TestStreamOutput {
 	@Test
 	public void getOutput() throws Exception {
 		try {
-			String assessment = "r2h27kn82dvrvy";
 			BufferedReader outputBuffer;
 			outputBuffer = falkonry.getOutput(assessment);
 			String inputLine;
