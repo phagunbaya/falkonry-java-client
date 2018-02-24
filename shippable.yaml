@@ -15,9 +15,10 @@ build:
   ci:
     - java -version
     - mvn -version
-    - mvn -Dskip.tests=true clean javadoc:javadoc
+    - mvn clean test
     - mkdir -p shippable/testresults
     - cp target/surefire-reports/*.xml shippable/testresults/
+    - mvn -Dskip.tests=true clean javadoc:javadoc
 integrations:
   notifications:
     - integrationName: slack-notify
