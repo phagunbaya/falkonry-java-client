@@ -10,6 +10,8 @@ env:
     - FALKONRY_ASSESSMENT_SLIDING_ID=vyvmy7wwm2gl49
     - FALKONRY_ASSESSMENT_BATCH_ID=r7l9tddmngbbl6
 build:
+  pre_ci_boot:
+    options: "--sysctl net.ipv6.conf.all.disable_ipv6=1"
   ci:
     - java -version
     - mvn -version
