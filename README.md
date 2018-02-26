@@ -1138,7 +1138,7 @@ time,end,car,Health
   options.put("timeZone", "GMT");
   options.put("valueIdentifier", "Health"); 
   options.put("entityIdentifier", "entities");
-  options.put("additionalTag", "testTag");
+  options.put("additionalKeyword", "testTag");
 
   String data = "{\"time\" : \"2011-03-26T12:00:00.000Z\", \"entities\" : \"entity1\", \"end\" : \"2012-06-01T00:00:00.000Z\", \"Health\" : \"Normal\"}";
   String response = falkonry.addfacts(assessment.getId(),data, options);
@@ -1173,7 +1173,7 @@ time,end,car,Health
   options.put("timeZone", "GMT");
   options.put("entityIdentifier", "car");
   options.put("valueIdentifier", "Health");
-  options.put("tagIdentifier", "Tag");
+  options.put("keyIdentifier", "Tag");
 
   String data = "time,end,car,Health,Tag\n2011-03-31T00:00:00.000Z,2011-04-01T00:00:00.000Z,IL9753,Normal,testTag1\n2011-03-31T00:00:00.000Z,2011-04-01T00:00:00.000Z,HI3821,Normal,testTag2";
   String response = falkonry.addFacts(assessment.getId(),data, options);

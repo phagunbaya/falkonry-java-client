@@ -225,7 +225,7 @@ public class TestAddFactsFromStream {
 		queryParams.put("timeZone", time.getZone());
 		queryParams.put("entityIdentifier", "entity");
 		queryParams.put("valueIdentifier", "Health");
-		queryParams.put("tagIdentifier", "Tags");
+		queryParams.put("keyIdentifier", "Tags");
 
 		InputStatus response = falkonry.addFactsStream(assessment.getId(), byteArrayInputStream, queryParams);
 		Assert.assertEquals(response.getAction(), "ADD_FACT_DATA");
@@ -242,7 +242,7 @@ public class TestAddFactsFromStream {
 	 * @throws Exception
 	 */
 	@Test
-	public void createDatastreamWithCsvFactsWithAdditionalTagStream() throws Exception {
+	public void createDatastreamWithCsvFactsWithadditionalKeywordStream() throws Exception {
 
 		// creating datastream
 		Datastream ds = new Datastream();
@@ -286,7 +286,7 @@ public class TestAddFactsFromStream {
 		queryParams.put("timeZone", time.getZone());
 		queryParams.put("entityIdentifier", "entity");
 		queryParams.put("valueIdentifier", "Health");
-		queryParams.put("additionalTag", "testTag");
+		queryParams.put("additionalKeyword", "testTag");
 
 		InputStatus response = falkonry.addFactsStream(assessment.getId(), byteArrayInputStream, queryParams);
 		Assert.assertEquals(response.getAction(), "ADD_FACT_DATA");

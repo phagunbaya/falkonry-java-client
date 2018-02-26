@@ -306,19 +306,19 @@ public class FalkonryService {
 				url += "&";
 			url += "valueIdentifier=" + URLEncoder.encode(options.get("valueIdentifier"), "UTF-8");
 		}
-		if (options.containsKey("additionalTag")) {
+		if (options.containsKey("additionalKeyword")) {
 			if (firstReqParam)
 				firstReqParam = false;
 			else
 				url += "&";
-			url += "additionalTag=" + URLEncoder.encode(options.get("additionalTag"), "UTF-8");
+			url += "additionalKeyword=" + URLEncoder.encode(options.get("additionalKeyword"), "UTF-8");
 		}
-		if (options.containsKey("tagIdentifier")) {
+		if (options.containsKey("keyIdentifier")) {
 			if (firstReqParam)
 				firstReqParam = false;
 			else
 				url += "&";
-			url += "tagIdentifier=" + URLEncoder.encode(options.get("tagIdentifier"), "UTF-8");
+			url += "keyIdentifier=" + URLEncoder.encode(options.get("keyIdentifier"), "UTF-8");
 		}
 		if (options.containsKey("batchIdentifier")) {
 			if (firstReqParam)
