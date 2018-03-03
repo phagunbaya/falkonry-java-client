@@ -73,6 +73,17 @@ public class TestDatastreamLive {
 	}
 
 	/**
+	 * Should get live monitoring status of datastream
+	 * 
+	 * @throws Exception
+	 */
+	@Test
+	public void testliveMonitoringStatus() throws Exception {
+		Datastream ds = falkonry.getDatastream(datastreamId);
+		Assert.assertEquals(ds.getLive(), "OFF", "Datastream live monitoring status missing");
+	}
+
+	/**
 	 * Should turn on the datastream
 	 * 
 	 * @throws Exception

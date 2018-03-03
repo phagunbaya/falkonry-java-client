@@ -1307,6 +1307,17 @@ File Sample:
     List<Assessment> assessments = falkonry.offDatastream(datastreamId);
     
 ```
+#### Datastream live monitoring status
+
+```java
+    import com.falkonry.client.Falkonry;
+
+    Falkonry falkonry   = new Falkonry("http://localhost:8080", "auth-token");
+    String datastreamId = "hk7cgt56r3yln0";
+    Datastream ds = falkonry.getDatastream(datastreamId);
+    String status = ds.getLive();  // ON: live monitoring on. OFF: live monitoring off
+    
+```
 
 
 ## Docs

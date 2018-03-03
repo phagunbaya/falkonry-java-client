@@ -29,6 +29,7 @@ public class Datastream {
   private Datasource dataSource;
   private List<Input> inputList;
   private String timePrecision;
+  private String live;
 
     /**
      *
@@ -268,5 +269,23 @@ public class Datastream {
 		this.timePrecision = timePrecision;
         return this;
 	}
+
+    /**
+     *
+     * @return
+     */
+    public String getLive() {
+    return live;
+  }
+
+    /**
+     *
+     * @param live
+     * @return
+     */
+    public Datastream setLive(String live) {
+    this.live = live;
+    return this;
+  }
 
 }
