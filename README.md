@@ -47,9 +47,9 @@ Maven install
 	* Add live input data (csv format) from a stream to Datastream (Used for live monitoring) 
     * Add facts data (json format) to Assessment of single entity datastream
     * Add facts data (json format) to Assessment of single entity Batch datastream
-    * Add facts data (json format) with addition tag to Assessment of multi entity datastream
+    * Add facts data (json format) with addition keyword to Assessment of multi entity datastream
     * Add facts data (csv format) to Assessment of single entity datastream
-    * Add facts data (csv format) with tags Assessment of single entity datastream
+    * Add facts data (csv format) with keywords to Assessment of single entity datastream
     * Add facts data (json format) from a stream to Assessment of multi entity datastream
     * Add facts data (csv format) from a stream to  Assessment of multi entity datastream
     * Get Historian Output from Assessment
