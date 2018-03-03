@@ -80,7 +80,7 @@ public class TestDatastreamLive {
 	@Test
 	public void testliveMonitoringStatus() throws Exception {
 		Datastream ds = falkonry.getDatastream(datastreamId);
-		Assert.assertEquals(ds.getLive(), "OFF", "Datastream live monitoring status missing");
+		Assert.assertEquals(ds.getLive(), "OFF");
 	}
 
 	/**
