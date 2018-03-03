@@ -243,7 +243,7 @@ public class TestAddAndGetFacts {
 		queryParams.put("timeZone", time.getZone());
 		queryParams.put("entityIdentifier", "entity");
 		queryParams.put("valueIdentifier", "Health");
-		queryParams.put("keyIdentifier", "Tags");
+		queryParams.put("keywordIdentifier", "Tags");
 
 		String data = "time,end,entity,Health,Tags\n" +
 				"2011-03-31T00:00:00.000Z,2011-04-01T00:00:00.000Z,entity1,Normal,testTag1\n" +

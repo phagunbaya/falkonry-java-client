@@ -313,12 +313,12 @@ public class FalkonryService {
 				url += "&";
 			url += "additionalKeyword=" + URLEncoder.encode(options.get("additionalKeyword"), "UTF-8");
 		}
-		if (options.containsKey("keyIdentifier")) {
+		if (options.containsKey("keywordIdentifier")) {
 			if (firstReqParam)
 				firstReqParam = false;
 			else
 				url += "&";
-			url += "keyIdentifier=" + URLEncoder.encode(options.get("keyIdentifier"), "UTF-8");
+			url += "keywordIdentifier=" + URLEncoder.encode(options.get("keywordIdentifier"), "UTF-8");
 		}
 		if (options.containsKey("batchIdentifier")) {
 			if (firstReqParam)

@@ -907,8 +907,8 @@ Usage:
 
 Data:
 ```
-    {"time" :"2016-03-01 01:01:01", "tag" : "signal1", "value" : 3.4}
-    {"time" :"2016-03-01 01:01:02", "tag" : "signal2", "value" : 9.3}
+    {"time" :"2016-03-01 01:01:01", "signal" : "signal1", "value" : 3.4}
+    {"time" :"2016-03-01 01:01:02", "signal" : "signal2", "value" : 9.3}
 ```
 
 Usage:
@@ -1120,7 +1120,7 @@ Data Sample
 ```
 
 
-#### Add facts data (json format) with addition tag to Assessment of multi entity datastream
+#### Add facts data (json format) with addition keyword to Assessment of multi entity datastream
 Data Sample
 ```
 time,end,car,Health
@@ -1160,7 +1160,7 @@ time,end,car,Health
   String response = falkonry.addFacts(assessment.getId(),data, options);
 ```
 
-#### Add facts data (csv format) with tags Assessment of multi entity datastream
+#### Add facts data (csv format) with keywords to Assessment of multi entity datastream
 
 ```java
   import com.falkonry.client.Falkonry;
@@ -1173,7 +1173,7 @@ time,end,car,Health
   options.put("timeZone", "GMT");
   options.put("entityIdentifier", "car");
   options.put("valueIdentifier", "Health");
-  options.put("keyIdentifier", "Tag");
+  options.put("keywordIdentifier", "Tag");
 
   String data = "time,end,car,Health,Tag\n2011-03-31T00:00:00.000Z,2011-04-01T00:00:00.000Z,IL9753,Normal,testTag1\n2011-03-31T00:00:00.000Z,2011-04-01T00:00:00.000Z,HI3821,Normal,testTag2";
   String response = falkonry.addFacts(assessment.getId(),data, options);

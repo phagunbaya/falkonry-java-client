@@ -225,7 +225,7 @@ public class TestAddFactsFromStream {
 		queryParams.put("timeZone", time.getZone());
 		queryParams.put("entityIdentifier", "entity");
 		queryParams.put("valueIdentifier", "Health");
-		queryParams.put("keyIdentifier", "Tags");
+		queryParams.put("keywordIdentifier", "Tags");
 
 		InputStatus response = falkonry.addFactsStream(assessment.getId(), byteArrayInputStream, queryParams);
 		Assert.assertEquals(response.getAction(), "ADD_FACT_DATA");
