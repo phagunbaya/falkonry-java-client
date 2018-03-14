@@ -477,16 +477,16 @@ public class FalkonryService {
 		}
 
 		String format;
-		String responseFromat = "application/json";
-		if (options.containsKey("responseFromat")) {
+		String responseFormat = "application/json";
+		if (options.containsKey("responseFormat")) {
 
-			format = options.get("responseFromat");
+			format = options.get("responseFormat");
 			if (format.equals("text/csv")) {
-				responseFromat = format;
+				responseFormat = format;
 			}
 		}
 
-		HttpResponseFormat outputData = httpService.getOutput(url, responseFromat);
+		HttpResponseFormat outputData = httpService.getOutput(url, responseFormat);
 		return outputData;
 	}
 
@@ -558,15 +558,15 @@ public class FalkonryService {
 		}
 
 		String format;
-		String responseFromat = "application/json";
-		if (options.containsKey("responseFromat")) {
+		String responseFormat = "application/json";
+		if (options.containsKey("responseFormat")) {
 
-			format = options.get("responseFromat");
+			format = options.get("responseFormat");
 			if (format.equals("text/csv")) {
-				responseFromat = format;
+				responseFormat = format;
 			}
 		}
-		HttpResponseFormat factsData = httpService.getOutput(url, responseFromat);
+		HttpResponseFormat factsData = httpService.getOutput(url, responseFormat);
 		return factsData;
 	}
 
@@ -578,15 +578,15 @@ public class FalkonryService {
 	public HttpResponseFormat getInputData(String datastream, Map<String, String> options) throws Exception {
 		String url = "/datastream/" + datastream + "/data";
 		String format;
-		String responseFromat = "application/json";
-		if (options.containsKey("responseFromat")) {
+		String responseFormat = "application/json";
+		if (options.containsKey("responseFormat")) {
 
-			format = options.get("responseFromat");
+			format = options.get("responseFormat");
 			if (format.equals("text/csv")) {
-				responseFromat = format;
+				responseFormat = format;
 			}
 		}
-		HttpResponseFormat factsData = httpService.getOutput(url, responseFromat);
+		HttpResponseFormat factsData = httpService.getOutput(url, responseFormat);
 		return factsData;
 	}
 
