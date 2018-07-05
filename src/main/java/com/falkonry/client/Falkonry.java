@@ -218,6 +218,26 @@ public class Falkonry {
 	}
 
 	/**
+	 * onAssessment
+	 * @param id Assessment id
+	 * @throws Exception
+	 * @return List
+	 */
+	public Assessment onAssessment(String id) throws Exception {
+		return this.falkonryService.onAssessment(id);
+	}
+
+	/**
+	 * offAssessment
+	 * @param id Assessment id
+	 * @throws Exception
+	 * @return List
+	 */
+	public Assessment offAssessment(String id) throws Exception {
+		return this.falkonryService.offAssessment(id);
+	}
+
+	/**
 	 * getEntityMeta
 	 * @param datastreamId
 	 * @throws Exception

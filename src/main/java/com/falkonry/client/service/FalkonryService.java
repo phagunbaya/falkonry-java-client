@@ -428,6 +428,38 @@ public class FalkonryService {
 
 	/**
 	 *
+	 * @param id
+	 *            Assessment id
+	 * @return
+	 * @throws Exception
+	 */
+	public Assessment onAssessment(String id) throws Exception {
+		Assessment assessmentObj = getAssessment(id);
+		ObjectMapper mapper = new ObjectMapper();
+		String url = "/datastream/" + assessmentObj.getDatastream() + "/on?assessment=" + id;
+		String assessment_json = httpService.post(url, "");
+		List<Assessment> assessmentList = mapper.readValue(assessment_json, new TypeReference<List<Assessment>>() {});
+		return assessmentList.get(0);
+	}
+
+	/**
+	 *
+	 * @param id
+	 *            Assessment id
+	 * @return
+	 * @throws Exception
+	 */
+	public Assessment offAssessment(String id) throws Exception {
+		Assessment assessmentObj = getAssessment(id);
+		ObjectMapper mapper = new ObjectMapper();
+		String url = "/datastream/" + assessmentObj.getDatastream() + "/off?assessment=" + id;
+		String assessment_json = httpService.post(url, "");
+		List<Assessment> assessmentList = mapper.readValue(assessment_json, new TypeReference<List<Assessment>>() {});
+		return assessmentList.get(0);
+	}
+
+	/**
+	 *
 	 * @param assessment
 	 * @param options
 	 * @return
