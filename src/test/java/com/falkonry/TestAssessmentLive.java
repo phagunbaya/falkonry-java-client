@@ -20,16 +20,10 @@ import java.util.*;
 public class TestAssessmentLive {
 
 	Falkonry falkonry = null;
-	/*String host = System.getenv("FALKONRY_HOST_URL");
+	String host = System.getenv("FALKONRY_HOST_URL");
 	String token = System.getenv("FALKONRY_TOKEN");
 	String datastreamId = System.getenv("FALKONRY_DATASTREAM_SLIDING_ID");
-	String assessmentId = System.getenv("FALKONRY_ASSESSMENT_SLIDING_ID");*/
-	
-	String host = "https://dev.falkonry.ai";
-	String token = "88qgjb6vblrc788y6hqp2gkj2664nwdl";
-	String datastreamId = "nwvtryj8ynmtcj";
-	String assessmentId = "j8h8c8ydd898k4";
-	
+	String assessmentId = System.getenv("FALKONRY_ASSESSMENT_SLIDING_ID");
 	
 	List<Datastream> datastreams = new ArrayList<Datastream>();
 
@@ -88,7 +82,8 @@ public class TestAssessmentLive {
 			Assert.assertEquals(e.getMessage(), "{\"message\":\"No Active model assigned in Assessment: " + assessmentObj.getName() + "\"}");
 		}
 	}
-
+	
+	
 	/**
 	 * Should get live monitoring status of assessment
 	 * 
@@ -101,32 +96,19 @@ public class TestAssessmentLive {
 	}
 
 	/**
-	 * Should turn on the assessment
+	 * Should turn on and off the assessment
 	 * 
 	 * @throws Exception
 	 */
-	@Ignore
 	@Test
-	public void testOnAssessment() throws Exception {
-		Assessment assessment = falkonry.onAssessment(assessmentId);
-		Assert.assertEquals(assessment.getId(), assessmentId);
-	}
-
-	/**
-	 * Should turn off the assessment
-	 * 
-	 * @throws Exception
-	 */
-	@Ignore
-	@Test
-	public void testOffAssessment() throws Exception {
+	public void testOnOffAssessment() throws Exception {
+		// Here assessment should have an active model
 		Assessment assessment1 = falkonry.onAssessment(assessmentId);
-		System.out.println(assessment1.getId());
-		System.out.println(assessmentId);
 		Assert.assertEquals(assessment1.getId(), assessmentId);
-
+		
+		Thread.sleep(10000);
+		
 		Assessment assessment2 = falkonry.offAssessment(assessmentId);
-		System.out.println(assessment2.getId());
 		Assert.assertEquals(assessment2.getId(), assessmentId);
 
 	}
