@@ -106,7 +106,7 @@ public class TestAssessmentLive {
 		Assessment assessment1 = falkonry.onAssessment(assessmentId);
 		Assert.assertEquals(assessment1.getId(), assessmentId);
 		
-		Thread.sleep(10000);
+		Thread.sleep(30000);
 		
 		Assessment assessment2 = falkonry.offAssessment(assessmentId);
 		Assert.assertEquals(assessment2.getId(), assessmentId);
