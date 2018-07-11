@@ -219,9 +219,9 @@ public class Falkonry {
 
 	/**
 	 * onAssessment
-	 * @param id Assessment id
+	 * @param id            Id of the assessment to turn on
+	 * @return              Assessment object that turned on
 	 * @throws Exception
-	 * @return List
 	 */
 	public Assessment onAssessment(String id) throws Exception {
 		return this.falkonryService.onAssessment(id);
@@ -229,9 +229,9 @@ public class Falkonry {
 
 	/**
 	 * offAssessment
-	 * @param id Assessment id
+	 * @param id            Id of the assessment to turn off
+	 * @return              Assessment object that turned off
 	 * @throws Exception
-	 * @return List
 	 */
 	public Assessment offAssessment(String id) throws Exception {
 		return this.falkonryService.offAssessment(id);

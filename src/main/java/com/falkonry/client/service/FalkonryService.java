@@ -427,10 +427,9 @@ public class FalkonryService {
 	}
 
 	/**
-	 *
-	 * @param id
-	 *            Assessment id
-	 * @return
+	 * onAssessment
+	 * @param id            Id of the assessment to turn on
+	 * @return              Assessment object that turned on
 	 * @throws Exception
 	 */
 	public Assessment onAssessment(String id) throws Exception {
@@ -443,10 +442,9 @@ public class FalkonryService {
 	}
 
 	/**
-	 *
-	 * @param id
-	 *            Assessment id
-	 * @return
+	 * offAssessment
+	 * @param id            Id of the assessment to turn off
+	 * @return              Assessment object that turned off
 	 * @throws Exception
 	 */
 	public Assessment offAssessment(String id) throws Exception {
