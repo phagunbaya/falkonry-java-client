@@ -28,9 +28,9 @@ public class FalkonryService {
 	private HttpService httpService;
 
 	/**
-	 *
-	 * @param host
-	 * @param token
+	 * Sets httpService with host and token
+	 * @param host         Host of the falkonry
+	 * @param token        Integration token
 	 * @throws Exception
 	 */
 	public FalkonryService(String host, String token) throws Exception {
@@ -38,9 +38,9 @@ public class FalkonryService {
 	}
 
 	/**
-	 *
-	 * @param datastream
-	 * @return
+	 * Create new datastream
+	 * @param datastream   Datastream object
+	 * @return             The newly created datastream
 	 * @throws Exception
 	 */
 	public Datastream createDatastream(Datastream datastream) throws Exception {
@@ -65,8 +65,8 @@ public class FalkonryService {
 	}
 
 	/**
-	 *
-	 * @return
+	 * Get list of datastreams
+	 * @return             List of datastreams
 	 * @throws Exception
 	 */
 	public List<Datastream> getDatastreams() throws Exception {
@@ -77,10 +77,9 @@ public class FalkonryService {
 	}
 
 	/**
-	 *
-	 * @param id
-	 *            DataStream id
-	 * @return
+	 * Get datastream by id
+	 * @param id                    DataStream id
+	 * @return                      Datastream object
 	 * @throws IOException
 	 * @throws JsonMappingException
 	 * @throws JsonParseException
@@ -95,9 +94,9 @@ public class FalkonryService {
 	}
 
 	/**
-	 *
-	 * @param datastream
-	 * @return
+	 * Update the Datastream
+	 * @param datastream   Datastream object
+	 * @return             Updated Datastream object
 	 * @throws Exception
 	 */
 	public Datastream updateDatastream(Datastream datastream) throws Exception {
@@ -108,9 +107,8 @@ public class FalkonryService {
 	}
 
 	/**
-	 *
-	 * @param id
-	 *            DataStream id
+	 * Delete Datastream using id
+	 * @param id           DataStream id
 	 * @throws Exception
 	 */
 	public void deleteDatastream(String id) throws Exception {
@@ -118,9 +116,9 @@ public class FalkonryService {
 	}
 
 	/**
-	 *
-	 * @param assessmentRequest
-	 * @return
+	 * Create new Assessment
+	 * @param assessmentRequest Request object for creating new assessment
+	 * @return                  The newly created Assessment
 	 * @throws Exception
 	 */
 	public Assessment createAssessment(AssessmentRequest assessmentRequest) throws Exception {
@@ -136,8 +134,8 @@ public class FalkonryService {
 	}
 
 	/**
-	 *
-	 * @return
+	 * Get list of assessments
+	 * @return             List of assessments
 	 * @throws Exception
 	 */
 	public List<Assessment> getAssessments() throws Exception {
@@ -148,10 +146,9 @@ public class FalkonryService {
 	}
 
 	/**
-	 *
-	 * @param id
-	 *            Assessment id
-	 * @return
+	 * Get assessment by id
+	 * @param id           Assessment id
+	 * @return             Assessment object
 	 * @throws Exception
 	 */
 	public Assessment getAssessment(String id) throws Exception {
@@ -162,9 +159,9 @@ public class FalkonryService {
 	}
 
 	/**
-	 *
-	 * @param assessment
-	 * @return
+	 * Update the Assessment
+	 * @param assessment   Assessment object
+	 * @return             Updated Assessment object
 	 * @throws Exception
 	 */
 	public Assessment updateAssessment(Assessment assessment) throws Exception {
@@ -175,9 +172,8 @@ public class FalkonryService {
 	}
 
 	/**
-	 *
-	 * @param id
-	 *            Assessment id
+	 * Delete Assessment using id
+	 * @param id           Assessment id
 	 * @throws Exception
 	 */
 	public void deleteAssessment(String id) throws Exception {
@@ -185,12 +181,11 @@ public class FalkonryService {
 	}
 
 	/**
-	 *
-	 * @param id
-	 *            DataStream id
-	 * @param data
-	 * @param options
-	 * @return
+	 * Add String of input data to the datastream
+	 * @param id           DataStream id
+	 * @param data         String of input data in csv/json format
+	 * @param options      Options for hasMoreData, steaming and various field identifiers in data
+	 * @return             Status of data ingestion
 	 * @throws Exception
 	 */
 	public InputStatus addInputData(String id, String data, Map<String, String> options) throws Exception {
@@ -201,13 +196,12 @@ public class FalkonryService {
 	}
 
 	/**
-	 *
-	 * @param id
-	 *            Assessment id
-	 * @param data
-	 * @param options
+	 * Add String of facts data to the assessment
+	 * @param id           Assessment id
+	 * @param data         String of fact data in csv/json format
+	 * @param options      Options for various field identifiers in data
 	 * @return
-	 * @throws Exception
+	 * @throws Exception   Status of data ingestion
 	 */
 	public InputStatus addFacts(String id, String data, Map<String, String> options) throws Exception {
 		ObjectMapper mapper = new ObjectMapper();
@@ -217,11 +211,11 @@ public class FalkonryService {
 	}
 
 	/**
-	 *
-	 * @param id
-	 * @param stream
-	 * @param options
-	 * @return
+	 * Add ByteArrayInputStream of input data to the datastream
+	 * @param id           Datastream id
+	 * @param stream       ByteArrayInputStream of input data in csv/json format
+	 * @param options      Options for hasMoreData, steaming and various field identifiers in data
+	 * @return             Status of data ingestion
 	 * @throws Exception
 	 */
 	public InputStatus addInputFromStream(String id, ByteArrayInputStream stream, Map<String, String> options)
@@ -234,12 +228,11 @@ public class FalkonryService {
 	}
 
 	/**
-	 *
-	 * @param id
-	 *            Assessment id
-	 * @param stream
-	 * @param options
-	 * @return
+	 * Add ByteArrayInputStream of facts data to the assessment
+	 * @param id           Assessment id
+	 * @param stream       ByteArrayInputStream of fact data in csv/json format
+	 * @param options      Options for various field identifiers in data
+	 * @return             Status of data ingestion
 	 * @throws Exception
 	 */
 	public InputStatus addFactsStream(String id, ByteArrayInputStream stream, Map<String, String> options)
@@ -253,9 +246,10 @@ public class FalkonryService {
 	}
 
 	/**
-	 * @param datstreamId
-	 * @param options
-	 * @return
+	 * Get url for adding facts data to the assessment
+	 * @param assessmentId Assessment id
+	 * @param options      Options for various field identifiers in data
+	 * @return             Url for adding facts data to the assessment
 	 * @throws Exception
 	 */
 	private String getAddFactsUrl(String assessmentId, Map<String, String> options) throws Exception {
@@ -332,9 +326,10 @@ public class FalkonryService {
 	}
 
 	/**
-	 * @param datstreamId
-	 * @param options
-	 * @return
+	 * Get url for adding input data to the datastream
+	 * @param datstreamId  Datastream id
+	 * @param options      Options for hasMoreData, steaming and various field identifiers in data
+	 * @return             Url for adding input data to the datastream
 	 * @throws Exception
 	 */
 	private String getInputIngestionUrl(String datstreamId, Map<String, String> options) throws Exception {
@@ -385,10 +380,9 @@ public class FalkonryService {
 	}
 
 	/**
-	 *
-	 * @param id
-	 *            Assessment id
-	 * @return
+	 * Get live streaming assessment output
+	 * @param id           Assessment id
+	 * @return             BufferedReader of live streaming assessment output
 	 * @throws Exception
 	 */
 	public BufferedReader getOutput(String id) throws Exception {
@@ -397,10 +391,9 @@ public class FalkonryService {
 	}
 
 	/**
-	 *
-	 * @param id
-	 *            DataStream id
-	 * @return
+	 * Turn live monitoring on for a datastream. Each assessment associated with the datastream will be turned on for live monitoring.
+	 * @param id           DataStream id
+	 * @return             List of assessments for which live monitoring is turned on
 	 * @throws Exception
 	 */
 	public List<Assessment> onDatastream(String id) throws Exception {
@@ -412,10 +405,9 @@ public class FalkonryService {
 	}
 
 	/**
-	 *
-	 * @param id
-	 *            DataStream id
-	 * @return
+	 * Turn live monitoring off for a datastream. Each assessment associated with the datastream will be turned off for live monitoring.
+	 * @param id           DataStream id
+	 * @return             List of assessments for which live monitoring is turned off
 	 * @throws Exception
 	 */
 	public List<Assessment> offDatastream(String id) throws Exception {
@@ -427,10 +419,40 @@ public class FalkonryService {
 	}
 
 	/**
-	 *
-	 * @param assessment
-	 * @param options
-	 * @return
+	 * Turn live monitoring on for an assessment
+	 * @param id            Assessment id
+	 * @return              Assessment object that turned on
+	 * @throws Exception
+	 */
+	public Assessment onAssessment(String id) throws Exception {
+		Assessment assessmentObj = getAssessment(id);
+		ObjectMapper mapper = new ObjectMapper();
+		String url = "/datastream/" + assessmentObj.getDatastream() + "/on?assessment=" + id;
+		String assessment_json = httpService.post(url, "");
+		List<Assessment> assessmentList = mapper.readValue(assessment_json, new TypeReference<List<Assessment>>() {});
+		return assessmentList.get(0);
+	}
+
+	/**
+	 * Turn live monitoring off for an assessment
+	 * @param id            Assessment id
+	 * @return              Assessment object that turned off
+	 * @throws Exception
+	 */
+	public Assessment offAssessment(String id) throws Exception {
+		Assessment assessmentObj = getAssessment(id);
+		ObjectMapper mapper = new ObjectMapper();
+		String url = "/datastream/" + assessmentObj.getDatastream() + "/off?assessment=" + id;
+		String assessment_json = httpService.post(url, "");
+		List<Assessment> assessmentList = mapper.readValue(assessment_json, new TypeReference<List<Assessment>>() {});
+		return assessmentList.get(0);
+	}
+
+	/**
+	 * Get historical output generated by an assessment from the historian
+	 * @param assessment   Assessment object
+	 * @param options      Options for startTime, endTime, responseFormat, modelIndex
+	 * @return             HttpResponseFormat for historical output generated by an assessment from the historian
 	 * @throws Exception
 	 */
 	public HttpResponseFormat getHistoricalOutput(Assessment assessment, Map<String, String> options) throws Exception {
@@ -493,10 +515,11 @@ public class FalkonryService {
 	// Post EntityMeta
 
 	/**
-	 * @param entityMetaRequest
-	 * @param id
+	 * Add EntityMeta to a datastream
+	 * @param entityMetaRequest   List of EntityMetaRequest
+	 * @param id                  Datastream id
 	 * @throws Exception
-	 * @return List
+	 * @return                    List of newly added EntityMeta
 	 */
 	public List<EntityMeta> postEntityMeta(List<EntityMetaRequest> entityMetaRequest, String id) throws Exception {
 		ObjectMapper mapper = new ObjectMapper();
@@ -507,9 +530,10 @@ public class FalkonryService {
 	}
 
 	/**
-	 * @param id
+	 * Get list of EntityMeta of a datastream
+	 * @param id           Datastream id
 	 * @throws Exception
-	 * @return List
+	 * @return             List of EntityMeta of a datastream
 	 */
 	public List<EntityMeta> getEntityMeta(String id) throws Exception {
 		ObjectMapper mapper = new ObjectMapper();
@@ -519,10 +543,11 @@ public class FalkonryService {
 	}
 
 	/**
-	 * @param assessment
-	 * @param options
+	 * Extract facts data from an assessment
+	 * @param assessment   Assessment id
+	 * @param options      Options for startTime, endTime, responseFormat, modelIndex
 	 * @throws Exception
-	 * @return List
+	 * @return             HttpResponseFormat of facts data of an assessment
 	 */
 	public HttpResponseFormat getFactsData(String assessment, Map<String, String> options) throws Exception {
 		String url = "/assessment/" + assessment + "/facts?";
@@ -571,9 +596,11 @@ public class FalkonryService {
 	}
 
 	/**
-	 * @param datastream
+	 * Extract input data from a datastream
+	 * @param datastream   Datastream id
+	 * @param options      Options for responseFormat
 	 * @throws Exception
-	 * @return List
+	 * @return             HttpResponseFormat of input data of a datastream
 	 */
 	public HttpResponseFormat getInputData(String datastream, Map<String, String> options) throws Exception {
 		String url = "/datastream/" + datastream + "/data";
@@ -591,9 +618,10 @@ public class FalkonryService {
 	}
 
 	/**
-	 * @param id
+	 * Get status of the tracker
+	 * @param id           Tracker id
 	 * @throws Exception
-	 * @return Tracker
+	 * @return             Tracker object
 	 */
 	public Tracker getStatus(String id) throws Exception {
 		ObjectMapper mapper = new ObjectMapper();
