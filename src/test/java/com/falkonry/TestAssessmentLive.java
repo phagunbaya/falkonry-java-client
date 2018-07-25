@@ -37,7 +37,7 @@ public class TestAssessmentLive {
 	}
 
 	/**
-	 * Should get exception when turning on the assessment
+	 * Should get exception when turning on the assessment without active model
 	 * 
 	 * @throws Exception
 	 */
@@ -110,6 +110,8 @@ public class TestAssessmentLive {
 		
 		Assessment assessment2 = falkonry.offAssessment(assessmentId);
 		Assert.assertEquals(assessment2.getId(), assessmentId);
+		
+		Thread.sleep(30000);
 
 	}
 
