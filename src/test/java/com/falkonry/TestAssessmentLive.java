@@ -1,10 +1,5 @@
 package com.falkonry;
 
-/*!
- * falkonry-java-client
- * Copyright(c) 2017 Falkonry Inc
- * MIT Licensed
- */
 
 import com.falkonry.client.Falkonry;
 import com.falkonry.helper.models.Datasource;
