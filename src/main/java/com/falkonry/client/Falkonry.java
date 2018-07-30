@@ -131,7 +131,7 @@ public class Falkonry {
 	 * Add input data as string to the datastream  
 	 * @param id           Datastream id
 	 * @param data         Input data as string in csv/json format
-	 * @param options      Map of parameters like hasMoreData, steaming and various field identifiers in data
+	 * @param options      Map of parameters like hasMoreData, streaming, timeIdentifier, timeFormat, timeZone, entityIdentifier, valueIdentifier, signalIdentifier, batchIdentifier
 	 * @throws Exception
 	 * @return             Status of data ingestion
 	 */
@@ -143,7 +143,7 @@ public class Falkonry {
 	 * Add fact data as string to the assessment
 	 * @param id           Assessment id
 	 * @param data         Fact data as string in csv/json format
-	 * @param options      Map of parameters for various field identifiers in data
+	 * @param options      Map of parameters like startTimeIdentifier, endTimeIdentifier, timeFormat, timeZone, entityIdentifier, valueIdentifier, batchIdentifier, keywordIdentifier, additionalKeyword
 	 * @throws Exception
 	 * @return             Status of data ingestion
 	 */
@@ -155,7 +155,7 @@ public class Falkonry {
 	 * Add input data as ByteArrayInputStream to the datastream
 	 * @param id           Datastream id
 	 * @param stream       Input data as ByteArrayInputStream in csv/json format
-	 * @param options      Map of parameters like hasMoreData, steaming and various field identifiers in data
+	 * @param options      Map of parameters like hasMoreData, streaming, timeIdentifier, timeFormat, timeZone, entityIdentifier, valueIdentifier, signalIdentifier, batchIdentifier
 	 * @throws Exception
 	 * @return             Status of data ingestion
 	 */
@@ -168,7 +168,7 @@ public class Falkonry {
 	 * Add fact data as ByteArrayInputStream to the assessment
 	 * @param id           Assessment id
 	 * @param stream       Fact data as ByteArrayInputStream in csv/json format
-	 * @param options      Map of parameters for various field identifiers in data
+	 * @param options      Map of parameters like startTimeIdentifier, endTimeIdentifier, timeFormat, timeZone, entityIdentifier, valueIdentifier, batchIdentifier, keywordIdentifier, additionalKeyword 
 	 * @throws Exception
 	 * @return             Status of data ingestion
 	 */

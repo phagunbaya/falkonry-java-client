@@ -184,7 +184,7 @@ public class FalkonryService {
 	 * Add input data as string to the datastream
 	 * @param id           DataStream id
 	 * @param data         Input data as string in csv/json format
-	 * @param options      Map of parameters like hasMoreData, steaming and various field identifiers in data
+	 * @param options      Map of parameters like hasMoreData, streaming, timeIdentifier, timeFormat, timeZone, entityIdentifier, valueIdentifier, signalIdentifier, batchIdentifier
 	 * @return             Status of data ingestion
 	 * @throws Exception
 	 */
@@ -199,7 +199,7 @@ public class FalkonryService {
 	 * Add fact data as string to the assessment
 	 * @param id           Assessment id
 	 * @param data         Fact data as string in csv/json format
-	 * @param options      Map of parameters for various field identifiers in data
+	 * @param options      Map of parameters like startTimeIdentifier, endTimeIdentifier, timeFormat, timeZone, entityIdentifier, valueIdentifier, batchIdentifier, keywordIdentifier, additionalKeyword
 	 * @return
 	 * @throws Exception   Status of data ingestion
 	 */
@@ -214,7 +214,7 @@ public class FalkonryService {
 	 * Add input data as ByteArrayInputStream to the datastream
 	 * @param id           Datastream id
 	 * @param stream       Input data as ByteArrayInputStream in csv/json format
-	 * @param options      Map of parameters like hasMoreData, steaming and various field identifiers in data
+	 * @param options      Map of parameters like hasMoreData, streaming, timeIdentifier, timeFormat, timeZone, entityIdentifier, valueIdentifier, signalIdentifier, batchIdentifier
 	 * @return             Status of data ingestion
 	 * @throws Exception
 	 */
@@ -231,7 +231,7 @@ public class FalkonryService {
 	 * Add fact data as ByteArrayInputStream to the assessment
 	 * @param id           Assessment id
 	 * @param stream       Fact data as ByteArrayInputStream in csv/json format
-	 * @param options      Map of parameters for various field identifiers in data
+	 * @param options      Map of parameters like startTimeIdentifier, endTimeIdentifier, timeFormat, timeZone, entityIdentifier, valueIdentifier, batchIdentifier, keywordIdentifier, additionalKeyword
 	 * @return             Status of data ingestion
 	 * @throws Exception
 	 */
@@ -248,7 +248,7 @@ public class FalkonryService {
 	/**
 	 * Get url for adding fact data to the assessment
 	 * @param assessmentId Assessment id
-	 * @param options      Map of parameters for various field identifiers in data
+	 * @param options      Map of parameters like startTimeIdentifier, endTimeIdentifier, timeFormat, timeZone, entityIdentifier, valueIdentifier, batchIdentifier, keywordIdentifier, additionalKeyword
 	 * @return             Url for adding fact data to the assessment
 	 * @throws Exception
 	 */
@@ -328,7 +328,7 @@ public class FalkonryService {
 	/**
 	 * Get url for adding input data to the datastream
 	 * @param datstreamId  Datastream id
-	 * @param options      Map of parameters like hasMoreData, steaming and various field identifiers in data
+	 * @param options      Map of parameters like hasMoreData, streaming, timeIdentifier, timeFormat, timeZone, entityIdentifier, valueIdentifier, signalIdentifier, batchIdentifier
 	 * @return             Url for adding input data to the datastream
 	 * @throws Exception
 	 */
