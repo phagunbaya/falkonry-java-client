@@ -246,10 +246,10 @@ public class FalkonryService {
 	}
 
 	/**
-	 * Get url for adding facts data to the assessment
+	 * Get url for adding fact data to the assessment
 	 * @param assessmentId Assessment id
 	 * @param options      Map of parameters for various field identifiers in data
-	 * @return             Url for adding facts data to the assessment
+	 * @return             Url for adding fact data to the assessment
 	 * @throws Exception
 	 */
 	private String getAddFactsUrl(String assessmentId, Map<String, String> options) throws Exception {
