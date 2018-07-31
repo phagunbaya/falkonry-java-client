@@ -1,4 +1,4 @@
-[![Falkonry Logo](https://app.falkonry.ai/img/logo.png)](http://falkonry.com/)
+[![Falkonry Logo](https://jumpstart.falkonry.ai/img/logo.png)](http://falkonry.com/)
 
 Falkonry Java Client to access [Falkonry Condition Prediction](falkonry.com) APIs
 
@@ -12,7 +12,7 @@ Falkonry Java Client to access [Falkonry Condition Prediction](falkonry.com) API
 <dependency>
   <groupId>com.falkonry</groupId>
   <artifactId>client</artifactId>
-  <version>2.1.1</version>
+  <version>2.2.0</version>
 </dependency>
 ```
 

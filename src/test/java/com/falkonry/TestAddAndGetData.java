@@ -16,7 +16,7 @@ import org.junit.Test;
 
 /*!
  * falkonry-java-client
- * Copyright(c) 2017 Falkonry Inc
+ * Copyright(c) 2017-2018 Falkonry Inc
  * MIT Licensed
  */
 
